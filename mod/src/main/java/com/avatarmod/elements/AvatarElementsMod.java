@@ -2,6 +2,7 @@ package com.avatarmod.elements;
 
 import com.avatarmod.elements.network.AvatarNetworking;
 import com.avatarmod.elements.network.AvatarServerEvents;
+import com.avatarmod.elements.network.SkillNetworking;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ public class AvatarElementsMod implements ModInitializer {
         LOGGER.info("Avatar: Elements initializing (common)");
         AvatarNetworking.registerPayloads();
         AvatarNetworking.registerServerReceivers();
+        SkillNetworking.registerPayloads();
+        SkillNetworking.registerServerReceivers();
         AvatarServerEvents.register();
     }
 }

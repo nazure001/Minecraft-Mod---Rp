@@ -16,6 +16,15 @@ public final class AvatarKeyBindings {
             )
     );
 
+    public static final KeyBinding SKILL_FIRE_JAB = KeyBindingHelper.registerKeyBinding(
+            new KeyBinding(
+                    "key.avatar_elements.skill_fire_jab",
+                    InputUtil.Type.KEYSYM,
+                    GLFW.GLFW_KEY_G,
+                    "category.avatar_elements.general"
+            )
+    );
+
     public static void register() {
         // Registration happens via KeyBindingHelper above; this method exists so
         // AvatarElementsClient can call it explicitly to trigger class loading.
