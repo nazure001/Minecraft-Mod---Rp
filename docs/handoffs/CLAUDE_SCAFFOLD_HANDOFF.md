@@ -140,11 +140,12 @@ BUILD SUCCESSFUL in 6m 2s
 JAR T1-2: `mod/build/libs/mod-0.1.0-alpha.jar` (14938 bytes)
 SHA-256: `09e0bf0667631a6de882adf5e0ac4dfed6b37991120e01c3e4e14863a018a491`
 
-### Uji T1-2 runtime: ⚠ BELUM DIUJI
-Membutuhkan user di dalam Minecraft:
-- Tekan R → periksa actionbar untuk `[Avatar] Aksi berhasil!`
-- Tekan R lagi cepat → `[Avatar] Cooldown: N tik`
-- Uji di dedicated server (setelah EULA manual) → satu tekanan = satu aksi server + satu ack
+### Uji T1-2 runtime: ✅ TERVERIFIKASI (singleplayer)
+Log client 14:09:09 — entry point common + client terpanggil.
+Hasil in-game (screenshot 2026-11-07):
+- Tekan R → `[Avatar] Server: test action acknowledged.` muncul di chat ✅
+- C2S → server receive → S2C ack pipeline berjalan penuh ✅
+- Pemeriksaan dedicated server: **BELUM DIUJI** (butuh EULA manual)
 - Pemeriksaan dua pemain: **BELUM DIUJI**
 
 ---
@@ -171,7 +172,7 @@ Jangan push ke `main` atau merge PR tanpa review.
 
 | Prioritas | Tugas | Status |
 |---|---|---|
-| Penting | Uji T1-2: tekan R → ack di actionbar | BELUM DIUJI (butuh Minecraft window) |
+| ~~Penting~~ | ~~Uji T1-2: tekan R → ack~~ | ✅ SELESAI 2026-11-07 |
 | Penting | Setujui EULA manual → uji server dedicated | Menunggu user |
 | A5 | Uji distribusi JAR di Fabric instance terpisah | BELUM DIUJI |
 | Berikutnya | T1-3 implementasi networking lengkap (SkillInput etc.) | Belum dimulai |

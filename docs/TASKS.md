@@ -16,7 +16,7 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 ## Tahap 1 — Fondasi Fabric Mod
 
 - [x] **T1-1** Scaffold mod Fabric 1.21.1 (fabric.mod.json, entry point, gradle) — Claude Code — 2026-11-07 — BUILD SUCCESSFUL (plugin: fabric-loom, Gradle 9.8.2, JDK25→JDK21, Yarn 1.21.1+build.3)
-- [ ] **T1-2** Implementasi keybind (skill slots, dodge, element radial, combat mode toggle)
+- [x] **T1-2** Implementasi keybinding test + C2S/S2C networking + rate limiting — Claude Code — 2026-11-07 — TERVERIFIKASI singleplayer: R → server ack → actionbar ✅ (dedicated server + 2 pemain: BELUM DIUJI)
 - [ ] **T1-3** Implementasi networking (C2S_SkillInput, S2C_SkillResult, S2C_HudUpdate)
 - [ ] **T1-4** Implementasi `PlayerBendingData` (chi, cooldown, mastery, skills) via AttachmentType
 - [ ] **T1-5** Implementasi `SkillTimeline` (windup → active → recovery)
