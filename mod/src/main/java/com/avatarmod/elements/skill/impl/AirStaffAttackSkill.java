@@ -2,7 +2,6 @@ package com.avatarmod.elements.skill.impl;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
-import com.avatarmod.elements.item.AvatarItems;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -30,11 +29,6 @@ public final class AirStaffAttackSkill {
         SkillTimeline timeline = PlayerBendingData.get(player).getTimeline();
         if (timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
         if (timeline.ticksInPhase() != 1) return;
-
-        // Require air_staff in main hand or off hand
-        boolean holdsStaff = player.getMainHandStack().isOf(AvatarItems.AIR_STAFF)
-                || player.getOffHandStack().isOf(AvatarItems.AIR_STAFF);
-        if (!holdsStaff) return;
 
         int step = PlayerBendingData.get(player).getAirStaffComboStep();
         executeComboStep(player, def, step);
