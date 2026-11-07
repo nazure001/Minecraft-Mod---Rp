@@ -7,6 +7,7 @@ import com.avatarmod.elements.skill.SkillDefinition;
 import com.avatarmod.elements.skill.SkillRegistry;
 import com.avatarmod.elements.skill.SkillValidator;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -38,6 +39,7 @@ public final class SkillNetworking {
         PayloadTypeRegistry.playC2S().register(SkillPackets.C2SSetElement.ID, SkillPackets.C2SSetElement.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSkillResult.ID, SkillPackets.S2CSkillResult.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CHudUpdate.ID, SkillPackets.S2CHudUpdate.CODEC);
+        PayloadTypeRegistry.playS2C().register(SkillPackets.S2CPhaseSync.ID, SkillPackets.S2CPhaseSync.CODEC);
     }
 
     public static void registerServerReceivers() {
@@ -79,6 +81,11 @@ public final class SkillNetworking {
                     SkillDefinition def = SkillRegistry.get(skillId).orElseThrow();
                     SkillValidator.apply(player, skillId, def);
 
+                    // Broadcast WINDUP start to nearby clients (charge orb renderer)
+                    if (def.windupTicks() > 0) {
+                        broadcastPhaseSync(player, skillId, "WINDUP", 0);
+                    }
+
                     // Track combo chain state
                     data.recordComboSkill(skillId, currentTick);
                     if ("avatar:air_staff_attack".equals(skillId)) {
@@ -94,6 +101,15 @@ public final class SkillNetworking {
                             skillId, true, SkillPackets.S2CSkillResult.DenyReason.NONE, 0));
                     sendHudUpdate(player, data, skillId);
                 });
+    }
+
+    public static void broadcastPhaseSync(ServerPlayerEntity caster, String skillId, String phase, int ticksIn) {
+        var packet = new SkillPackets.S2CPhaseSync(caster.getUuid(), skillId, phase, ticksIn);
+        // Send to caster + all players tracking the caster
+        ServerPlayNetworking.send(caster, packet);
+        for (var watcher : PlayerLookup.tracking(caster)) {
+            ServerPlayNetworking.send(watcher, packet);
+        }
     }
 
     private static void sendHudUpdate(ServerPlayerEntity player, PlayerBendingData data, String skillId) {
@@ -135,6 +151,9 @@ public final class SkillNetworking {
 
                     SkillDefinition def = SkillRegistry.get(skillId).orElseThrow();
                     SkillValidator.apply(player, skillId, def);
+                    if (def.windupTicks() > 0) {
+                        broadcastPhaseSync(player, skillId, "WINDUP", 0);
+                    }
                     data.recordComboSkill(skillId, currentTick);
                     if ("avatar:air_staff_attack".equals(skillId)) {
                         data.advanceAirStaffCombo(currentTick, def.comboWindowTicks());

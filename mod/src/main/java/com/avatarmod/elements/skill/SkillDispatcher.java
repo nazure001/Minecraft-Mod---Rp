@@ -2,6 +2,7 @@ package com.avatarmod.elements.skill;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
+import com.avatarmod.elements.network.SkillNetworking;
 import com.avatarmod.elements.skill.impl.AirStaffAttackSkill;
 import com.avatarmod.elements.skill.impl.AirVortexSkill;
 import com.avatarmod.elements.skill.impl.EarthBoulderSkill;
@@ -27,7 +28,14 @@ public final class SkillDispatcher {
         String activeSkill = data.getActiveSkillId();
         if (activeSkill == null) return;
 
+        SkillTimeline.Phase phaseBefore = timeline.phase();
         SkillRegistry.get(activeSkill).ifPresent(def -> dispatch(player, def));
+        SkillTimeline.Phase phaseAfter = timeline.phase();
+
+        // Broadcast on any phase transition (or when first entering WINDUP via start())
+        if (phaseBefore != phaseAfter) {
+            SkillNetworking.broadcastPhaseSync(player, activeSkill, phaseAfter.name(), timeline.ticksInPhase());
+        }
     }
 
     private static void dispatch(ServerPlayerEntity player, SkillDefinition def) {

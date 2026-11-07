@@ -104,5 +104,32 @@ public final class SkillPackets {
         @Override public CustomPayload.Id<C2SSetElement> getId() { return ID; }
     }
 
+    // Server → Client (broadcast): phase transition for any caster, so nearby players
+    // can render the charge orb on that player.
+    public record S2CPhaseSync(
+            java.util.UUID casterUuid,
+            String skillId,
+            String phase,   // "IDLE" | "WINDUP" | "ACTIVE" | "RECOVERY"
+            int ticksIn
+    ) implements CustomPayload {
+        public static final CustomPayload.Id<S2CPhaseSync> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "s2c_phase_sync"));
+        public static final PacketCodec<PacketByteBuf, S2CPhaseSync> CODEC = PacketCodec.of(
+                (value, buf) -> {
+                    buf.writeUuid(value.casterUuid());
+                    buf.writeString(value.skillId());
+                    buf.writeString(value.phase());
+                    buf.writeVarInt(value.ticksIn());
+                },
+                buf -> new S2CPhaseSync(
+                        buf.readUuid(),
+                        buf.readString(64),
+                        buf.readString(16),
+                        buf.readVarInt()
+                )
+        );
+        @Override public CustomPayload.Id<S2CPhaseSync> getId() { return ID; }
+    }
+
     private SkillPackets() {}
 }
