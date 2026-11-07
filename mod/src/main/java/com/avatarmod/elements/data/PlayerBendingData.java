@@ -108,7 +108,7 @@ public final class PlayerBendingData {
     // --- static helpers ---
 
     public static PlayerBendingData get(ServerPlayerEntity player) {
-        return player.getAttached(ATTACHMENT);
+        return player.getAttachedOrCreate(ATTACHMENT);
     }
 
     public static void tick(ServerPlayerEntity player) {
