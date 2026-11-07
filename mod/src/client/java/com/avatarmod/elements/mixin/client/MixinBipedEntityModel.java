@@ -44,32 +44,32 @@ public abstract class MixinBipedEntityModel<T extends LivingEntity> {
     }
 
     /**
-     * Pose 1 — Sikap Siaga (Ready Stance) derived from pose_data.json:
-     *   torso.yaw  = +18°  → 0.314 rad
-     *   torso.pitch=  +2°  → 0.035 rad
-     *   head compensates torso yaw so gaze stays forward
+     * Pose — Sikap Siaga (Ready Stance) from CLAUDE_READY_POSE_HANDOFF.md §7.
+     * Vanilla 6-bone projection of full upper_arm+forearm+staff rig.
+     * All angles are ABSOLUTE (override vanilla walk animation while staff held).
      *
-     * Arm angles are approximated from staff contact data
-     * (rh_u_on_staff=5.5, lh_u_on_staff=15.0 → right hand near grip, left near middle).
-     * Full IK solve deferred until elbow-bone support (GeckoLib phase).
+     * Source values (degrees → radians):
+     *   torso  : yaw -25° / pitch +5°
+     *   head   : yaw compensates body, pitch -5°
+     *   rightArm: projected from V=[+0.867,-9.186,-0.738] → pitch+4.6°/yaw-5.4°/roll+5.4°
+     *   leftArm : projected from V=[+3.666,-8.159,-2.741] → pitch+17°/yaw+24.1°/roll-22.5°
+     *
+     * Elbow bend requires PAL custom bones — next phase after fire_jab verified.
      */
     private void applyReadyPose() {
-        // Torso rotation (adds to vanilla body swing)
-        body.yaw += 0.31f;    // +18°
-        body.pitch += 0.035f; // +2°
+        body.yaw   = -0.4363f; // -25.0°
+        body.pitch =  0.0873f; // +5.0°
 
-        // Right arm — dominant/rear grip, slightly lowered at side-hip
-        rightArm.pitch = -0.55f;  // ~-31° forward
-        rightArm.yaw   =  0.20f;  //  ~12° inward
-        rightArm.roll  =  0.10f;
+        // Head compensates body yaw so gaze stays forward; pitch from handoff
+        head.yaw  +=  0.4363f; // +25.0° offset
+        head.pitch = -0.0873f; // -5.0°
 
-        // Left arm — guide/front grip, stretched forward across chest
-        leftArm.pitch = -0.80f;   // ~-46° forward
-        leftArm.yaw   = -0.30f;   //  ~17° outward
-        leftArm.roll  = -0.08f;
+        rightArm.pitch =  0.0803f; // +4.6°
+        rightArm.yaw   = -0.0942f; // -5.4°
+        rightArm.roll  =  0.0942f; // +5.4°
 
-        // Head: vanilla already sets headYaw/headPitch to track look direction.
-        // Compensate for body yaw so the head tracks the same world direction.
-        head.yaw -= 0.31f;
+        leftArm.pitch  =  0.2967f; // +17.0°
+        leftArm.yaw    =  0.4208f; // +24.1°
+        leftArm.roll   = -0.3927f; // -22.5°
     }
 }

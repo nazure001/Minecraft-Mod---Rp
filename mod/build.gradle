@@ -8,6 +8,10 @@ group = project.maven_group
 
 repositories {
     // Fabric maven is added automatically by Loom
+    maven {
+        name = "RedlanceMinecraft"
+        url = uri("https://repo.redlance.org/public")
+    }
 }
 
 loom {
@@ -39,6 +43,7 @@ dependencies {
     }
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    modImplementation "com.zigythebird.playeranim:PlayerAnimationLibFabric:1.1.6+mc.1.21.1"
 }
 
 processResources {
