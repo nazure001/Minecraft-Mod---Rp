@@ -70,6 +70,24 @@ public final class AvatarKeyBindings {
             )
     );
 
+    public static final KeyBinding SKILL_WATER_WHIP = KeyBindingHelper.registerKeyBinding(
+            new KeyBinding(
+                    "key.avatar_elements.skill_water_whip",
+                    InputUtil.Type.KEYSYM,
+                    GLFW.GLFW_KEY_C,
+                    "category.avatar_elements.general"
+            )
+    );
+
+    public static final KeyBinding SKILL_EARTH_BOULDER = KeyBindingHelper.registerKeyBinding(
+            new KeyBinding(
+                    "key.avatar_elements.skill_earth_boulder",
+                    InputUtil.Type.KEYSYM,
+                    GLFW.GLFW_KEY_B,
+                    "category.avatar_elements.general"
+            )
+    );
+
     public static void register() {
         // Registration happens via KeyBindingHelper above; this method exists so
         // AvatarElementsClient can call it explicitly to trigger class loading.

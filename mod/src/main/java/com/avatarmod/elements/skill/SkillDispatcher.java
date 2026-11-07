@@ -4,10 +4,12 @@ import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.skill.impl.AirStaffAttackSkill;
 import com.avatarmod.elements.skill.impl.AirVortexSkill;
+import com.avatarmod.elements.skill.impl.EarthBoulderSkill;
 import com.avatarmod.elements.skill.impl.FireGuardSkill;
 import com.avatarmod.elements.skill.impl.FireJabSkill;
 import com.avatarmod.elements.skill.impl.FireJetSkill;
 import com.avatarmod.elements.skill.impl.FlameSweepSkill;
+import com.avatarmod.elements.skill.impl.WaterWhipSkill;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 /**
@@ -36,6 +38,8 @@ public final class SkillDispatcher {
             case "avatar:fire_guard"        -> FireGuardSkill.tick(player, def);
             case "avatar:air_staff_attack"  -> AirStaffAttackSkill.tick(player, def);
             case "avatar:air_vortex"        -> AirVortexSkill.tick(player, def);
+            case "avatar:water_whip"        -> WaterWhipSkill.tick(player, def);
+            case "avatar:earth_boulder"     -> EarthBoulderSkill.tick(player, def);
         }
     }
 

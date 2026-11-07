@@ -44,6 +44,14 @@ public class AvatarElementsClient implements ClientModInitializer {
             while (AvatarKeyBindings.SKILL_AIR_VORTEX.wasPressed()) {
                 SkillClientHandler.sendSkillInput("avatar:air_vortex");
             }
+            // Water skills
+            while (AvatarKeyBindings.SKILL_WATER_WHIP.wasPressed()) {
+                SkillClientHandler.sendSkillInput("avatar:water_whip");
+            }
+            // Earth skills
+            while (AvatarKeyBindings.SKILL_EARTH_BOULDER.wasPressed()) {
+                SkillClientHandler.sendSkillInput("avatar:earth_boulder");
+            }
         });
     }
 }

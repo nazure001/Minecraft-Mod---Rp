@@ -31,19 +31,28 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 ## Tahap 2 — Prototipe Vertikal
 
 - [x] **T2-1** Fire Jab: SPHERE 2.5, dmg 4.0, knockback 0.3, FLAME VFX, BLAZE_SHOOT SFX — TERVERIFIKASI in-game ✅
-- [x] **T2-2** Flame Sweep: ARC 180°, 3 hit/active, dmg 6.0, +30% combo bonus — BUILD ✅ (belum diuji terpisah)
-- [x] **T2-3** Fire Jet: velocity dash 2.2f, flame trail VFX — BUILD ✅ (belum diuji)
-- [x] **T2-4** Fire Guard: blok entity damage saat ACTIVE, shield shimmer VFX — BUILD ✅ (belum diuji)
-- [x] **T2-5** Kombo Jab→Sweep→Jab: +50% dmg step3, range x1.3, lava particles — BUILD ✅
+- [x] **T2-2** Flame Sweep: ARC 180°, 3 hit/active, dmg 6.0, +30% combo bonus — TERVERIFIKASI damage ✅ (Z key; ARC particles belum dikonfirmasi)
+- [x] **T2-3** Fire Jet: velocity dash 2.2f, flame trail VFX — TERVERIFIKASI dash berfungsi ✅ (desain: dash singkat; rocket flight → backlog B-5)
+- [x] **T2-4** Fire Guard: blok entity damage saat ACTIVE, shield shimmer VFX — particles ✅ (damage blocking belum diuji langsung)
+- [x] **T2-5** Kombo Jab→Sweep→Jab: +50% dmg step3, range x1.3, lava particles — BUILD ✅ (belum diuji terpisah)
 - [x] **T2-6** Air Staff Attack: 3-hit kombo (H), CLOUD particles — TERVERIFIKASI in-game ✅
-- [x] **T2-7** Air Vortex: pull r6, 40 tik, spiral particles (V) — BUILD ✅ (belum diuji)
-- [ ] **T2-8** Test sinkronisasi: dua pemain, dedicated server
+- [x] **T2-7** Air Vortex: pull r6, 40 tik, spiral particles (V) — TERVERIFIKASI damage ✅ (pull VFX belum dikonfirmasi visual)
+- [ ] **T2-8** Test sinkronisasi: dua pemain, dedicated server (chi/cooldown independen, kombo tidak tertukar)
 
 ---
 
-## Tahap 3–8
+## Tahap 3 — Empat Elemen (Gelombang 1)
 
-Lihat `docs/PROJECT_PLAN.md` untuk daftar lengkap per tahap. Tugas akan dipecah saat tahap dimulai.
+- [x] **T3-1** Water Whip: LINE hitbox r6, dmg 3.0, pull knockback, DRIPPING_WATER+SPLASH VFX — keybinding C — BUILD ✅ (belum diuji)
+- [x] **T3-2** Earth Boulder: projectile traveling 0.8b/t, dmg 5.0, lifetime 20 tik, no block modify — keybinding B — BUILD ✅ (belum diuji)
+- [ ] **T3-3** Audit Air Palm/Air Blast: tambah impl handler (JSON sudah ada, belum ada SkillDispatcher handler)
+- [ ] **T3-4** Test sinkronisasi T2-8 sebelum lanjut gelombang 2
+
+---
+
+## Tahap 3–8 (Gelombang Berikutnya)
+
+Lihat `docs/PROJECT_PLAN.md` untuk daftar lengkap per tahap.
 
 ---
 
@@ -53,6 +62,7 @@ Lihat `docs/PROJECT_PLAN.md` untuk daftar lengkap per tahap. Tugas akan dipecah 
 - [ ] **B-2** Ganti XP vanilla sebagai progression → mastery tracking kustom
 - [ ] **B-3** Pack format `pack.mcmeta` — verifikasi format 48 untuk 1.21.1
 - [ ] **B-4** `avatar_skill_timer` di armor-datapack sudah tidak dipakai — hapus setelah konfirmasi
+- [ ] **B-5** Fire Jet rocket flight: tahan tombol, chi berkelanjutan, aturan pendaratan (lanjutan dari dash T2-3)
 
 ---
 
