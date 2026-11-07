@@ -37,7 +37,7 @@
     {
       "id": "avatar:fire_jet",
       "element": "FIRE",
-      "masteryRequired": 1,
+      "masteryRequired": 0,
       "chiCost": 25,
       "chiPerTick": 0,
       "cooldownTicks": 30,

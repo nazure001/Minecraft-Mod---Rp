@@ -29,7 +29,7 @@ public final class AvatarKeyBindings {
             new KeyBinding(
                     "key.avatar_elements.skill_flame_sweep",
                     InputUtil.Type.KEYSYM,
-                    GLFW.GLFW_KEY_F,
+                    GLFW.GLFW_KEY_Z,
                     "category.avatar_elements.general"
             )
     );

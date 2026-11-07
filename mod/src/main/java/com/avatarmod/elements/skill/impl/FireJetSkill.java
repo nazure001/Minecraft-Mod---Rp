@@ -3,6 +3,7 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.skill.SkillDefinition;
+import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -39,6 +40,8 @@ public final class FireJetSkill {
                 look.z * LAUNCH_FORCE
         );
         player.velocityModified = true;
+        // Push velocity to client — server-set velocity isn't auto-synced for the controlled player
+        player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player.getId(), player.getVelocity()));
 
         ServerWorld world = player.getServerWorld();
         world.playSound(null, player.getBlockPos(),
