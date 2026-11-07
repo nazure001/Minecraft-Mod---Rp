@@ -1,13 +1,13 @@
-# Handoff: Claude Code — Scaffold T1-1
+# Handoff: Claude Code — Scaffold T1-1 + T1-2
 
-**Tanggal:** 2026-11-07  
+**Tanggal terakhir diperbarui:** 2026-11-07  
 **Branch:** `feat/fabric-scaffold`  
-**Commit terakhir:** `cf217ed` — chore(mod): hapus org.gradle.java.home dari gradle.properties yang di-track  
+**Commit terakhir:** `075b1d8` — feat(T1-2): keybinding + C2S/S2C networking + rate limiting  
 **Penulis:** Claude Code (Sonnet 4.6)
 
 ---
 
-## 1. Versi Konfigurasi (A1)
+## 1. Versi Konfigurasi
 
 | Komponen | Versi |
 |---|---|
@@ -32,8 +32,11 @@ org.gradle.java.home=C:/Users/USER/.jdks/jdk-25.0.5+8
 Plugin ID `net.fabricmc.fabric-loom` → `LoomNoRemapGradlePlugin` (non-obfuscated env, mapping tidak tersedia).  
 Plugin ID **`fabric-loom`** → `LoomGradlePlugin` (standard remapping) — **INI YANG BENAR.**
 
-Semua error "Cannot configure layered mappings in a non-obfuscated environment" dan "Could not find method mappings()" bersumber dari plugin ID yang salah satu karakter ini.  
+Semua error "Cannot configure layered mappings in a non-obfuscated environment" dan "Could not find method mappings()" bersumber dari plugin ID yang salah.  
 Didokumentasikan di `docs/DECISIONS.md` D011.
+
+**Configuration cache fix (ditemukan saat verifikasi worktree):**
+`processResources` mengakses `project.*` di execution time (dalam closure) → error saat configuration cache aktif. Fix: capture ke local `def propXxx = project.xxx` di configuration time sebelum closure. Commit `075b1d8`.
 
 ---
 
@@ -41,8 +44,6 @@ Didokumentasikan di `docs/DECISIONS.md` D011.
 
 ```bash
 # Pastikan ~/.gradle/gradle.properties berisi org.gradle.java.home ke JDK 25
-# (lihat D012 di DECISIONS.md untuk instruksi install Temurin 25)
-
 cd mod
 
 # Build
@@ -57,115 +58,126 @@ cd mod
 
 ---
 
-## 4. Hasil Pemeriksaan T1-1
+## 4. Hasil Pemeriksaan T1-1 (semua terverifikasi di worktree bersih dari d673999)
 
 ### A1 — Versi ✅
 Lihat tabel di atas.
 
-### A2 — Isi JAR ✅
+### A2 — Isi JAR T1-1 scaffold ✅
 ```
-mod/build/libs/mod-0.1.0-alpha.jar  (4355 bytes)
-SHA-256: 6767474837ea86d47064fb71bd3ceb37acff09ba5b1bfd19ca20368a69114ff2
+mod/build/libs/mod-0.1.0-alpha.jar  (saat d673999)
+Worktree JAR SHA-256: 6c0b1b5387bacc844d9ec6dde3f481c30f11a3b829a0305d11c54cd932d116e9
 ```
 Isi: `fabric.mod.json`, `AvatarElementsMod.class`, `AvatarElementsClient.class`,
-`avatar_elements.mixins.json`, `avatar_elements.client.mixins.json`,
-`assets/avatar_elements/icon.png`, `assets/avatar_elements/lang/en_us.json`.
+mixin JSONs, `assets/avatar_elements/icon.png`, `assets/avatar_elements/lang/en_us.json`.
 
-`fabric.mod.json` berisi `id: "avatar_elements"`, `version: "0.1.0-alpha"`,
-entrypoint common dan client, semua field wajib terisi.
+### A3 — Client run ✅ TERVERIFIKASI
+Log `run/logs/latest.log` (13:52, 2026-11-07):
+```
+[13:52:39] [main/INFO] ... Env=CLIENT
+[13:52:56] [Render thread/INFO] (avatar_elements) Avatar: Elements initializing (common)
+[13:52:57] [Render thread/INFO] (avatar_elements) Avatar: Elements initializing (client)
+[13:53:01] [Render thread/INFO] (Minecraft) Reloading ResourceManager: ... avatar_elements ...
+```
+Mod dimuat di environment CLIENT, kedua entry point terpanggil, ResourceManager memuat avatar_elements.
 
-### A3 — Client run ⚠ BELUM DIUJI
-**Hambatan:** `runClient` membuka jendela GUI Minecraft — tidak bisa diverifikasi
-tanpa display/monitor aktif di lingkungan ini. Loom juga menggunakan direktori
-`run/` yang sama untuk client dan server, sehingga log client ditimpa log server
-(A4). Langkah pertama sesi berikutnya: jalankan `./gradlew runClient`, masuk
-dunia test, periksa `run/logs/latest.log` untuk baris `Env=CLIENT` dan
-`Avatar: Elements initializing (client)`.
+**Catatan:** Client dijalankan di worktree `../avatar-verify/` (dari checkpoint d673999).
+Jendela Minecraft terbuka. User perlu masuk dunia secara manual untuk uji penuh.
 
 ### A4 — Server run ✅ (EULA tidak disetujui otomatis)
-Log `run/logs/latest.log` (13:22, 2026-11-07):
+Log `run/logs/latest.log` (13:44, 2026-11-07):
 ```
 - avatar_elements 0.1.0-alpha
-[main/INFO] (FabricLoader/Mixin) ... Env=SERVER
-[main/INFO] (avatar_elements) Avatar: Elements initializing (common)
-[main/INFO] (Minecraft) You need to agree to the EULA in order to run the server.
+[13:44:19] [main/INFO] ... Env=SERVER
+[13:44:44] [main/INFO] (avatar_elements) Avatar: Elements initializing (common)
+[13:44:45] [main/WARN] (Minecraft) Failed to load eula.txt
+[13:44:45] [main/INFO] (Minecraft) You need to agree to the EULA in order to run the server.
 ```
-Mod dimuat (44 mod total, `avatar_elements 0.1.0-alpha` terdeteksi),
-entry point common terpanggil. Server berhenti normal karena EULA belum disetujui.
-
-**EULA tidak disetujui otomatis** — sesuai instruksi. Untuk lanjut:
-buka `mod/run/eula.txt`, ubah `eula=false` ke `eula=true` secara manual.
+Mod dimuat, entry point terpanggil, berhenti normal karena EULA belum disetujui.
+**EULA tidak disetujui otomatis.** Untuk lanjut: buka `mod/run/eula.txt`, ubah ke `eula=true` manual.
 
 ### A5 — Dev run vs distribusi JAR ⚠ BELUM DIUJI
-Dev run (`runClient`/`runServer`) menggunakan class files dari build cache Gradle,
-bukan dari JAR distribusi. JAR distribusi (`build/libs/mod-0.1.0-alpha.jar`)
-adalah hasil `./gradlew build` — yang sudah lulus. Pengujian dengan menempatkan
-JAR di folder `mods/` Fabric instance terpisah belum dilakukan.
+Dev run (`runClient`/`runServer`) menggunakan class files dari build cache Gradle.
+JAR distribusi (`build/libs/mod-0.1.0-alpha.jar`) sudah lulus `./gradlew build`.
+Pengujian JAR di folder `mods/` Fabric instance terpisah belum dilakukan.
 
-### A6 — Log ✅ / ⚠
-Server log tersedia di `mod/run/logs/latest.log` (lihat A4).
-Client log: BELUM DIUJI (lihat A3).
+### A6 — Log ✅
+Server log: `mod/run/logs/latest.log` (A4 di atas).
+Client log: `../avatar-verify/mod/run/logs/latest.log` (A3 di atas).
 
 ### A7 — Remote origin ✅
 ```
 origin = https://github.com/nazure001/Minecraft-Mod---Rp.git
 ```
-Branch `feat/fabric-scaffold` belum pernah di-push ke remote.
-3 commit lokal, tidak ada push. Tidak ada perubahan pada remote.
+Branch `feat/fabric-scaffold` belum pernah di-push ke remote. Tidak ada perubahan pada remote.
 
 ### A8 — JDK path tidak masuk repo ✅
-`org.gradle.java.home` sudah dihapus dari `mod/gradle.properties` yang di-track
-(commit `cf217ed`). Tersimpan hanya di `~/.gradle/gradle.properties` lokal.
-Instruksi setup ada sebagai komentar di `mod/gradle.properties`.
+`org.gradle.java.home` sudah dihapus dari `mod/gradle.properties` yang di-track (commit `cf217ed`).
 
 ---
 
-## 5. File Berubah yang Belum Di-commit
+## 5. Status T1-2 (commit 075b1d8)
 
-### Milik Antigravity IDE (jangan di-stage oleh Claude):
+### File baru/dimodifikasi:
+
+| File | Isi |
+|---|---|
+| `mod/src/main/java/.../network/TestActionPackets.java` | C2STestAction (no-arg) + S2CAck (allowed, cooldownTicks) |
+| `mod/src/main/java/.../network/AvatarNetworking.java` | Registrasi payload + server receiver + rate limiting 20 ticks |
+| `mod/src/main/java/.../network/AvatarServerEvents.java` | Disconnect cleanup via ServerPlayConnectionEvents |
+| `mod/src/main/java/.../AvatarElementsMod.java` | Panggil AvatarNetworking + AvatarServerEvents |
+| `mod/src/client/.../input/AvatarKeyBindings.java` | KeyBinding "R", changeable di Controls |
+| `mod/src/client/.../network/ClientNetworkHandler.java` | Kirim C2S + terima S2CAck → actionbar |
+| `mod/src/client/.../AvatarElementsClient.java` | Tick handler: while(wasPressed()) → sendTestAction() |
+| `mod/src/main/resources/.../lang/en_us.json` | Teks keybinding dan kategori |
+| `mod/build.gradle` | Fix processResources config cache compatibility |
+
+### Build T1-2: ✅
+```
+BUILD SUCCESSFUL in 6m 2s
+9 actionable tasks: 7 executed, 2 up-to-date
+```
+JAR T1-2: `mod/build/libs/mod-0.1.0-alpha.jar` (14938 bytes)
+SHA-256: `09e0bf0667631a6de882adf5e0ac4dfed6b37991120e01c3e4e14863a018a491`
+
+### Uji T1-2 runtime: ⚠ BELUM DIUJI
+Membutuhkan user di dalam Minecraft:
+- Tekan R → periksa actionbar untuk `[Avatar] Aksi berhasil!`
+- Tekan R lagi cepat → `[Avatar] Cooldown: N tik`
+- Uji di dedicated server (setelah EULA manual) → satu tekanan = satu aksi server + satu ack
+- Pemeriksaan dua pemain: **BELUM DIUJI**
+
+---
+
+## 6. File Berubah yang Belum Di-commit (milik agent lain)
+
+**Milik Antigravity IDE — jangan di-stage oleh Claude:**
 - `art-source/air_staff/v0.2/` — model dan aset air staff v0.2
-- `art-source/audio/prototype/v0.2/` — file audio SFX prototype
+- `art-source/audio/prototype/v0.2/` — file audio SFX prototype dan WAV
 - `docs/handoffs/ANTIGRAVITY_ASSET_REVISED_REPORT.md`
 - File baru: `art-source/audio/prototype/v0.2/*.wav`, `verify_assets.py`, dll.
 
-### Milik Claude Code (T1-2 — BELUM SELESAI, jangan commit dulu):
-File-file ini dibuat di awal sesi ini tetapi **tidak diuji dan tidak di-commit**
-karena instruksi prioritas mengharuskan penghentian T1-2:
-
-- `mod/src/main/java/com/avatarmod/elements/network/TestActionPackets.java`
-- `mod/src/main/java/com/avatarmod/elements/network/AvatarNetworking.java`
-- `mod/src/main/java/com/avatarmod/elements/network/AvatarServerEvents.java`
-- `mod/src/main/java/com/avatarmod/elements/AvatarElementsMod.java` (dimodifikasi)
-- `mod/src/client/java/com/avatarmod/elements/client/AvatarElementsClient.java` (dimodifikasi)
-- `mod/src/client/java/com/avatarmod/elements/client/input/AvatarKeyBindings.java`
-- `mod/src/client/java/com/avatarmod/elements/client/network/ClientNetworkHandler.java`
-- `mod/src/main/resources/assets/avatar_elements/lang/en_us.json` (dimodifikasi)
-
-**Jika ingin melanjutkan T1-2:** jalankan `./gradlew build` terlebih dahulu,
-perbaiki error jika ada, lalu uji sebelum commit.  
-**Jika ingin membatalkan T1-2:** `git restore mod/src/` lalu `git clean -f mod/src/`.
-
 ---
 
-## 6. Status Remote
+## 7. Status Remote
 
-Branch `feat/fabric-scaffold` belum pernah di-push.  
-4 commit lokal (ahead of origin/feat/fabric-scaffold by 3+).  
+Branch `feat/fabric-scaffold` belum pernah di-push.
+5 commit lokal (ahead of origin).
 Jangan push ke `main` atau merge PR tanpa review.
 
 ---
 
-## 7. Pekerjaan Tersisa
+## 8. Pekerjaan Tersisa
 
 | Prioritas | Tugas | Status |
 |---|---|---|
-| Tinggi | A3: Jalankan client, verifikasi `Env=CLIENT` di log | BELUM DIUJI |
-| Tinggi | A5: Uji JAR distribusi di Fabric instance terpisah | BELUM DIUJI |
-| Berikutnya | T1-2: Keybinding + C2S/S2C networking | Sebagian dibuat, belum diuji |
-| Berikutnya | Setujui EULA manual untuk uji server penuh | Menunggu user |
+| Penting | Uji T1-2: tekan R → ack di actionbar | BELUM DIUJI (butuh Minecraft window) |
+| Penting | Setujui EULA manual → uji server dedicated | Menunggu user |
+| A5 | Uji distribusi JAR di Fabric instance terpisah | BELUM DIUJI |
+| Berikutnya | T1-3 implementasi networking lengkap (SkillInput etc.) | Belum dimulai |
 
 **Langkah pertama sesi berikutnya:**
 1. `git status` — pastikan tidak ada file penting yang terlupakan
-2. `./gradlew build` — verifikasi build masih lulus dengan file T1-2 baru
-3. `./gradlew runClient` — periksa `run/logs/latest.log` untuk `Env=CLIENT`
-4. Setujui EULA manual lalu `./gradlew runServer` untuk uji server penuh
+2. User masuk Minecraft (jendela sudah terbuka), buat dunia test, tekan R
+3. Verifikasi actionbar: hijau = server ack, merah = cooldown
+4. Uji server dedicated: setujui EULA manual lalu `./gradlew runServer`
