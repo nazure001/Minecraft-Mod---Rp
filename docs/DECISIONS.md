@@ -74,23 +74,41 @@ Format: `[YYYY-MM-DD] DXXX — Judul — Keputusan — Alasan`
 
 ---
 
-## D012 — JDK 25 side-by-side untuk Gradle/Loom toolchain
+## D012 — JDK 25 side-by-side untuk JVM Gradle (bukan compile target mod)
 **Tanggal:** 2026-11-07  
-**Keputusan:** JDK 25 (Temurin 25.0.5+8) di-install di `C:\Users\USER\.jdks\jdk-25.0.5+8`. Gradle + Loom dijalankan dengan JDK 25; mod sendiri masih compile ke Java 21 via toolchain.  
-**Alasan:** Fabric Loom 1.18+ menggunakan Java 25 Foreign Function and Memory API sebagai pengganti native library internal. Semua loom ≥ 1.18.1 membutuhkan JVM 25 untuk menjalankan Gradle, meskipun mod targetnya tetap Java 21. Loom 1.17.x tidak kompatibel dengan Gradle 9.8.2. JDK 25 di-install side-by-side sesuai constraint "jangan ubah JAVA_HOME global".
+**Keputusan:** JDK 25 (Temurin 25.0.5+8) di-install di `C:\Users\USER\.jdks\jdk-25.0.5+8` dan diset via `org.gradle.java.home` di `gradle.properties`. Mod compile target tetap Java 21 (via `options.release = 21` dan toolchain JDK 21).
+
+**Fakta terverifikasi (dari error aktual):**
+- Loom ≥ 1.18.x: `Dependency requires at least JVM runtime version 25` — butuh JVM 25 untuk MENJALANKAN Gradle/Loom
+- Loom 1.7.4 + Gradle 9.8.2: `'Problems.forNamespace()' method changed` — Gradle API berubah di 9.x, loom lama tidak kompatibel
+- Loom 1.17.21 + Gradle 9.8.2: `Could not find method mappings()` — Groovy DSL timing issue (konfigurasi belum register)
+- Loom 1.19.3: `requires at least Gradle 9.8.0` (dari error saat coba Gradle 9.3.1)
+
+**Pembedaan JVM (instruksi ChatGPT poin 4):**
+- JVM Gradle: `org.gradle.java.home` → JDK 25 (loom butuh ini untuk jalan)
+- Toolchain kompilasi mod: `java.toolchain.languageVersion = 21` → JDK 21 (dari `~/.jdks/jdk-21.0.5+11`)
+- Runtime Minecraft 1.21.1: Java 21 (tidak berubah)
+
+**Alasan pilihan:** Jangan ubah JAVA_HOME global (constraint eksplisit). JDK 25 di-install side-by-side.
 
 ---
 
-## D011 — Versi dependency Fabric scaffold (terkonfirmasi dari sumber resmi)
+## D011 — Versi dependency Fabric scaffold (diperbarui dari diagnostik aktual)
 **Tanggal:** 2026-11-07  
-**Sumber:** `github.com/FabricMC/fabric-example-mod` branch `1.21.1`  
+**Sumber:** `github.com/FabricMC/fabric-example-mod` branch `1.21.1` (awal), dikoreksi dari error aktual  
 **Keputusan:**
 - Minecraft: `1.21.1`
 - Fabric Loader: `0.20.1`
-- Fabric Loom: `1.19.3` (pinned; `1.19-SNAPSHOT` resolves ke 1.19.4+ yang requires Java 25; loom 1.17.x tidak compatible dengan Gradle 9.8.2)
+- Fabric Loom: `1.19.3` (pinned; loom 1.19.3 requires Gradle ≥ 9.8.0 — terverifikasi)
 - Fabric API: `0.116.17+1.21.1`
-- Gradle: `9.8.2`
-- Mappings: `loom.officialMojangMappings()` (Mojang, bukan Yarn)
-- Java toolchain: `21`
+- Gradle: `9.8.2` (minimum yang dibutuhkan loom 1.19.3)
+- Mappings: `Yarn 1.21.1+build.3` via `loom.layered { it.mappings("net.fabricmc:yarn:...") }`
+- Java toolchain (mod): `21`; JVM Gradle: `25`
+- **Plugin ID**: `fabric-loom` (bukan `net.fabricmc.fabric-loom`)
 
-**Alasan:** Versi diambil langsung dari template resmi Fabric, bukan ditebak.
+**Root cause utama T1-1 (terverifikasi dari decompile LoomGradleExtensionImpl):**
+`net.fabricmc.fabric-loom` → `LoomNoRemapGradlePlugin` (environment non-obfuscated, tidak bisa pakai mappings).
+`fabric-loom` → `LoomGradlePlugin` (standard remapping, benar untuk Fabric mod).
+Semua error "non-obfuscated environment" dan "mappings() not found" berasal dari plugin ID yang salah.
+
+**Alasan:** Versi awal dari template resmi Fabric. Loom, Gradle, JVM version, dan plugin ID dikoreksi dari error aktual selama diagnostik T1-1. BUILD SUCCESSFUL terverifikasi 2026-11-07.
