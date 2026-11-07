@@ -1,3 +1,5 @@
 {
-  "itemGroup.avatar_elements.main": "Avatar: Elements"
+  "itemGroup.avatar_elements.main": "Avatar: Elements",
+  "category.avatar_elements.general": "Avatar: Elements",
+  "key.avatar_elements.test_action": "Test Action (Avatar)"
 }

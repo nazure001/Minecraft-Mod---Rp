@@ -31,19 +31,25 @@ dependencies {
 }
 
 processResources {
-    inputs.property "mod_id", project.mod_id
-    inputs.property "version", project.mod_version
-    inputs.property "minecraft_version", project.minecraft_version
-    inputs.property "loader_version", project.loader_version
-    inputs.property "fabric_api_version", project.fabric_api_version
+    def propModId = project.mod_id
+    def propVersion = project.mod_version
+    def propMinecraft = project.minecraft_version
+    def propLoader = project.loader_version
+    def propFabricApi = project.fabric_api_version
+
+    inputs.property "mod_id", propModId
+    inputs.property "version", propVersion
+    inputs.property "minecraft_version", propMinecraft
+    inputs.property "loader_version", propLoader
+    inputs.property "fabric_api_version", propFabricApi
 
     filesMatching("fabric.mod.json") {
         expand(
-            "mod_id": project.mod_id,
-            "version": project.mod_version,
-            "minecraft_version": project.minecraft_version,
-            "loader_version": project.loader_version,
-            "fabric_api_version": project.fabric_api_version
+            "mod_id": propModId,
+            "version": propVersion,
+            "minecraft_version": propMinecraft,
+            "loader_version": propLoader,
+            "fabric_api_version": propFabricApi
         )
     }
 }
