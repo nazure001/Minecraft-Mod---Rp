@@ -11,6 +11,9 @@ public final class SkillTimeline {
 
     public enum Phase { IDLE, WINDUP, ACTIVE, RECOVERY }
 
+    /** Shared sentinel returned when no skill is in flight — always IDLE, never mutated. */
+    public static final SkillTimeline IDLE_INSTANCE = new SkillTimeline(null, 0, 0, 0);
+
     private final String skillId;
     private final int windupTicks;
     private final int activeTicks;

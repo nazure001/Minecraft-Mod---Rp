@@ -89,6 +89,15 @@ public final class PlayerBendingData {
 
     public SkillTimeline getActiveTimeline() { return activeTimeline; }
 
+    /** Returns the shared idle-safe timeline (never null). */
+    public SkillTimeline getTimeline() {
+        return activeTimeline != null ? activeTimeline : SkillTimeline.IDLE_INSTANCE;
+    }
+
+    public String getActiveSkillId() {
+        return activeTimeline != null ? activeTimeline.skillId() : null;
+    }
+
     public boolean hasActiveTimeline() {
         return activeTimeline != null && !activeTimeline.isIdle();
     }

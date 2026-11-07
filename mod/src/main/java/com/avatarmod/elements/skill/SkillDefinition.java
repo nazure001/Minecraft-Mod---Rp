@@ -16,8 +16,11 @@ public record SkillDefinition(
         int recoveryTicks,
         float damage,
         float range,
+        float knockback,
+        HitboxShape hitboxShape,
         boolean cancelOnHit,
         int comboWindowTicks
 ) {
     public enum Element { FIRE, WATER, EARTH, AIR }
+    public enum HitboxShape { SPHERE, ARC, LINE, CONE }
 }

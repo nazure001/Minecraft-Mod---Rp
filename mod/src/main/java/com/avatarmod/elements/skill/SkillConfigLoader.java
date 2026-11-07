@@ -63,6 +63,10 @@ public final class SkillConfigLoader {
                     o.get("recoveryTicks").getAsInt(),
                     o.get("damage").getAsFloat(),
                     o.get("range").getAsFloat(),
+                    o.has("knockback") ? o.get("knockback").getAsFloat() : 0f,
+                    o.has("hitboxShape")
+                            ? SkillDefinition.HitboxShape.valueOf(o.get("hitboxShape").getAsString())
+                            : SkillDefinition.HitboxShape.SPHERE,
                     o.get("cancelOnHit").getAsBoolean(),
                     o.get("comboWindowTicks").getAsInt()
             ));
