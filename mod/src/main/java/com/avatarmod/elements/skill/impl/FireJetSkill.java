@@ -20,13 +20,15 @@ public final class FireJetSkill {
     public static void tick(ServerPlayerEntity player, SkillDefinition def) {
         SkillTimeline timeline = PlayerBendingData.get(player).getTimeline();
 
-        // Launch on first active tick
-        if (timeline.phase() == SkillTimeline.Phase.ACTIVE && timeline.ticksInPhase() == 1) {
+        if (timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
+
+        // ticksInPhase == 0: first moment of ACTIVE phase (phase just advanced from WINDUP)
+        if (timeline.ticksInPhase() == 0) {
             launch(player);
         }
 
-        // Flame trail every 2 ticks during active
-        if (timeline.phase() == SkillTimeline.Phase.ACTIVE && timeline.ticksInPhase() % 2 == 0) {
+        // Flame trail every 2 ticks (0, 2, 4, …)
+        if (timeline.ticksInPhase() % 2 == 0) {
             trail(player);
         }
     }

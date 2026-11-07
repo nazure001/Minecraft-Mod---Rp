@@ -42,7 +42,7 @@
       "chiPerTick": 0,
       "cooldownTicks": 30,
       "windupTicks": 1,
-      "activeTicks": 1,
+      "activeTicks": 10,
       "recoveryTicks": 10,
       "damage": 0.0,
       "range": 0.0,
