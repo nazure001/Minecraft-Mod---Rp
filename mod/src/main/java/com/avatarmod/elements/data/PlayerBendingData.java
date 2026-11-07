@@ -15,9 +15,7 @@ import java.util.Map;
  */
 public final class PlayerBendingData {
 
-    public static final int MAX_CHI_DEFAULT = 100;
-    public static final int CHI_REGEN_PER_TICK = 1;   // 1 chi/tick = ~20/s at rest
-    public static final int CHI_REGEN_INTERVAL = 4;   // regen every 4 ticks
+    public static final int MAX_CHI_DEFAULT = ChiManager.BASE_MAX_CHI;
 
     // Fabric attachment type — registered once at mod init
     public static final AttachmentType<PlayerBendingData> ATTACHMENT =
@@ -31,6 +29,7 @@ public final class PlayerBendingData {
     private int masteryLevel;
     private final Map<String, Integer> cooldowns; // skillId → ticks remaining
     private SkillTimeline activeTimeline;         // null when no skill in flight
+    private final ChiManager chiManager;
 
     public PlayerBendingData() {
         this.chi = MAX_CHI_DEFAULT;
@@ -38,21 +37,25 @@ public final class PlayerBendingData {
         this.masteryLevel = 0;
         this.cooldowns = new HashMap<>();
         this.activeTimeline = null;
+        this.chiManager = new ChiManager();
     }
+
+    public ChiManager getChiManager() { return chiManager; }
 
     // --- chi ---
 
     public int getChi() { return chi; }
     public int getMaxChi() { return maxChi; }
 
-    public boolean trySpendChi(int amount) {
-        if (chi < amount) return false;
-        chi = Math.max(0, chi - amount);
+    public boolean trySpendChi(int baseCost) {
+        int actual = chiManager.computeCost(baseCost, chi);
+        if (actual < 0) return false;
+        chi = chiManager.clamp(chi - actual, maxChi);
         return true;
     }
 
     public void regenChi(int amount) {
-        chi = Math.min(maxChi, chi + amount);
+        chi = chiManager.clamp(chi + amount, maxChi);
     }
 
     // --- cooldowns ---
@@ -113,8 +116,9 @@ public final class PlayerBendingData {
         data.tickCooldowns();
         data.tickTimeline();
         long worldTime = player.getServerWorld().getTime();
-        if (worldTime % CHI_REGEN_INTERVAL == 0) {
-            data.regenChi(CHI_REGEN_PER_TICK);
+        if (worldTime % ChiManager.REGEN_INTERVAL == 0) {
+            int pulse = data.chiManager.computeRegenPulse(data.chi, data.maxChi);
+            data.chi += pulse;
         }
     }
 }
