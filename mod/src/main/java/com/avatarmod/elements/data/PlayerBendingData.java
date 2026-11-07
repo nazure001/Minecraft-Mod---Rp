@@ -30,12 +30,14 @@ public final class PlayerBendingData {
     private final int maxChi;
     private int masteryLevel;
     private final Map<String, Integer> cooldowns; // skillId → ticks remaining
+    private SkillTimeline activeTimeline;         // null when no skill in flight
 
     public PlayerBendingData() {
         this.chi = MAX_CHI_DEFAULT;
         this.maxChi = MAX_CHI_DEFAULT;
         this.masteryLevel = 0;
         this.cooldowns = new HashMap<>();
+        this.activeTimeline = null;
     }
 
     // --- chi ---
@@ -74,6 +76,27 @@ public final class PlayerBendingData {
         cooldowns.entrySet().removeIf(e -> e.getValue() <= 0);
     }
 
+    // --- timeline ---
+
+    /** Start a new timeline; cancels any current one. */
+    public void startTimeline(String skillId, int windup, int active, int recovery) {
+        activeTimeline = new SkillTimeline(skillId, windup, active, recovery);
+        activeTimeline.start();
+    }
+
+    public SkillTimeline getActiveTimeline() { return activeTimeline; }
+
+    public boolean hasActiveTimeline() {
+        return activeTimeline != null && !activeTimeline.isIdle();
+    }
+
+    private void tickTimeline() {
+        if (activeTimeline != null) {
+            activeTimeline.tick();
+            if (activeTimeline.isIdle()) activeTimeline = null;
+        }
+    }
+
     // --- mastery ---
 
     public int getMasteryLevel() { return masteryLevel; }
@@ -88,7 +111,7 @@ public final class PlayerBendingData {
     public static void tick(ServerPlayerEntity player) {
         PlayerBendingData data = get(player);
         data.tickCooldowns();
-        // Regen chi every CHI_REGEN_INTERVAL ticks
+        data.tickTimeline();
         long worldTime = player.getServerWorld().getTime();
         if (worldTime % CHI_REGEN_INTERVAL == 0) {
             data.regenChi(CHI_REGEN_PER_TICK);

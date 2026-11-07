@@ -2,6 +2,7 @@ package com.avatarmod.elements.network;
 
 import com.avatarmod.elements.AvatarElementsMod;
 import com.avatarmod.elements.data.PlayerBendingData;
+import com.avatarmod.elements.data.SkillTimeline;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -34,6 +35,18 @@ public final class SkillNetworking {
             "avatar:air_blast", 10
     );
     private static final int TEMP_COOLDOWN_DEFAULT = 10;
+
+    // [windup, active, recovery] — from CONTENT_SPEC.md; replaced by SkillValidator in T1-6
+    private record SkillTiming(int windup, int active, int recovery) {}
+    private static final Map<String, SkillTiming> TEMP_TIMINGS = Map.of(
+            "avatar:fire_jab",    new SkillTiming(2, 3, 4),
+            "avatar:flame_sweep", new SkillTiming(3, 8, 6),
+            "avatar:fire_jet",    new SkillTiming(1, 1, 10),
+            "avatar:fire_guard",  new SkillTiming(2, 60, 5),
+            "avatar:air_palm",    new SkillTiming(2, 2, 4),
+            "avatar:air_blast",   new SkillTiming(3, 4, 6)
+    );
+    private static final SkillTiming TEMP_TIMING_DEFAULT = new SkillTiming(2, 3, 4);
 
     private static final int RATE_LIMIT_TICKS = 5;
     private static final Map<UUID, Long> lastSkillTick = new HashMap<>();
@@ -88,13 +101,17 @@ public final class SkillNetworking {
                         return;
                     }
 
-                    // Apply cooldown and confirm
+                    // Apply cooldown, start timeline, confirm
                     int cooldown = TEMP_COOLDOWNS.getOrDefault(skillId, TEMP_COOLDOWN_DEFAULT);
                     data.setCooldown(skillId, cooldown);
 
+                    SkillTiming timing = TEMP_TIMINGS.getOrDefault(skillId, TEMP_TIMING_DEFAULT);
+                    data.startTimeline(skillId, timing.windup(), timing.active(), timing.recovery());
+
                     AvatarElementsMod.LOGGER.info(
-                            "Skill '{}' used by {} (chi: {}/{})", skillId,
-                            player.getName().getString(), data.getChi(), data.getMaxChi());
+                            "Skill '{}' used by {} (chi: {}/{}, phase: WINDUP→{}t)",
+                            skillId, player.getName().getString(),
+                            data.getChi(), data.getMaxChi(), timing.windup());
 
                     player.sendMessage(Text.literal("[Avatar] " + skillId + " — OK"), false);
                     ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
