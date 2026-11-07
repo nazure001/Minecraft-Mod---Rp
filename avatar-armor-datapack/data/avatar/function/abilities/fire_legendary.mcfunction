@@ -1,0 +1,1 @@
+function avatar:abilities/fire_sovereign

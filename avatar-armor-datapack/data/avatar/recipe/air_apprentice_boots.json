@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:leather_boots"
+      },
+      {
+        "item": "minecraft:chainmail_boots"
+      }
+    ],
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:rabbit_hide"
+    }
+  ],
+  "result": {
+    "id": "minecraft:chainmail_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "air",
+          "tier": "apprentice",
+          "piece": "boots"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Glider Pilot Boots\", \"color\": \"yellow\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier II: Apprentice\", \"color\": \"green\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Equipped with polished copper wind goggles and fleece ear protection.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Speed I + Jump Boost I + Slow Falling\", \"color\": \"yellow\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:dune"
+      },
+      "minecraft:custom_model_data": 4204,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:air_apprentice_boots_armor",
+          "amount": 1.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.movement_speed",
+          "id": "avatar:air_apprentice_boots_speed",
+          "amount": 0.03,
+          "operation": "add_value",
+          "slot": "feet"
+        }
+      ]
+    }
+  }
+}

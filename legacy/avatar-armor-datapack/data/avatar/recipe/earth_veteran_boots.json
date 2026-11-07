@@ -1,0 +1,55 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_boots"
+    },
+    {
+      "item": "minecraft:iron_block"
+    },
+    {
+      "item": "minecraft:emerald"
+    }
+  ],
+  "result": {
+    "id": "minecraft:iron_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "earth",
+          "tier": "veteran",
+          "piece": "boots"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Heavy Fortress Sabatons\", \"color\": \"dark_green\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier IV: Veteran\", \"color\": \"blue\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Massive iron fortress armor worn by the unbreakable vanguard of Ba Sing Se.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Resistance II + Haste II\", \"color\": \"green\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:iron",
+        "pattern": "minecraft:host"
+      },
+      "minecraft:custom_model_data": 3404,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:earth_veteran_boots_armor",
+          "amount": 2.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:earth_veteran_boots_toughness",
+          "amount": 1.5,
+          "operation": "add_value",
+          "slot": "feet"
+        }
+      ]
+    }
+  }
+}

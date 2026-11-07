@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:chainmail_chestplate"
+      },
+      {
+        "item": "minecraft:iron_chestplate"
+      }
+    ],
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "result": {
+    "id": "minecraft:iron_chestplate",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "earth",
+          "tier": "adept",
+          "piece": "chestplate"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Terra Infantry Cuirass\", \"color\": \"dark_green\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier III: Adept\", \"color\": \"aqua\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Studded with jade horn mounts and reinforced with green iron plates.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Resistance I + Haste I + Absorption I\", \"color\": \"green\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:wild"
+      },
+      "minecraft:custom_model_data": 3302,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:earth_adept_chestplate_armor",
+          "amount": 6.0,
+          "operation": "add_value",
+          "slot": "chest"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:earth_adept_chestplate_toughness",
+          "amount": 1.0,
+          "operation": "add_value",
+          "slot": "chest"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:earth_adept_chestplate_earth_toughness",
+          "amount": 2.4000000000000004,
+          "operation": "add_value",
+          "slot": "chest"
+        }
+      ]
+    }
+  }
+}

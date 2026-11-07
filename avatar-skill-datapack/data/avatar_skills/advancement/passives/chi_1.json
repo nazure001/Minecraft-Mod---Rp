@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:amethyst_shard"
+    },
+    "title": {
+      "text": "Chi Mastery I: Chi Flow",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "Max Chi increased to 125 and +20% regeneration speed.",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

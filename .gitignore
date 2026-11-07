@@ -1,0 +1,49 @@
+# Build output
+mod/build/
+mod/.gradle/
+mod/run/
+*.class
+*.jar
+!reference/*.jar
+
+# Gradle caches
+.gradle/
+gradle-app.setting
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.antigravity/
+
+# Logs and temp
+*.log
+logs/
+crash-reports/
+
+# Minecraft world data (never commit)
+mod/run/saves/
+mod/run/world/
+mod/run/server.properties
+mod/run/ops.json
+mod/run/whitelist.json
+mod/run/banned-*.json
+mod/run/usercache.json
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Large reference files (track with Git LFS or exclude)
+reference/*.zip
+reference/*.mcaddon
+
+# Credentials and secrets
+*.env
+secrets.properties

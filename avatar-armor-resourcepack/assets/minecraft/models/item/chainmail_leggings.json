@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/chainmail_leggings"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1203
+      },
+      "model": "avatar:item/fire_apprentice_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2203
+      },
+      "model": "avatar:item/water_apprentice_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3203
+      },
+      "model": "avatar:item/earth_apprentice_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4203
+      },
+      "model": "avatar:item/air_apprentice_leggings"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_helmet"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:totem_of_undying"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_helmet",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "earth",
+          "tier": "sovereign",
+          "piece": "helmet"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Sovereign Bedrock Titan Horns\", \"color\": \"green\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier VII: Sovereign\", \"color\": \"yellow\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Unmovable bedrock forged in the core of the world, commanding earth tremors.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Sovereign Mountain Titan \\u2014 Resistance III + Haste III + Strength II + Health Boost IV\", \"color\": \"green\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:silence"
+      },
+      "minecraft:custom_model_data": 3701,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:earth_sovereign_helmet_armor",
+          "amount": 4.0,
+          "operation": "add_value",
+          "slot": "head"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:earth_sovereign_helmet_toughness",
+          "amount": 4.0,
+          "operation": "add_value",
+          "slot": "head"
+        },
+        {
+          "type": "minecraft:generic.knockback_resistance",
+          "id": "avatar:earth_sovereign_helmet_kb",
+          "amount": 0.15,
+          "operation": "add_value",
+          "slot": "head"
+        }
+      ]
+    }
+  }
+}

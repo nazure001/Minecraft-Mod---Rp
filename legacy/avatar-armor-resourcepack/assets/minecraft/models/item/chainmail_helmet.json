@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/chainmail_helmet"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1201
+      },
+      "model": "avatar:item/headwear/fire_apprentice"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2201
+      },
+      "model": "avatar:item/headwear/water_apprentice"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3201
+      },
+      "model": "avatar:item/headwear/earth_apprentice"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4201
+      },
+      "model": "avatar:item/headwear/air_apprentice"
+    }
+  ]
+}

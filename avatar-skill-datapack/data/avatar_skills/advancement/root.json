@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5005
+      }
+    },
+    "title": {
+      "text": "Avatar: The Way of Bending",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "Awaken your elemental chi and begin your journey across the Four Nations.",
+      "color": "yellow"
+    },
+    "background": "minecraft:textures/block/amethyst_block.png",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

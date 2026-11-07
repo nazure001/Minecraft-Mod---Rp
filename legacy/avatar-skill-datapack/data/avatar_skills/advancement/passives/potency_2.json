@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/potency_1",
+  "display": {
+    "icon": {
+      "id": "minecraft:blaze_rod"
+    },
+    "title": {
+      "text": "Potency II: Focused Impact",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+25% damage amplifier on all bending moves.",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:diamond_leggings"
+      },
+      {
+        "item": "minecraft:netherite_leggings"
+      }
+    ],
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_leggings",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "earth",
+          "tier": "mythic",
+          "piece": "leggings"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Mountain Titan Greaves\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier VI: Mythic\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Ancient obsidian bedrock fused with emerald tectonic fissures.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Resistance III + Haste II + Strength II + Health Boost II\", \"color\": \"green\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:netherite",
+        "pattern": "minecraft:spire"
+      },
+      "minecraft:custom_model_data": 3603,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:earth_mythic_leggings_armor",
+          "amount": 6.0,
+          "operation": "add_value",
+          "slot": "legs"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:earth_mythic_leggings_toughness",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "legs"
+        },
+        {
+          "type": "minecraft:generic.knockback_resistance",
+          "id": "avatar:earth_mythic_leggings_kb",
+          "amount": 0.1,
+          "operation": "add_value",
+          "slot": "legs"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:blaze_powder"
+    },
+    "title": {
+      "text": "Potency I: Spark of Power",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+10% damage amplifier on all bending moves.",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

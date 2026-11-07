@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/resilience_2",
+  "display": {
+    "icon": {
+      "id": "minecraft:diamond_chestplate"
+    },
+    "title": {
+      "text": "Resilience III: Mountain Fortitude",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+6 Extra Hearts (32 Max Health).",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

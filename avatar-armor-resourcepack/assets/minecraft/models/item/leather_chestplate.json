@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/leather_chestplate"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1102
+      },
+      "model": "avatar:item/fire_initiate_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2102
+      },
+      "model": "avatar:item/water_initiate_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3102
+      },
+      "model": "avatar:item/earth_initiate_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4102
+      },
+      "model": "avatar:item/air_initiate_chestplate"
+    }
+  ]
+}

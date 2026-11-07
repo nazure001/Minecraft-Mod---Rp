@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5005
+      }
+    },
+    "title": {
+      "text": "Master of All Four Elements: Avatar State",
+      "color": "light_purple",
+      "bold": true
+    },
+    "description": {
+      "text": "Channel the infinite power of Raava. Command all 4 elements simultaneously!",
+      "color": "gold"
+    },
+    "frame": "challenge"
+  },
+  "criteria": {
+    "avatar_state_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

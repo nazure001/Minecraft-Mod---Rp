@@ -1,0 +1,92 @@
+{
+  "parent": "minecraft:item/handheld_rod",
+  "textures": {
+    "layer0": "minecraft:item/carrot_on_a_stick"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 5001
+      },
+      "model": "avatar_skills:item/scroll_fire"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5002
+      },
+      "model": "avatar_skills:item/scroll_water"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5003
+      },
+      "model": "avatar_skills:item/scroll_earth"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5004
+      },
+      "model": "avatar_skills:item/scroll_air"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5005
+      },
+      "model": "avatar_skills:item/avatar_relic"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5006
+      },
+      "model": "avatar_skills:item/scroll_mastery"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5007
+      },
+      "model": "avatar_skills:item/chi_orb"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5008
+      },
+      "model": "avatar_skills:item/focus_lightning"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5009
+      },
+      "model": "avatar_skills:item/focus_combustion"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5010
+      },
+      "model": "avatar_skills:item/focus_blood"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5011
+      },
+      "model": "avatar_skills:item/focus_healing"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5012
+      },
+      "model": "avatar_skills:item/focus_lava"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5013
+      },
+      "model": "avatar_skills:item/focus_metal"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5014
+      },
+      "model": "avatar_skills:item/focus_flight"
+    }
+  ]
+}

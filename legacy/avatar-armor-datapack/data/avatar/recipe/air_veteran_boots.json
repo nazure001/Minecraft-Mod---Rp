@@ -1,0 +1,62 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_boots"
+    },
+    {
+      "item": "minecraft:iron_block"
+    },
+    {
+      "item": "minecraft:white_wool"
+    }
+  ],
+  "result": {
+    "id": "minecraft:iron_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "air",
+          "tier": "veteran",
+          "piece": "boots"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Sky Temple Sabatons\", \"color\": \"gold\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier IV: Veteran\", \"color\": \"blue\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Adorned with white meditation prayer beads and a flowing wind veil.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Speed II + Jump Boost II + Slow Falling + Haste I\", \"color\": \"yellow\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:host"
+      },
+      "minecraft:custom_model_data": 4404,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:air_veteran_boots_armor",
+          "amount": 2.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:air_veteran_boots_toughness",
+          "amount": 1.5,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.movement_speed",
+          "id": "avatar:air_veteran_boots_speed",
+          "amount": 0.06,
+          "operation": "add_value",
+          "slot": "feet"
+        }
+      ]
+    }
+  }
+}

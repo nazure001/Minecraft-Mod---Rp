@@ -1,0 +1,62 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_leggings"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:totem_of_undying"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_leggings",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "fire",
+          "tier": "sovereign",
+          "piece": "leggings"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Sovereign Dragon Greaves\", \"color\": \"gold\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier VII: Sovereign\", \"color\": \"yellow\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"The supreme regalia of the Dragon Master, radiating living sunfire.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Sovereign Dragon Wrath \\u2014 Fire Res + Str III + Spd II + Haste II + Res II + Regen I\", \"color\": \"red\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:silence"
+      },
+      "minecraft:custom_model_data": 1703,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:fire_sovereign_leggings_armor",
+          "amount": 7.0,
+          "operation": "add_value",
+          "slot": "legs"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:fire_sovereign_leggings_toughness",
+          "amount": 4.0,
+          "operation": "add_value",
+          "slot": "legs"
+        },
+        {
+          "type": "minecraft:generic.knockback_resistance",
+          "id": "avatar:fire_sovereign_leggings_kb",
+          "amount": 0.15,
+          "operation": "add_value",
+          "slot": "legs"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5001
+      }
+    },
+    "title": {
+      "text": "Firebending Discipline",
+      "color": "red",
+      "bold": true
+    },
+    "description": {
+      "text": "Master breath, passion, and explosive flame momentum.",
+      "color": "gold"
+    },
+    "frame": "task"
+  },
+  "criteria": {
+    "fire_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

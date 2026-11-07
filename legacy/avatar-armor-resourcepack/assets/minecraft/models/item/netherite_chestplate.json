@@ -1,0 +1,56 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/netherite_chestplate"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1602
+      },
+      "model": "avatar:item/fire_mythic_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1702
+      },
+      "model": "avatar:item/fire_sovereign_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2602
+      },
+      "model": "avatar:item/water_mythic_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2702
+      },
+      "model": "avatar:item/water_sovereign_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3602
+      },
+      "model": "avatar:item/earth_mythic_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3702
+      },
+      "model": "avatar:item/earth_sovereign_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4602
+      },
+      "model": "avatar:item/air_mythic_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4702
+      },
+      "model": "avatar:item/air_sovereign_chestplate"
+    }
+  ]
+}

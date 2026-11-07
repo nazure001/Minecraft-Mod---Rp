@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5003
+      }
+    },
+    "title": {
+      "text": "Earthbending Discipline",
+      "color": "dark_green",
+      "bold": true
+    },
+    "description": {
+      "text": "Stand firm with neutral jing. Move mountains with unwavering will.",
+      "color": "green"
+    },
+    "frame": "task"
+  },
+  "criteria": {
+    "earth_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

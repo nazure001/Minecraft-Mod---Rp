@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:diamond_helmet"
+      },
+      {
+        "item": "minecraft:netherite_helmet"
+      }
+    ],
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:dragon_breath"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_helmet",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "fire",
+          "tier": "mythic",
+          "piece": "helmet"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Volcanic Dragon Horn Helm\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier VI: Mythic\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Netherite plate infused with the smoking wrath of ancient sun dragons.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Fire Resistance + Strength II + Speed II + Haste II + Regeneration I\", \"color\": \"red\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:netherite",
+        "pattern": "minecraft:spire"
+      },
+      "minecraft:custom_model_data": 1601,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:fire_mythic_helmet_armor",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "head"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:fire_mythic_helmet_toughness",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "head"
+        },
+        {
+          "type": "minecraft:generic.knockback_resistance",
+          "id": "avatar:fire_mythic_helmet_kb",
+          "amount": 0.1,
+          "operation": "add_value",
+          "slot": "head"
+        }
+      ]
+    }
+  }
+}

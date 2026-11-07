@@ -1,0 +1,53 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:leather_helmet"
+      },
+      {
+        "item": "minecraft:chainmail_helmet"
+      }
+    ],
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:magma_cream"
+    }
+  ],
+  "result": {
+    "id": "minecraft:chainmail_helmet",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "fire",
+          "tier": "apprentice",
+          "piece": "helmet"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Fire Vanguard Mask\", \"color\": \"red\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier II: Apprentice\", \"color\": \"green\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Worn by vanguard skirmishers and infiltrators of the Fire Army.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Fire Resistance I + Speed I + Strength I\", \"color\": \"red\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:dune"
+      },
+      "minecraft:custom_model_data": 1201,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:fire_apprentice_helmet_armor",
+          "amount": 2.0,
+          "operation": "add_value",
+          "slot": "head"
+        }
+      ]
+    }
+  }
+}

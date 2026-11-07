@@ -1,0 +1,56 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/netherite_leggings"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1603
+      },
+      "model": "avatar:item/fire_mythic_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1703
+      },
+      "model": "avatar:item/fire_sovereign_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2603
+      },
+      "model": "avatar:item/water_mythic_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2703
+      },
+      "model": "avatar:item/water_sovereign_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3603
+      },
+      "model": "avatar:item/earth_mythic_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3703
+      },
+      "model": "avatar:item/earth_sovereign_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4603
+      },
+      "model": "avatar:item/air_mythic_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4703
+      },
+      "model": "avatar:item/air_sovereign_leggings"
+    }
+  ]
+}

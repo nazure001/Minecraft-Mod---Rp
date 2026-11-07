@@ -1,0 +1,69 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_chestplate"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:totem_of_undying"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_chestplate",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "water",
+          "tier": "sovereign",
+          "piece": "chestplate"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Sovereign Leviathan Mantle\", \"color\": \"aqua\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier VII: Sovereign\", \"color\": \"yellow\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"The divine manifestation of Ocean and Moon Spirits, guiding all tides.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Sovereign Ocean Spirit \\u2014 Water Breath + Dolphin + Conduit Power + Regen II + Res II + Health Boost IV\", \"color\": \"aqua\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:silence"
+      },
+      "minecraft:custom_model_data": 2702,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:water_sovereign_chestplate_armor",
+          "amount": 9.0,
+          "operation": "add_value",
+          "slot": "chest"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:water_sovereign_chestplate_toughness",
+          "amount": 4.0,
+          "operation": "add_value",
+          "slot": "chest"
+        },
+        {
+          "type": "minecraft:generic.knockback_resistance",
+          "id": "avatar:water_sovereign_chestplate_kb",
+          "amount": 0.15,
+          "operation": "add_value",
+          "slot": "chest"
+        },
+        {
+          "type": "minecraft:generic.max_health",
+          "id": "avatar:water_sovereign_chestplate_health",
+          "amount": 14.0,
+          "operation": "add_value",
+          "slot": "chest"
+        }
+      ]
+    }
+  }
+}

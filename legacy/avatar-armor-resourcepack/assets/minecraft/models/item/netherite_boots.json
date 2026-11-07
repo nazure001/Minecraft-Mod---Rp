@@ -1,0 +1,56 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/netherite_boots"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1604
+      },
+      "model": "avatar:item/fire_mythic_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1704
+      },
+      "model": "avatar:item/fire_sovereign_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2604
+      },
+      "model": "avatar:item/water_mythic_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2704
+      },
+      "model": "avatar:item/water_sovereign_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3604
+      },
+      "model": "avatar:item/earth_mythic_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3704
+      },
+      "model": "avatar:item/earth_sovereign_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4604
+      },
+      "model": "avatar:item/air_mythic_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4704
+      },
+      "model": "avatar:item/air_sovereign_boots"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/resilience_3",
+  "display": {
+    "icon": {
+      "id": "minecraft:netherite_chestplate"
+    },
+    "title": {
+      "text": "Resilience IV: Earth Titan",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+8 Extra Hearts (36 Max Health).",
+      "color": "white"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

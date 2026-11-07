@@ -1,0 +1,1 @@
+give @s minecraft:warped_fungus_on_a_stick[custom_model_data=5007,custom_data={avatar_item:true,avatar_skill:"chi_orb"},item_name='{"text":"Condensed Chi Orb","color":"aqua","bold":true}',lore=['{"text":"Right-Click to consume for +1 Chi Point","color":"yellow"}']] 16

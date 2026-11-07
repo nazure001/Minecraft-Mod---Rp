@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:iron_leggings"
+      },
+      {
+        "item": "minecraft:diamond_leggings"
+      }
+    ],
+    {
+      "item": "minecraft:diamond_block"
+    },
+    {
+      "item": "minecraft:heart_of_the_sea"
+    }
+  ],
+  "result": {
+    "id": "minecraft:diamond_leggings",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "water",
+          "tier": "master",
+          "piece": "leggings"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"High Chieftain Leggings\", \"color\": \"blue\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier V: Master\", \"color\": \"gold\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Masterwork diamond plate adorned with curved pearl tusks and tidal crests.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Water Breathing + Dolphin's Grace + Regeneration II + Resistance I + Health Boost I\", \"color\": \"aqua\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:amethyst",
+        "pattern": "minecraft:eye"
+      },
+      "minecraft:custom_model_data": 2503,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:water_master_leggings_armor",
+          "amount": 6.0,
+          "operation": "add_value",
+          "slot": "legs"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:water_master_leggings_toughness",
+          "amount": 2.0,
+          "operation": "add_value",
+          "slot": "legs"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/chi_4",
+  "display": {
+    "icon": {
+      "id": "minecraft:nether_star"
+    },
+    "title": {
+      "text": "Chi Mastery V: Infinite Ocean",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "Max Chi 250, Cooldowns -30%, and rapid chi surge!",
+      "color": "white"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

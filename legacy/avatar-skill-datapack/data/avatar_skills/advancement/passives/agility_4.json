@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/agility_3",
+  "display": {
+    "icon": {
+      "id": "minecraft:wind_charge"
+    },
+    "title": {
+      "text": "Agility IV: Cloud Runner",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+60% Movement Speed and 15m Safe Fall Distance.",
+      "color": "white"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:diamond_boots"
+      },
+      {
+        "item": "minecraft:netherite_boots"
+      }
+    ],
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:dragon_breath"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "fire",
+          "tier": "mythic",
+          "piece": "boots"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Volcanic Dragon Sabatons\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier VI: Mythic\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Netherite plate infused with the smoking wrath of ancient sun dragons.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Fire Resistance + Strength II + Speed II + Haste II + Regeneration I\", \"color\": \"red\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:netherite",
+        "pattern": "minecraft:spire"
+      },
+      "minecraft:custom_model_data": 1604,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:fire_mythic_boots_armor",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:fire_mythic_boots_toughness",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.knockback_resistance",
+          "id": "avatar:fire_mythic_boots_kb",
+          "amount": 0.1,
+          "operation": "add_value",
+          "slot": "feet"
+        }
+      ]
+    }
+  }
+}

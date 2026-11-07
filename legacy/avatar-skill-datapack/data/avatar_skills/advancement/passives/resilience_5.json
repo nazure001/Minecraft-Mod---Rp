@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/resilience_4",
+  "display": {
+    "icon": {
+      "id": "minecraft:totem_of_undying"
+    },
+    "title": {
+      "text": "Resilience V: Immortal Colossus",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+10 Extra Hearts (40 Max Health - Two Full Heart Bars) + Resistance!",
+      "color": "white"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

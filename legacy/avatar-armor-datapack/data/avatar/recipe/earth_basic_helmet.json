@@ -1,0 +1,48 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:leather_helmet"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    }
+  ],
+  "result": {
+    "id": "minecraft:leather_helmet",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "earth",
+          "tier": "initiate",
+          "piece": "helmet"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Earth Initiate Cowl\", \"color\": \"green\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier I: Initiate\", \"color\": \"gray\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Durable hempen cloth spun by monastic earth weavers.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Resistance I\", \"color\": \"green\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:coast"
+      },
+      "minecraft:custom_model_data": 3101,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:earth_initiate_helmet_armor",
+          "amount": 1.0,
+          "operation": "add_value",
+          "slot": "head"
+        }
+      ],
+      "minecraft:dyed_color": {
+        "rgb": 3890731
+      }
+    }
+  }
+}

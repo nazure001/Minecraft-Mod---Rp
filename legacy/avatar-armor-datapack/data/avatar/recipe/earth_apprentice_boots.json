@@ -1,0 +1,53 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:leather_boots"
+      },
+      {
+        "item": "minecraft:chainmail_boots"
+      }
+    ],
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:bamboo"
+    }
+  ],
+  "result": {
+    "id": "minecraft:chainmail_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "earth",
+          "tier": "apprentice",
+          "piece": "boots"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Dai Li Bamboo Boots\", \"color\": \"green\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier II: Apprentice\", \"color\": \"green\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Conical woven bamboo hat affixed with a polished jade talisman.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Resistance I + Haste I\", \"color\": \"green\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:dune"
+      },
+      "minecraft:custom_model_data": 3204,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:earth_apprentice_boots_armor",
+          "amount": 1.0,
+          "operation": "add_value",
+          "slot": "feet"
+        }
+      ]
+    }
+  }
+}

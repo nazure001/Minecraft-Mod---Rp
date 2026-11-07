@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5006
+      }
+    },
+    "title": {
+      "text": "Physical & Spiritual Nodes",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "Invest Chi Orbs to cultivate Agility, Chi Capacity, Resilience, and Potency.",
+      "color": "yellow"
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "attrib_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

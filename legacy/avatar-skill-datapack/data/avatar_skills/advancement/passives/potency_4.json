@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/potency_3",
+  "display": {
+    "icon": {
+      "id": "minecraft:magma_block"
+    },
+    "title": {
+      "text": "Potency IV: Master's Wrath",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+60% damage amplifier and heavy upward knockback.",
+      "color": "white"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

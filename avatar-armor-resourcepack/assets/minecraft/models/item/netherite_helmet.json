@@ -1,0 +1,56 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/netherite_helmet"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1601
+      },
+      "model": "avatar:item/headwear/fire_mythic"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1701
+      },
+      "model": "avatar:item/headwear/fire_sovereign"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2601
+      },
+      "model": "avatar:item/headwear/water_mythic"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2701
+      },
+      "model": "avatar:item/headwear/water_sovereign"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3601
+      },
+      "model": "avatar:item/headwear/earth_mythic"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3701
+      },
+      "model": "avatar:item/headwear/earth_sovereign"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4601
+      },
+      "model": "avatar:item/headwear/air_mythic"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4701
+      },
+      "model": "avatar:item/headwear/air_sovereign"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:iron_boots"
+      },
+      {
+        "item": "minecraft:diamond_boots"
+      }
+    ],
+    {
+      "item": "minecraft:diamond_block"
+    },
+    {
+      "item": "minecraft:wind_charge"
+    }
+  ],
+  "result": {
+    "id": "minecraft:diamond_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "air",
+          "tier": "master",
+          "piece": "boots"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"High Monk Sabatons\", \"color\": \"gold\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier V: Master\", \"color\": \"gold\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Blessed with a floating golden nimbus ring and curved cloud pauldrons.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Speed III + Jump Boost II + Slow Falling + Haste II\", \"color\": \"yellow\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:vex"
+      },
+      "minecraft:custom_model_data": 4504,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:air_master_boots_armor",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:air_master_boots_toughness",
+          "amount": 2.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.movement_speed",
+          "id": "avatar:air_master_boots_speed",
+          "amount": 0.075,
+          "operation": "add_value",
+          "slot": "feet"
+        }
+      ]
+    }
+  }
+}

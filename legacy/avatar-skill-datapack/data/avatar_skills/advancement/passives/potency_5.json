@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/potency_4",
+  "display": {
+    "icon": {
+      "id": "minecraft:dragon_breath"
+    },
+    "title": {
+      "text": "Potency V: Cataclysmic Surge",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+80% damage amplifier and doubled stun & burn durations!",
+      "color": "white"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

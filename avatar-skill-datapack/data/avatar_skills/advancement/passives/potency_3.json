@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/potency_2",
+  "display": {
+    "icon": {
+      "id": "minecraft:fire_charge"
+    },
+    "title": {
+      "text": "Potency III: Destructive Force",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+40% damage amplifier and +1 block area of effect.",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

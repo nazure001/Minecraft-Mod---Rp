@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/leather_boots"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1104
+      },
+      "model": "avatar:item/fire_initiate_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2104
+      },
+      "model": "avatar:item/water_initiate_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3104
+      },
+      "model": "avatar:item/earth_initiate_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4104
+      },
+      "model": "avatar:item/air_initiate_boots"
+    }
+  ]
+}

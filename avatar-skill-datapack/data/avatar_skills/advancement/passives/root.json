@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5006
+      }
+    },
+    "title": {
+      "text": "Spiritual Cultivation",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "Channel raw chi to cultivate physical agility, vitality, chi capacity, and destructive potency.",
+      "color": "yellow"
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

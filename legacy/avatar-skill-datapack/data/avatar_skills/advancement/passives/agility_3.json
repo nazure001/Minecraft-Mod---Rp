@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/agility_2",
+  "display": {
+    "icon": {
+      "id": "minecraft:rabbit_foot"
+    },
+    "title": {
+      "text": "Agility III: Gale Dash",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+45% Movement Speed and Jump Boost.",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

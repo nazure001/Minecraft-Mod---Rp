@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/agility_4",
+  "display": {
+    "icon": {
+      "id": "minecraft:elytra"
+    },
+    "title": {
+      "text": "Agility V: Weightless Grace",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+80% Movement Speed, Step Height 1.5 blocks, and Complete Fall Immunity!",
+      "color": "white"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

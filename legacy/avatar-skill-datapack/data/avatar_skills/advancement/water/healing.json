@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:water/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5011
+      }
+    },
+    "title": {
+      "text": "Sub-Bending: Spirit Healing",
+      "color": "green",
+      "bold": true
+    },
+    "description": {
+      "text": "Channel glowing water to mend flesh and purify ailments.",
+      "color": "white"
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "healing_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

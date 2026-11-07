@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5002
+      }
+    },
+    "title": {
+      "text": "Waterbending Discipline",
+      "color": "blue",
+      "bold": true
+    },
+    "description": {
+      "text": "Flow like the ocean tides, adapting between liquid, ice, and mist.",
+      "color": "aqua"
+    },
+    "frame": "task"
+  },
+  "criteria": {
+    "water_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

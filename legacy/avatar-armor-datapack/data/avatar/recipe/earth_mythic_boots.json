@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:diamond_boots"
+      },
+      {
+        "item": "minecraft:netherite_boots"
+      }
+    ],
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "earth",
+          "tier": "mythic",
+          "piece": "boots"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Mountain Titan Warboots\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier VI: Mythic\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Ancient obsidian bedrock fused with emerald tectonic fissures.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Resistance III + Haste II + Strength II + Health Boost II\", \"color\": \"green\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:netherite",
+        "pattern": "minecraft:spire"
+      },
+      "minecraft:custom_model_data": 3604,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:earth_mythic_boots_armor",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:earth_mythic_boots_toughness",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.knockback_resistance",
+          "id": "avatar:earth_mythic_boots_kb",
+          "amount": 0.1,
+          "operation": "add_value",
+          "slot": "feet"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/diamond_boots"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1304
+      },
+      "model": "avatar:item/fire_adept_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1404
+      },
+      "model": "avatar:item/fire_veteran_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1504
+      },
+      "model": "avatar:item/fire_master_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2304
+      },
+      "model": "avatar:item/water_adept_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2404
+      },
+      "model": "avatar:item/water_veteran_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2504
+      },
+      "model": "avatar:item/water_master_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3304
+      },
+      "model": "avatar:item/earth_adept_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3404
+      },
+      "model": "avatar:item/earth_veteran_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3504
+      },
+      "model": "avatar:item/earth_master_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4304
+      },
+      "model": "avatar:item/air_adept_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4404
+      },
+      "model": "avatar:item/air_veteran_boots"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4504
+      },
+      "model": "avatar:item/air_master_boots"
+    }
+  ]
+}

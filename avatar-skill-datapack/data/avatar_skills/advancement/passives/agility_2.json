@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/agility_1",
+  "display": {
+    "icon": {
+      "id": "minecraft:sugar"
+    },
+    "title": {
+      "text": "Agility II: Wind Stride",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+30% Movement Speed and 8m Safe Fall Distance.",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

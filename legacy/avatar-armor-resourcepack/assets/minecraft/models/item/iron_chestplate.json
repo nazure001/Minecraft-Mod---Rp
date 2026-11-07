@@ -1,0 +1,56 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/iron_chestplate"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1302
+      },
+      "model": "avatar:item/fire_adept_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1402
+      },
+      "model": "avatar:item/fire_veteran_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2302
+      },
+      "model": "avatar:item/water_adept_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2402
+      },
+      "model": "avatar:item/water_veteran_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3302
+      },
+      "model": "avatar:item/earth_adept_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3402
+      },
+      "model": "avatar:item/earth_veteran_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4302
+      },
+      "model": "avatar:item/air_adept_chestplate"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4402
+      },
+      "model": "avatar:item/air_veteran_chestplate"
+    }
+  ]
+}

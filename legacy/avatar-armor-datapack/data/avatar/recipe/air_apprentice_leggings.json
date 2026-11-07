@@ -1,0 +1,53 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:leather_leggings"
+      },
+      {
+        "item": "minecraft:chainmail_leggings"
+      }
+    ],
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:rabbit_hide"
+    }
+  ],
+  "result": {
+    "id": "minecraft:chainmail_leggings",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "air",
+          "tier": "apprentice",
+          "piece": "leggings"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Glider Pilot Breeches\", \"color\": \"yellow\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier II: Apprentice\", \"color\": \"green\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Equipped with polished copper wind goggles and fleece ear protection.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Speed I + Jump Boost I + Slow Falling\", \"color\": \"yellow\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:dune"
+      },
+      "minecraft:custom_model_data": 4203,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:air_apprentice_leggings_armor",
+          "amount": 4.0,
+          "operation": "add_value",
+          "slot": "legs"
+        }
+      ]
+    }
+  }
+}

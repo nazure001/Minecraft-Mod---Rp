@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:earth/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5013
+      }
+    },
+    "title": {
+      "text": "Sub-Bending: Metalbending",
+      "color": "gray",
+      "bold": true
+    },
+    "description": {
+      "text": "Sense unpurified earth particles within forged metal cables.",
+      "color": "white"
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "metal_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

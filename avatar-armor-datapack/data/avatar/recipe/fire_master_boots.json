@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:iron_boots"
+      },
+      {
+        "item": "minecraft:diamond_boots"
+      }
+    ],
+    {
+      "item": "minecraft:diamond_block"
+    },
+    {
+      "item": "minecraft:magma_block"
+    }
+  ],
+  "result": {
+    "id": "minecraft:diamond_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "fire",
+          "tier": "master",
+          "piece": "boots"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Fire Lord Guard Sabatons\", \"color\": \"gold\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier V: Master\", \"color\": \"gold\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Masterwork diamond-forged gilded armor reserved for high-ranking officers.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Fire Resistance + Strength II + Speed II + Haste I\", \"color\": \"red\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:vex"
+      },
+      "minecraft:custom_model_data": 1504,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:fire_master_boots_armor",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:fire_master_boots_toughness",
+          "amount": 2.0,
+          "operation": "add_value",
+          "slot": "feet"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:shield"
+    },
+    "title": {
+      "text": "Resilience I: Stone Skin",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+2 Extra Hearts (24 Max Health).",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

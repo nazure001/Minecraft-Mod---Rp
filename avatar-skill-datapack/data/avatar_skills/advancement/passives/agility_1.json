@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:feather"
+    },
+    "title": {
+      "text": "Agility I: Swift Step",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+15% Movement Speed and 5m Safe Fall Distance.",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

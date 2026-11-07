@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:chainmail_leggings"
+      },
+      {
+        "item": "minecraft:iron_leggings"
+      }
+    ],
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:phantom_membrane"
+    }
+  ],
+  "result": {
+    "id": "minecraft:iron_leggings",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "air",
+          "tier": "adept",
+          "piece": "leggings"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Aeromancer Greaves\", \"color\": \"aqua\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier III: Adept\", \"color\": \"aqua\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Features swept-back glider winglets and lightweight aerosteel plates.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Speed II + Jump Boost II + Slow Falling\", \"color\": \"yellow\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:quartz",
+        "pattern": "minecraft:wild"
+      },
+      "minecraft:custom_model_data": 4303,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:air_adept_leggings_armor",
+          "amount": 5.0,
+          "operation": "add_value",
+          "slot": "legs"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:air_adept_leggings_toughness",
+          "amount": 1.0,
+          "operation": "add_value",
+          "slot": "legs"
+        }
+      ]
+    }
+  }
+}

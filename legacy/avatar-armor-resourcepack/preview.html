@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Avatar Armor 1.21.1 — 7-Tier Elemental Progression Showcase</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --card-bg: #151821;
+      --card-border: #2a3042;
+      --mc-tooltip-bg: rgba(16, 1, 16, 0.94);
+      --mc-tooltip-border: #29045b;
+      --gold: #ffd700;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body {
+      background: var(--bg);
+      color: #e2e8f0;
+      padding: 24px;
+      min-height: 100vh;
+    }
+    header {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    header img.pack-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 8px;
+      image-rendering: pixelated;
+      border: 2px solid var(--gold);
+    }
+    .header-text h1 {
+      font-size: 24px;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .header-text p {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .badge {
+      margin-left: auto;
+      background: #1c372a;
+      border: 1px solid #34c759;
+      color: #4ade80;
+      font-weight: bold;
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      padding: 10px 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: #94a3b8;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: #1e2433;
+      color: #fff;
+      border-color: #3b82f6;
+    }
+    .tab-btn.active.fire { border-color: #ef4444; color: #ef4444; }
+    .tab-btn.active.water { border-color: #38bdf8; color: #38bdf8; }
+    .tab-btn.active.earth { border-color: #4ade80; color: #4ade80; }
+    .tab-btn.active.air { border-color: #facc15; color: #facc15; }
+
+    /* Showcase Grid */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .tier-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+      position: relative;
+    }
+    .tier-card.sovereign {
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+      background: linear-gradient(180deg, #241c12 0%, #151821 100%);
+    }
+    .tier-card.mythic {
+      border: 1.5px solid #c084fc;
+      box-shadow: 0 0 10px rgba(192, 132, 252, 0.15);
+      background: linear-gradient(180deg, #1f1828 0%, #151821 100%);
+    }
+    .tier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .tier-title {
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .tier-mat {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    
+    /* Minecraft Slots */
+    .slots-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .mc-slot {
+      width: 58px;
+      height: 58px;
+      background: #12141a;
+      border: 2px solid #373e50;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .mc-slot:hover {
+      transform: scale(1.06);
+      border-color: #60a5fa;
+      z-index: 10;
+    }
+    .mc-slot img {
+      width: 44px;
+      height: 44px;
+      image-rendering: pixelated;
+    }
+
+    /* Set Bonus pill */
+    .bonus-box {
+      background: #0f1118;
+      border-left: 3px solid #3b82f6;
+      border-radius: 4px;
+      padding: 8px 10px;
+      font-size: 11px;
+      line-height: 1.4;
+      color: #cbd5e1;
+    }
+
+    /* Command snippet */
+    .cmd-box {
+      margin-top: 10px;
+      background: #0b0c10;
+      border: 1px solid #232836;
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-family: monospace;
+      font-size: 11px;
+      color: #facc15;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .copy-btn {
+      background: #1e2433;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .copy-btn:hover { color: #fff; background: #3b82f6; }
+
+    /* Infographic Banner View */
+    .infographic-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .infographic-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #373e50;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="pack.png" alt="Pack Icon" class="pack-icon">
+    <div class="header-text">
+      <h1>AVATAR: THE LAST AIRBENDER — 7-TIER ELEMENTAL ARMOR</h1>
+      <p>Official 1.21.1 Datapack & Resource Pack • 4 Nations • 7 Tiers Progression (28 Armor Sets, 112 Pieces) • 100% Equal Vanilla Base</p>
+    </div>
+    <div class="badge">Minecraft Java 1.21.1</div>
+  </header>
+
+  <!-- Infographics -->
+  <div class="infographic-card">
+    <h2 style="font-size: 16px; color: var(--gold); margin-bottom: 14px; text-align: left;">🖼️ 7-Tier Evolution Comparison Matrix</h2>
+    <a href="evolution_comparison.png" target="_blank" title="Click to view full resolution">
+      <img src="evolution_comparison.png" alt="Avatar Armor 7-Tier Evolution Comparison Matrix">
+    </a>
+  </div>
+
+  <div class="infographic-card">
+    <h2 style="font-size: 16px; color: var(--gold); margin-bottom: 14px; text-align: left;">🌟 Complete 4-Nation 7-Tier Showcase Poster</h2>
+    <a href="preview.png" target="_blank" title="Click to view full resolution">
+      <img src="preview.png" alt="Avatar Armor 7-Tier Showcase Poster">
+    </a>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active fire" onclick="setNation('fire')">🔥 Fire Nation</button>
+    <button class="tab-btn water" onclick="setNation('water')">🌊 Water Tribe</button>
+    <button class="tab-btn earth" onclick="setNation('earth')">🪨 Earth Kingdom</button>
+    <button class="tab-btn air" onclick="setNation('air')">💨 Air Nomad</button>
+  </div>
+
+  <div id="tiers-container" class="showcase-grid"></div>
+
+  <script>
+    const data = {
+      fire: {
+        color: '#ef4444',
+        name: 'Fire Nation',
+        tiers: [
+          { name: 'Tier I: Initiate', base: 'Leather Base + Blaze Powder', bonus: 'Fire Resistance I + Movement Speed', prefix: 'fire_initiate', cmd: '/function avatar:give/fire_initiate' },
+          { name: 'Tier II: Apprentice', base: 'Chain Base + Copper + Magma Cream', bonus: 'Fire Res I + Speed I + Strength I', prefix: 'fire_apprentice', cmd: '/function avatar:give/fire_apprentice' },
+          { name: 'Tier III: Adept', base: 'Iron Base + Blaze Rod', bonus: 'Fire Res + Strength I + Speed I + Haste I', prefix: 'fire_adept', cmd: '/function avatar:give/fire_adept' },
+          { name: 'Tier IV: Veteran', base: 'Iron Block Reinf. + Crying Obsidian', bonus: 'Fire Res + Strength II + Speed I + Haste I', prefix: 'fire_veteran', cmd: '/function avatar:give/fire_veteran' },
+          { name: 'Tier V: Master', base: 'Diamond Block + Magma Block', bonus: 'Fire Res + Strength II + Speed II + Haste I', prefix: 'fire_master', cmd: '/function avatar:give/fire_master' },
+          { name: 'Tier VI: Mythic', isMyth: true, base: 'Netherite Ingot + Dragon Breath', bonus: 'Fire Res + Str II + Spd II + Haste II + Regen I', prefix: 'fire_mythic', cmd: '/function avatar:give/fire_mythic' },
+          { name: 'Tier VII: Sovereign', isSov: true, base: 'Nether Star + Totem of Undying', bonus: 'Sovereign Dragon Wrath: Fire Res + Str III + Spd II + Haste II + Res II + Regen I', prefix: 'fire_sovereign', cmd: '/function avatar:give/fire_sovereign' }
+        ]
+      },
+      water: {
+        color: '#38bdf8',
+        name: 'Water Tribe',
+        tiers: [
+          { name: 'Tier I: Initiate', base: 'Leather Base + Prismarine Shard', bonus: 'Water Breathing I', prefix: 'water_initiate', cmd: '/function avatar:give/water_initiate' },
+          { name: 'Tier II: Apprentice', base: 'Chain Base + Copper + Crystals', bonus: 'Water Breathing + Dolphin\'s Grace I', prefix: 'water_apprentice', cmd: '/function avatar:give/water_apprentice' },
+          { name: 'Tier III: Adept', base: 'Iron Base + Lapis Lazuli', bonus: 'Water Breath + Dolphin + Regen I', prefix: 'water_adept', cmd: '/function avatar:give/water_adept' },
+          { name: 'Tier IV: Veteran', base: 'Iron Block Reinf. + Dark Prismarine', bonus: 'Water Breath + Dolphin + Regen I + Resistance I', prefix: 'water_veteran', cmd: '/function avatar:give/water_veteran' },
+          { name: 'Tier V: Master', base: 'Diamond Block + Heart of the Sea', bonus: 'Water Breath + Dolphin + Regen II + Res I + Health I', prefix: 'water_master', cmd: '/function avatar:give/water_master' },
+          { name: 'Tier VI: Mythic', isMyth: true, base: 'Netherite Ingot + Nautilus Shell', bonus: 'Water Breath + Dolphin + Regen II + Res II + Health II', prefix: 'water_mythic', cmd: '/function avatar:give/water_mythic' },
+          { name: 'Tier VII: Sovereign', isSov: true, base: 'Nether Star + Totem of Undying', bonus: 'Sovereign Ocean Spirit: Water Breath + Dolphin + Conduit Power + Regen II + Res II + Health IV', prefix: 'water_sovereign', cmd: '/function avatar:give/water_sovereign' }
+        ]
+      },
+      earth: {
+        color: '#4ade80',
+        name: 'Earth Kingdom',
+        tiers: [
+          { name: 'Tier I: Initiate', base: 'Leather Base + Clay Ball', bonus: 'Resistance I', prefix: 'earth_initiate', cmd: '/function avatar:give/earth_initiate' },
+          { name: 'Tier II: Apprentice', base: 'Chain Base + Copper + Bamboo', bonus: 'Resistance I + Haste I', prefix: 'earth_apprentice', cmd: '/function avatar:give/earth_apprentice' },
+          { name: 'Tier III: Adept', base: 'Iron Base + Amethyst Shard', bonus: 'Resistance I + Haste I + Absorption I', prefix: 'earth_adept', cmd: '/function avatar:give/earth_adept' },
+          { name: 'Tier IV: Veteran', base: 'Iron Block Reinf. + Emerald', bonus: 'Resistance II + Haste II', prefix: 'earth_veteran', cmd: '/function avatar:give/earth_veteran' },
+          { name: 'Tier V: Master', base: 'Diamond Block + Emerald Block', bonus: 'Resistance II + Haste II + Strength I + Health I', prefix: 'earth_master', cmd: '/function avatar:give/earth_master' },
+          { name: 'Tier VI: Mythic', isMyth: true, base: 'Netherite Ingot + Obsidian', bonus: 'Resistance III + Haste II + Strength II + Health II', prefix: 'earth_mythic', cmd: '/function avatar:give/earth_mythic' },
+          { name: 'Tier VII: Sovereign', isSov: true, base: 'Nether Star + Totem of Undying', bonus: 'Sovereign Mountain Titan: Resistance III + Haste III + Strength II + Health IV', prefix: 'earth_sovereign', cmd: '/function avatar:give/earth_sovereign' }
+        ]
+      },
+      air: {
+        color: '#facc15',
+        name: 'Air Nomad',
+        tiers: [
+          { name: 'Tier I: Initiate', base: 'Leather Base + Feather', bonus: 'Speed I + Jump Boost I', prefix: 'air_initiate', cmd: '/function avatar:give/air_initiate' },
+          { name: 'Tier II: Apprentice', base: 'Chain Base + Copper + Rabbit Hide', bonus: 'Speed I + Jump Boost I + Slow Falling', prefix: 'air_apprentice', cmd: '/function avatar:give/air_apprentice' },
+          { name: 'Tier III: Adept', base: 'Iron Base + Phantom Membrane', bonus: 'Speed II + Jump Boost II + Slow Falling', prefix: 'air_adept', cmd: '/function avatar:give/air_adept' },
+          { name: 'Tier IV: Veteran', base: 'Iron Block Reinf. + White Wool', bonus: 'Speed II + Jump Boost II + Slow Falling + Haste I', prefix: 'air_veteran', cmd: '/function avatar:give/air_veteran' },
+          { name: 'Tier V: Master', base: 'Diamond Block + Wind Charge', bonus: 'Speed III + Jump Boost II + Slow Falling + Haste II', prefix: 'air_master', cmd: '/function avatar:give/air_master' },
+          { name: 'Tier VI: Mythic', isMyth: true, base: 'Netherite Ingot + Breeze Rod', bonus: 'Speed III + Jump Boost III + Slow Falling + Haste II + Regen I', prefix: 'air_mythic', cmd: '/function avatar:give/air_mythic' },
+          { name: 'Tier VII: Sovereign', isSov: true, base: 'Nether Star + Totem of Undying', bonus: 'Sovereign Avatar Nimbus: Speed IV + Jump Boost III + Slow Falling + Haste III + Regen II', prefix: 'air_sovereign', cmd: '/function avatar:give/air_sovereign' }
+        ]
+      }
+    };
+
+    function setNation(natKey) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.tab-btn.${natKey}`).classList.add('active');
+
+      const nat = data[natKey];
+      const container = document.getElementById('tiers-container');
+      const pieces = ['helmet', 'chestplate', 'leggings', 'boots'];
+
+      container.innerHTML = nat.tiers.map(t => {
+        let cardClass = 'tier-card';
+        if (t.isSov) cardClass += ' sovereign';
+        else if (t.isMyth) cardClass += ' mythic';
+
+        let titleColor = nat.color;
+        if (t.isSov) titleColor = 'var(--gold)';
+        else if (t.isMyth) titleColor = '#c084fc';
+
+        return `
+          <div class="${cardClass}">
+            <div class="tier-header">
+              <span class="tier-title" style="color: ${titleColor}">${t.name}</span>
+              <span class="tier-mat">${t.base}</span>
+            </div>
+            <div class="slots-row">
+              ${pieces.map(p => `
+                <div class="mc-slot" title="${t.prefix}_${p}">
+                  <img src="assets/avatar/textures/item/${t.prefix}_${p}.png" alt="${p}">
+                </div>
+              `).join('')}
+            </div>
+            <div class="bonus-box" style="border-left-color: ${titleColor}">
+              <strong>Full Set:</strong> ${t.bonus}
+            </div>
+            <div class="cmd-box">
+              <span>${t.cmd}</span>
+              <button class="copy-btn" onclick="navigator.clipboard.writeText('${t.cmd}'); alert('Command copied to clipboard!')">Copy</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Default to Fire
+    setNation('fire');
+  </script>
+</body>
+</html>

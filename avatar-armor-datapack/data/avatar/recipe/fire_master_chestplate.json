@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:iron_chestplate"
+      },
+      {
+        "item": "minecraft:diamond_chestplate"
+      }
+    ],
+    {
+      "item": "minecraft:diamond_block"
+    },
+    {
+      "item": "minecraft:magma_block"
+    }
+  ],
+  "result": {
+    "id": "minecraft:diamond_chestplate",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "fire",
+          "tier": "master",
+          "piece": "chestplate"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Fire Lord Guard Cuirass\", \"color\": \"gold\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier V: Master\", \"color\": \"gold\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Masterwork diamond-forged gilded armor reserved for high-ranking officers.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Fire Resistance + Strength II + Speed II + Haste I\", \"color\": \"red\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:vex"
+      },
+      "minecraft:custom_model_data": 1502,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:fire_master_chestplate_armor",
+          "amount": 8.0,
+          "operation": "add_value",
+          "slot": "chest"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:fire_master_chestplate_toughness",
+          "amount": 2.0,
+          "operation": "add_value",
+          "slot": "chest"
+        },
+        {
+          "type": "minecraft:generic.attack_damage",
+          "id": "avatar:fire_master_chestplate_attack",
+          "amount": 5.0,
+          "operation": "add_value",
+          "slot": "chest"
+        }
+      ]
+    }
+  }
+}

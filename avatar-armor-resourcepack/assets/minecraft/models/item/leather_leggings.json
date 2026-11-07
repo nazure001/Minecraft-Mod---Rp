@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/leather_leggings"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1103
+      },
+      "model": "avatar:item/fire_initiate_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2103
+      },
+      "model": "avatar:item/water_initiate_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3103
+      },
+      "model": "avatar:item/earth_initiate_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4103
+      },
+      "model": "avatar:item/air_initiate_leggings"
+    }
+  ]
+}

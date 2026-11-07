@@ -1,0 +1,48 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:leather_boots"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ],
+  "result": {
+    "id": "minecraft:leather_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "fire",
+          "tier": "initiate",
+          "piece": "boots"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Fire Initiate Sandals\", \"color\": \"red\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier I: Initiate\", \"color\": \"gray\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Woven from fire-resistant embercloth for temple acolytes.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Fire Resistance I + Slight Movement Speed\", \"color\": \"red\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:sentry"
+      },
+      "minecraft:custom_model_data": 1104,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:fire_initiate_boots_armor",
+          "amount": 1.0,
+          "operation": "add_value",
+          "slot": "feet"
+        }
+      ],
+      "minecraft:dyed_color": {
+        "rgb": 9055019
+      }
+    }
+  }
+}

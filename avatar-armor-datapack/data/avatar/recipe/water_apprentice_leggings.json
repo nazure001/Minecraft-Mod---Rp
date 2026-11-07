@@ -1,0 +1,53 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:leather_leggings"
+      },
+      {
+        "item": "minecraft:chainmail_leggings"
+      }
+    ],
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:prismarine_crystals"
+    }
+  ],
+  "result": {
+    "id": "minecraft:chainmail_leggings",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "water",
+          "tier": "apprentice",
+          "piece": "leggings"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Wolf Pelt Trousers\", \"color\": \"aqua\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier II: Apprentice\", \"color\": \"green\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Crowned with a white wolf pelt and blue tribal hunting markings.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Water Breathing + Dolphin's Grace I\", \"color\": \"aqua\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:dune"
+      },
+      "minecraft:custom_model_data": 2203,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:water_apprentice_leggings_armor",
+          "amount": 4.0,
+          "operation": "add_value",
+          "slot": "legs"
+        }
+      ]
+    }
+  }
+}

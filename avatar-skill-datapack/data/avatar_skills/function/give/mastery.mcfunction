@@ -1,0 +1,1 @@
+give @s minecraft:warped_fungus_on_a_stick[custom_model_data=5006,custom_data={avatar_item:true,avatar_skill:"mastery"},item_name='{"text":"Tome of Chi Mastery","color":"gold","bold":true}',lore=['{"text":"Right-Click to open the Skill Node Tree Shrine","color":"yellow"}','{"text":"Allocate Chi Points into Agility, Chi, Resilience, & Potency","color":"gray"}']]

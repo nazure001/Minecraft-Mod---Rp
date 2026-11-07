@@ -1,0 +1,80 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/diamond_helmet"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1301
+      },
+      "model": "avatar:item/headwear/fire_adept"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1401
+      },
+      "model": "avatar:item/headwear/fire_veteran"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1501
+      },
+      "model": "avatar:item/headwear/fire_master"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2301
+      },
+      "model": "avatar:item/headwear/water_adept"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2401
+      },
+      "model": "avatar:item/headwear/water_veteran"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2501
+      },
+      "model": "avatar:item/headwear/water_master"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3301
+      },
+      "model": "avatar:item/headwear/earth_adept"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3401
+      },
+      "model": "avatar:item/headwear/earth_veteran"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3501
+      },
+      "model": "avatar:item/headwear/earth_master"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4301
+      },
+      "model": "avatar:item/headwear/air_adept"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4401
+      },
+      "model": "avatar:item/headwear/air_veteran"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4501
+      },
+      "model": "avatar:item/headwear/air_master"
+    }
+  ]
+}

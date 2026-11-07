@@ -1,0 +1,56 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/iron_helmet"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1301
+      },
+      "model": "avatar:item/headwear/fire_adept"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1401
+      },
+      "model": "avatar:item/headwear/fire_veteran"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2301
+      },
+      "model": "avatar:item/headwear/water_adept"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2401
+      },
+      "model": "avatar:item/headwear/water_veteran"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3301
+      },
+      "model": "avatar:item/headwear/earth_adept"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3401
+      },
+      "model": "avatar:item/headwear/earth_veteran"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4301
+      },
+      "model": "avatar:item/headwear/air_adept"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4401
+      },
+      "model": "avatar:item/headwear/air_veteran"
+    }
+  ]
+}

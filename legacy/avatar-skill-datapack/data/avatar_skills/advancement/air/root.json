@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5004
+      }
+    },
+    "title": {
+      "text": "Airbending Discipline",
+      "color": "yellow",
+      "bold": true
+    },
+    "description": {
+      "text": "Embrace negative jing: evade, circle, and control the atmosphere.",
+      "color": "white"
+    },
+    "frame": "task"
+  },
+  "criteria": {
+    "air_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

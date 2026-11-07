@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:diamond_leggings"
+      },
+      {
+        "item": "minecraft:netherite_leggings"
+      }
+    ],
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:nautilus_shell"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_leggings",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "water",
+          "tier": "mythic",
+          "piece": "leggings"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Leviathan Scaled Greaves\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier VI: Mythic\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Ascended netherite warplate carrying the crushing depths of ancient leviathans.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Water Breathing + Dolphin's Grace + Regeneration II + Resistance II + Health Boost II\", \"color\": \"aqua\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:diamond",
+        "pattern": "minecraft:spire"
+      },
+      "minecraft:custom_model_data": 2603,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:water_mythic_leggings_armor",
+          "amount": 6.0,
+          "operation": "add_value",
+          "slot": "legs"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:water_mythic_leggings_toughness",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "legs"
+        },
+        {
+          "type": "minecraft:generic.knockback_resistance",
+          "id": "avatar:water_mythic_leggings_kb",
+          "amount": 0.1,
+          "operation": "add_value",
+          "slot": "legs"
+        }
+      ]
+    }
+  }
+}

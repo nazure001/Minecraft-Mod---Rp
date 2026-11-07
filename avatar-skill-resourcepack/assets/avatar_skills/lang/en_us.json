@@ -1,0 +1,20 @@
+{
+  "item.avatar_skills.scroll_fire": "Scroll of Firebending",
+  "item.avatar_skills.scroll_water": "Scroll of Waterbending",
+  "item.avatar_skills.scroll_earth": "Scroll of Earthbending",
+  "item.avatar_skills.scroll_air": "Scroll of Airbending",
+  "item.avatar_skills.avatar_relic": "Cosmic Avatar Relic",
+  "item.avatar_skills.scroll_mastery": "Tome of Chi Mastery",
+  "item.avatar_skills.chi_orb": "Condensed Chi Orb",
+  "item.avatar_skills.focus_lightning": "Focus of Lightning Generation",
+  "item.avatar_skills.focus_combustion": "Focus of Combustion Bending",
+  "item.avatar_skills.focus_blood": "Focus of Bloodbending",
+  "item.avatar_skills.focus_healing": "Focus of Spirit Healing",
+  "item.avatar_skills.focus_lava": "Focus of Lavabending",
+  "item.avatar_skills.focus_metal": "Focus of Metalbending",
+  "item.avatar_skills.focus_flight": "Focus of Weightless Flight",
+  "advancements.avatar.root.title": "Avatar: The Way of Bending",
+  "advancements.avatar.root.description": "Awaken the latent elemental chi within your spirit.",
+  "advancements.avatar.avatar_state.title": "Master of All Four Elements",
+  "advancements.avatar.avatar_state.description": "Unlock Fire, Water, Earth, and Air to awaken the Avatar State!"
+}

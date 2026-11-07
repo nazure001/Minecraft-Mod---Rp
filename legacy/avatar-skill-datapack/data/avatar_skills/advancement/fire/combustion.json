@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:fire/lightning",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5009
+      }
+    },
+    "title": {
+      "text": "Mastery: Combustion Bending",
+      "color": "dark_red",
+      "bold": true
+    },
+    "description": {
+      "text": "Channel explosive telekinetic beams through the third eye.",
+      "color": "yellow"
+    },
+    "frame": "challenge"
+  },
+  "criteria": {
+    "combustion_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

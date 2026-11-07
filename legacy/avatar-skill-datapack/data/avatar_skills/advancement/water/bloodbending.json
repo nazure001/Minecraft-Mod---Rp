@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:water/healing",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5010
+      }
+    },
+    "title": {
+      "text": "Forbidden Art: Bloodbending",
+      "color": "dark_red",
+      "bold": true
+    },
+    "description": {
+      "text": "Manipulate the fluid inside living beings, immobilizing their bodies.",
+      "color": "red"
+    },
+    "frame": "challenge"
+  },
+  "criteria": {
+    "bloodbending_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

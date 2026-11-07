@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/chi_3",
+  "display": {
+    "icon": {
+      "id": "minecraft:heart_of_the_sea"
+    },
+    "title": {
+      "text": "Chi Mastery IV: Spirit Conduit",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "Max Chi increased to 200 and skill cooldowns reduced by 20%.",
+      "color": "white"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

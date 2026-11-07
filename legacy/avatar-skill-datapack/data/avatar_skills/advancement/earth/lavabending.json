@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:earth/metalbending",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5012
+      }
+    },
+    "title": {
+      "text": "Rare Discipline: Lavabending",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "Superheat stone molecules into liquid magma flows.",
+      "color": "yellow"
+    },
+    "frame": "challenge"
+  },
+  "criteria": {
+    "lava_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

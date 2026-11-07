@@ -1,0 +1,48 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:leather_helmet"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    }
+  ],
+  "result": {
+    "id": "minecraft:leather_helmet",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "water",
+          "tier": "initiate",
+          "piece": "helmet"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Water Initiate Hood\", \"color\": \"aqua\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier I: Initiate\", \"color\": \"gray\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Stitched from soft seal-cloth and tundra wool for water tribe acolytes.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Water Breathing I\", \"color\": \"aqua\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:coast"
+      },
+      "minecraft:custom_model_data": 2101,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:water_initiate_helmet_armor",
+          "amount": 1.0,
+          "operation": "add_value",
+          "slot": "head"
+        }
+      ],
+      "minecraft:dyed_color": {
+        "rgb": 2839162
+      }
+    }
+  }
+}

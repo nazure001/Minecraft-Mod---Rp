@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:chainmail_boots"
+      },
+      {
+        "item": "minecraft:iron_boots"
+      }
+    ],
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "result": {
+    "id": "minecraft:iron_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "earth",
+          "tier": "adept",
+          "piece": "boots"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Terra Infantry Boots\", \"color\": \"dark_green\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier III: Adept\", \"color\": \"aqua\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Studded with jade horn mounts and reinforced with green iron plates.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Resistance I + Haste I + Absorption I\", \"color\": \"green\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:wild"
+      },
+      "minecraft:custom_model_data": 3304,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:earth_adept_boots_armor",
+          "amount": 2.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:earth_adept_boots_toughness",
+          "amount": 1.0,
+          "operation": "add_value",
+          "slot": "feet"
+        }
+      ]
+    }
+  }
+}

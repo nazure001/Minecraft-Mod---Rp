@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/chi_1",
+  "display": {
+    "icon": {
+      "id": "minecraft:prismarine_crystals"
+    },
+    "title": {
+      "text": "Chi Mastery II: Deep Reservoir",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "Max Chi increased to 150 and +40% regeneration speed.",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:leather_helmet"
+    },
+    {
+      "item": "minecraft:feather"
+    }
+  ],
+  "result": {
+    "id": "minecraft:leather_helmet",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "air",
+          "tier": "initiate",
+          "piece": "helmet"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Air Initiate Cowl\", \"color\": \"yellow\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier I: Initiate\", \"color\": \"gray\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Spun from light saffron silk, floating effortlessly on the breeze.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Speed I + Jump Boost I\", \"color\": \"yellow\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:coast"
+      },
+      "minecraft:custom_model_data": 4101,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:air_initiate_helmet_armor",
+          "amount": 1.0,
+          "operation": "add_value",
+          "slot": "head"
+        }
+      ],
+      "minecraft:dyed_color": {
+        "rgb": 13933348
+      }
+    }
+  }
+}

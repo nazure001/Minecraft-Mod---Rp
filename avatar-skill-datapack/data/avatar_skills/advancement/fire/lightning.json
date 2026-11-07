@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:fire/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5008
+      }
+    },
+    "title": {
+      "text": "Sub-Bending: Lightning Generation",
+      "color": "aqua",
+      "bold": true
+    },
+    "description": {
+      "text": "Separate positive and negative chi to unleash pure electric fury.",
+      "color": "white"
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "lightning_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

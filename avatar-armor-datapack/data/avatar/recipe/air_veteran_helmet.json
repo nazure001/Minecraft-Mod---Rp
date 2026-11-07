@@ -1,0 +1,55 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_helmet"
+    },
+    {
+      "item": "minecraft:iron_block"
+    },
+    {
+      "item": "minecraft:white_wool"
+    }
+  ],
+  "result": {
+    "id": "minecraft:iron_helmet",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "air",
+          "tier": "veteran",
+          "piece": "helmet"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Sky Temple Battle Cowl\", \"color\": \"gold\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier IV: Veteran\", \"color\": \"blue\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Adorned with white meditation prayer beads and a flowing wind veil.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Speed II + Jump Boost II + Slow Falling + Haste I\", \"color\": \"yellow\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:host"
+      },
+      "minecraft:custom_model_data": 4401,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:air_veteran_helmet_armor",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "head"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:air_veteran_helmet_toughness",
+          "amount": 1.5,
+          "operation": "add_value",
+          "slot": "head"
+        }
+      ]
+    }
+  }
+}

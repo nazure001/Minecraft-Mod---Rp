@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/resilience_1",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_chestplate"
+    },
+    "title": {
+      "text": "Resilience II: Iron Will",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "+4 Extra Hearts (28 Max Health).",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

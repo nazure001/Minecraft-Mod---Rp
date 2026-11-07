@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:leather_chestplate"
+      },
+      {
+        "item": "minecraft:chainmail_chestplate"
+      }
+    ],
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:prismarine_crystals"
+    }
+  ],
+  "result": {
+    "id": "minecraft:chainmail_chestplate",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "water",
+          "tier": "apprentice",
+          "piece": "chestplate"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Wolf Pelt Hunting Tunic\", \"color\": \"aqua\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier II: Apprentice\", \"color\": \"green\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Crowned with a white wolf pelt and blue tribal hunting markings.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Water Breathing + Dolphin's Grace I\", \"color\": \"aqua\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:dune"
+      },
+      "minecraft:custom_model_data": 2202,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:water_apprentice_chestplate_armor",
+          "amount": 5.0,
+          "operation": "add_value",
+          "slot": "chest"
+        },
+        {
+          "type": "minecraft:generic.max_health",
+          "id": "avatar:water_apprentice_chestplate_health",
+          "amount": 4.0,
+          "operation": "add_value",
+          "slot": "chest"
+        }
+      ]
+    }
+  }
+}

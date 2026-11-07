@@ -1,0 +1,62 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_chestplate"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:totem_of_undying"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_chestplate",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "air",
+          "tier": "sovereign",
+          "piece": "chestplate"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Sovereign Winged Zephyr Mantle\", \"color\": \"yellow\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier VII: Sovereign\", \"color\": \"yellow\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"The supreme Avatar ascension, bearing the radiant glowing cyan arrow of destiny.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Sovereign Avatar Nimbus \\u2014 Speed IV + Jump Boost III + Slow Falling + Haste III + Regen II\", \"color\": \"yellow\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:quartz",
+        "pattern": "minecraft:silence"
+      },
+      "minecraft:custom_model_data": 4702,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:air_sovereign_chestplate_armor",
+          "amount": 9.0,
+          "operation": "add_value",
+          "slot": "chest"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:air_sovereign_chestplate_toughness",
+          "amount": 4.0,
+          "operation": "add_value",
+          "slot": "chest"
+        },
+        {
+          "type": "minecraft:generic.knockback_resistance",
+          "id": "avatar:air_sovereign_chestplate_kb",
+          "amount": 0.15,
+          "operation": "add_value",
+          "slot": "chest"
+        }
+      ]
+    }
+  }
+}

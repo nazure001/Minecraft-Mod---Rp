@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:diamond_leggings"
+      },
+      {
+        "item": "minecraft:netherite_leggings"
+      }
+    ],
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:breeze_rod"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_leggings",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "air",
+          "tier": "mythic",
+          "piece": "leggings"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Celestial Sky Greaves\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier VI: Mythic\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Infused with the pure spiritual winds of the Upper Stratosphere.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Speed III + Jump Boost III + Slow Falling + Haste II + Regeneration I\", \"color\": \"yellow\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:diamond",
+        "pattern": "minecraft:spire"
+      },
+      "minecraft:custom_model_data": 4603,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:air_mythic_leggings_armor",
+          "amount": 6.0,
+          "operation": "add_value",
+          "slot": "legs"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:air_mythic_leggings_toughness",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "legs"
+        },
+        {
+          "type": "minecraft:generic.knockback_resistance",
+          "id": "avatar:air_mythic_leggings_kb",
+          "amount": 0.1,
+          "operation": "add_value",
+          "slot": "legs"
+        }
+      ]
+    }
+  }
+}

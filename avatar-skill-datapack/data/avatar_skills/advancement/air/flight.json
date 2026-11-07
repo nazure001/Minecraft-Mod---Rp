@@ -1,0 +1,26 @@
+{
+  "parent": "avatar_skills:air/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:warped_fungus_on_a_stick",
+      "components": {
+        "minecraft:custom_model_data": 5014
+      }
+    },
+    "title": {
+      "text": "Sovereign Art: Weightless Flight",
+      "color": "light_purple",
+      "bold": true
+    },
+    "description": {
+      "text": "Let go your earthly tether. Enter the void, empty, and become wind.",
+      "color": "aqua"
+    },
+    "frame": "challenge"
+  },
+  "criteria": {
+    "flight_unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+function avatar_skills:give/all_skills

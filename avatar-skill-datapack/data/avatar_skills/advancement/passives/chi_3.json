@@ -1,0 +1,25 @@
+{
+  "parent": "avatar_skills:passives/chi_2",
+  "display": {
+    "icon": {
+      "id": "minecraft:echo_shard"
+    },
+    "title": {
+      "text": "Chi Mastery III: Elemental Resonance",
+      "color": "gold",
+      "bold": true
+    },
+    "description": {
+      "text": "Max Chi increased to 175 and all skill cooldowns reduced by 10%.",
+      "color": "white"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

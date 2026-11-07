@@ -1,0 +1,80 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/diamond_leggings"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1303
+      },
+      "model": "avatar:item/fire_adept_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1403
+      },
+      "model": "avatar:item/fire_veteran_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1503
+      },
+      "model": "avatar:item/fire_master_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2303
+      },
+      "model": "avatar:item/water_adept_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2403
+      },
+      "model": "avatar:item/water_veteran_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2503
+      },
+      "model": "avatar:item/water_master_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3303
+      },
+      "model": "avatar:item/earth_adept_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3403
+      },
+      "model": "avatar:item/earth_veteran_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3503
+      },
+      "model": "avatar:item/earth_master_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4303
+      },
+      "model": "avatar:item/air_adept_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4403
+      },
+      "model": "avatar:item/air_veteran_leggings"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4503
+      },
+      "model": "avatar:item/air_master_leggings"
+    }
+  ]
+}

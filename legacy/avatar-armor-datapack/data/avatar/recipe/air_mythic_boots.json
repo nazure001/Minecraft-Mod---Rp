@@ -1,0 +1,74 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:diamond_boots"
+      },
+      {
+        "item": "minecraft:netherite_boots"
+      }
+    ],
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:breeze_rod"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "air",
+          "tier": "mythic",
+          "piece": "boots"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Celestial Zephyr Warboots\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier VI: Mythic\", \"color\": \"light_purple\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Infused with the pure spiritual winds of the Upper Stratosphere.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Speed III + Jump Boost III + Slow Falling + Haste II + Regeneration I\", \"color\": \"yellow\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:diamond",
+        "pattern": "minecraft:spire"
+      },
+      "minecraft:custom_model_data": 4604,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:air_mythic_boots_armor",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:air_mythic_boots_toughness",
+          "amount": 3.0,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.knockback_resistance",
+          "id": "avatar:air_mythic_boots_kb",
+          "amount": 0.1,
+          "operation": "add_value",
+          "slot": "feet"
+        },
+        {
+          "type": "minecraft:generic.movement_speed",
+          "id": "avatar:air_mythic_boots_speed",
+          "amount": 0.09,
+          "operation": "add_value",
+          "slot": "feet"
+        }
+      ]
+    }
+  }
+}

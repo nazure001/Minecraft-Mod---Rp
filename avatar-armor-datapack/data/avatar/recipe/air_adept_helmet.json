@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:chainmail_helmet"
+      },
+      {
+        "item": "minecraft:iron_helmet"
+      }
+    ],
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:phantom_membrane"
+    }
+  ],
+  "result": {
+    "id": "minecraft:iron_helmet",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": {
+        "avatar": {
+          "nation": "air",
+          "tier": "adept",
+          "piece": "helmet"
+        }
+      },
+      "minecraft:item_name": "{\"text\": \"Aeromancer Winged Helm\", \"color\": \"aqua\", \"bold\": false, \"italic\": false}",
+      "minecraft:lore": [
+        "{\"text\": \"Tier III: Adept\", \"color\": \"aqua\", \"bold\": false, \"italic\": false}",
+        "{\"text\": \"Features swept-back glider winglets and lightweight aerosteel plates.\", \"color\": \"gold\", \"italic\": true}",
+        "{\"text\": \"Full Set: Speed II + Jump Boost II + Slow Falling\", \"color\": \"yellow\", \"italic\": false}"
+      ],
+      "minecraft:trim": {
+        "material": "minecraft:quartz",
+        "pattern": "minecraft:wild"
+      },
+      "minecraft:custom_model_data": 4301,
+      "minecraft:attribute_modifiers": [
+        {
+          "type": "minecraft:generic.armor",
+          "id": "avatar:air_adept_helmet_armor",
+          "amount": 2.0,
+          "operation": "add_value",
+          "slot": "head"
+        },
+        {
+          "type": "minecraft:generic.armor_toughness",
+          "id": "avatar:air_adept_helmet_toughness",
+          "amount": 1.0,
+          "operation": "add_value",
+          "slot": "head"
+        }
+      ]
+    }
+  }
+}
