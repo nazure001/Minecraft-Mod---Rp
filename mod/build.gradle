@@ -19,6 +19,17 @@ loom {
             sourceSet sourceSets.client
         }
     }
+
+    runs {
+        client {
+            // Default Loom heap is too small; bump to 3G to prevent OOM during dev.
+            vmArg "-Xmx3G"
+            vmArg "-Xms1G"
+        }
+        server {
+            vmArg "-Xmx2G"
+        }
+    }
 }
 
 dependencies {
