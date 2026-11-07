@@ -17,8 +17,20 @@ import java.util.UUID;
 
 public final class SkillNetworking {
 
-    private static final int RATE_LIMIT_TICKS = 5;
-    private static final Map<UUID, Long> lastSkillTick = new HashMap<>();
+    // Per-skill rate limit: UUID → (skillId → lastTick). Prevents single-skill spam
+    // without blocking rapid Z→X cross-skill switching.
+    private static final int RATE_LIMIT_TICKS = 3;
+    private static final Map<UUID, Map<String, Long>> lastSkillTick = new HashMap<>();
+
+    private static long getLastTick(UUID uuid, String skillId) {
+        Map<String, Long> perSkill = lastSkillTick.get(uuid);
+        if (perSkill == null) return -RATE_LIMIT_TICKS - 1L;
+        return perSkill.getOrDefault(skillId, -RATE_LIMIT_TICKS - 1L);
+    }
+
+    private static void setLastTick(UUID uuid, String skillId, long tick) {
+        lastSkillTick.computeIfAbsent(uuid, k -> new HashMap<>()).put(skillId, tick);
+    }
 
     public static void registerPayloads() {
         PayloadTypeRegistry.playC2S().register(SkillPackets.C2SSkillInput.ID, SkillPackets.C2SSkillInput.CODEC);
@@ -43,14 +55,14 @@ public final class SkillNetworking {
                         return;
                     }
 
-                    // Anti-spam
-                    long lastTick = lastSkillTick.getOrDefault(uuid, -RATE_LIMIT_TICKS - 1L);
+                    // Anti-spam (per-skill: Z→X rapid switch allowed, Z→Z spam blocked)
+                    long lastTick = getLastTick(uuid, skillId);
                     if (currentTick - lastTick < RATE_LIMIT_TICKS) {
                         ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
                                 skillId, false, SkillPackets.S2CSkillResult.DenyReason.RATE_LIMITED, 0));
                         return;
                     }
-                    lastSkillTick.put(uuid, currentTick);
+                    setLastTick(uuid, skillId, currentTick);
 
                     // Validate
                     SkillValidator.ValidationResult result = SkillValidator.validate(player, skillId);
@@ -73,12 +85,11 @@ public final class SkillNetworking {
                         data.advanceAirStaffCombo(currentTick, def.comboWindowTicks());
                     }
 
-                    AvatarElementsMod.LOGGER.info(
+                    AvatarElementsMod.LOGGER.debug(
                             "Skill '{}' used by {} (chi: {}/{})",
                             skillId, player.getName().getString(),
                             data.getChi(), data.getMaxChi());
 
-                    player.sendMessage(Text.literal("[Avatar] " + skillId + " — OK"), false);
                     ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
                             skillId, true, SkillPackets.S2CSkillResult.DenyReason.NONE, 0));
                     sendHudUpdate(player, data, skillId);
@@ -106,13 +117,13 @@ public final class SkillNetworking {
 
                     long currentTick = player.getServerWorld().getTime();
                     UUID uuid = player.getUuid();
-                    long lastTick = lastSkillTick.getOrDefault(uuid, -RATE_LIMIT_TICKS - 1L);
+                    long lastTick = getLastTick(uuid, skillId);
                     if (currentTick - lastTick < RATE_LIMIT_TICKS) {
                         ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
                                 skillId, false, SkillPackets.S2CSkillResult.DenyReason.RATE_LIMITED, 0));
                         return;
                     }
-                    lastSkillTick.put(uuid, currentTick);
+                    setLastTick(uuid, skillId, currentTick);
 
                     SkillValidator.ValidationResult result = SkillValidator.validate(player, skillId);
                     if (!result.allowed()) {
@@ -129,7 +140,6 @@ public final class SkillNetworking {
                         data.advanceAirStaffCombo(currentTick, def.comboWindowTicks());
                     }
 
-                    player.sendMessage(Text.literal("[Avatar] " + skillId + " — OK"), false);
                     ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
                             skillId, true, SkillPackets.S2CSkillResult.DenyReason.NONE, 0));
                     sendHudUpdate(player, data, skillId);
@@ -156,7 +166,7 @@ public final class SkillNetworking {
     }
 
     public static void onPlayerDisconnect(UUID uuid) {
-        lastSkillTick.remove(uuid);
+        lastSkillTick.remove(uuid); // cleans all per-skill entries for this player
     }
 
     private SkillNetworking() {}
