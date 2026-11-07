@@ -1,146 +1,139 @@
-# Charge Orb System — Spesifikasi untuk Review ChatGPT
+# Charge Orb System — Spesifikasi Final
 
-Dokumen ini mendefinisikan sistem visual "charge orb" sebelum skill dilempar.
-Tujuan: sinkron 1st/3rd person, orb mengikuti cursor, animasi tangan relevan dengan arah lempar.
-
-**Status:** Draft — menunggu persetujuan ChatGPT sebelum implementasi Claude.
+**Status:** DISETUJUI ChatGPT 2026-11-07. Siap diimplementasi Claude.
 
 ---
 
-## Konsep Utama
+## Keputusan Arsitektur (dari ChatGPT)
 
-Setiap elemen punya "charge orb" yang muncul di tangan player saat skill WINDUP,
-tetap di tangan saat ACTIVE, lalu terlempar/meledak saat recovery atau saat skill hit.
+| Aspek | Keputusan |
+|---|---|
+| Multiplayer | Orb terlihat pemilik **dan** pemain lain, state disetujui server |
+| Kapan muncul | Saat skill masuk fase **WINDUP** (charging), bukan saat idle memilih elemen |
+| Posisi | Mengikuti attachment tangan per jurus (dari COMBAT_CONTRACT field 2) |
+| Saat dilempar | Transisi per jurus: ditembak / dilebur ke serangan / dipadamkan |
+| Saat cancel | Efek menghilang singkat (dissolve), **tidak ada damage** |
+| 1st person | **Prioritas tinggi** — harus selesai bersamaan dengan 3rd person |
+| Listrik | Kandidat visual sub-elemen; **bukan** elemen playable ke-5 |
+| Chi saat cancel | Ikuti aturan cast yang sudah ada di pipeline, tidak ada refund baru |
 
-```
-IDLE → [tekan skill] → WINDUP (orb spawn di tangan) → ACTIVE (orb held, siap lempar)
-     → cast arah cursor → orb terbang → hit → impact VFX
-     → RECOVERY → IDLE
-```
+### Koreksi Arsitektur Penting
+
+**`OrbEntity` TIDAK diperlukan untuk fase charge.**
+State charge tersinkron via packet yang sudah ada (`S2CPhaseSync`) + renderer
+client-side cukup untuk orb yang menempel di tangan. `OrbEntity` / `OrbProjectile`
+hanya dibuat saat orb benar-benar dilepas sebagai objek terbang dengan
+collision dan lifetime sendiri.
+
+**1st person dirender di viewmodel space, bukan HUD overlay.**
+Orb harus terlihat seperti digenggam di tangan, ukuran dan posisi tidak
+menutupi bidikan. Bukan billboard yang ikut cursor.
+
+**Orb tidak universal.**
+Fire Jab, Water Whip, dan staff attack punya bahasa visual sendiri.
+Tidak semua skill harus diawali bola elemen — orb hanya untuk skill
+yang memang punya fase charge.
 
 ---
 
 ## Visual Per Elemen
 
-| Elemen | Orb Visual | Referensi |
+| Elemen | Orb Visual |
+|---|---|
+| **Api** | Bola api berputar, partikel flame melingkar, glow oranye |
+| **Udara** | Sphere transparan, cincin angin berputar horizontal, partikel cloud |
+| **Listrik** | Bola biru/putih, petir kecil keluar ke segala arah — visual sub-elemen, belum playable |
+| **Air** | Bola air, droplet mengorbit, efek riak |
+| **Tanah** | Bongkahan batu berputar mengelilingi inti |
+
+---
+
+## Arsitektur Teknis Final
+
+```
+SkillTimeline (server)
+  WINDUP → kirim S2CPhaseSync(skillId, WINDUP, casterUUID)
+  ACTIVE → kirim S2CPhaseSync(skillId, ACTIVE, casterUUID)
+  RECOVERY/cancel → kirim S2CPhaseSync(skillId, RECOVERY/IDLE, casterUUID)
+
+ChargeOrbClientState (client)
+  per-player map: UUID → OrbState { phase, element, ticksIn }
+  update dari S2CPhaseSync packet
+
+ChargeOrbRenderer (client, WorldRenderEvents.AFTER_ENTITIES)
+  untuk setiap OrbState yang WINDUP/ACTIVE:
+    1. ambil player entity dari UUID
+    2. hitung posisi orb dari PAL right_arm bone world pos + tangan offset
+    3. render sphere mesh + particle ring sesuai element
+    4. scale berdasarkan ticksIn (orb membesar saat charge)
+
+FirstPersonOrbRenderer (client, GameRenderer mixin atau ItemRenderer mixin)
+  hanya untuk client player sendiri
+  render orb di viewmodel space (ikut tangan kanan, bukan cursor)
+  posisi: offset dari kamera + arm transform, natural digenggam
+  tidak menutupi crosshair
+
+OrbProjectile extends ProjectileEntity (server + client)
+  hanya spawn saat skill cast melempar orb (bukan semua skill)
+  punya velocity = player.getRotationVec() * projectile_speed
+  punya collision handler → impact VFX packet
+```
+
+### Packet yang Dibutuhkan
+
+| Packet | Arah | Isi |
 |---|---|---|
-| **Api** | Bola api berputar, partikel flame melingkar, glow oranye | Blaze fireball, tapi spherical |
-| **Udara** | Sphere transparan, cincin angin berputar horizontal, partikel cloud | Avatar airbending sphere |
-| **Listrik** | Bola biru/putih, petir kecil keluar ke segala arah saat digenggam | Chidori (Naruto) |
-| **Air** | Bola air, droplet mengorbit, efek riak | Waterbending ball |
-| **Tanah** | Bongkahan batu berputar mengelilingi inti | Earthbending rock |
+| `S2CPhaseSync` | Server→Client | skillId, phase, casterUUID, ticksIn — **sudah ada di TASKS** |
+| `S2COrbImpact` | Server→Client | position, element, skill_id — baru |
+
+`S2CPhaseSync` adalah blocker: ChargeOrbClientState bergantung pada packet ini.
+Kalau belum ada, perlu dibuat dulu sebelum renderer bisa ditest.
 
 ---
 
-## Arsitektur Teknis (Proposal Claude)
-
-### Komponen
+## Urutan Implementasi
 
 ```
-OrbEntity (server + client)
-  └── tethered ke PlayerEntity via tether_id
-  └── state: CHARGING | HELD | FLYING | DEAD
+1. S2CPhaseSync packet (server kirim phase ke semua client nearby)
+   → Claude Code
 
-OrbRenderer (client only)
-  └── WorldRenderEvents.AFTER_ENTITIES
-  └── render sphere + particle ring berdasarkan element
+2. ChargeOrbClientState (client-side state dari packet)
+   → Claude Code
 
-FirstPersonOrbOverlay (client only)
-  └── HudRenderCallback (atau WorldRenderEvents.AFTER_TRANSLUCENT)
-  └── billboard quad di depan kamera, ikut pitch/yaw player
-  └── sync state dengan OrbEntity milik client player
+3. ChargeOrbRenderer 3rd person — Fire element dulu
+   → Claude Code (sphere + partikel flame)
 
-OrbBehavior (server)
-  └── dipanggil oleh SkillTimeline saat phase transition
-  └── WINDUP → spawn OrbEntity di koordinat tangan player
-  └── ACTIVE → update tether setiap tick
-  └── cast → setVelocity ke arah player.getRotationVec()
-  └── hit → impact VFX packet ke semua client nearby
+4. FirstPersonOrbRenderer — Fire element
+   → Claude Code (viewmodel space)
+
+5. Test fire_jab: orb muncul saat WINDUP, held saat ACTIVE, hilang saat RECOVERY
+   → User
+
+6. OrbProjectile (opsional per skill, bukan semua)
+   → Claude Code setelah langkah 5 verified
+
+7. Visual elemen lain (Air, Water, Earth)
+   → Claude Code setelah Fire pipeline terbukti
 ```
-
-### Attachment ke Tangan
-
-Posisi orb server-side: `player.getPos() + player.getHandPos_approx()`
-
-Posisi orb client-side (akurat): via PAL `right_arm` bone world position
-- Diambil setelah PAL selesai compute pose frame
-- Offset dari `right_arm` pivot ke ujung tangan: `+[0, -6, 0]` (blok)
-
-### 1st Person Sync
-
-1st person overlay dirender sebagai billboard quad di `near plane + 0.5 blok`.
-Posisi ikut `player.getRotationVec()` × jarak genggam (0.6 blok dari kamera).
-Size orb disesuaikan FOV agar terlihat natural.
-
-Efek orb (partikel melingkar) dirender di world space di titik yang sama,
-sehingga 3rd person spectator melihat orb di tangan, 1st person melihat orb di depan tangan.
 
 ---
 
-## Pertanyaan untuk ChatGPT
+## Skill yang Butuh Charge Orb (Prioritas)
 
-Mohon jawab sebelum Claude mulai implementasi:
-
-**1. Urutan prioritas skill yang butuh orb:**
-- [ ] A: fire_jab dulu (satu skill, prove pipeline)
-- [ ] B: semua Fire skill sekaligus
-- [ ] C: satu skill per elemen sekaligus
-
-**2. Kapan orb muncul:**
-- [ ] A: hanya saat WINDUP (orb = charging indicator)
-- [ ] B: saat WINDUP + tetap di ACTIVE sampai dilempar
-- [ ] C: sudah ada di tangan saat idle (persistent orb)
-
-**3. Apakah orb visible ke player lain di multiplayer:**
-- [ ] A: Ya, semua bisa lihat (OrbEntity = real entity di dunia)
-- [ ] B: Tidak, hanya cosmetic client-side
-
-**4. Cancel behavior:**
-- [ ] A: Orb langsung hilang (pop) jika skill di-cancel
-- [ ] B: Orb dissolve animation sebelum hilang
-- [ ] C: Orb jatuh ke tanah jika cancel saat ACTIVE
-
-**5. Orb saat dilempar:**
-- [ ] A: Menjadi projectile entity (OrbProjectile)
-- [ ] B: Orb hilang di tangan, efek terpisah (tidak ada projectile terlihat)
-- [ ] C: Tergantung skill
-
-**6. 1st person implementation priority:**
-- [ ] A: 1st person orb penting, harus selesai bersamaan dengan 3rd person
-- [ ] B: 3rd person dulu, 1st person bisa ditambah belakangan
-- [ ] C: Hanya 3rd person (game dimainkan di 3rd person)
-
-**7. Konfirmasi attachment point:**
-Apakah orb attach ke `right_hand` PAL bone, atau cukup approximate dari `player.getPos()` + offset tetap?
+| Skill | Orb | Catatan |
+|---|---|---|
+| `avatar:fire_jab` | Api kecil | Orb kecil, langsung dilempar/dilebur ke jab |
+| `avatar:fire_jet` | Api besar | Orb besar, ditembak sebagai projectile |
+| `avatar:air_blast` | Udara | Orb sphere transparan |
+| `avatar:water_whip` | Air | Bukan orb — whip shape, visual berbeda |
+| `avatar:air_staff_attack` | Tidak | Pakai trail angin, tidak perlu orb |
 
 ---
 
 ## Ketergantungan
 
-Orb system **membutuhkan** ini selesai lebih dulu:
-- [ ] Animasi tangan fire_jab final dari Antigravity (agar orb posisi akurat di ujung tangan)
-- [ ] PAL custom bone `right_hand` atau minimal `right_arm` world position query
-
-Orb system **tidak membutuhkan** ini:
-- Trail renderer (trail adalah fitur terpisah, orb bisa jalan tanpa trail)
-- Skill tree / progression
-
----
-
-## Estimasi Kompleksitas
-
-| Komponen | Estimasi |
-|---|---|
-| OrbEntity + networking | Medium (2–3 hari) |
-| OrbRenderer 3rd person | Medium (1–2 hari) |
-| Particle ring per elemen | Medium (1 hari per elemen) |
-| 1st person overlay | Medium-High (2–3 hari, butuh FOV compensation) |
-| Cursor tracking (aim lock) | Low (player.getRotationVec() sudah ada) |
-| Cast velocity sync | Low (server-side, ikut getRotationVec()) |
-
-**Total estimasi (fire element saja, semua komponen):** 1–2 minggu.
-
----
-
-*Dokumen ini disiapkan oleh Claude Code untuk direview ChatGPT.*
-*Setelah ChatGPT jawab pertanyaan di atas, Claude akan mulai implementasi sesuai jawaban.*
+- **PAL `right_arm` bone world position** — dibutuhkan untuk posisi orb akurat.
+  Saat ini belum ada query API. Perlu dicek apakah PAL expose world matrix bone.
+- **Animasi tangan final (Antigravity)** — agar posisi orb sinkron dengan gerakan.
+  Bisa diimplementasi tanpa ini, dengan fallback `player.getHandPos()` approximate.
+- **`S2CPhaseSync` packet** — blocker utama. Harus ada sebelum renderer.
