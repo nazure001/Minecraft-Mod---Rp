@@ -1,0 +1,108 @@
+{
+  "manifest_version": "0.1",
+  "project": "Avatar: Elements",
+  "target_stage": "Stage 2 - Vertical Prototype",
+  "audio_format": "WAV PCM 16-bit 44.1kHz (Mono)",
+  "status_scope": "MOCKUP / PROTOTYPE SYNTHESIS (Verifikasi timing & envelope; belum foley studio / in-game loaded)",
+  "events": [
+    {
+      "event": "avatar:fire_jab",
+      "moveset": "Fire Unarmed",
+      "filename": "fire_jab.wav",
+      "duration_seconds": 0.35,
+      "variants_count": 1,
+      "origin": "Proyek sendiri (Sintesis matematis DSP Python)",
+      "license": "CC0 / Domain Publik",
+      "status": "FILE DIBUAT",
+      "verification": "Lolos validasi struktur WAV header & PCM decoding. Belum diuji in-game."
+    },
+    {
+      "event": "avatar:flame_sweep",
+      "moveset": "Fire Unarmed",
+      "filename": "flame_sweep.wav",
+      "duration_seconds": 0.65,
+      "variants_count": 1,
+      "origin": "Proyek sendiri (Sintesis matematis DSP Python)",
+      "license": "CC0 / Domain Publik",
+      "status": "FILE DIBUAT",
+      "verification": "Lolos validasi struktur WAV header & PCM decoding. Belum diuji in-game."
+    },
+    {
+      "event": "avatar:fire_jet",
+      "moveset": "Fire Unarmed (Mobility)",
+      "filename": "fire_jet.wav",
+      "duration_seconds": 0.80,
+      "variants_count": 1,
+      "origin": "Proyek sendiri (Sintesis matematis DSP Python)",
+      "license": "CC0 / Domain Publik",
+      "status": "FILE DIBUAT",
+      "verification": "Lolos validasi struktur WAV header & PCM decoding. Belum diuji in-game."
+    },
+    {
+      "event": "avatar:fire_impact",
+      "moveset": "Fire Unarmed (Hit Impact)",
+      "filename": "fire_impact.wav",
+      "duration_seconds": 0.50,
+      "variants_count": 1,
+      "origin": "Proyek sendiri (Sintesis matematis DSP Python)",
+      "license": "CC0 / Domain Publik",
+      "status": "FILE DIBUAT",
+      "verification": "Lolos validasi struktur WAV header & PCM decoding. Belum diuji in-game."
+    },
+    {
+      "event": "avatar:staff_thrust",
+      "moveset": "Air Staff",
+      "filename": "staff_thrust.wav",
+      "duration_seconds": 0.30,
+      "variants_count": 1,
+      "origin": "Proyek sendiri (Sintesis matematis DSP Python)",
+      "license": "CC0 / Domain Publik",
+      "status": "FILE DIBUAT",
+      "verification": "Lolos validasi struktur WAV header & PCM decoding. Belum diuji in-game."
+    },
+    {
+      "event": "avatar:staff_spin",
+      "moveset": "Air Staff",
+      "filename": "staff_spin.wav",
+      "duration_seconds": 0.75,
+      "variants_count": 1,
+      "origin": "Proyek sendiri (Sintesis matematis DSP Python)",
+      "license": "CC0 / Domain Publik",
+      "status": "FILE DIBUAT",
+      "verification": "Lolos validasi struktur WAV header & PCM decoding. Belum diuji in-game."
+    },
+    {
+      "event": "avatar:staff_sweep",
+      "moveset": "Air Staff",
+      "filename": "staff_sweep.wav",
+      "duration_seconds": 0.45,
+      "variants_count": 1,
+      "origin": "Proyek sendiri (Sintesis matematis DSP Python)",
+      "license": "CC0 / Domain Publik",
+      "status": "FILE DIBUAT",
+      "verification": "Lolos validasi struktur WAV header & PCM decoding. Belum diuji in-game."
+    },
+    {
+      "event": "avatar:air_vortex",
+      "moveset": "Air Staff (Skill Khas)",
+      "filename": "air_vortex.wav",
+      "duration_seconds": 1.20,
+      "variants_count": 1,
+      "origin": "Proyek sendiri (Sintesis matematis DSP Python)",
+      "license": "CC0 / Domain Publik",
+      "status": "FILE DIBUAT",
+      "verification": "Lolos validasi struktur WAV header & PCM decoding. Belum diuji in-game."
+    },
+    {
+      "event": "avatar:staff_impact",
+      "moveset": "Air Staff (Hit Impact)",
+      "filename": "staff_impact.wav",
+      "duration_seconds": 0.25,
+      "variants_count": 1,
+      "origin": "Proyek sendiri (Sintesis matematis DSP Python)",
+      "license": "CC0 / Domain Publik",
+      "status": "FILE DIBUAT",
+      "verification": "Lolos validasi struktur WAV header & PCM decoding. Belum diuji in-game."
+    }
+  ]
+}

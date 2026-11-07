@@ -1,49 +1,112 @@
-# Build output
-mod/build/
-mod/.gradle/
-mod/run/
-*.class
-*.jar
-!reference/*.jar
+# ==============================================================================
+# Git Ignore Configuration - Avatar Elements (Minecraft Java 1.21.1 / Fabric)
+# ==============================================================================
 
-# Gradle caches
+# ------------------------------------------------------------------------------
+# 1. Gradle & Fabric Loom Build Outputs
+# ------------------------------------------------------------------------------
 .gradle/
+build/
+out/
+bin/
+mod/.gradle/
+mod/build/
+mod/out/
+mod/bin/
+.loom-cache/
+mod/.loom-cache/
+remapped_mods/
 gradle-app.setting
+.gradletasknamecache
 
-# IDE
-.idea/
-*.iml
-.vscode/
-.antigravity/
+# Java compilation artifacts
+*.class
 
-# Logs and temp
-*.log
+# Jar archives (ignore all jars except Gradle Wrapper)
+*.jar
+!**/gradle/wrapper/gradle-wrapper.jar
+!**/gradle-wrapper.jar
+
+# ------------------------------------------------------------------------------
+# 2. Minecraft Runtime Environment & Dedicated Server Data
+# ------------------------------------------------------------------------------
+run/
+mod/run/
 logs/
+mod/logs/
 crash-reports/
+mod/crash-reports/
+*.log
 
-# Minecraft world data (never commit)
+# Sensitive/Stateful world & server files (never commit)
 mod/run/saves/
 mod/run/world/
 mod/run/server.properties
 mod/run/ops.json
 mod/run/whitelist.json
 mod/run/banned-*.json
-mod/run/usercache.json
+mod/run/usercache.json*
+mod/run/eula.txt
+mod/run/mods/
+mod/run/config/
 
-# Python cache
+# ------------------------------------------------------------------------------
+# 3. IDE, Editor & Antigravity Metadata
+# ------------------------------------------------------------------------------
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.antigravity/
+.settings/
+.project
+.classpath
+
+# ------------------------------------------------------------------------------
+# 4. Reference Binaries & Large Media Archives
+# ------------------------------------------------------------------------------
+# External reference files (JARs, Addons, ZIPs)
+reference/*
+!reference/.gitkeep
+!reference/README.md
+
+# Package exports in root & unneeded archives
+*.zip
+*.mcaddon
+!legacy/*.zip
+
+# ------------------------------------------------------------------------------
+# 5. Legacy Root Duplicates
+# ------------------------------------------------------------------------------
+# Root-level legacy python generator scripts (tracked canonical versions live in legacy/)
+/*.py
+
+# ------------------------------------------------------------------------------
+# 6. Python Environments & Caches
+# ------------------------------------------------------------------------------
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+ENV/
 
-# OS
+# ------------------------------------------------------------------------------
+# 7. Operating System & Temporary Files
+# ------------------------------------------------------------------------------
 .DS_Store
 Thumbs.db
 desktop.ini
+*.tmp
+*.bak
+*~
 
-# Large reference files (track with Git LFS or exclude)
-reference/*.zip
-reference/*.mcaddon
-
-# Credentials and secrets
+# ------------------------------------------------------------------------------
+# 8. Secrets & Local Environment Overrides
+# ------------------------------------------------------------------------------
 *.env
+*.env.*
 secrets.properties
+local.properties

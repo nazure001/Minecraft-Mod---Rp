@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "com.avatarmod.elements.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

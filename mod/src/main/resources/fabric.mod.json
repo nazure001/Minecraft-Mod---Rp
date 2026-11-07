@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "Avatar: Elements",
+  "description": "Bending the four elements in Minecraft — fire, water, earth, air. Fabric 1.21.1.",
+  "authors": [
+    "Avatar Elements Team"
+  ],
+  "contact": {
+    "sources": "https://github.com/TODO/avatar-elements"
+  },
+  "license": "MIT",
+  "icon": "assets/avatar_elements/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.avatarmod.elements.AvatarElementsMod"
+    ],
+    "client": [
+      "com.avatarmod.elements.client.AvatarElementsClient"
+    ]
+  },
+  "mixins": [
+    "avatar_elements.mixins.json",
+    {
+      "config": "avatar_elements.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {}
+}

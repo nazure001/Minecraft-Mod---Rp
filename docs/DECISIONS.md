@@ -57,3 +57,40 @@ Format: `[YYYY-MM-DD] DXXX — Judul — Keputusan — Alasan`
 **Tanggal:** 2026-11-07  
 **Keputusan:** Semua nilai skill, armor, weapon didefinisikan di `docs/CONTENT_SPEC.md` (selama masih datapack) dan akan dimigrasikan ke `data/avatar/skill_definitions/*.json` saat Tahap 1 Fabric mod dimulai.  
 **Alasan:** Mencegah nilai berbeda antara kode, HUD, tooltip, dan dokumentasi.
+
+---
+
+## D009 — Mod ID dan package Java
+**Tanggal:** 2026-11-07  
+**Keputusan:** Mod ID = `avatar_elements`, Maven group = `com.avatarmod`, package root = `com.avatarmod.elements`. Archives base name = `avatar-elements`.  
+**Alasan:** Placeholder yang dipakai saat scaffold T1-1. Jika nama mod berubah, update `gradle.properties` (mod_id, maven_group, archives_base_name) dan rename package — catat di sini.
+
+---
+
+## D010 — JDK: Java 17 dipertahankan sebagai JAVA_HOME sistem, JDK 21 Temurin side-by-side
+**Tanggal:** 2026-11-07  
+**Keputusan:** JDK 21 (Eclipse Temurin 21.0.5+11) diinstal di `C:\Users\USER\.jdks\jdk-21.0.5+11`. JAVA_HOME sistem tetap JDK 17. Gradle Java Toolchain di `build.gradle` mengarah ke Java 21; Gradle mendeteksi Temurin otomatis dari `~/.jdks`.  
+**Alasan:** Instruksi eksplisit: jangan ubah JAVA_HOME/PATH global. Toolchain Gradle menangani pemilihan JDK per-project tanpa mengubah sistem.
+
+---
+
+## D012 — JDK 25 side-by-side untuk Gradle/Loom toolchain
+**Tanggal:** 2026-11-07  
+**Keputusan:** JDK 25 (Temurin 25.0.5+8) di-install di `C:\Users\USER\.jdks\jdk-25.0.5+8`. Gradle + Loom dijalankan dengan JDK 25; mod sendiri masih compile ke Java 21 via toolchain.  
+**Alasan:** Fabric Loom 1.18+ menggunakan Java 25 Foreign Function and Memory API sebagai pengganti native library internal. Semua loom ≥ 1.18.1 membutuhkan JVM 25 untuk menjalankan Gradle, meskipun mod targetnya tetap Java 21. Loom 1.17.x tidak kompatibel dengan Gradle 9.8.2. JDK 25 di-install side-by-side sesuai constraint "jangan ubah JAVA_HOME global".
+
+---
+
+## D011 — Versi dependency Fabric scaffold (terkonfirmasi dari sumber resmi)
+**Tanggal:** 2026-11-07  
+**Sumber:** `github.com/FabricMC/fabric-example-mod` branch `1.21.1`  
+**Keputusan:**
+- Minecraft: `1.21.1`
+- Fabric Loader: `0.20.1`
+- Fabric Loom: `1.19.3` (pinned; `1.19-SNAPSHOT` resolves ke 1.19.4+ yang requires Java 25; loom 1.17.x tidak compatible dengan Gradle 9.8.2)
+- Fabric API: `0.116.17+1.21.1`
+- Gradle: `9.8.2`
+- Mappings: `loom.officialMojangMappings()` (Mojang, bukan Yarn)
+- Java toolchain: `21`
+
+**Alasan:** Versi diambil langsung dari template resmi Fabric, bukan ditebak.
