@@ -24,15 +24,23 @@ public class AvatarElementsClient implements ClientModInitializer {
             while (AvatarKeyBindings.TEST_ACTION.wasPressed()) {
                 ClientNetworkHandler.sendTestAction();
             }
-            // T1-3 skill input test (key G → fire_jab)
+            // Fire skills
             while (AvatarKeyBindings.SKILL_FIRE_JAB.wasPressed()) {
                 SkillClientHandler.sendSkillInput("avatar:fire_jab");
             }
-            // T2-6 air staff combo (key H)
+            while (AvatarKeyBindings.SKILL_FLAME_SWEEP.wasPressed()) {
+                SkillClientHandler.sendSkillInput("avatar:flame_sweep");
+            }
+            while (AvatarKeyBindings.SKILL_FIRE_JET.wasPressed()) {
+                SkillClientHandler.sendSkillInput("avatar:fire_jet");
+            }
+            while (AvatarKeyBindings.SKILL_FIRE_GUARD.wasPressed()) {
+                SkillClientHandler.sendSkillInput("avatar:fire_guard");
+            }
+            // Air skills
             while (AvatarKeyBindings.SKILL_AIR_STAFF.wasPressed()) {
                 SkillClientHandler.sendSkillInput("avatar:air_staff_attack");
             }
-            // T2-7 air vortex (key V)
             while (AvatarKeyBindings.SKILL_AIR_VORTEX.wasPressed()) {
                 SkillClientHandler.sendSkillInput("avatar:air_vortex");
             }

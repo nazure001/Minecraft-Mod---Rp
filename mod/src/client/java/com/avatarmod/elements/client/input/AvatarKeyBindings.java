@@ -25,6 +25,33 @@ public final class AvatarKeyBindings {
             )
     );
 
+    public static final KeyBinding SKILL_FLAME_SWEEP = KeyBindingHelper.registerKeyBinding(
+            new KeyBinding(
+                    "key.avatar_elements.skill_flame_sweep",
+                    InputUtil.Type.KEYSYM,
+                    GLFW.GLFW_KEY_F,
+                    "category.avatar_elements.general"
+            )
+    );
+
+    public static final KeyBinding SKILL_FIRE_JET = KeyBindingHelper.registerKeyBinding(
+            new KeyBinding(
+                    "key.avatar_elements.skill_fire_jet",
+                    InputUtil.Type.KEYSYM,
+                    GLFW.GLFW_KEY_J,
+                    "category.avatar_elements.general"
+            )
+    );
+
+    public static final KeyBinding SKILL_FIRE_GUARD = KeyBindingHelper.registerKeyBinding(
+            new KeyBinding(
+                    "key.avatar_elements.skill_fire_guard",
+                    InputUtil.Type.KEYSYM,
+                    GLFW.GLFW_KEY_K,
+                    "category.avatar_elements.general"
+            )
+    );
+
     public static final KeyBinding SKILL_AIR_STAFF = KeyBindingHelper.registerKeyBinding(
             new KeyBinding(
                     "key.avatar_elements.skill_air_staff",
