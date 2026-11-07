@@ -1,5 +1,6 @@
 package com.avatarmod.elements.client.network;
 
+import com.avatarmod.elements.client.hud.HudState;
 import com.avatarmod.elements.network.SkillPackets;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
@@ -36,13 +37,11 @@ public final class SkillClientHandler {
                 (payload, context) -> {
                     MinecraftClient client = context.client();
                     client.execute(() -> {
-                        if (client.player == null) return;
-                        // HUD rendering placeholder — T1-8 will implement the actual overlay.
-                        // Log to actionbar for now so the pipeline is visible during testing.
-                        client.player.sendMessage(
-                                Text.literal("§b[HUD] Chi: " + payload.currentChi() + "/" + payload.maxChi()
-                                        + "  CD: " + payload.activeCooldownSkillId()
-                                        + " (" + payload.cooldownTicksRemaining() + "t)"), true);
+                        HudState.update(
+                                payload.currentChi(),
+                                payload.maxChi(),
+                                payload.activeCooldownSkillId(),
+                                payload.cooldownTicksRemaining());
                     });
                 });
     }

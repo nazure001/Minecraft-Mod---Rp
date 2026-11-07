@@ -1,6 +1,7 @@
 package com.avatarmod.elements.client;
 
 import com.avatarmod.elements.AvatarElementsMod;
+import com.avatarmod.elements.client.hud.AvatarHudRenderer;
 import com.avatarmod.elements.client.input.AvatarKeyBindings;
 import com.avatarmod.elements.client.network.ClientNetworkHandler;
 import com.avatarmod.elements.client.network.SkillClientHandler;
@@ -15,6 +16,7 @@ public class AvatarElementsClient implements ClientModInitializer {
         AvatarKeyBindings.register();
         ClientNetworkHandler.register();
         SkillClientHandler.register();
+        AvatarHudRenderer.register();
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null) return;
