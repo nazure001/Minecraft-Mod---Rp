@@ -1,287 +1,379 @@
 {
   "manifest_version": "0.2-revised",
   "project": "Avatar: Elements",
-  "target_stage": "Stage 2 - Vertical Prototype",
-  "audio_target_format": "Minecraft Native OGG Vorbis 44.1kHz (Format saat ini: WAV PCM 16-bit Mono mockup)",
-  "total_core_events": 14,
-  "total_variants": 27,
-  "total_variants_available": 9,
-  "total_variants_pending": 18,
-  "origin_and_license_rationale": {
-    "origin": "Proyek internal Avatar: Elements (Disintesis secara matematis melalui modulasi frekuensi DSP Python)",
-    "license_basis": "Karya prosedural orisinal buatan sendiri, bebas dari sampel berhak cipta pihak ketiga, dilisensikan di bawah CC0 (Public Domain Dedication) untuk penggunaan internal dan rilis mod.",
-    "technical_limitations": "Audio yang tersedia saat ini berstatus MOCKUP AUDIO SINTETIS PROSEDURAL untuk verifikasi timeline dan sinkronisasi kombo; BUKAN rekaman studio Foley aktor laga asli. Memerlukan konversi ke OGG Vorbis dan registrasi sounds.json resmi sebelum pengujian in-game."
+  "mod_id": "avatar_elements",
+  "status": "DRAFT PARSIAL, MENUNGGU REVIEW ASET",
+  "audio_format_current": "WAV PCM 16-bit 44.1kHz Mono (Draft Mockup Sintetis)",
+  "audio_format_target": "OGG Vorbis 44.1kHz (Minecraft Native Runtime)",
+  "counters_calculated_from_array": {
+    "total_core_events": 14,
+    "total_variants": 27,
+    "variants_draft_available": 9,
+    "variants_pending": 18
   },
-  "events": [
+  "documentation": {
+    "origin": "Proyek internal Avatar: Elements (Disintesis secara matematis menggunakan modulasi frekuensi DSP Python)",
+    "license_basis": "Karya prosedural orisinal tanpa sampel pihak ketiga berhak cipta. Dilisensikan di bawah CC0 (Public Domain Dedication) untuk kebutuhan internal proyek mod.",
+    "mapping_policy": "Pemetaan draf audio lama ke event baru didasarkan murni pada kesesuaian karakter akustik (sapuan frekuensi, resonansi kayu, durasi letupan, atau pusaran), bukan sekadar mengganti nama file agar jumlah terpenuhi. Sebanyak 18 varian lainnya yang belum memiliki karakter audio yang cocok dicatat jujur berstatus BELUM DIBUAT.",
+    "technical_limitation": "Audio saat ini berstatus DRAFT MOCKUP SINTETIS PROSEDURAL untuk verifikasi keberadaan event dan alur trigger; BUKAN rekaman studio foley aktor laga asli. Tidak mengandung estimasi timing gameplay tanpa spesifikasi resmi. Belum dikonversi ke OGG Vorbis dan belum diuji in-game."
+  },
+  "core_events": [
     {
-      "event_id": "avatar_elements:fire_jab",
-      "category": "Fire Unarmed - Serangan Kombo 1",
-      "description": "Pukulan tinju api cepat (windup 2t, active 3t, recovery 4t)",
+      "event": "avatar_elements:fire.swing",
+      "description": "Suara ayunan serangan api",
+      "total_variants": 3,
       "variants": [
         {
-          "variant_name": "fire_jab_1.wav",
-          "duration": 0.35,
-          "status": "FILE DIBUAT (Mockup Sintetis)",
-          "path": "v0.2/fire_jab_1.wav"
+          "name": "fire_swing_1.wav",
+          "relative_path": "fire_swing_1.wav",
+          "status": "FILE DIBUAT (Draft Mockup Sintetis)",
+          "source_draft": "flame_sweep.wav",
+          "sound_character_rationale": "Sapuan frekuensi desiran api 200-800Hz (durasi 0.65s), cocok merepresentasikan ayunan serangan api sebelum mengenai sasaran.",
+          "audio_properties": {
+            "duration_seconds": 0.65,
+            "sample_rate_hz": 44100,
+            "channels": 1,
+            "bit_depth": 16
+          }
         },
         {
-          "variant_name": "fire_jab_2.wav",
-          "duration": null,
+          "name": "fire_swing_2.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi foley ayunan api sekunder (belum tersedia di draft lama).",
+          "audio_properties": null
         },
         {
-          "variant_name": "fire_jab_3.wav",
-          "duration": null,
+          "name": "fire_swing_3.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi foley ayunan api tersier (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     },
     {
-      "event_id": "avatar_elements:flame_sweep",
-      "category": "Fire Unarmed - Serangan Kombo 2",
-      "description": "Tebasan sabit api menyapu 180 derajat (windup 3t, active 8t, recovery 6t)",
+      "event": "avatar_elements:fire.release",
+      "description": "Pelepasan letupan api instan dari tinju/tendangan",
+      "total_variants": 2,
       "variants": [
         {
-          "variant_name": "flame_sweep_1.wav",
-          "duration": 0.65,
-          "status": "FILE DIBUAT (Mockup Sintetis)",
-          "path": "v0.2/flame_sweep_1.wav"
+          "name": "fire_release_1.wav",
+          "relative_path": "fire_release_1.wav",
+          "status": "FILE DIBUAT (Draft Mockup Sintetis)",
+          "source_draft": "fire_jab.wav",
+          "sound_character_rationale": "Letupan pendek pop kompresi udara panas (durasi 0.35s), cocok merepresentasikan pelepasan api instan dari tinju/tendangan.",
+          "audio_properties": {
+            "duration_seconds": 0.35,
+            "sample_rate_hz": 44100,
+            "channels": 1,
+            "bit_depth": 16
+          }
         },
         {
-          "variant_name": "flame_sweep_2.wav",
-          "duration": null,
+          "name": "fire_release_2.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi letupan pelepasan api sekunder (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     },
     {
-      "event_id": "avatar_elements:fire_finisher",
-      "category": "Fire Unarmed - Serangan Kombo 3 Penutup",
-      "description": "Hentakan pukulan api ledakan penutup kombo",
+      "event": "avatar_elements:fire.impact",
+      "description": "Benturan dan sambaran api mengenai sasaran",
+      "total_variants": 3,
       "variants": [
         {
-          "variant_name": "fire_finisher_1.wav",
-          "duration": null,
-          "status": "BELUM DIBUAT",
-          "path": null
+          "name": "fire_impact_1.wav",
+          "relative_path": "fire_impact_1.wav",
+          "status": "FILE DIBUAT (Draft Mockup Sintetis)",
+          "source_draft": "fire_impact.wav",
+          "sound_character_rationale": "Ledakan benturan bass ~60Hz berpadu suara sambaran api membakar target (durasi 0.50s).",
+          "audio_properties": {
+            "duration_seconds": 0.5,
+            "sample_rate_hz": 44100,
+            "channels": 1,
+            "bit_depth": 16
+          }
         },
         {
-          "variant_name": "fire_finisher_2.wav",
-          "duration": null,
+          "name": "fire_impact_2.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi ledakan benturan sekunder (belum tersedia di draft lama).",
+          "audio_properties": null
+        },
+        {
+          "name": "fire_impact_3.wav",
+          "relative_path": null,
+          "status": "BELUM DIBUAT",
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi ledakan benturan tersier (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     },
     {
-      "event_id": "avatar_elements:fire_jet_start",
-      "category": "Fire Unarmed - Skill Mobilitas (Ignition)",
-      "description": "Letupan semburan api awal saat meluncur maju",
+      "event": "avatar_elements:fire.charge_start",
+      "description": "Inisiasi pengisian energi api atau ignition semburan lunge",
+      "total_variants": 1,
       "variants": [
         {
-          "variant_name": "fire_jet_start_1.wav",
-          "duration": 0.8,
-          "status": "FILE DIBUAT (Mockup Sintetis)",
-          "path": "v0.2/fire_jet_start_1.wav"
-        },
-        {
-          "variant_name": "fire_jet_start_2.wav",
-          "duration": null,
-          "status": "BELUM DIBUAT",
-          "path": null
+          "name": "fire_charge_start_1.wav",
+          "relative_path": "fire_charge_start_1.wav",
+          "status": "FILE DIBUAT (Draft Mockup Sintetis)",
+          "source_draft": "fire_jet.wav",
+          "sound_character_rationale": "Deru pengapian awal (ignition swell) yang naik secara eksponensial (durasi 0.80s), cocok untuk inisiasi luncuran semburan api.",
+          "audio_properties": {
+            "duration_seconds": 0.8,
+            "sample_rate_hz": 44100,
+            "channels": 1,
+            "bit_depth": 16
+          }
         }
       ]
     },
     {
-      "event_id": "avatar_elements:fire_jet_loop",
-      "category": "Fire Unarmed - Skill Mobilitas (Loop)",
-      "description": "Suara desis dorongan api kontinu di kaki selama gliding",
+      "event": "avatar_elements:fire.charge_loop",
+      "description": "Deru kobaran api kontinu selama pengisian atau luncuran",
+      "total_variants": 1,
       "variants": [
         {
-          "variant_name": "fire_jet_loop.wav",
-          "duration": null,
+          "name": "fire_charge_loop_1.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan looping audio deru kobaran api mulus tanpa sambungan klik (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     },
     {
-      "event_id": "avatar_elements:fire_guard_cast",
-      "category": "Fire Unarmed - Skill Pertahanan",
-      "description": "Kobaran perisai api melingkar menangkis proyektil",
+      "event": "avatar_elements:fire.charge_release",
+      "description": "Pelepasan energi api terisi secara eksplosif",
+      "total_variants": 2,
       "variants": [
         {
-          "variant_name": "fire_guard_cast_1.wav",
-          "duration": null,
+          "name": "fire_charge_release_1.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan letupan pelepasan energi api bermassa besar (belum tersedia di draft lama).",
+          "audio_properties": null
         },
         {
-          "variant_name": "fire_guard_cast_2.wav",
-          "duration": null,
+          "name": "fire_charge_release_2.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi pelepasan energi api sekunder (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     },
     {
-      "event_id": "avatar_elements:fire_impact",
-      "category": "Fire Unarmed - Dampak Benturan",
-      "description": "Suara ledakan dan sambaran panas saat jurus api menghantam target",
+      "event": "avatar_elements:staff.swing",
+      "description": "Desiran ayunan bilah tongkat kayu di udara",
+      "total_variants": 3,
       "variants": [
         {
-          "variant_name": "fire_impact_1.wav",
-          "duration": 0.5,
-          "status": "FILE DIBUAT (Mockup Sintetis)",
-          "path": "v0.2/fire_impact_1.wav"
+          "name": "staff_swing_1.wav",
+          "relative_path": "staff_swing_1.wav",
+          "status": "FILE DIBUAT (Draft Mockup Sintetis)",
+          "source_draft": "staff_sweep.wav",
+          "sound_character_rationale": "Desiran kayu padat membelah massa udara (durasi 0.45s), merepresentasikan ayunan tongkat di udara.",
+          "audio_properties": {
+            "duration_seconds": 0.45,
+            "sample_rate_hz": 44100,
+            "channels": 1,
+            "bit_depth": 16
+          }
         },
         {
-          "variant_name": "fire_impact_2.wav",
-          "duration": null,
+          "name": "staff_swing_2.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi desiran ayunan tongkat kayu sekunder (belum tersedia di draft lama).",
+          "audio_properties": null
         },
         {
-          "variant_name": "fire_impact_3.wav",
-          "duration": null,
+          "name": "staff_swing_3.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi desiran ayunan tongkat kayu tersier (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     },
     {
-      "event_id": "avatar_elements:staff_thrust",
-      "category": "Air Staff - Serangan Kombo 1",
-      "description": "Tusukan lurus tongkat kayu berdesing di udara",
+      "event": "avatar_elements:staff.spin",
+      "description": "Putaran tongkat kayu berulang secara kontinu",
+      "total_variants": 2,
       "variants": [
         {
-          "variant_name": "staff_thrust_1.wav",
-          "duration": 0.3,
-          "status": "FILE DIBUAT (Mockup Sintetis)",
-          "path": "v0.2/staff_thrust_1.wav"
+          "name": "staff_spin_1.wav",
+          "relative_path": "staff_spin_1.wav",
+          "status": "FILE DIBUAT (Draft Mockup Sintetis)",
+          "source_draft": "staff_spin.wav",
+          "sound_character_rationale": "Putaran tongkat kayu berulang secara siklik (~5Hz osilasi, durasi 0.75s), cocok merepresentasikan teknik baling-baling tongkat.",
+          "audio_properties": {
+            "duration_seconds": 0.75,
+            "sample_rate_hz": 44100,
+            "channels": 1,
+            "bit_depth": 16
+          }
         },
         {
-          "variant_name": "staff_thrust_2.wav",
-          "duration": null,
+          "name": "staff_spin_2.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi putaran tongkat kayu berkecepatan berbeda (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     },
     {
-      "event_id": "avatar_elements:staff_spin",
-      "category": "Air Staff - Serangan Kombo 2",
-      "description": "Putaran baling-baling tongkat kayu menangkis dan memukul",
+      "event": "avatar_elements:staff.impact",
+      "description": "Benturan tumpul tongkat kayu mengenai target",
+      "total_variants": 3,
       "variants": [
         {
-          "variant_name": "staff_spin_1.wav",
-          "duration": 0.75,
-          "status": "FILE DIBUAT (Mockup Sintetis)",
-          "path": "v0.2/staff_spin_1.wav"
+          "name": "staff_impact_1.wav",
+          "relative_path": "staff_impact_1.wav",
+          "status": "FILE DIBUAT (Draft Mockup Sintetis)",
+          "source_draft": "staff_impact.wav",
+          "sound_character_rationale": "Benturan tumpul kayu keras membentur benda padat (resonansi transient ~190Hz, durasi 0.25s).",
+          "audio_properties": {
+            "duration_seconds": 0.25,
+            "sample_rate_hz": 44100,
+            "channels": 1,
+            "bit_depth": 16
+          }
         },
         {
-          "variant_name": "staff_spin_2.wav",
-          "duration": null,
+          "name": "staff_impact_2.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi benturan tumpul kayu sekunder (belum tersedia di draft lama).",
+          "audio_properties": null
+        },
+        {
+          "name": "staff_impact_3.wav",
+          "relative_path": null,
+          "status": "BELUM DIBUAT",
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi benturan tumpul kayu tersier (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     },
     {
-      "event_id": "avatar_elements:staff_sweep",
-      "category": "Air Staff - Serangan Kombo 3",
-      "description": "Sapuan mendatar tongkat menghempaskan angin kencang",
+      "event": "avatar_elements:air.release",
+      "description": "Hembusan pelepasan tekanan udara",
+      "total_variants": 2,
       "variants": [
         {
-          "variant_name": "staff_sweep_1.wav",
-          "duration": 0.45,
-          "status": "FILE DIBUAT (Mockup Sintetis)",
-          "path": "v0.2/staff_sweep_1.wav"
+          "name": "air_release_1.wav",
+          "relative_path": "air_release_1.wav",
+          "status": "FILE DIBUAT (Draft Mockup Sintetis)",
+          "source_draft": "staff_thrust.wav",
+          "sound_character_rationale": "Hembusan dorongan udara tajam dan terfokus (durasi 0.30s), merepresentasikan pelepasan tekanan udara.",
+          "audio_properties": {
+            "duration_seconds": 0.3,
+            "sample_rate_hz": 44100,
+            "channels": 1,
+            "bit_depth": 16
+          }
         },
         {
-          "variant_name": "staff_sweep_2.wav",
-          "duration": null,
+          "name": "air_release_2.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi dorongan pelepasan udara sekunder (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     },
     {
-      "event_id": "avatar_elements:air_vortex_cast",
-      "category": "Air Staff - Skill Khas (Inisiasi)",
-      "description": "Hentakan tongkat membangkitkan pusaran angin sentrifugal",
+      "event": "avatar_elements:air.impact",
+      "description": "Dentuman benturan tekanan udara mengenai sasaran",
+      "total_variants": 2,
       "variants": [
         {
-          "variant_name": "air_vortex_cast_1.wav",
-          "duration": 1.2,
-          "status": "FILE DIBUAT (Mockup Sintetis)",
-          "path": "v0.2/air_vortex_cast_1.wav"
+          "name": "air_impact_1.wav",
+          "relative_path": null,
+          "status": "BELUM DIBUAT",
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan dentuman benturan gelombang tekanan angin ke tubuh/dinding (belum tersedia di draft lama).",
+          "audio_properties": null
         },
         {
-          "variant_name": "air_vortex_cast_2.wav",
-          "duration": null,
+          "name": "air_impact_2.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan variasi dentuman benturan udara sekunder (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     },
     {
-      "event_id": "avatar_elements:air_vortex_loop",
-      "category": "Air Staff - Skill Khas (Loop)",
-      "description": "Deru pusaran angin tornado berputar kontinu menyedot entitas",
+      "event": "avatar_elements:air.vortex_start",
+      "description": "Inisiasi pembentukan pusaran angin",
+      "total_variants": 1,
       "variants": [
         {
-          "variant_name": "air_vortex_loop.wav",
-          "duration": null,
-          "status": "BELUM DIBUAT",
-          "path": null
+          "name": "air_vortex_start_1.wav",
+          "relative_path": "air_vortex_start_1.wav",
+          "status": "FILE DIBUAT (Draft Mockup Sintetis)",
+          "source_draft": "air_vortex.wav",
+          "sound_character_rationale": "Pusaran angin sentrifugal resonan berdurasi 1.20s yang mengawali pembentukan pusaran udara.",
+          "audio_properties": {
+            "duration_seconds": 1.2,
+            "sample_rate_hz": 44100,
+            "channels": 1,
+            "bit_depth": 16
+          }
         }
       ]
     },
     {
-      "event_id": "avatar_elements:staff_impact",
-      "category": "Air Staff - Dampak Benturan",
-      "description": "Hantaman tumpul kayu mengenai tubuh lawan",
+      "event": "avatar_elements:air.vortex_loop",
+      "description": "Deru pusaran angin berputar kontinu",
+      "total_variants": 1,
       "variants": [
         {
-          "variant_name": "staff_impact_soft.wav",
-          "duration": null,
+          "name": "air_vortex_loop_1.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
-        },
-        {
-          "variant_name": "staff_impact_medium.wav",
-          "duration": 0.25,
-          "status": "FILE DIBUAT (Mockup Sintetis)",
-          "path": "v0.2/staff_impact_medium.wav"
-        },
-        {
-          "variant_name": "staff_impact_heavy.wav",
-          "duration": null,
-          "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan loop angin tornado kontinu tanpa jeda klik (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     },
     {
-      "event_id": "avatar_elements:staff_parry",
-      "category": "Air Staff - Tangkisan Kayu",
-      "description": "Benturan kayu tongkat menangkis senjata tajam atau panah",
+      "event": "avatar_elements:air.vortex_end",
+      "description": "Peredaan atau pelepasan akhir pusaran angin",
+      "total_variants": 1,
       "variants": [
         {
-          "variant_name": "staff_parry_1.wav",
-          "duration": null,
+          "name": "air_vortex_end_1.wav",
+          "relative_path": null,
           "status": "BELUM DIBUAT",
-          "path": null
-        },
-        {
-          "variant_name": "staff_parry_2.wav",
-          "duration": null,
-          "status": "BELUM DIBUAT",
-          "path": null
+          "source_draft": null,
+          "sound_character_rationale": "Memerlukan suara pelepasan atau peredaan pusaran angin (belum tersedia di draft lama).",
+          "audio_properties": null
         }
       ]
     }

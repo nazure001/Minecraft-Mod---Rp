@@ -2,7 +2,7 @@
   "meta": {
     "format_version": "4.10",
     "creation_time": 1730975000,
-    "model_format": "free",
+    "model_format": "java_block",
     "box_uv": false
   },
   "name": "air_staff",
@@ -16,6 +16,7 @@
       "name": "lower_cap",
       "box_uv": false,
       "type": "cube",
+      "uuid": "c3a1f2e0-1111-4000-8000-000000000001",
       "from": [
         7.0,
         -7.0,
@@ -35,55 +36,55 @@
       "faces": {
         "north": {
           "uv": [
-            0,
-            16,
-            2,
-            17
+            0.0,
+            16.0,
+            2.0,
+            17.0
           ],
           "texture": 0
         },
         "east": {
           "uv": [
-            2,
-            16,
-            4,
-            17
+            2.0,
+            16.0,
+            4.0,
+            17.0
           ],
           "texture": 0
         },
         "south": {
           "uv": [
-            4,
-            16,
-            6,
-            17
+            4.0,
+            16.0,
+            6.0,
+            17.0
           ],
           "texture": 0
         },
         "west": {
           "uv": [
-            6,
-            16,
-            8,
-            17
+            6.0,
+            16.0,
+            8.0,
+            17.0
           ],
           "texture": 0
         },
         "up": {
           "uv": [
-            0,
-            17,
-            2,
-            19
+            0.0,
+            17.0,
+            2.0,
+            19.0
           ],
           "texture": 0
         },
         "down": {
           "uv": [
-            2,
-            17,
-            4,
-            19
+            2.0,
+            17.0,
+            4.0,
+            19.0
           ],
           "texture": 0
         }
@@ -93,6 +94,7 @@
       "name": "lower_shaft",
       "box_uv": false,
       "type": "cube",
+      "uuid": "c3a1f2e0-1111-4000-8000-000000000002",
       "from": [
         7.25,
         -6.0,
@@ -112,44 +114,44 @@
       "faces": {
         "north": {
           "uv": [
-            0,
-            0,
+            0.0,
+            0.0,
             1.5,
-            11
+            11.0
           ],
           "texture": 0
         },
         "east": {
           "uv": [
-            2,
-            0,
+            2.0,
+            0.0,
             3.5,
-            11
+            11.0
           ],
           "texture": 0
         },
         "south": {
           "uv": [
-            4,
-            0,
+            4.0,
+            0.0,
             5.5,
-            11
+            11.0
           ],
           "texture": 0
         },
         "west": {
           "uv": [
-            6,
-            0,
+            6.0,
+            0.0,
             7.5,
-            11
+            11.0
           ],
           "texture": 0
         },
         "up": {
           "uv": [
-            0,
-            0,
+            0.0,
+            0.0,
             1.5,
             1.5
           ],
@@ -157,8 +159,8 @@
         },
         "down": {
           "uv": [
-            0,
-            0,
+            0.0,
+            0.0,
             1.5,
             1.5
           ],
@@ -170,6 +172,7 @@
       "name": "grip_wrap",
       "box_uv": false,
       "type": "cube",
+      "uuid": "c3a1f2e0-1111-4000-8000-000000000003",
       "from": [
         7.0,
         5.0,
@@ -189,55 +192,55 @@
       "faces": {
         "north": {
           "uv": [
-            16,
-            0,
-            18,
-            6
+            16.0,
+            0.0,
+            18.0,
+            6.0
           ],
           "texture": 0
         },
         "east": {
           "uv": [
-            18,
-            0,
-            20,
-            6
+            18.0,
+            0.0,
+            20.0,
+            6.0
           ],
           "texture": 0
         },
         "south": {
           "uv": [
-            20,
-            0,
-            22,
-            6
+            20.0,
+            0.0,
+            22.0,
+            6.0
           ],
           "texture": 0
         },
         "west": {
           "uv": [
-            22,
-            0,
-            24,
-            6
+            22.0,
+            0.0,
+            24.0,
+            6.0
           ],
           "texture": 0
         },
         "up": {
           "uv": [
-            16,
-            6,
-            18,
-            8
+            16.0,
+            6.0,
+            18.0,
+            8.0
           ],
           "texture": 0
         },
         "down": {
           "uv": [
-            18,
-            6,
-            20,
-            8
+            18.0,
+            6.0,
+            20.0,
+            8.0
           ],
           "texture": 0
         }
@@ -247,6 +250,7 @@
       "name": "upper_shaft",
       "box_uv": false,
       "type": "cube",
+      "uuid": "c3a1f2e0-1111-4000-8000-000000000004",
       "from": [
         7.25,
         11.0,
@@ -266,44 +270,44 @@
       "faces": {
         "north": {
           "uv": [
-            8,
-            0,
+            8.0,
+            0.0,
             9.5,
-            11
+            11.0
           ],
           "texture": 0
         },
         "east": {
           "uv": [
-            10,
-            0,
+            10.0,
+            0.0,
             11.5,
-            11
+            11.0
           ],
           "texture": 0
         },
         "south": {
           "uv": [
-            12,
-            0,
+            12.0,
+            0.0,
             13.5,
-            11
+            11.0
           ],
           "texture": 0
         },
         "west": {
           "uv": [
-            14,
-            0,
+            14.0,
+            0.0,
             15.5,
-            11
+            11.0
           ],
           "texture": 0
         },
         "up": {
           "uv": [
-            8,
-            0,
+            8.0,
+            0.0,
             9.5,
             1.5
           ],
@@ -311,8 +315,8 @@
         },
         "down": {
           "uv": [
-            8,
-            0,
+            8.0,
+            0.0,
             9.5,
             1.5
           ],
@@ -324,6 +328,7 @@
       "name": "upper_cap",
       "box_uv": false,
       "type": "cube",
+      "uuid": "c3a1f2e0-1111-4000-8000-000000000005",
       "from": [
         7.0,
         22.0,
@@ -343,55 +348,55 @@
       "faces": {
         "north": {
           "uv": [
-            8,
-            16,
-            10,
-            17
+            8.0,
+            16.0,
+            10.0,
+            17.0
           ],
           "texture": 0
         },
         "east": {
           "uv": [
-            10,
-            16,
-            12,
-            17
+            10.0,
+            16.0,
+            12.0,
+            17.0
           ],
           "texture": 0
         },
         "south": {
           "uv": [
-            12,
-            16,
-            14,
-            17
+            12.0,
+            16.0,
+            14.0,
+            17.0
           ],
           "texture": 0
         },
         "west": {
           "uv": [
-            14,
-            16,
-            16,
-            17
+            14.0,
+            16.0,
+            16.0,
+            17.0
           ],
           "texture": 0
         },
         "up": {
           "uv": [
-            8,
-            17,
-            10,
-            19
+            8.0,
+            17.0,
+            10.0,
+            19.0
           ],
           "texture": 0
         },
         "down": {
           "uv": [
-            10,
-            17,
-            12,
-            19
+            10.0,
+            17.0,
+            12.0,
+            19.0
           ],
           "texture": 0
         }
@@ -399,11 +404,11 @@
     }
   ],
   "outliner": [
-    "lower_cap",
-    "lower_shaft",
-    "grip_wrap",
-    "upper_shaft",
-    "upper_cap"
+    "c3a1f2e0-1111-4000-8000-000000000001",
+    "c3a1f2e0-1111-4000-8000-000000000002",
+    "c3a1f2e0-1111-4000-8000-000000000003",
+    "c3a1f2e0-1111-4000-8000-000000000004",
+    "c3a1f2e0-1111-4000-8000-000000000005"
   ],
   "textures": [
     {
@@ -417,7 +422,7 @@
       "visible": true,
       "mode": "bitmap",
       "saved": true,
-      "uuid": "b8c4d3e2-f5a6-7890-1234-bcdef5678901",
+      "uuid": "c3a1f2e0-1111-4000-8000-000000000000",
       "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABPUlEQVR4nGOMtVb+nxlgxvDg+WuGJy8+MchI8DFsP3mfgVgxfVcvBh09fQYjC2eG1y8eMGzftI4kPuOyIpf/pFiILuZSMpssi2F8xq4os/+k+hpZjEnNnPIQeEJG0MPEKA6BY92R/8mNf5DYsa8ilIVALIWJsHf1HspCYBmFifAZnyZlIdBFYSJM6FlJeQg8oSARUhwCxyhMhCrRbZSFQOxoSRg1WhJGjvCSMMbZ6L+MKB/D6RuPGCSFBRhIZSsKsjJQApgosRzEphQwUWI5iE0pYKHEchAbG7j/6itOCxXFuGkbBffxWI5NnomaUUDIcmzqWGgRBSDw6OV7DDE5cUEMMaYRnwuYaBUFxAKmgY4CFkpzgZWKKFaDsSU4mkeBIlohgwsgq2OidhQQcgS6PKOzgdJ/WkQBsWDAcwEASbNkw0mhehkAAAAASUVORK5CYII="
     }
   ],
@@ -429,7 +434,7 @@
         55
       ],
       "translation": [
-        0,
+        0.0,
         4.0,
         0.5
       ],
@@ -446,7 +451,7 @@
         -55
       ],
       "translation": [
-        0,
+        0.0,
         4.0,
         0.5
       ],
@@ -497,9 +502,9 @@
         0
       ],
       "translation": [
-        0,
+        0.0,
         3.0,
-        0
+        0.0
       ],
       "scale": [
         0.5,
@@ -514,9 +519,9 @@
         -45
       ],
       "translation": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
       "scale": [
         0.55,
@@ -531,9 +536,9 @@
         0
       ],
       "translation": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
       "scale": [
         0.7,

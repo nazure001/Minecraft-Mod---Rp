@@ -73,7 +73,12 @@ reference/*
 
 # Package exports in root & unneeded archives
 *.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
 *.mcaddon
+*.mcpack
 !legacy/*.zip
 
 # ------------------------------------------------------------------------------
@@ -102,6 +107,8 @@ desktop.ini
 *.tmp
 *.bak
 *~
+.tmp*/
+*.driveupload*/
 
 # ------------------------------------------------------------------------------
 # 8. Secrets & Local Environment Overrides
