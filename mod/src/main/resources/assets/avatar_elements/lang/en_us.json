@@ -2,5 +2,6 @@
   "itemGroup.avatar_elements.main": "Avatar: Elements",
   "category.avatar_elements.general": "Avatar: Elements",
   "key.avatar_elements.test_action": "Test Action (Avatar)",
-  "key.avatar_elements.skill_fire_jab": "Skill: Fire Jab (Avatar)"
+  "key.avatar_elements.skill_fire_jab": "Skill: Fire Jab (Avatar)",
+  "item.avatar_elements.air_staff": "Air Staff"
 }

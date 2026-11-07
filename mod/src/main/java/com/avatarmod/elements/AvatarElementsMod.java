@@ -1,5 +1,6 @@
 package com.avatarmod.elements;
 
+import com.avatarmod.elements.item.AvatarItems;
 import com.avatarmod.elements.network.AvatarNetworking;
 import com.avatarmod.elements.network.AvatarServerEvents;
 import com.avatarmod.elements.network.SkillNetworking;
@@ -14,6 +15,7 @@ public class AvatarElementsMod implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Avatar: Elements initializing (common)");
+        AvatarItems.register();
         AvatarNetworking.registerPayloads();
         AvatarNetworking.registerServerReceivers();
         SkillNetworking.registerPayloads();
