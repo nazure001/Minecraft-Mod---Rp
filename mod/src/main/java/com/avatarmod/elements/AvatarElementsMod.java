@@ -2,6 +2,7 @@ package com.avatarmod.elements;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.item.AvatarItems;
+import com.avatarmod.elements.skill.SkillRegistry;
 import com.avatarmod.elements.network.AvatarNetworking;
 import com.avatarmod.elements.network.AvatarServerEvents;
 import com.avatarmod.elements.network.SkillNetworking;
@@ -21,8 +22,8 @@ public class AvatarElementsMod implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Avatar: Elements initializing (common)");
-        // Touch ATTACHMENT field to trigger static registration
         LOGGER.debug("Bending attachment: {}", PlayerBendingData.ATTACHMENT);
+        SkillRegistry.populate();
         AvatarItems.register();
         AvatarNetworking.registerPayloads();
         AvatarNetworking.registerServerReceivers();
