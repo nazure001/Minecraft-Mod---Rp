@@ -7,6 +7,8 @@ import com.avatarmod.elements.client.hud.ElementWheelRenderer;
 import com.avatarmod.elements.client.input.AvatarKeyBindings;
 import com.avatarmod.elements.client.network.ClientNetworkHandler;
 import com.avatarmod.elements.client.network.SkillClientHandler;
+import com.avatarmod.elements.client.orb.ChargeOrbRenderer;
+import com.avatarmod.elements.client.orb.FirstPersonOrbRenderer;
 import com.avatarmod.elements.network.SkillPackets;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -23,6 +25,8 @@ public class AvatarElementsClient implements ClientModInitializer {
         ClientNetworkHandler.register();
         SkillClientHandler.register();
         AvatarHudRenderer.register();
+        ChargeOrbRenderer.register();
+        FirstPersonOrbRenderer.register();
 
         // Show current element in action bar (simple HUD)
         HudRenderCallback.EVENT.register((context, tickCounter) -> {
