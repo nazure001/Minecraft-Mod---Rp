@@ -145,7 +145,7 @@ Log client 14:09:09 — entry point common + client terpanggil.
 Hasil in-game (screenshot 2026-11-07):
 - Tekan R → `[Avatar] Server: test action acknowledged.` muncul di chat ✅
 - C2S → server receive → S2C ack pipeline berjalan penuh ✅
-- Pemeriksaan dedicated server: **BELUM DIUJI** (butuh EULA manual)
+- Pemeriksaan dedicated server: ✅ TERVERIFIKASI 2026-11-07 (Player925, `online-mode=false`, `localhost:25565`)
 - Pemeriksaan dua pemain: **BELUM DIUJI**
 
 ---
@@ -173,7 +173,7 @@ Jangan push ke `main` atau merge PR tanpa review.
 | Prioritas | Tugas | Status |
 |---|---|---|
 | ~~Penting~~ | ~~Uji T1-2: tekan R → ack~~ | ✅ SELESAI 2026-11-07 |
-| Penting | Setujui EULA manual → uji server dedicated | Menunggu user |
+| ~~Penting~~ | ~~Uji server dedicated~~ | ✅ SELESAI 2026-11-07 |
 | A5 | Uji distribusi JAR di Fabric instance terpisah | BELUM DIUJI |
 | Berikutnya | T1-3 implementasi networking lengkap (SkillInput etc.) | Belum dimulai |
 
