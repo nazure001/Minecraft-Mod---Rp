@@ -2,6 +2,7 @@ package com.avatarmod.elements.network;
 
 import com.avatarmod.elements.AvatarElementsMod;
 import com.avatarmod.elements.data.PlayerBendingData;
+import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.skill.ElementSlotMap;
 import com.avatarmod.elements.skill.SkillDefinition;
 import com.avatarmod.elements.skill.SkillRegistry;
@@ -15,6 +16,7 @@ import net.minecraft.text.Text;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class SkillNetworking {
 
@@ -22,6 +24,21 @@ public final class SkillNetworking {
     // without blocking rapid Z→X cross-skill switching.
     private static final int RATE_LIMIT_TICKS = 3;
     private static final Map<UUID, Map<String, Long>> lastSkillTick = new HashMap<>();
+
+    // castSerial: increments each time a new cast starts for a given player.
+    // Sent in every S2CPhaseSync so the client can discard stale IDLE resets.
+    private static final Map<UUID, AtomicInteger> castSerials = new HashMap<>();
+
+    private static int nextSerial(UUID uuid) {
+        return castSerials.computeIfAbsent(uuid, k -> new AtomicInteger(0))
+                          .incrementAndGet();
+    }
+
+    /** Returns the current (most recently issued) serial for this player, or 0. */
+    public static int currentSerial(UUID uuid) {
+        AtomicInteger ai = castSerials.get(uuid);
+        return ai == null ? 0 : ai.get();
+    }
 
     private static long getLastTick(UUID uuid, String skillId) {
         Map<String, Long> perSkill = lastSkillTick.get(uuid);
@@ -81,9 +98,11 @@ public final class SkillNetworking {
                     SkillDefinition def = SkillRegistry.get(skillId).orElseThrow();
                     SkillValidator.apply(player, skillId, def);
 
-                    // Broadcast WINDUP start to nearby clients (charge orb renderer)
-                    if (def.windupTicks() > 0) {
-                        broadcastPhaseSync(player, skillId, "WINDUP", 0);
+                    // Broadcast actual initial phase (windup=0 skills start at ACTIVE)
+                    int serial = nextSerial(uuid);
+                    SkillTimeline.Phase initialPhase = data.getTimeline().phase();
+                    if (initialPhase != SkillTimeline.Phase.IDLE) {
+                        broadcastPhaseSync(player, skillId, initialPhase.name(), 0, serial);
                     }
 
                     // Track combo chain state
@@ -103,13 +122,41 @@ public final class SkillNetworking {
                 });
     }
 
-    public static void broadcastPhaseSync(ServerPlayerEntity caster, String skillId, String phase, int ticksIn) {
-        var packet = new SkillPackets.S2CPhaseSync(caster.getUuid(), skillId, phase, ticksIn);
-        // Send to caster + all players tracking the caster
+    public static void broadcastPhaseSync(ServerPlayerEntity caster, String skillId,
+                                          String phase, int ticksIn, int serial) {
+        var packet = new SkillPackets.S2CPhaseSync(caster.getUuid(), skillId, phase, ticksIn, serial);
         ServerPlayNetworking.send(caster, packet);
         for (var watcher : PlayerLookup.tracking(caster)) {
             ServerPlayNetworking.send(watcher, packet);
         }
+    }
+
+    /** Force-reset orb for this caster on all nearby clients (cancel / death). */
+    public static void broadcastOrbReset(ServerPlayerEntity caster) {
+        int serial = currentSerial(caster.getUuid());
+        PlayerBendingData data = PlayerBendingData.get(caster);
+        String skillId = data.getActiveSkillId();
+        if (skillId == null) return;
+        broadcastPhaseSync(caster, skillId, "IDLE", 0, serial);
+    }
+
+    /**
+     * Sent to a player who starts tracking a caster mid-cast.
+     * Gives them the current phase so they can render the orb without waiting for
+     * the next transition packet.
+     */
+    public static void syncOrbStateToNewWatcher(ServerPlayerEntity watcher,
+                                                ServerPlayerEntity caster) {
+        PlayerBendingData data = PlayerBendingData.get(caster);
+        SkillTimeline timeline = data.getTimeline();
+        if (timeline.isIdle()) return;
+        String skillId = data.getActiveSkillId();
+        if (skillId == null) return;
+        int serial = currentSerial(caster.getUuid());
+        var packet = new SkillPackets.S2CPhaseSync(
+                caster.getUuid(), skillId, timeline.phase().name(),
+                timeline.ticksInPhase(), serial);
+        ServerPlayNetworking.send(watcher, packet);
     }
 
     private static void sendHudUpdate(ServerPlayerEntity player, PlayerBendingData data, String skillId) {
@@ -151,8 +198,10 @@ public final class SkillNetworking {
 
                     SkillDefinition def = SkillRegistry.get(skillId).orElseThrow();
                     SkillValidator.apply(player, skillId, def);
-                    if (def.windupTicks() > 0) {
-                        broadcastPhaseSync(player, skillId, "WINDUP", 0);
+                    int serial = nextSerial(uuid);
+                    SkillTimeline.Phase initialPhase = data.getTimeline().phase();
+                    if (initialPhase != SkillTimeline.Phase.IDLE) {
+                        broadcastPhaseSync(player, skillId, initialPhase.name(), 0, serial);
                     }
                     data.recordComboSkill(skillId, currentTick);
                     if ("avatar:air_staff_attack".equals(skillId)) {
@@ -185,7 +234,8 @@ public final class SkillNetworking {
     }
 
     public static void onPlayerDisconnect(UUID uuid) {
-        lastSkillTick.remove(uuid); // cleans all per-skill entries for this player
+        lastSkillTick.remove(uuid);
+        castSerials.remove(uuid);
     }
 
     private SkillNetworking() {}

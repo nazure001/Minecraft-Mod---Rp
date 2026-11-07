@@ -106,11 +106,14 @@ public final class SkillPackets {
 
     // Server → Client (broadcast): phase transition for any caster, so nearby players
     // can render the charge orb on that player.
+    // castSerial increments each time a NEW cast starts; allows client to ignore
+    // late IDLE resets from a previous cast when a new cast has already begun.
     public record S2CPhaseSync(
             java.util.UUID casterUuid,
             String skillId,
             String phase,   // "IDLE" | "WINDUP" | "ACTIVE" | "RECOVERY"
-            int ticksIn
+            int ticksIn,
+            int castSerial
     ) implements CustomPayload {
         public static final CustomPayload.Id<S2CPhaseSync> ID =
                 new CustomPayload.Id<>(Identifier.of("avatar_elements", "s2c_phase_sync"));
@@ -120,11 +123,13 @@ public final class SkillPackets {
                     buf.writeString(value.skillId());
                     buf.writeString(value.phase());
                     buf.writeVarInt(value.ticksIn());
+                    buf.writeVarInt(value.castSerial());
                 },
                 buf -> new S2CPhaseSync(
                         buf.readUuid(),
                         buf.readString(64),
                         buf.readString(16),
+                        buf.readVarInt(),
                         buf.readVarInt()
                 )
         );

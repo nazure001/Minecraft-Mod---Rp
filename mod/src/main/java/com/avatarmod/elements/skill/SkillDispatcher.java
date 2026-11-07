@@ -32,9 +32,10 @@ public final class SkillDispatcher {
         SkillRegistry.get(activeSkill).ifPresent(def -> dispatch(player, def));
         SkillTimeline.Phase phaseAfter = timeline.phase();
 
-        // Broadcast on any phase transition (or when first entering WINDUP via start())
         if (phaseBefore != phaseAfter) {
-            SkillNetworking.broadcastPhaseSync(player, activeSkill, phaseAfter.name(), timeline.ticksInPhase());
+            int serial = SkillNetworking.currentSerial(player.getUuid());
+            SkillNetworking.broadcastPhaseSync(player, activeSkill,
+                    phaseAfter.name(), timeline.ticksInPhase(), serial);
         }
     }
 

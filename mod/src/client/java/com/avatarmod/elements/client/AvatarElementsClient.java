@@ -7,8 +7,10 @@ import com.avatarmod.elements.client.hud.ElementWheelRenderer;
 import com.avatarmod.elements.client.input.AvatarKeyBindings;
 import com.avatarmod.elements.client.network.ClientNetworkHandler;
 import com.avatarmod.elements.client.network.SkillClientHandler;
+import com.avatarmod.elements.client.orb.ChargeOrbClientState;
 import com.avatarmod.elements.client.orb.ChargeOrbRenderer;
 import com.avatarmod.elements.client.orb.FirstPersonOrbRenderer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import com.avatarmod.elements.network.SkillPackets;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -27,6 +29,13 @@ public class AvatarElementsClient implements ClientModInitializer {
         AvatarHudRenderer.register();
         ChargeOrbRenderer.register();
         FirstPersonOrbRenderer.register();
+
+        // Clear orb state on disconnect or world change to avoid stale visuals
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) ->
+                ChargeOrbClientState.clear());
+        // JOIN clears stale state from a previous session/world
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) ->
+                ChargeOrbClientState.clear());
 
         // Show current element in action bar (simple HUD)
         HudRenderCallback.EVENT.register((context, tickCounter) -> {

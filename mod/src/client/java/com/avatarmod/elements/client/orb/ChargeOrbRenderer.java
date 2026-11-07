@@ -72,7 +72,7 @@ public final class ChargeOrbRenderer {
     }
 
     private static float computeRadius(ChargeOrbClientState.OrbState state) {
-        float t = Math.min(1f, (float) state.ticksIn() / CHARGE_MAX_TICKS);
+        float t = Math.min(1f, state.interpolatedTicks() / CHARGE_MAX_TICKS);
         return BASE_RADIUS + (MAX_RADIUS - BASE_RADIUS) * t;
     }
 

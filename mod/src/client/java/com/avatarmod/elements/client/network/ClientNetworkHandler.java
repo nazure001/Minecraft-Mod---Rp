@@ -18,7 +18,8 @@ public final class ClientNetworkHandler {
                                     payload.casterUuid(),
                                     payload.skillId(),
                                     payload.phase(),
-                                    payload.ticksIn()
+                                    payload.ticksIn(),
+                                    payload.castSerial()
                             )
                     );
                 });
