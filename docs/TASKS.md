@@ -30,13 +30,13 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 
 ## Tahap 2 — Prototipe Vertikal
 
-- [ ] **T2-1** Fire Jab (tangan kosong): animasi, hitbox, VFX, suara pada 1 timeline
-- [ ] **T2-2** Flame Sweep: animasi arc, hitbox arc, VFX, suara
-- [ ] **T2-3** Fire Jet: animasi, movement (cek collision), VFX, suara
-- [ ] **T2-4** Fire Guard: animasi, block logic, VFX
-- [ ] **T2-5** Kombo fire 3 serangan (Jab → Sweep → Jab, dengan combo window)
-- [ ] **T2-6** Air Staff basic attack (Tongkat udara): 3 serangan kombo
-- [ ] **T2-7** Air Vortex skill pada tongkat udara
+- [x] **T2-1** Fire Jab: SPHERE 2.5, dmg 4.0, knockback 0.3, FLAME VFX, BLAZE_SHOOT SFX — TERVERIFIKASI in-game ✅
+- [x] **T2-2** Flame Sweep: ARC 180°, 3 hit/active, dmg 6.0, +30% combo bonus — BUILD ✅ (belum diuji terpisah)
+- [x] **T2-3** Fire Jet: velocity dash 2.2f, flame trail VFX — BUILD ✅ (belum diuji)
+- [x] **T2-4** Fire Guard: blok entity damage saat ACTIVE, shield shimmer VFX — BUILD ✅ (belum diuji)
+- [x] **T2-5** Kombo Jab→Sweep→Jab: +50% dmg step3, range x1.3, lava particles — BUILD ✅
+- [x] **T2-6** Air Staff Attack: 3-hit kombo (H), CLOUD particles — TERVERIFIKASI in-game ✅
+- [x] **T2-7** Air Vortex: pull r6, 40 tik, spiral particles (V) — BUILD ✅ (belum diuji)
 - [ ] **T2-8** Test sinkronisasi: dua pemain, dedicated server
 
 ---
