@@ -31,6 +31,14 @@ public final class PlayerBendingData {
     private SkillTimeline activeTimeline;         // null when no skill in flight
     private final ChiManager chiManager;
 
+    // T2-5 fire combo chain tracking
+    private String lastComboSkillId = null;
+    private long lastComboSkillTick = -9999L;
+
+    // T2-6 air staff 3-hit combo
+    private int airStaffComboStep = 0;
+    private long airStaffLastCastTick = -9999L;
+
     public PlayerBendingData() {
         this.chi = MAX_CHI_DEFAULT;
         this.maxChi = MAX_CHI_DEFAULT;
@@ -108,6 +116,28 @@ public final class PlayerBendingData {
             if (activeTimeline.isIdle()) activeTimeline = null;
         }
     }
+
+    // --- fire combo chain (T2-5) ---
+
+    public void recordComboSkill(String skillId, long tick) {
+        lastComboSkillId = skillId;
+        lastComboSkillTick = tick;
+    }
+    public String getLastComboSkillId() { return lastComboSkillId; }
+    public long getLastComboSkillTick() { return lastComboSkillTick; }
+
+    // --- air staff combo step (T2-6) ---
+
+    /** Returns 1, 2, or 3 — advances the step if within window, else resets to 1. */
+    public int advanceAirStaffCombo(long currentTick, int windowTicks) {
+        if (currentTick - airStaffLastCastTick > windowTicks) {
+            airStaffComboStep = 0;
+        }
+        airStaffComboStep = (airStaffComboStep % 3) + 1;
+        airStaffLastCastTick = currentTick;
+        return airStaffComboStep;
+    }
+    public int getAirStaffComboStep() { return airStaffComboStep; }
 
     // --- mastery ---
 

@@ -64,6 +64,12 @@ public final class SkillNetworking {
                     SkillDefinition def = SkillRegistry.get(skillId).orElseThrow();
                     SkillValidator.apply(player, skillId, def);
 
+                    // Track combo chain state
+                    data.recordComboSkill(skillId, currentTick);
+                    if ("avatar:air_staff_attack".equals(skillId)) {
+                        data.advanceAirStaffCombo(currentTick, def.comboWindowTicks());
+                    }
+
                     AvatarElementsMod.LOGGER.info(
                             "Skill '{}' used by {} (chi: {}/{})",
                             skillId, player.getName().getString(),

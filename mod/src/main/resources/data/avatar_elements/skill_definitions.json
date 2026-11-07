@@ -101,6 +101,40 @@
       "hitboxShape": "LINE",
       "cancelOnHit": false,
       "comboWindowTicks": 8
+    },
+    {
+      "id": "avatar:air_staff_attack",
+      "element": "AIR",
+      "masteryRequired": 0,
+      "chiCost": 5,
+      "chiPerTick": 0,
+      "cooldownTicks": 4,
+      "windupTicks": 1,
+      "activeTicks": 2,
+      "recoveryTicks": 3,
+      "damage": 3.0,
+      "range": 2.0,
+      "knockback": 0.4,
+      "hitboxShape": "SPHERE",
+      "cancelOnHit": false,
+      "comboWindowTicks": 8
+    },
+    {
+      "id": "avatar:air_vortex",
+      "element": "AIR",
+      "masteryRequired": 0,
+      "chiCost": 20,
+      "chiPerTick": 0,
+      "cooldownTicks": 25,
+      "windupTicks": 2,
+      "activeTicks": 40,
+      "recoveryTicks": 8,
+      "damage": 0.5,
+      "range": 6.0,
+      "knockback": 0.15,
+      "hitboxShape": "SPHERE",
+      "cancelOnHit": false,
+      "comboWindowTicks": 0
     }
   ]
 }

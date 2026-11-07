@@ -31,14 +31,28 @@ public final class FireJabSkill {
         executeHitbox(player, def);
     }
 
+    // flame_sweep comboWindowTicks = 8
+    private static final int SWEEP_COMBO_WINDOW = 8;
+    private static final float FINAL_COMBO_DAMAGE_BONUS = 1.5f;
+    private static final float FINAL_COMBO_RANGE_BONUS = 1.3f;
+
     private static void executeHitbox(ServerPlayerEntity player, SkillDefinition def) {
+        PlayerBendingData data = PlayerBendingData.get(player);
+        long currentTick = player.getServerWorld().getTime();
+        boolean isFinalCombo = "avatar:flame_sweep".equals(data.getLastComboSkillId())
+                && (currentTick - data.getLastComboSkillTick()) <= SWEEP_COMBO_WINDOW;
+        executeHitbox(player, def, isFinalCombo);
+    }
+
+    @SuppressWarnings("unused")
+    private static void executeHitbox(ServerPlayerEntity player, SkillDefinition def, boolean finalCombo) {
         ServerWorld world = player.getServerWorld();
         Vec3d pos = player.getPos().add(0, player.getStandingEyeHeight() / 2.0, 0);
         Vec3d look = player.getRotationVec(1.0f);
         // Center hitbox slightly in front of player
         Vec3d center = pos.add(look.multiply(def.range() * 0.6));
 
-        double r = def.range();
+        double r = def.range() * (finalCombo ? FINAL_COMBO_RANGE_BONUS : 1.0f);
         Box box = Box.of(center, r * 2, r * 2, r * 2);
 
         List<LivingEntity> targets = world.getEntitiesByClass(
@@ -47,9 +61,10 @@ public final class FireJabSkill {
         );
 
         DamageSource source = world.getDamageSources().playerAttack(player);
+        float damage = def.damage() * (finalCombo ? FINAL_COMBO_DAMAGE_BONUS : 1.0f);
 
         for (LivingEntity target : targets) {
-            target.damage(source, def.damage());
+            target.damage(source, damage);
 
             // Knockback away from player
             Vec3d knockDir = target.getPos().subtract(player.getPos()).normalize();
@@ -61,13 +76,18 @@ public final class FireJabSkill {
             target.velocityModified = true;
         }
 
-        // VFX: flame particles at center
+        // VFX: flame particles at center (more for final combo hit)
+        int count = finalCombo ? 24 : 12;
         world.spawnParticles(ParticleTypes.FLAME,
                 center.x, center.y, center.z,
-                12, r * 0.4, r * 0.4, r * 0.4, 0.05);
+                count, r * 0.4, r * 0.4, r * 0.4, 0.05);
         world.spawnParticles(ParticleTypes.LARGE_SMOKE,
                 center.x, center.y, center.z,
-                4, r * 0.2, r * 0.2, r * 0.2, 0.01);
+                finalCombo ? 8 : 4, r * 0.2, r * 0.2, r * 0.2, 0.01);
+        if (finalCombo) {
+            world.spawnParticles(ParticleTypes.LAVA,
+                    center.x, center.y, center.z, 4, r * 0.3, r * 0.3, r * 0.3, 0.0);
+        }
 
         // SFX: fire woosh
         world.playSound(null, player.getBlockPos(),

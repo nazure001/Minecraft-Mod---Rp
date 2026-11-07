@@ -2,6 +2,8 @@ package com.avatarmod.elements.network;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.skill.SkillDispatcher;
+import com.avatarmod.elements.skill.impl.FireGuardSkill;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.entity.EntityType;
@@ -25,6 +27,12 @@ public final class AvatarServerEvents {
                 PlayerBendingData.tick(player);
                 SkillDispatcher.tick(player);
             }
+        });
+
+        // T2-4: Fire Guard — block incoming damage while guard is ACTIVE
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
+            if (!(entity instanceof ServerPlayerEntity player)) return true;
+            return !FireGuardSkill.shouldBlockDamage(player, source);
         });
     }
 

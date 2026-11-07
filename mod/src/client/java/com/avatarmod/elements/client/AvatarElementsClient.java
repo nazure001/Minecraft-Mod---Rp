@@ -28,6 +28,14 @@ public class AvatarElementsClient implements ClientModInitializer {
             while (AvatarKeyBindings.SKILL_FIRE_JAB.wasPressed()) {
                 SkillClientHandler.sendSkillInput("avatar:fire_jab");
             }
+            // T2-6 air staff combo (key H)
+            while (AvatarKeyBindings.SKILL_AIR_STAFF.wasPressed()) {
+                SkillClientHandler.sendSkillInput("avatar:air_staff_attack");
+            }
+            // T2-7 air vortex (key V)
+            while (AvatarKeyBindings.SKILL_AIR_VORTEX.wasPressed()) {
+                SkillClientHandler.sendSkillInput("avatar:air_vortex");
+            }
         });
     }
 }

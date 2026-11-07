@@ -25,6 +25,24 @@ public final class AvatarKeyBindings {
             )
     );
 
+    public static final KeyBinding SKILL_AIR_STAFF = KeyBindingHelper.registerKeyBinding(
+            new KeyBinding(
+                    "key.avatar_elements.skill_air_staff",
+                    InputUtil.Type.KEYSYM,
+                    GLFW.GLFW_KEY_H,
+                    "category.avatar_elements.general"
+            )
+    );
+
+    public static final KeyBinding SKILL_AIR_VORTEX = KeyBindingHelper.registerKeyBinding(
+            new KeyBinding(
+                    "key.avatar_elements.skill_air_vortex",
+                    InputUtil.Type.KEYSYM,
+                    GLFW.GLFW_KEY_V,
+                    "category.avatar_elements.general"
+            )
+    );
+
     public static void register() {
         // Registration happens via KeyBindingHelper above; this method exists so
         // AvatarElementsClient can call it explicitly to trigger class loading.
