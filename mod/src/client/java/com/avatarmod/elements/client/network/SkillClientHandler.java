@@ -1,5 +1,6 @@
 package com.avatarmod.elements.client.network;
 
+import com.avatarmod.elements.client.anim.AvatarAnimations;
 import com.avatarmod.elements.client.hud.HudState;
 import com.avatarmod.elements.network.SkillPackets;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -16,6 +17,10 @@ public final class SkillClientHandler {
                     client.execute(() -> {
                         if (client.player == null) return;
                         if (payload.allowed()) {
+                            if ("avatar:fire_jab".equals(payload.skillId())
+                                    && client.player instanceof net.minecraft.client.network.AbstractClientPlayerEntity acp) {
+                                AvatarAnimations.triggerFireJab(acp);
+                            }
                             client.player.sendMessage(
                                     Text.literal("§a[Avatar] " + payload.skillId() + " — OK"), true);
                         } else {

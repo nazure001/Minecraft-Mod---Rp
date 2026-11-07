@@ -1,6 +1,7 @@
 package com.avatarmod.elements.client;
 
 import com.avatarmod.elements.AvatarElementsMod;
+import com.avatarmod.elements.client.anim.AvatarAnimations;
 import com.avatarmod.elements.client.hud.AvatarHudRenderer;
 import com.avatarmod.elements.client.hud.ElementWheelRenderer;
 import com.avatarmod.elements.client.input.AvatarKeyBindings;
@@ -17,6 +18,7 @@ public class AvatarElementsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         AvatarElementsMod.LOGGER.info("Avatar: Elements initializing (client)");
+        AvatarAnimations.register();
         AvatarKeyBindings.register();
         ClientNetworkHandler.register();
         SkillClientHandler.register();
