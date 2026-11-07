@@ -2,13 +2,20 @@ package com.avatarmod.elements.client;
 
 import com.avatarmod.elements.AvatarElementsMod;
 import com.avatarmod.elements.client.hud.AvatarHudRenderer;
+import com.avatarmod.elements.client.hud.ElementWheelRenderer;
 import com.avatarmod.elements.client.input.AvatarKeyBindings;
 import com.avatarmod.elements.client.network.ClientNetworkHandler;
 import com.avatarmod.elements.client.network.SkillClientHandler;
+import com.avatarmod.elements.network.SkillPackets;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.util.InputUtil;
 
 public class AvatarElementsClient implements ClientModInitializer {
+
+    private static boolean wheelWasOpen = false;
 
     @Override
     public void onInitializeClient() {
@@ -18,40 +25,48 @@ public class AvatarElementsClient implements ClientModInitializer {
         SkillClientHandler.register();
         AvatarHudRenderer.register();
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (client.player == null) return;
-            // T1-2 test action (key R)
-            while (AvatarKeyBindings.TEST_ACTION.wasPressed()) {
-                ClientNetworkHandler.sendTestAction();
-            }
-            // Fire skills
-            while (AvatarKeyBindings.SKILL_FIRE_JAB.wasPressed()) {
-                SkillClientHandler.sendSkillInput("avatar:fire_jab");
-            }
-            while (AvatarKeyBindings.SKILL_FLAME_SWEEP.wasPressed()) {
-                SkillClientHandler.sendSkillInput("avatar:flame_sweep");
-            }
-            while (AvatarKeyBindings.SKILL_FIRE_JET.wasPressed()) {
-                SkillClientHandler.sendSkillInput("avatar:fire_jet");
-            }
-            while (AvatarKeyBindings.SKILL_FIRE_GUARD.wasPressed()) {
-                SkillClientHandler.sendSkillInput("avatar:fire_guard");
-            }
-            // Air skills
-            while (AvatarKeyBindings.SKILL_AIR_STAFF.wasPressed()) {
-                SkillClientHandler.sendSkillInput("avatar:air_staff_attack");
-            }
-            while (AvatarKeyBindings.SKILL_AIR_VORTEX.wasPressed()) {
-                SkillClientHandler.sendSkillInput("avatar:air_vortex");
-            }
-            // Water skills
-            while (AvatarKeyBindings.SKILL_WATER_WHIP.wasPressed()) {
-                SkillClientHandler.sendSkillInput("avatar:water_whip");
-            }
-            // Earth skills
-            while (AvatarKeyBindings.SKILL_EARTH_BOULDER.wasPressed()) {
-                SkillClientHandler.sendSkillInput("avatar:earth_boulder");
+        // Wheel render (only when R is held)
+        HudRenderCallback.EVENT.register((context, tickCounter) -> {
+            if (isWheelOpen()) {
+                ElementWheelRenderer.render(context, tickCounter);
             }
         });
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (client.player == null) return;
+
+            // --- Element wheel (hold R) ---
+            boolean wheelOpen = isWheelOpen();
+            if (!wheelOpen && wheelWasOpen) {
+                // Key just released — send selected element to server
+                String chosen = ElementWheelRenderer.getHovered();
+                ClientPlayNetworking.send(new SkillPackets.C2SSetElement(chosen));
+            }
+            wheelWasOpen = wheelOpen;
+
+            // --- Skill slot keys (Z/X/C/V) ---
+            if (wheelOpen) return; // ignore slot presses while wheel is open
+
+            while (AvatarKeyBindings.SLOT_1.wasPressed()) {
+                SkillClientHandler.sendSlotCast(0);
+            }
+            while (AvatarKeyBindings.SLOT_2.wasPressed()) {
+                SkillClientHandler.sendSlotCast(1);
+            }
+            while (AvatarKeyBindings.SLOT_3.wasPressed()) {
+                SkillClientHandler.sendSlotCast(2);
+            }
+            while (AvatarKeyBindings.SLOT_4.wasPressed()) {
+                SkillClientHandler.sendSlotCast(3);
+            }
+        });
+    }
+
+    private static boolean isWheelOpen() {
+        var client = net.minecraft.client.MinecraftClient.getInstance();
+        if (client.getWindow() == null) return false;
+        return InputUtil.isKeyPressed(client.getWindow().getHandle(),
+                net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+                        .getBoundKeyOf(AvatarKeyBindings.ELEMENT_WHEEL).getCode());
     }
 }

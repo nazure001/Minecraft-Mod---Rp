@@ -39,6 +39,9 @@ public final class PlayerBendingData {
     private int airStaffComboStep = 0;
     private long airStaffLastCastTick = -9999L;
 
+    // Active element selected by player (server-side mirror of client wheel choice)
+    private String activeElement = "FIRE";
+
     public PlayerBendingData() {
         this.chi = MAX_CHI_DEFAULT;
         this.maxChi = MAX_CHI_DEFAULT;
@@ -143,6 +146,9 @@ public final class PlayerBendingData {
 
     public int getMasteryLevel() { return masteryLevel; }
     public void setMasteryLevel(int level) { this.masteryLevel = Math.max(0, Math.min(5, level)); }
+
+    public String getActiveElement() { return activeElement; }
+    public void setActiveElement(String element) { this.activeElement = element; }
 
     // --- static helpers ---
 

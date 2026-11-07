@@ -29,6 +29,9 @@ public final class AvatarServerEvents {
             }
         });
 
+        SkillNetworking.registerSlotCastReceiver();
+        SkillNetworking.registerSetElementReceiver();
+
         // T2-4: Fire Guard — block incoming damage while guard is ACTIVE
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             if (!(entity instanceof ServerPlayerEntity player)) return true;

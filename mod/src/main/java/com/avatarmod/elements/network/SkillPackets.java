@@ -82,5 +82,27 @@ public final class SkillPackets {
         public CustomPayload.Id<S2CHudUpdate> getId() { return ID; }
     }
 
+    // Client → Server: cast skill in slot N of active element
+    public record C2SSlotCast(int slotIndex) implements CustomPayload {
+        public static final CustomPayload.Id<C2SSlotCast> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "c2s_slot_cast"));
+        public static final PacketCodec<PacketByteBuf, C2SSlotCast> CODEC = PacketCodec.of(
+                (value, buf) -> buf.writeByte(value.slotIndex()),
+                buf -> new C2SSlotCast(buf.readByte())
+        );
+        @Override public CustomPayload.Id<C2SSlotCast> getId() { return ID; }
+    }
+
+    // Client → Server: player selected a new active element
+    public record C2SSetElement(String element) implements CustomPayload {
+        public static final CustomPayload.Id<C2SSetElement> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "c2s_set_element"));
+        public static final PacketCodec<PacketByteBuf, C2SSetElement> CODEC = PacketCodec.of(
+                (value, buf) -> buf.writeString(value.element()),
+                buf -> new C2SSetElement(buf.readString(16))
+        );
+        @Override public CustomPayload.Id<C2SSetElement> getId() { return ID; }
+    }
+
     private SkillPackets() {}
 }

@@ -50,5 +50,9 @@ public final class SkillClientHandler {
         ClientPlayNetworking.send(new SkillPackets.C2SSkillInput(skillId));
     }
 
+    public static void sendSlotCast(int slotIndex) {
+        ClientPlayNetworking.send(new SkillPackets.C2SSlotCast(slotIndex));
+    }
+
     private SkillClientHandler() {}
 }

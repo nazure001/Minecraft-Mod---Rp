@@ -1,0 +1,6 @@
+{
+  "FIRE":  ["avatar:fire_jab", "avatar:flame_sweep", "avatar:fire_guard", "avatar:fire_jet"],
+  "AIR":   ["avatar:air_staff_attack", "avatar:air_vortex", null, null],
+  "WATER": ["avatar:water_whip", null, null, null],
+  "EARTH": ["avatar:earth_boulder", null, null, null]
+}
