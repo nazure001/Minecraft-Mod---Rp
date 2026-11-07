@@ -97,7 +97,7 @@ Keyframes Blender/Blockbench:
 - Frame 3 (strike): rightArm pitch –0.1 rad, elbow extend 0, body yaw +0.15 rad
 - Frame 9 (return): kembali ke neutral
 
-Status animasi: `[ ]` belum dibuat di Blockbench
+Status animasi: `[~]` PAL pipeline terbukti (fire_jab_test.json bergerak di game 2026-11-07). Animasi final menunggu Antigravity.
 
 ### 2. Weapon Attachment
 
@@ -109,7 +109,7 @@ bone       : Hand_R  (tidak ada Tool_R untuk skill ini)
 vfx_anchor : posisi world Hand_R tip saat frame 3 (strike)
 ```
 
-Status: `[ ]` PAL belum terpasang, Hand_R world position belum bisa di-query
+Status: `[ ]` Hand_R world position query belum diimplementasi (PAL terpasang dan terverifikasi)
 
 ### 3. Trail Points
 
