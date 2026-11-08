@@ -1,0 +1,122 @@
+{
+  "01_ready": {
+    "name": "1. Sikap Siaga (Ready Stance)",
+    "timing_study": "0.00s - 0.20s (Frame 0-4)",
+    "torso": {
+      "pos": [
+        0.0,
+        11.5,
+        0.0
+      ],
+      "yaw": 18.0,
+      "pitch": 2.0
+    },
+    "head": {
+      "yaw": -18.0,
+      "pitch": 0.0
+    },
+    "staff_butt": [
+      -3.2,
+      13.8,
+      -1.8
+    ],
+    "staff_tip": [
+      -0.2,
+      19.19,
+      27.56
+    ],
+    "rh_u_on_staff": 5.5,
+    "lh_u_on_staff": 15.0,
+    "slide_span": 9.5
+  },
+  "02_windup": {
+    "name": "2. Persiapan / Tarik (Anticipation / Windup)",
+    "timing_study": "0.25s - 0.45s (Frame 5-10)",
+    "torso": {
+      "pos": [
+        -0.5,
+        10.8,
+        -1.2
+      ],
+      "yaw": 36.0,
+      "pitch": 4.0
+    },
+    "head": {
+      "yaw": -36.0,
+      "pitch": 0.0
+    },
+    "staff_butt": [
+      -5.2,
+      13.2,
+      -7.5
+    ],
+    "staff_tip": [
+      -1.0,
+      19.2,
+      21.59
+    ],
+    "rh_u_on_staff": 5.5,
+    "lh_u_on_staff": 16.8,
+    "slide_span": 11.3
+  },
+  "03_thrust": {
+    "name": "3. Dorongan / Tusuk (Apex Thrust Strike)",
+    "timing_study": "0.50s - 0.70s (Frame 11-16)",
+    "torso": {
+      "pos": [
+        0.2,
+        11.2,
+        3.5
+      ],
+      "yaw": 6.0,
+      "pitch": 10.0
+    },
+    "head": {
+      "yaw": -6.0,
+      "pitch": 2.0
+    },
+    "staff_butt": [
+      -1.8,
+      17.2,
+      4.5
+    ],
+    "staff_tip": [
+      0.01,
+      20.21,
+      34.29
+    ],
+    "rh_u_on_staff": 5.5,
+    "lh_u_on_staff": 13.6,
+    "slide_span": 8.1
+  },
+  "04_recovery": {
+    "name": "4. Pemulihan (Recovery & Balance Reset)",
+    "timing_study": "0.75s - 1.00s (Frame 17-23)",
+    "torso": {
+      "pos": [
+        0.0,
+        11.6,
+        1.2
+      ],
+      "yaw": 16.0,
+      "pitch": 3.0
+    },
+    "head": {
+      "yaw": -16.0,
+      "pitch": 0.0
+    },
+    "staff_butt": [
+      -2.8,
+      14.5,
+      0.8
+    ],
+    "staff_tip": [
+      -0.1,
+      19.61,
+      30.24
+    ],
+    "rh_u_on_staff": 5.5,
+    "lh_u_on_staff": 15.2,
+    "slide_span": 9.7
+  }
+}

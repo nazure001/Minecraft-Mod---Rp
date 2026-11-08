@@ -1,0 +1,1358 @@
+{
+  "meta": {
+    "format_version": "4.10",
+    "creation_time": 1730972000,
+    "model_format": "modded_entity",
+    "box_uv": false
+  },
+  "name": "player_staff_thrust_study",
+  "geometry_name": "player_staff_thrust",
+  "visible_box": [
+    1,
+    2,
+    1
+  ],
+  "resolution": {
+    "width": 64,
+    "height": 64
+  },
+  "elements": [
+    {
+      "name": "torso",
+      "box_uv": false,
+      "from": [
+        -4,
+        12,
+        -2
+      ],
+      "to": [
+        4,
+        24,
+        2
+      ],
+      "origin": [
+        0,
+        12,
+        0
+      ],
+      "color": 9,
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            5,
+            7,
+            8
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            4,
+            5,
+            5,
+            8
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            2,
+            5,
+            4,
+            8
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            7,
+            5,
+            8,
+            8
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            2,
+            4,
+            4,
+            5
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            4,
+            4,
+            6,
+            5
+          ],
+          "texture": null
+        }
+      }
+    },
+    {
+      "name": "head",
+      "box_uv": false,
+      "from": [
+        -4,
+        24,
+        -4
+      ],
+      "to": [
+        4,
+        32,
+        4
+      ],
+      "origin": [
+        0,
+        24,
+        0
+      ],
+      "color": 1,
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            2,
+            4,
+            4
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            0,
+            2,
+            2,
+            4
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            4,
+            2,
+            6,
+            4
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            6,
+            2,
+            8,
+            4
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            2,
+            0,
+            4,
+            2
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            4,
+            0,
+            6,
+            2
+          ],
+          "texture": null
+        }
+      }
+    },
+    {
+      "name": "left_arm",
+      "box_uv": false,
+      "from": [
+        4,
+        12,
+        -2
+      ],
+      "to": [
+        8,
+        24,
+        2
+      ],
+      "origin": [
+        5,
+        22,
+        0
+      ],
+      "color": 2,
+      "faces": {
+        "north": {
+          "uv": [
+            9,
+            5,
+            10,
+            8
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            8,
+            5,
+            9,
+            8
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            11,
+            5,
+            12,
+            8
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            10,
+            5,
+            11,
+            8
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            9,
+            4,
+            10,
+            5
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            10,
+            4,
+            11,
+            5
+          ],
+          "texture": null
+        }
+      }
+    },
+    {
+      "name": "right_arm",
+      "box_uv": false,
+      "from": [
+        -8,
+        12,
+        -2
+      ],
+      "to": [
+        -4,
+        24,
+        2
+      ],
+      "origin": [
+        -5,
+        22,
+        0
+      ],
+      "color": 2,
+      "faces": {
+        "north": {
+          "uv": [
+            11,
+            5,
+            12,
+            8
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            10,
+            5,
+            11,
+            8
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            9,
+            5,
+            10,
+            8
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            8,
+            5,
+            9,
+            8
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            9,
+            4,
+            10,
+            5
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            10,
+            4,
+            11,
+            5
+          ],
+          "texture": null
+        }
+      }
+    },
+    {
+      "name": "left_leg",
+      "box_uv": false,
+      "from": [
+        0,
+        0,
+        -2
+      ],
+      "to": [
+        4,
+        12,
+        2
+      ],
+      "origin": [
+        2,
+        12,
+        0
+      ],
+      "color": 3,
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            9,
+            6,
+            12
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            4,
+            9,
+            5,
+            12
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            7,
+            9,
+            8,
+            12
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            6,
+            9,
+            7,
+            12
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            5,
+            8,
+            6,
+            9
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            6,
+            8,
+            7,
+            9
+          ],
+          "texture": null
+        }
+      }
+    },
+    {
+      "name": "right_leg",
+      "box_uv": false,
+      "from": [
+        -4,
+        0,
+        -2
+      ],
+      "to": [
+        0,
+        12,
+        2
+      ],
+      "origin": [
+        -2,
+        12,
+        0
+      ],
+      "color": 3,
+      "faces": {
+        "north": {
+          "uv": [
+            7,
+            9,
+            8,
+            12
+          ],
+          "texture": null
+        },
+        "east": {
+          "uv": [
+            6,
+            9,
+            7,
+            12
+          ],
+          "texture": null
+        },
+        "south": {
+          "uv": [
+            5,
+            9,
+            6,
+            12
+          ],
+          "texture": null
+        },
+        "west": {
+          "uv": [
+            4,
+            9,
+            5,
+            12
+          ],
+          "texture": null
+        },
+        "up": {
+          "uv": [
+            5,
+            8,
+            6,
+            9
+          ],
+          "texture": null
+        },
+        "down": {
+          "uv": [
+            6,
+            8,
+            7,
+            9
+          ],
+          "texture": null
+        }
+      }
+    },
+    {
+      "name": "staff_lower_cap",
+      "box_uv": false,
+      "from": [
+        -0.9,
+        -7.0,
+        -0.9
+      ],
+      "to": [
+        0.9,
+        -6.0,
+        0.9
+      ],
+      "origin": [
+        0,
+        8,
+        0
+      ],
+      "color": 4,
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "texture": null
+        }
+      }
+    },
+    {
+      "name": "staff_lower_shaft",
+      "box_uv": false,
+      "from": [
+        -0.7,
+        -6.0,
+        -0.7
+      ],
+      "to": [
+        0.7,
+        5.0,
+        0.7
+      ],
+      "origin": [
+        0,
+        8,
+        0
+      ],
+      "color": 5,
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            2,
+            11
+          ],
+          "texture": null
+        }
+      }
+    },
+    {
+      "name": "staff_grip_wrap",
+      "box_uv": false,
+      "from": [
+        -0.85,
+        5.0,
+        -0.85
+      ],
+      "to": [
+        0.85,
+        11.0,
+        0.85
+      ],
+      "origin": [
+        0,
+        8,
+        0
+      ],
+      "color": 6,
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            0,
+            10,
+            6
+          ],
+          "texture": null
+        }
+      }
+    },
+    {
+      "name": "staff_upper_shaft",
+      "box_uv": false,
+      "from": [
+        -0.7,
+        11.0,
+        -0.7
+      ],
+      "to": [
+        0.7,
+        22.0,
+        0.7
+      ],
+      "origin": [
+        0,
+        8,
+        0
+      ],
+      "color": 5,
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            2,
+            11
+          ],
+          "texture": null
+        }
+      }
+    },
+    {
+      "name": "staff_upper_cap",
+      "box_uv": false,
+      "from": [
+        -0.9,
+        22.0,
+        -0.9
+      ],
+      "to": [
+        0.9,
+        23.0,
+        0.9
+      ],
+      "origin": [
+        0,
+        8,
+        0
+      ],
+      "color": 4,
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "texture": null
+        }
+      }
+    }
+  ],
+  "outliner": [
+    {
+      "name": "body",
+      "origin": [
+        0,
+        12,
+        0
+      ],
+      "children": [
+        0,
+        {
+          "name": "head",
+          "origin": [
+            0,
+            24,
+            0
+          ],
+          "children": [
+            1
+          ]
+        },
+        {
+          "name": "left_arm",
+          "origin": [
+            5,
+            22,
+            0
+          ],
+          "children": [
+            2
+          ]
+        },
+        {
+          "name": "right_arm",
+          "origin": [
+            -5,
+            22,
+            0
+          ],
+          "children": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "name": "left_leg",
+      "origin": [
+        2,
+        12,
+        0
+      ],
+      "children": [
+        4
+      ]
+    },
+    {
+      "name": "right_leg",
+      "origin": [
+        -2,
+        12,
+        0
+      ],
+      "children": [
+        5
+      ]
+    },
+    {
+      "name": "staff_assembly",
+      "origin": [
+        0,
+        8,
+        0
+      ],
+      "children": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "name": "01_ready_stance",
+      "loop": "hold",
+      "length": 0.5,
+      "animators": {
+        "body": {
+          "name": "body",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 4.0,
+                  "y": 22.0,
+                  "z": 0.0
+                }
+              ]
+            }
+          ]
+        },
+        "head": {
+          "name": "head",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -2.0,
+                  "y": -22.0,
+                  "z": 0.0
+                }
+              ]
+            }
+          ]
+        },
+        "left_arm": {
+          "name": "left_arm",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -48.0,
+                  "y": 26.0,
+                  "z": 18.0
+                }
+              ]
+            }
+          ]
+        },
+        "right_arm": {
+          "name": "right_arm",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -16.0,
+                  "y": -10.0,
+                  "z": -8.0
+                }
+              ]
+            }
+          ]
+        },
+        "left_leg": {
+          "name": "left_leg",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 10.0,
+                  "y": 12.0,
+                  "z": -4.0
+                }
+              ]
+            }
+          ]
+        },
+        "right_leg": {
+          "name": "right_leg",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -14.0,
+                  "y": -18.0,
+                  "z": 6.0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "02_anticipation_windup",
+      "loop": "hold",
+      "length": 0.5,
+      "animators": {
+        "body": {
+          "name": "body",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 6.0,
+                  "y": 42.0,
+                  "z": -2.0
+                }
+              ]
+            }
+          ]
+        },
+        "head": {
+          "name": "head",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 0.0,
+                  "y": -42.0,
+                  "z": 2.0
+                }
+              ]
+            }
+          ]
+        },
+        "left_arm": {
+          "name": "left_arm",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -36.0,
+                  "y": 40.0,
+                  "z": 24.0
+                }
+              ]
+            }
+          ]
+        },
+        "right_arm": {
+          "name": "right_arm",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 10.0,
+                  "y": -24.0,
+                  "z": -14.0
+                }
+              ]
+            }
+          ]
+        },
+        "left_leg": {
+          "name": "left_leg",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 18.0,
+                  "y": 16.0,
+                  "z": -2.0
+                }
+              ]
+            }
+          ]
+        },
+        "right_leg": {
+          "name": "right_leg",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -26.0,
+                  "y": -26.0,
+                  "z": 8.0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "03_thrust_strike",
+      "loop": "hold",
+      "length": 0.5,
+      "animators": {
+        "body": {
+          "name": "body",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 12.0,
+                  "y": 8.0,
+                  "z": 0.0
+                }
+              ]
+            }
+          ]
+        },
+        "head": {
+          "name": "head",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 4.0,
+                  "y": -8.0,
+                  "z": 0.0
+                }
+              ]
+            }
+          ]
+        },
+        "left_arm": {
+          "name": "left_arm",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -76.0,
+                  "y": 10.0,
+                  "z": 12.0
+                }
+              ]
+            }
+          ]
+        },
+        "right_arm": {
+          "name": "right_arm",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -62.0,
+                  "y": -6.0,
+                  "z": -6.0
+                }
+              ]
+            }
+          ]
+        },
+        "left_leg": {
+          "name": "left_leg",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 32.0,
+                  "y": 4.0,
+                  "z": -4.0
+                }
+              ]
+            }
+          ]
+        },
+        "right_leg": {
+          "name": "right_leg",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -35.0,
+                  "y": -10.0,
+                  "z": 6.0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "04_recovery",
+      "loop": "hold",
+      "length": 0.5,
+      "animators": {
+        "body": {
+          "name": "body",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 4.0,
+                  "y": 18.0,
+                  "z": 0.0
+                }
+              ]
+            }
+          ]
+        },
+        "head": {
+          "name": "head",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -1.0,
+                  "y": -18.0,
+                  "z": 0.0
+                }
+              ]
+            }
+          ]
+        },
+        "left_arm": {
+          "name": "left_arm",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -50.0,
+                  "y": 22.0,
+                  "z": 15.0
+                }
+              ]
+            }
+          ]
+        },
+        "right_arm": {
+          "name": "right_arm",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -24.0,
+                  "y": -12.0,
+                  "z": -8.0
+                }
+              ]
+            }
+          ]
+        },
+        "left_leg": {
+          "name": "left_leg",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 14.0,
+                  "y": 8.0,
+                  "z": -3.0
+                }
+              ]
+            }
+          ]
+        },
+        "right_leg": {
+          "name": "right_leg",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -18.0,
+                  "y": -14.0,
+                  "z": 4.0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "staff_thrust_cycle",
+      "loop": "once",
+      "length": 1.0,
+      "animators": {
+        "body": {
+          "name": "body",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": 4.0,
+                  "y": 22.0,
+                  "z": 0.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 0.25,
+              "data_points": [
+                {
+                  "x": 6.0,
+                  "y": 42.0,
+                  "z": -2.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 0.5,
+              "data_points": [
+                {
+                  "x": 12.0,
+                  "y": 8.0,
+                  "z": 0.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 0.7,
+              "data_points": [
+                {
+                  "x": 10.0,
+                  "y": 10.0,
+                  "z": 0.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 1.0,
+              "data_points": [
+                {
+                  "x": 4.0,
+                  "y": 22.0,
+                  "z": 0.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            }
+          ]
+        },
+        "left_arm": {
+          "name": "left_arm",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -48.0,
+                  "y": 26.0,
+                  "z": 18.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 0.25,
+              "data_points": [
+                {
+                  "x": -36.0,
+                  "y": 40.0,
+                  "z": 24.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 0.5,
+              "data_points": [
+                {
+                  "x": -76.0,
+                  "y": 10.0,
+                  "z": 12.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 0.75,
+              "data_points": [
+                {
+                  "x": -50.0,
+                  "y": 22.0,
+                  "z": 15.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 1.0,
+              "data_points": [
+                {
+                  "x": -48.0,
+                  "y": 26.0,
+                  "z": 18.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            }
+          ]
+        },
+        "right_arm": {
+          "name": "right_arm",
+          "type": "bone",
+          "keyframes": [
+            {
+              "channel": "rotation",
+              "time": 0.0,
+              "data_points": [
+                {
+                  "x": -16.0,
+                  "y": -10.0,
+                  "z": -8.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 0.25,
+              "data_points": [
+                {
+                  "x": 10.0,
+                  "y": -24.0,
+                  "z": -14.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 0.5,
+              "data_points": [
+                {
+                  "x": -62.0,
+                  "y": -6.0,
+                  "z": -6.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 0.75,
+              "data_points": [
+                {
+                  "x": -24.0,
+                  "y": -12.0,
+                  "z": -8.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            },
+            {
+              "channel": "rotation",
+              "time": 1.0,
+              "data_points": [
+                {
+                  "x": -16.0,
+                  "y": -10.0,
+                  "z": -8.0
+                }
+              ],
+              "interpolation": "catmullrom"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -13,6 +13,7 @@ mod/.gradle/
 mod/build/
 mod/out/
 mod/bin/
+mod/com/
 .loom-cache/
 mod/.loom-cache/
 remapped_mods/
