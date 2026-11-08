@@ -114,10 +114,14 @@ public final class PlayerBendingData {
     }
 
     private void tickTimeline() {
-        if (activeTimeline != null) {
-            activeTimeline.tick();
-            if (activeTimeline.isIdle()) activeTimeline = null;
-        }
+        // Timeline.tick() is called by SkillDispatcher so it can detect phase transitions
+        // and broadcast IDLE when the skill completes. We only clean up externally-cancelled timelines here.
+        if (activeTimeline != null && activeTimeline.isIdle()) activeTimeline = null;
+    }
+
+    /** Called by SkillDispatcher after the timeline reaches IDLE. */
+    public void clearTimeline() {
+        activeTimeline = null;
     }
 
     // --- fire combo chain (T2-5) ---

@@ -21,21 +21,32 @@ public final class SkillDispatcher {
 
     public static void tick(ServerPlayerEntity player) {
         PlayerBendingData data = PlayerBendingData.get(player);
-        SkillTimeline timeline = data.getTimeline();
-
-        if (timeline.isIdle()) return;
+        if (!data.hasActiveTimeline()) return;
 
         String activeSkill = data.getActiveSkillId();
         if (activeSkill == null) return;
 
+        SkillTimeline timeline = data.getActiveTimeline();
         SkillTimeline.Phase phaseBefore = timeline.phase();
-        SkillRegistry.get(activeSkill).ifPresent(def -> dispatch(player, def));
+
+        // Advance timeline here (not in PlayerBendingData) so we can detect IDLE transition
+        timeline.tick();
+
         SkillTimeline.Phase phaseAfter = timeline.phase();
 
+        // Dispatch skill effects (hitbox, particles, etc.) — reads post-tick phase/ticksInPhase
+        SkillRegistry.get(activeSkill).ifPresent(def -> dispatch(player, def));
+
+        // Broadcast any phase transition, including IDLE when the skill completes naturally
         if (phaseBefore != phaseAfter) {
             int serial = SkillNetworking.currentSerial(player.getUuid());
             SkillNetworking.broadcastPhaseSync(player, activeSkill,
                     phaseAfter.name(), timeline.ticksInPhase(), serial);
+        }
+
+        // Clean up idle timeline after broadcasting
+        if (timeline.isIdle()) {
+            data.clearTimeline();
         }
     }
 

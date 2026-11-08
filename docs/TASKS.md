@@ -50,9 +50,46 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 
 ---
 
+## Tahap 3 — Charge Orb & Hold-Release Skills
+
+- [x] **T3-5** Charge Orb VFX system: S2CPhaseSync, ChargeOrbRenderer (3rd), FirstPersonOrbRenderer (1st) — Claude Code — 2026-11-08
+  - Fix: `setShader` missing → orb invisible
+  - Fix: `new MatrixStack()` → `ctx.matrixStack()` pada 1st person renderer
+  - Fix: skip self hanya saat 1st person (3rd person self-render kini berfungsi)
+  - Fix: `timeline.tick()` dipindah ke SkillDispatcher agar IDLE broadcast terkirim saat skill selesai
+  - Fix: additive blending (`SRC_ALPHA, ONE`) + alpha 0.40 untuk glowing sphere visual
+  - Status: BUILD SUCCESSFUL, orb terlihat in-game ✅ (IDLE clearance & visual masih perlu verifikasi ulang)
+
+- [ ] **T3-6** Fire Blast: skill hold→release, charge grows orb, release spawns projectile entity
+  - `cast_type: HOLD_RELEASE` — butuh `C2SHoldStart` + `C2SHoldRelease` packet pair
+  - Server-side charge state per player (charge_ticks, max 40)
+  - Projectile entity terbang ke arah pandang saat release
+  - Damage & radius scale dengan charge time
+  - Orb membesar menggunakan ChargeOrbClientState yang sudah ada
+
+- [ ] **T3-7** Hold-Release framework generik: `C2SHoldStart`/`C2SHoldRelease` packet, `HoldTimeline` server state
+  - Prerequisite untuk fire_blast, boulder_launch, lightning_strike, combustion_beam, ice_prison
+
+- [ ] **T3-8** Tambah skill Fire ke slot kedua:
+  - Slot Z: fire_jab (instant, sudah ada)
+  - Slot X: fire_blast (hold→release, baru)
+  - Slot C: flame_sweep (instant, sudah ada)
+  - Slot V: fire_jet (instant, sudah ada)
+
+- [ ] **T3-9** Air Blast: tambah SkillDispatcher handler (JSON sudah ada di T3-3)
+
+- [ ] **T3-10** Water Jet: channel skill, tekan+tahan untuk semburan air berkelanjutan
+
+- [ ] **T3-11** Earth Pillar: raise column dari bawah target, launch ke atas
+
+- [ ] **T3-12** Boulder Launch: hold→release, batu makin besar sesuai charge
+
+---
+
 ## Tahap 3–8 (Gelombang Berikutnya)
 
 Lihat `docs/PROJECT_PLAN.md` untuk daftar lengkap per tahap.
+Lihat `docs/CONTENT_SPEC.md` → "Skill List Lengkap" untuk katalog semua teknik.
 
 ---
 

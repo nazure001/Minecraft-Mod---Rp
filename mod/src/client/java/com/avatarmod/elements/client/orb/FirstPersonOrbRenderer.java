@@ -1,11 +1,13 @@
 package com.avatarmod.elements.client.orb;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix4f;
 
@@ -32,9 +34,7 @@ public final class FirstPersonOrbRenderer {
 
     private static void render(WorldRenderContext ctx) {
         MinecraftClient mc = MinecraftClient.getInstance();
-        if (mc.player == null || mc.options.getPerspective().isFirstPerson() == false) return;
-
-        // Hide orb when inventory / screen is open
+        if (mc.player == null || !mc.options.getPerspective().isFirstPerson()) return;
         if (mc.currentScreen != null) return;
 
         ChargeOrbClientState.OrbState state =
@@ -44,37 +44,42 @@ public final class FirstPersonOrbRenderer {
         float[] color = elementColor(state.skillId());
         float radius = computeRadius(state);
 
-        // Build a fresh viewmodel matrix: starts from identity, applies head yaw/pitch
-        MatrixStack matrices = new MatrixStack();
+        // Use the world render context's matrix stack (already camera-relative).
+        // Translate to player eye position, rotate by player yaw so OFF_X/Z are
+        // in front-of-player space, then apply hand offset.
+        MatrixStack matrices = ctx.matrixStack();
+        Camera camera = ctx.camera();
+        Vec3d camPos = camera.getPos();
 
-        // Slight sway using player's body yaw delta (optional, skipped for MVP)
+        // Player eye position relative to camera
+        Vec3d eyePos = mc.player.getEyePos();
+
+        matrices.push();
+        matrices.translate(eyePos.x - camPos.x, eyePos.y - camPos.y, eyePos.z - camPos.z);
+        // Rotate so +X is to the player's right, -Z is forward
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-mc.player.getYaw()));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(mc.player.getPitch()));
         matrices.translate(OFF_X, OFF_Y, OFF_Z);
 
-        // Face the camera (billboard-ish): no rotation — sphere looks same from all angles
-
         RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
+        RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE); // additive glow
         RenderSystem.disableCull();
         RenderSystem.disableDepthTest();
+        RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 
-        // Switch to projection that matches the hand/item render (narrower FOV, no clip)
-        // For now we render into the same projection; a GameRenderer mixin would be more
-        // accurate but adds complexity. This gives a good-enough in-hand feel.
         BufferBuilder buf = Tessellator.getInstance().begin(
                 VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 
-        Matrix4f projMat = RenderSystem.getProjectionMatrix();
-        Matrix4f modelMat = matrices.peek().getPositionMatrix();
+        renderSphere(buf, matrices.peek().getPositionMatrix(),
+                radius, color[0], color[1], color[2], color[3]);
 
-        renderSphere(buf, modelMat, radius, color[0], color[1], color[2], color[3]);
-
-        // We need to draw with the current projection; use drawWithGlobalProgram
-        RenderSystem.setShader(GameRenderer::getPositionColorProgram);
         BufferRenderer.drawWithGlobalProgram(buf.end());
 
         RenderSystem.enableDepthTest();
         RenderSystem.enableCull();
         RenderSystem.disableBlend();
+
+        matrices.pop();
     }
 
     private static float computeRadius(ChargeOrbClientState.OrbState state) {
@@ -86,7 +91,7 @@ public final class FirstPersonOrbRenderer {
         if (skillId == null) return new float[]{1f, 0.4f, 0.1f, 0.85f};
         return switch (skillId) {
             case "avatar:fire_jab", "avatar:fire_jet", "avatar:flame_sweep" ->
-                    new float[]{1f, 0.35f, 0.05f, 0.85f};
+                    new float[]{1f, 0.35f, 0.05f, 0.40f};
             case "avatar:air_blast", "avatar:air_vortex" ->
                     new float[]{0.8f, 0.95f, 1f, 0.60f};
             case "avatar:water_whip" ->

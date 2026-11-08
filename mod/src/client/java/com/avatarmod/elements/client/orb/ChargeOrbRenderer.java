@@ -1,5 +1,6 @@
 package com.avatarmod.elements.client.orb;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
@@ -52,8 +53,8 @@ public final class ChargeOrbRenderer {
 
             PlayerEntity player = mc.world.getPlayerByUuid(entry.getKey());
             if (player == null) continue;
-            // Skip self — handled by FirstPersonOrbRenderer
-            if (player == mc.player) continue;
+            // Skip self only in 1st person — FirstPersonOrbRenderer handles that view
+            if (player == mc.player && mc.options.getPerspective().isFirstPerson()) continue;
 
             // Orb position: right-hand approximate world position
             Vec3d pos = player.getPos()
@@ -81,7 +82,7 @@ public final class ChargeOrbRenderer {
         if (skillId == null) return new float[]{1f, 0.4f, 0.1f, 0.85f};
         return switch (skillId) {
             case "avatar:fire_jab", "avatar:fire_jet", "avatar:flame_sweep" ->
-                    new float[]{1f, 0.35f, 0.05f, 0.85f};   // orange-red
+                    new float[]{1f, 0.35f, 0.05f, 0.40f};   // orange-red
             case "avatar:air_blast", "avatar:air_vortex" ->
                     new float[]{0.8f, 0.95f, 1f, 0.60f};    // pale blue-white
             case "avatar:water_whip" ->
@@ -99,9 +100,10 @@ public final class ChargeOrbRenderer {
     private static void renderOrb(MatrixStack matrices, float r,
                                    float red, float green, float blue, float alpha) {
         RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
+        RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE); // additive glow
         RenderSystem.disableCull();
         RenderSystem.disableDepthTest();
+        RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 
         BufferBuilder buf = Tessellator.getInstance().begin(
                 VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);

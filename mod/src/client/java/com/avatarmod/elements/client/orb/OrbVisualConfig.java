@@ -21,7 +21,8 @@ public final class OrbVisualConfig {
     }
 
     private static final Map<String, Config> REGISTRY = Map.of(
-        "avatar:fire_jab",  new Config(Set.of("WINDUP")),
+        // fire_jab: WINDUP(2t) + ACTIVE(3t) = 5 ticks visible — short jab, orb dissolves on hit
+        "avatar:fire_jab",  new Config(Set.of("WINDUP", "ACTIVE")),
         "avatar:fire_jet",  new Config(Set.of("WINDUP", "ACTIVE")),
         "avatar:air_blast", new Config(Set.of("WINDUP", "ACTIVE"))
     );
