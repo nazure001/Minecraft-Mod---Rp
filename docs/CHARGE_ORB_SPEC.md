@@ -1,6 +1,15 @@
+> Revisi desain 2026-11-08: bagian tambahan di akhir dokumen menjadi acuan untuk perluasan W. Status historis tetap dipertahankan; tidak ada implementasi atau uji baru yang diklaim.
+
 # Charge Orb System — Spesifikasi Final
 
-**Status:** DISETUJUI ChatGPT 2026-11-07. Siap diimplementasi Claude.
+**Status dokumen:** Proposal historis 2026-11-07. Addendum koreksi di bagian akhir mengesampingkan bagian yang bertentangan; implementasi/runtime terbaru harus diverifikasi dari source dan `TASKS.md`.
+
+## Snapshot renderer aktif — 2026-11-08
+
+- Orb ditampilkan hanya untuk skill yang terdaftar di `OrbVisualConfig`: `fire_jab` (WINDUP/ACTIVE), `fire_blast` (WINDUP/HOLD), `fire_jet` (WINDUP/ACTIVE), dan `air_blast` (WINDUP/ACTIVE).
+- Third-person mengikuti `KnuckleVfxHelper` untuk client player; fallback player memakai offset berbasis yaw.
+- First-person memakai offset relatif kamera dan rotasi yaw/pitch, bukan transform tangan PAL. Ukuran Fire Blast diatur khusus hingga 40 tick.
+- Packet phase dan renderer sudah ada di source. Daftar optik lama di bawah merupakan proposal; bukan bukti semua ukuran, tracking, dan lifecycle sudah diuji.
 
 ---
 
@@ -86,15 +95,14 @@ OrbProjectile extends ProjectileEntity (server + client)
 | `S2CPhaseSync` | Server→Client | skillId, phase, casterUUID, ticksIn — **sudah ada di TASKS** |
 | `S2COrbImpact` | Server→Client | position, element, skill_id — baru |
 
-`S2CPhaseSync` adalah blocker: ChargeOrbClientState bergantung pada packet ini.
-Kalau belum ada, perlu dibuat dulu sebelum renderer bisa ditest.
+`S2CPhaseSync` adalah dependency ChargeOrbClientState. Packet dan renderer sudah ada di source saat audit; penyelesaian visual/lifecycle tetap harus diuji di Minecraft.
 
 ---
 
 ## Urutan Implementasi
 
 ```
-1. S2CPhaseSync packet (server kirim phase ke semua client nearby)
+1. S2CPhaseSync packet (server kirim phase ke semua client nearby; sudah ada)
    → Claude Code
 
 2. ChargeOrbClientState (client-side state dari packet)
@@ -122,8 +130,8 @@ Kalau belum ada, perlu dibuat dulu sebelum renderer bisa ditest.
 
 | Skill | Orb | Catatan |
 |---|---|---|
-| `avatar:fire_jab` | Api kecil | Orb kecil, langsung dilempar/dilebur ke jab |
-| `avatar:fire_jet` | Api besar | Orb besar, ditembak sebagai projectile |
+| `avatar:fire_jab` | Api kecil | Opt-in demo/prototipe; bukan jurus charge wajib |
+| `avatar:fire_jet` | Api besar | Entri historis; Fire Jet saat ini adalah dash, bukan projectile |
 | `avatar:air_blast` | Udara | Orb sphere transparan |
 | `avatar:water_whip` | Air | Bukan orb — whip shape, visual berbeda |
 | `avatar:air_staff_attack` | Tidak | Pakai trail angin, tidak perlu orb |
@@ -136,4 +144,20 @@ Kalau belum ada, perlu dibuat dulu sebelum renderer bisa ditest.
   Saat ini belum ada query API. Perlu dicek apakah PAL expose world matrix bone.
 - **Animasi tangan final (Antigravity)** — agar posisi orb sinkron dengan gerakan.
   Bisa diimplementasi tanpa ini, dengan fallback `player.getHandPos()` approximate.
-- **`S2CPhaseSync` packet** — blocker utama. Harus ada sebelum renderer.
+- **`S2CPhaseSync` packet** — sudah ada di source; validasi lifecycle/late-watcher masih perlu dicatat terpisah.
+
+---
+
+## Klarifikasi manipulasi dan utilitas — 2026-11-08
+
+Bagian ini mengoreksi contoh prototipe sebelumnya: Fire Jet adalah dash, bukan projectile besar.
+Fire Blast HOLD_RELEASE merupakan kandidat utama charge orb. Orb pada Fire Jab, jika dipakai untuk demo,
+berstatus efek prototipe opt-in dan tidak menjadikan Jab jurus charge wajib.
+WINDUP/ACTIVE tidak otomatis berarti charging; gunakan visual config dan state kemampuan aktual.
+
+Orb charge yang mengikuti tangan adalah visual client dari state server, bukan entity material baru.
+Material terkendali untuk air/tanah/lava harus punya sumber dan ledger sebelum visual ditampilkan sebagai material nyata.
+Orb tidak menciptakan persediaan air/lava. Renderer bukan authority damage, resource, atau transaksi world.
+Air riding dan konstruksi wall tidak memerlukan orb hanya karena durasinya panjang.
+First person gunakan attachment tangan/viewmodel yang terverifikasi; third person gunakan transform player yang sama acuannya.
+Saat release/cancel/finish, serial dan lifecycle menghapus efek lama; observer baru tersinkron ketika mulai tracking.

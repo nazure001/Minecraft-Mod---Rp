@@ -1,3 +1,5 @@
+> Revisi desain 2026-11-08: bagian tambahan di akhir dokumen menjadi acuan untuk perluasan W. Status historis tetap dipertahankan; tidak ada implementasi atau uji baru yang diklaim.
+
 # Briefing untuk Antigravity — Pipeline Animasi & VFX
 
 Dokumen ini adalah panduan kolaborasi dari Claude Code untuk Antigravity,
@@ -195,3 +197,33 @@ Antigravity selesai animasi fire_jab (.animation.json)
 3. **Kecepatan animasi:** PAL bisa disesuaikan `speed` multiplier saat runtime — desain di kecepatan natural, Claude Code akan menyesuaikan ke `SkillTimeline` tick
 4. **Idle/ready pose:** Jangan bake idle animation ke file animasi skill — ready pose dihandle oleh mixin terpisah
 5. **Smooth lerp:** PAL punya blending otomatis — tidak perlu pose transisi manual antara idle dan skill start
+
+---
+
+## Mandat terbaru dan scope — 2026-11-08
+
+Antigravity mengambil alih implementasi karena Claude sementara berhenti. Pembatasan historis
+jangan mengubah mod/ dicabut untuk scope A–D; jangan mengubah environment global, save pengguna atau main.
+Lead memegang file bersama/networking/dispatcher/Gradle/config; agent paralel memiliki modul/worktree terpisah.
+A orb lifecycle → B rig/runtime → C Fire Jab lengkap → D hold-release + Fire Blast tetap prioritas.
+
+PAL adalah kandidat yang dilaporkan dipasang, bukan bukti bahwa hierarki siku di atas otomatis didukung.
+Buktikan bending/skin/sleeve, attachment, blending dan reset sebelum ekspor final. Blender opsional.
+Fire Jab tangan kosong memakai ready tersendiri, bukan staff ready. Bedakan pivot model-space, rotasi parent-local,
+dan attachment local/world. Tool_R pada grip memerlukan konversi titik trail lama dari pangkal tongkat.
+Timing dinyatakan absolut sejak cast dan relatif fase secara eksplisit; jangan menggeser damage agar cocok preview tanpa review.
+
+Agent motion boleh merapikan blocking Fire Jab sambil runtime dibuktikan. Agent orb menangani cleanup/tracking.
+Desain W (material, utilitas PvP, profesi) dapat dicatat; implementasi setelah gate A–D, bukan perluasan diam-diam.
+Tidak ada izin menyalin aset reference atau mengklaim fitur selesai hanya karena build sukses.
+
+---
+
+## Brief UI tambahan — 2026-11-08
+
+Arah visual baru: gulungan perkamen bertema tribe, bukan panel gelap Essential sebagai tema utama.
+Essential hanya referensi navigasi/settings; RPG-HUD referensi HUD modular. Keduanya bukan dependency wajib.
+Baca UI_THEME_SPEC.md, UI-01–UI-10 pada TASKS dan acceptance UI pada TESTING.
+Jangan menggeser A–D. Agent desain boleh membuat wireframe/aset original dengan kepemilikan file jelas;
+implementasi UI setelah checkpoint aktif dan kontrak data tersedia. Theme AUTO/manual/minimal satu sistem.
+Tidak mengubah inventory/keybind combat atau menambah fitur sosial/account Essential.

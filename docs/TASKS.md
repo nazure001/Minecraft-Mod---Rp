@@ -1,3 +1,5 @@
+> Revisi desain 2026-11-08: bagian tambahan di akhir dokumen menjadi acuan untuk perluasan W. Status historis tetap dipertahankan; tidak ada implementasi atau uji baru yang diklaim.
+
 # TASKS.md — Daftar Tugas Aktif
 
 Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
@@ -45,7 +47,7 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 
 - [x] **T3-1** Water Whip: LINE hitbox r6, dmg 3.0, pull knockback, DRIPPING_WATER+SPLASH VFX — keybinding C — BUILD ✅ (belum diuji)
 - [x] **T3-2** Earth Boulder: projectile traveling 0.8b/t, dmg 5.0, lifetime 20 tik, no block modify — keybinding B — BUILD ✅ (belum diuji)
-- [ ] **T3-3** Audit Air Palm/Air Blast: tambah impl handler (JSON sudah ada, belum ada SkillDispatcher handler)
+- [ ] **T3-3** Verifikasi Air Palm/Air Blast: definisi JSON dan handler `SkillDispatcher` kini ada; uji implementasi, nilai, dan pemetaan slot masih pending
 - [ ] **T3-4** Test sinkronisasi T2-8 sebelum lanjut gelombang 2
 
 ---
@@ -60,23 +62,31 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
   - Fix: additive blending (`SRC_ALPHA, ONE`) + alpha 0.40 untuk glowing sphere visual
   - Status: BUILD SUCCESSFUL, orb terlihat in-game ✅ (IDLE clearance & visual masih perlu verifikasi ulang)
 
-- [ ] **T3-6** Fire Blast: skill hold→release, charge grows orb, release spawns projectile entity
-  - `cast_type: HOLD_RELEASE` — butuh `C2SHoldStart` + `C2SHoldRelease` packet pair
-  - Server-side charge state per player (charge_ticks, max 40)
-  - Projectile entity terbang ke arah pandang saat release
-  - Damage & radius scale dengan charge time
-  - Orb membesar menggunakan ChargeOrbClientState yang sudah ada
+- [x] **T3-6** Fire Blast: skill hold→release, charge grows orb, release spawns projectile entity — Antigravity — 2026-11-08
+  - `cast_type: HOLD_RELEASE` terintegrasi dengan `C2SHoldStart` + `C2SHoldRelease`
+  - Server-side charge state per player di SkillTimeline (Phase.HOLD, max 40 ticks)
+  - FireBall projectile terbang ke arah pandang (speed 1.8 blok/tick)
+  - Damage (35%-100% dari 7.0) & radius (1.0 - 3.0 blok) scaling dengan charge ratio
+  - Orb membesar menggunakan interpolatedTicks() di ChargeOrbClientState dan KnuckleVfxHelper
 
-- [ ] **T3-7** Hold-Release framework generik: `C2SHoldStart`/`C2SHoldRelease` packet, `HoldTimeline` server state
-  - Prerequisite untuk fire_blast, boulder_launch, lightning_strike, combustion_beam, ice_prison
+- [x] **T3-7** Hold-Release framework generik: `C2SHoldStart`/`C2SHoldRelease` packet, Phase.HOLD di SkillTimeline — Antigravity — 2026-11-08
+  - Prerequisite terintegrasi tanpa sistem chi/cooldown/timeline paralel
+  - Siap dipakai untuk fire_blast, boulder_launch, lightning_strike, combustion_beam, ice_prison
 
-- [ ] **T3-8** Tambah skill Fire ke slot kedua:
-  - Slot Z: fire_jab (instant, sudah ada)
+- [x] **T3-8** Menyusun lima slot skill Fire — Antigravity — 2026-11-08
+  - Slot Z: fire_jab (instant, terverifikasi)
   - Slot X: fire_blast (hold→release, baru)
-  - Slot C: flame_sweep (instant, sudah ada)
-  - Slot V: fire_jet (instant, sudah ada)
+  - Slot C: flame_sweep (instant, terverifikasi)
+  - Slot V: fire_guard; Slot B: fire_jet (sesuai `element_slots.json`)
 
-- [ ] **T3-9** Air Blast: tambah SkillDispatcher handler (JSON sudah ada di T3-3)
+> T3-9 digabung ke T3-3: handler Air Blast sudah ada di source saat audit; ini bukan klaim build atau uji runtime yang lulus.
+
+## Follow-up audit schema
+
+- [ ] **SC-1** Validasi schema skill dan slot saat load: field wajib/enum, duplikasi ID, referensi slot yang tidak dikenal, serta laporkan resource/override invalid secara eksplisit.
+- [ ] **SC-2** Tetapkan assignment slot WATER/EARTH; saat ini lima slot per elemen mengulang satu skill.
+- [ ] **SC-3** Putuskan implementasi atau penghapusan perilaku `CHANNEL`, `TOGGLE`, dan chi sustain `chiPerTick`; enum/field saat ini belum menggerakkan perilaku runtime.
+- [ ] **SC-4** Rekonsiliasi dependency PAL di Gradle dan metadata Fabric; client mengimpor PAL tetapi `fabric.mod.json` belum mendeklarasikannya di `depends`.
 
 - [ ] **T3-10** Water Jet: channel skill, tekan+tahan untuk semburan air berkelanjutan
 
@@ -111,3 +121,43 @@ Lihat `docs/CONTENT_SPEC.md` → "Skill List Lengkap" untuk katalog semua teknik
 | T0-2 | Identifikasi konflik | 2026-11-07 | Dua sistem skill paralel, chi failsafe, Avatar State tanpa validasi |
 | T0-3 | Perbaiki datapack | 2026-11-07 | 5 fix diterapkan, belum diuji di Minecraft |
 | T0-4 | Setup workspace | 2026-11-07 | Struktur folder, docs, Git init |
+
+---
+
+## Backlog W — Manipulasi dunia, utilitas dan profesi (2026-11-08)
+
+Semua status berikut BELUM DIIMPLEMENTASIKAN. Tidak mengubah status task lama menjadi terverifikasi.
+- [ ] W-01 Audit schema/runtime config vs CONTENT_SPEC; pertahankan angka aktif sampai rekonsiliasi.
+- [ ] W-02 Kontrak activation, duration, sustain, interruption, sumber, efek entity/world, unlock.
+- [ ] W-03 Keputusan mode terrain default dan material/drop/restore; dokumentasikan keputusan sebelum world mutation.
+- [ ] W-04 Transaksi material server + persistence dan migrasi versi data.
+- [ ] W-05 Uji konservasi, cancel, restart, chunk unload, dimensi dan dua pemain berebut sumber.
+- [ ] W-06 Earth Wall raise/hold dari sumber nyata; source check dan destination collision.
+- [ ] W-07 Launch seluruh wall, swept collision, hit gating, impact, reclaim.
+- [ ] W-08 Utilitas dasar FIRE/WATER/EARTH/AIR beserta efek PvP eksplisit.
+- [ ] W-09 Waduk/wadah air dan lava, tag material, unit volume dan aturan isi ulang.
+- [ ] W-10 Profil tribe/elemen/mastery/teknik/profesi dan latihan anti-farming.
+- [ ] W-11 Ore extraction: tool/tier, loot, enchantment dan XP; tanpa duplikasi/auto-smelt.
+- [ ] W-12 Konstruksi preview/confirm dan terraforming batch dengan permission serta persistence.
+- [ ] W-13 Weapon imbue dan matriks interaksi elemen, tanpa damage handler ganda.
+- [ ] W-14 Air riding TOGGLE/UNTIL_INTERRUPTED; sustain/fall/knock rules sebelum implementasi.
+- [ ] W-15 Uji load budget dan dedicated multiplayer sebelum perluasan volume.
+
+Dependensi: A–D aktif → W-01/02/03 → W-04/05 → W-06/07 → W-08/09 → W-10/11 → W-12.
+W-13/14 dijadwalkan setelah fondasi terkait terbukti, bukan diimplementasikan semua sekaligus.
+
+---
+
+## Backlog UI — gulungan bertema tribe (2026-11-08)
+
+Status semua task: BELUM DIIMPLEMENTASIKAN; detail `UI_THEME_SPEC.md`.
+- [ ] UI-01 Audit HUD, data dan konflik input aktual; tetapkan mode overlay/pengganti dengan jelas.
+- [ ] UI-02 Wireframe menu gulungan, HUD minimal dan tema tribe; buat preview, bukan klaim runtime.
+- [ ] UI-03 Komponen scalable/background modular, text, tab, slider, toggle, tooltip dan pencarian.
+- [ ] UI-04 Config client berversi, AUTO/manual/minimal, layout preview dan apply/cancel/reset.
+- [ ] UI-05 Tema Fire/Water/Earth/Air/Nonbender memakai token yang sama.
+- [ ] UI-06 Ikon chi/stamina/health, cooldown dan charge dari snapshot server; tanpa data dummy live.
+- [ ] UI-07 Profil mastery/profesi dan widget material sesudah data terkait tersedia.
+- [ ] UI-08 Keyboard, kontras, reduced motion/flash, resolusi dan GUI scale.
+- [ ] UI-09 Uji overlap HUD/mod lain, input bocor, close saat charge, SP/MP dan izin server.
+- [ ] UI-10 Catat provenance aset dan hasil build/runtime; tidak memasang Essential/RPG-HUD sebagai syarat inti.

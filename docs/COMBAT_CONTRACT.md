@@ -1,4 +1,8 @@
+> Revisi desain 2026-11-08: bagian tambahan di akhir dokumen menjadi acuan untuk perluasan W. Status historis tetap dipertahankan; tidak ada implementasi atau uji baru yang diklaim.
+
 # Combat Contract — Avatar: Elements Mod
+
+> Catatan audit 2026-11-08: bagian kontrak/urutan di bawah memuat rancangan historis. Source aktif kini memakai `SkillTimeline`, `SkillDispatcher`, JSON `skill_definitions.json`, dan Player Animation Library tercantum di Gradle. Status `[ ]`/`[~]` lama bukan verifikasi terkini; gunakan `TASKS.md` untuk backlog dan `TESTING.md` untuk workflow. PAL dependency tidak membuktikan rig/bone API atau seluruh klaim animasi pada dokumen ini sudah teruji.
 
 Dokumen ini mendefinisikan kontrak visual combat untuk setiap skill.
 Semua timing mengacu pada `SkillTimeline` (tick = 1/20 detik).
@@ -287,7 +291,7 @@ Skill berikut belum boleh ditambah kontrak atau diimplementasi sampai
 - **Epic Fight JAR** (`reference/epic-fight-21.17.3.1-mc1.21.1-neoforge.jar`) —
   NeoForge only, hanya referensi konsep armature. Jangan install ke Fabric.
 - **PAL** (`com.zigythebird.playeranim:PlayerAnimationLibFabric:1.1.6+mc.1.21.1`) —
-  library animasi terpilih, belum ditambah ke `build.gradle`.
+  dideklarasikan di `build.gradle`; kemampuan rig/bone yang dibutuhkan tetap harus dibuktikan terhadap versi runtime.
 
 ---
 
@@ -296,7 +300,7 @@ Skill berikut belum boleh ditambah kontrak atau diimplementasi sampai
 Urutan implementasi yang wajib diikuti:
 
 ```
-1. Tambah PAL ke build.gradle + verifikasi build
+1. PAL sudah tercantum di build.gradle; verifikasi integrasi runtime sebelum mengandalkan API bone
 2. Buat armature JSON: Head, Body, Arm_R/L, Elbow_R/L, Hand_R/L
 3. Buat animasi fire_jab di Blockbench (3 keyframe, 9 tick)
 4. Hubungkan ke SkillTimeline → semua 7 field fire_jab [x]
@@ -305,3 +309,25 @@ Urutan implementasi yang wajib diikuti:
 7. Hubungkan → semua 7 field air_staff_attack [x]
 8. Baru boleh lanjut ke skill lain
 ```
+
+---
+
+## Ekstensi kontrak untuk utilitas dan konstruksi — 2026-11-08
+
+Status: desain. Kontrak tujuh field tetap berlaku pada aksi serangan; tambahkan:
+source_policy, material_budget, duration_policy, sustain_policy, world_permission,
+construct_lifecycle, persistence_policy, progression_requirements dan entity_effect_policy.
+Jangan menambah packet khusus setiap profesi; gunakan pipeline validasi yang sama dengan pemetaan aksi yang jelas.
+
+Earth Wall terdiri dari cast Raise, konstruksi persisten, aksi Launch, dan resolusi Impact/Reclaim.
+Satu cast tetap satu timeline; lifetime konstruksi dan aksi berikutnya bukan duplikasi SkillTimeline.
+Definisikan hit gating, benturan sepanjang lintasan, interruption dan hasil material untuk setiap aksi.
+Penerimaan damage utilitas tetap melalui resolver server; collision dan occlusion tidak ditentukan renderer.
+
+Heat/Water Flow/Shaping/Air Flow harus membedakan intensitas pekerjaan dari efek ofensif yang memang didefinisikan.
+Konstruksi tidak ditempatkan di dalam hitbox pemain sebagai bypass damage/suffocation.
+Animasi/VFX menggunakan cast serial + construct identity bila relevan; late watcher menerima state yang masih hidup.
+Fire Jab bukan jurus charge wajib; Fire Jet tetap dash; charge orb hanya opt-in teknik yang relevan.
+
+Catatan rig: deklarasi custom bone PAL tidak membuktikan geometri siku; kontrak export harus mengikuti
+rig versi runtime yang benar-benar teruji. Source renderer menentukan pemetaan, bukan nama bone semata.

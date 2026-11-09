@@ -1,3 +1,5 @@
+> Revisi desain 2026-11-08: bagian tambahan di akhir dokumen menjadi acuan untuk perluasan W. Status historis tetap dipertahankan; tidak ada implementasi atau uji baru yang diklaim.
+
 # DECISIONS.md — Keputusan Teknis
 
 Format: `[YYYY-MM-DD] DXXX — Judul — Keputusan — Alasan`
@@ -7,7 +9,7 @@ Format: `[YYYY-MM-DD] DXXX — Judul — Keputusan — Alasan`
 ## D001 — Platform: Fabric bukan Forge/NeoForge
 **Tanggal:** 2026-11-07  
 **Keputusan:** Mod dikembangkan di Fabric 1.21.1.  
-**Alasan:** Epic Fight mod tersedia untuk Fabric 1.21.1. Fabric lebih ringan dan update lebih cepat. File referensi NeoForge (`epic-fight-21.17.3.1-mc1.21.1-neoforge.jar`) di `reference/` hanya untuk studi API animasi.
+**Alasan:** Fabric dipertahankan sebagai platform proyek. Ketersediaan Epic Fight Fabric tidak menjadi dasar keputusan; paket referensi yang diaudit adalah NeoForge. File referensi NeoForge (`epic-fight-21.17.3.1-mc1.21.1-neoforge.jar`) di `reference/` hanya untuk studi API animasi.
 
 ---
 
@@ -112,3 +114,51 @@ Format: `[YYYY-MM-DD] DXXX — Judul — Keputusan — Alasan`
 Semua error "non-obfuscated environment" dan "mappings() not found" berasal dari plugin ID yang salah.
 
 **Alasan:** Versi awal dari template resmi Fabric. Loom, Gradle, JVM version, dan plugin ID dikoreksi dari error aktual selama diagnostik T1-1. BUILD SUCCESSFUL terverifikasi 2026-11-07.
+
+---
+
+## D013 — Manipulasi elemen sebagai fondasi bersama
+Tanggal: 2026-11-08. Status: arah desain yang disetujui untuk dokumentasi; implementasi belum dimulai.
+Combat, utilitas pekerjaan, dan interaksi dunia memakai sumber material serta validasi server yang sama.
+Efek PvP utilitas didefinisikan eksplisit; tidak semua VFX memberi damage.
+
+## D014 — Aktivasi berbeda dari durasi dan sustain
+TOGGLE/CHANNEL/HOLD_RELEASE menjelaskan input; UNTIL_INTERRUPTED menjelaskan durasi.
+Air riding dapat tanpa timer tetap. Biaya sustain dan ambang interrupt TBD.
+
+## D015 — Material nyata dan konstruksi bergerak
+Earth Wall mengambil material dunia dan dapat diluncurkan seluruhnya sebagai satu massa.
+Reklamasi mengembalikan material tersisa, bukan regenerasi tanpa sumber. Tidak ada duplikasi item.
+Default PERMANENT vs TEMPORARY_RESTORE masih OPEN; hanya rekomendasi survival, belum keputusan pengguna final.
+
+## D016 — Progression dan profesi pilihan
+Tribe, elemen, mastery, teknik dan profesi terpisah. Level tidak otomatis membuka semua pekerjaan.
+Batas profesi, latihan/XP dan stat baru TBD. Master construction memerlukan teknik dan material.
+
+## D017 — Urutan dan sumber kebenaran
+Pertahankan A orb → B animasi → C Fire Jab → D hold-release/Fire Blast.
+Sesudahnya: kontrak → ledger material → Earth Wall → utilitas → profesi → konstruksi master.
+D008 dipertegas: dokumen mengatur desain; runtime memakai JSON yang benar-benar didukung loader dan sinkronisasi yang sama.
+Perbedaan nilai lama vs source aktif diaudit dahulu; pembaruan ini tidak mengubah balance.
+D001 dikoreksi: pemilihan Fabric tidak didasarkan pada klaim Epic Fight Fabric tersedia; JAR referensi adalah NeoForge.
+
+### Hasil audit schema runtime — 2026-11-08
+
+Definisi aktif dimuat dari `mod/src/main/resources/data/avatar_elements/skill_definitions.json`, dengan override opsional pada `config/avatar_elements/skill_definitions.json`. Pemetaan slot berasal dari `data/avatar_elements/element_slots.json` dan memiliki lima slot; source saat ini mengulang skill Water/Earth di semua slot. `CONTENT_SPEC.md` menandai nilai/katalog non-runtime secara terpisah. Audit ini tidak mengubah angka balance maupun penempatan slot.
+
+Schema loader memakai camelCase; hanya `cast_type` dan `max_charge_ticks` yang mempunyai alias snake_case. `CHANNEL`, `TOGGLE`, dan `chiPerTick` belum didukung sebagai perilaku runtime; hanya `HOLD_RELEASE` mendapat jalur khusus. Penyelarasan nilai atau assignment gameplay berikutnya harus mengubah data dan/atau implementasi secara eksplisit, tidak cukup dengan memperbarui katalog.
+
+Audit source juga menemukan bahwa pemetaan slot yang hilang atau gagal diparse diam-diam memakai fallback, dan komentar API `ElementSlotMap` masih menyebut empat slot/indeks 0–3 meski implementasi memakai lima slot/indeks 0–4. Validasi eksplisit dan assignment WATER/EARTH dicatat di `TASKS.md` SC-1/SC-2; data runtime tidak diubah dalam audit dokumentasi ini.
+`SkillConfigLoader` juga tidak menjamin fallback untuk JSON override yang malformed karena parse/konversi tidak ditangani sebagai `IOException`; validasi dan pelaporan jelas masuk SC-1.
+
+Client mengimpor Player Animation Library dari Gradle, tetapi metadata `fabric.mod.json` tidak mencantumkannya sebagai dependency. Reconciliation metadata dicatat di `TASKS.md` SC-4; tidak mengubah manifest dependency saat audit ini.
+
+---
+
+## D018 — GUI gulungan dengan navigasi modern
+Tanggal: 2026-11-08. Status: arah visual dipilih pengguna; implementasi belum diverifikasi.
+Menu utama/settings dan profil memakai gulungan perkamen; HUD ringkas, bukan lembar yang menghalangi combat.
+Essential menjadi referensi navigasi; RPG-HUD referensi modularitas; keduanya bukan dependency wajib.
+AUTO mengikuti tribe, aksen skill mengikuti elemen aktif; pilihan manual/minimal tidak memengaruhi gameplay.
+Aset original; satu theme system, preferensi client terpisah dari izin/data server.
+Kontrak detail pada UI_THEME_SPEC.md. UI masuk tahap presentasi setelah checkpoint aktif A–D, bukan migrasi input baru.

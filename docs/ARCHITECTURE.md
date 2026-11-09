@@ -1,99 +1,71 @@
+> Revisi desain 2026-11-08: bagian tambahan di akhir dokumen menjadi acuan untuk perluasan W. Status historis tetap dipertahankan; tidak ada implementasi atau uji baru yang diklaim.
+
 # ARCHITECTURE.md — Arsitektur Teknis
 
-## Pembagian client/server
+## Runtime saat ini (diaudit dari source dan resource)
 
-```
-Client (Fabric mod)                Server (Fabric mod)
-─────────────────────              ──────────────────────────
-Keybind + input buffer             Validasi chi, cooldown, damage
-Animasi (Epic Fight)               Validasi hitbox dan proyektil
-Partikel VFX (client-side)         Perubahan blok (earth wall, lava)
-HUD (chi, stamina, cooldown)       State pemain (mastery, progression)
-Sound (positional)                 Aturan Avatar State dan sub-bending
-Skill timeline rendering           Batas proyektil dan entitas per pemain
-```
+Mod menggunakan Fabric 1.21.1 dengan source set `main` dan `client`. Client menangani keybind, HUD, renderer, dan state VFX lokal; server menangani validasi cast, chi/cooldown, timeline, hitbox/efek skill dan sinkronisasi phase. Server menjadi authority untuk hasil gameplay; dokumen rancangan W di bawah belum berarti manipulasi dunia/profesi sudah diimplementasikan.
 
-## Networking
+### Networking
 
-Paket kustom (Fabric Networking API):
-- `C2S_SkillInput` — input skill dari client ke server (keybind + slot aktif)
-- `S2C_SkillResult` — hasil validasi server ke client (cast / reject + alasan)
-- `S2C_HudUpdate` — update chi, cooldown, status ke client
-- `S2C_AnimationTrigger` — trigger animasi ke semua client dalam jangkauan
+Payload aktual didefinisikan di `SkillPackets`:
 
-Server adalah authority. Client tidak langsung menerapkan damage atau perubahan blok.
+| Arah | Payload |
+|---|---|
+| Client → Server | `C2SSkillInput`, `C2SSlotCast`, `C2SHoldStart`, `C2SHoldRelease`, `C2SSetElement` |
+| Server → Client | `S2CSkillResult`, `S2CHudUpdate`, `S2CPhaseSync` |
 
-## Penyimpanan
+`S2CPhaseSync` menyertakan UUID caster, skill ID, nama phase, tick phase, dan cast serial. Ini bukan packet `S2C_AnimationTrigger` seperti deskripsi scaffold lama.
 
-| Data | Lokasi | Format |
+### State dan konfigurasi
+
+| Data | Lokasi/format aktual | Batasan yang diketahui |
 |---|---|---|
-| Mastery pemain | `PlayerData` NBT via AttachmentType | JSON-serializable |
-| Chi dan cooldown | Scoreboard (sementara) → AttachmentType | Integer |
-| Skill yang terbuka | AttachmentType (persistent) | Set\<ResourceLocation\> |
-| Konfigurasi server | `config/avatar/server.json` | JSON |
-| Konfigurasi client | `config/avatar/client.json` | JSON |
+| Chi, cooldown, mastery, elemen aktif, timeline/kombo | `PlayerBendingData` via Fabric `AttachmentType` | State saat ini tidak dipersistenkan lintas sesi |
+| Definisi skill | Bundled `data/avatar_elements/skill_definitions.json` | Loader mendahulukan override `config/avatar_elements/skill_definitions.json`; parser manual hanya membaca field yang didukung |
+| Pemetaan slot | Bundled `data/avatar_elements/element_slots.json` | Lima slot per elemen; belum ada override config |
+| Preferensi client/server JSON | Belum ada sistem file config umum | Jangan menganggap path `config/avatar/...` pada rancangan lama sudah tersedia |
 
-## Konfigurasi bersama (satu sumber data)
+Runtime package root adalah `com.avatarmod.elements`; implementasi utama berada di `data/`, `network/`, `skill/`, `entity/`, `particle/`, dan client `client/`. Mod ID/asset namespace adalah `avatar_elements`; skill ID berbentuk string saat ini memakai prefix `avatar:`.
 
-Semua nilai gameplay (damage, chi cost, cooldown, range, duration) didefinisikan di:
-```
-mod/src/main/resources/data/avatar/skill_definitions/
-mod/src/main/resources/data/avatar/armor_definitions/
-mod/src/main/resources/data/avatar/weapon_definitions/
-```
+### Dependency dan build
 
-Format JSON. Dibaca oleh: kode server (validasi), HUD (display), tooltip item, dan `docs/CONTENT_SPEC.md` (referensi dokumentasi).
+`mod/build.gradle` mendeklarasikan Fabric Loom, Minecraft 1.21.1, Fabric Loader/API, dan Player Animation Library. Client source mengimpor PAL; namun `fabric.mod.json` belum mencantumkannya di `depends`, sehingga metadata dependency perlu direkonsiliasi sebelum paket distribusi. Epic Fight yang ada di `reference/` adalah referensi NeoForge, bukan dependency runtime mod Fabric; WTHIT/JADE juga bukan dependency yang dideklarasikan.
 
-## Skill timeline
+### Charge orb (as-built)
 
-Setiap skill punya satu `SkillTimeline`:
-```
-[windup_ticks] → [active_ticks] → [recovery_ticks]
-     ↓                ↓                ↓
-  animasi mulai    hitbox aktif     animasi selesai
-  chi dikurangi    VFX dipancarkan  cooldown dimulai
-  suara windup     suara impact     bisa kombo berikutnya
-```
+`OrbVisualConfig` mengaktifkan orb untuk `fire_jab` (WINDUP/ACTIVE), `fire_blast` (WINDUP/HOLD), `fire_jet` (WINDUP/ACTIVE), dan `air_blast` (WINDUP/ACTIVE). Renderer third-person memakai `KnuckleVfxHelper` untuk client player dan fallback offset berbasis yaw untuk player lain. Renderer first-person memakai offset camera-relative berbasis yaw/pitch; itu bukan query PAL bone/viewmodel hand transform. Nilai optik dan phase ini berasal dari source dan belum semuanya dinyatakan lolos uji visual.
 
-Ini memastikan animasi, hitbox, VFX, dan suara berjalan pada waktu yang sama.
+---
 
-## Dependensi mod
+## Arsitektur target: manipulasi dunia dan profesi (rancangan 2026-11-08)
 
-| Mod | Versi | Peran |
-|---|---|---|
-| Fabric API | 1.21.1 | Base API |
-| Epic Fight | 21.17.3.1 | Animasi pertarungan |
-| WTHIT/JADE | opsional | Debug overlay |
+Pekerjaan A–D tidak diperluas saat berjalan. Komponen berikut adalah kontrak desain, bukan kelas yang sudah ada.
+- AbilityDefinition: aktivasi, durasi, sustain, efek entity/world, sumber, progression, dan event presentasi.
+- AbilitySession: state server per cast, serial, waktu server, interrupt; memakai validator/resource/timeline yang ada.
+- ConstructState: identitas dan pemilik konstruksi; dapat hidup lebih lama dari cast; referensi transaksi material.
+- MaterialTransaction/Ledger: reserve → remove → in-control → place/drop/reclaim; commit/abort idempoten dan tersimpan.
+- WorldPermissionAdapter: validasi sumber, tujuan, claim, PvP dan entity; jika integrasi claim tak tersedia, jangan mengklaim kompatibel.
+- ProgressionProfile: tribe, elemen, mastery, teknik, profesi dan latihan; seluruh unlock diverifikasi server.
+- Presentation: snapshot server menggerakkan animasi, attachment, VFX/SFX, preview; client tidak menentukan collision/damage.
 
-## Struktur package Java
+Satu sumber konfigurasi runtime yang diparsing dipakai validasi dan hasil sinkronisasi HUD; dokumen menjadi referensi desain.
+Path/schema loader aktual harus diaudit sebelum migrasi; jangan menambah registry atau chi/timeline kedua.
+Ability bertipe utility memakai damage resolver yang sama dengan combat bila efek ofensif didefinisikan.
 
-```
-com.avatar.elements/
-├── AvatarMod.java
-├── client/
-│   ├── KeyBindings.java
-│   ├── HudRenderer.java
-│   └── AnimationHandler.java
-├── server/
-│   ├── SkillValidator.java
-│   ├── ChiManager.java
-│   └── CombatHandler.java
-├── common/
-│   ├── skill/
-│   │   ├── SkillDefinition.java
-│   │   ├── SkillTimeline.java
-│   │   └── SkillRegistry.java
-│   ├── element/
-│   │   └── Element.java
-│   ├── data/
-│   │   └── PlayerBendingData.java
-│   └── network/
-│       ├── C2SSkillInputPacket.java
-│       └── S2CSkillResultPacket.java
-└── content/
-    ├── skills/fire/
-    ├── skills/water/
-    ├── skills/earth/
-    ├── skills/air/
-    └── weapons/
-```
+Persistence harus menyimpan pemilik/serial/material/konstruksi dan hasil transaksi; tangani save/restart/chunk unload,
+disconnect, pindah dimensi, transaksi sebagian, serta resource contention dua pemain.
+Temporary restore memerlukan deteksi konflik dan rekonsiliasi material, bukan sekadar setBlock snapshot lama.
+Budget server: batasi volume, collision, entity debris, batch world edit, tracking dan jarak render.
+Partikel/debris visual tidak menambah item atau menentukan kerusakan.
+
+---
+
+## UI gulungan modular (2026-11-08)
+
+Acuan: `UI_THEME_SPEC.md`. Satu renderer/layout widget memakai theme tokens untuk lima identitas, bukan lima logika screen.
+Screen/settings memakai perkamen modular; teks dan komponen terpisah dari background. HUD memakai bingkai kecil.
+Preference client (tema/skala/posisi/efek/audio) terpisah dari authoritative player/server state.
+Data HUD, profil, tooltip dan skill tree memakai definisi/snapshot yang sama; dilarang hardcode tabel gameplay kedua.
+Input screen dikonsumsi sebelum combat; close/focus loss ditangani agar hold tidak macet.
+Tidak ada dependency wajib Essential/RPG-HUD. Tidak menyalin GUI, font atau aset reference otomatis.
