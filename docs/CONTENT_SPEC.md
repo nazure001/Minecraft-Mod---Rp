@@ -14,7 +14,7 @@ Loader membaca objek JSON dengan properti `skills` berupa array. Properti yang d
 | `element` | string/enum | `FIRE`, `WATER`, `EARTH`, atau `AIR` |
 | `masteryRequired` | int | Mastery minimum |
 | `chiCost` | int | Chi saat cast |
-| `chiPerTick` | int | Dibaca ke definisi, tetapi belum dikonsumsi oleh jalur runtime saat ini |
+| `chiPerTick` | int | Wajib `0`; sustain cost ditunda dan nilai nonzero ditolak loader |
 | `cooldownTicks` | int | Cooldown |
 | `windupTicks` | int | Windup |
 | `activeTicks` | int | Durasi fase active |
@@ -25,14 +25,16 @@ Loader membaca objek JSON dengan properti `skills` berupa array. Properti yang d
 | `hitboxShape` | string/enum | Opsional; default `SPHERE`; nilai yang dikenal: `SPHERE`, `ARC`, `LINE`, `CONE` |
 | `cancelOnHit` | boolean | Flag definisi |
 | `comboWindowTicks` | int | Jendela kombo |
-| `castType` | string/enum | Opsional; default `INSTANT`; nilai enum `INSTANT`, `HOLD_RELEASE`, `CHANNEL`, `TOGGLE` |
-| `maxChargeTicks` | int | Opsional; default `0`, dipakai bersama `HOLD_RELEASE` |
+| `castType` | string/enum | Opsional; default `INSTANT`; loader menerima `INSTANT` dan `HOLD_RELEASE` |
+| `maxChargeTicks` | int | Opsional; wajib lebih dari `0` untuk `HOLD_RELEASE`, selain itu harus `0` |
 
 Loader menerima alias snake_case hanya untuk `cast_type` dan `max_charge_ticks`; field lain harus memakai ejaan camelCase di atas. Field tambahan seperti `projectile_speed`, `explosion_radius`, atau `block_duration_ticks` tidak dibaca oleh `SkillConfigLoader` dan tidak boleh dianggap konfigurasi runtime.
 
-Walaupun enum mendeklarasikan `CHANNEL` dan `TOGGLE`, jalur validasi/timeline saat ini hanya mengaktifkan perilaku khusus `HOLD_RELEASE`; chi sustain dari `chiPerTick` belum diterapkan. Jangan mendeskripsikan field enum/data tersebut sebagai fitur runtime yang sudah berfungsi.
+Loader memvalidasi field wajib, tipe dan rentang nilai, enum, ID namespaced unik, serta menolak properti yang tidak dikenal. `activeTicks` harus minimal 1; field integer dan nilai float tidak boleh negatif, dan float harus finite. Alias camelCase dan snake_case tidak boleh hadir bersamaan. Slot harus berisi tepat lima entri per elemen; referensi skill harus ada dan elemennya harus cocok. Slot `null` berarti kosong dan ID slot berulang tetap diizinkan.
 
-Jika file override ada tetapi JSON/schema-nya malformed, loader tidak menjamin fallback ke bundled resource: parse/konversi terjadi di dalam blok yang hanya menangkap `IOException`. Validasi startup dan pelaporan error yang jelas masih menjadi follow-up.
+Runtime saat ini hanya mendukung `INSTANT` dan `HOLD_RELEASE`; walaupun enum Java mendeklarasikan `CHANNEL` dan `TOGGLE`, loader menolaknya. `HOLD_RELEASE` memerlukan `maxChargeTicks` lebih dari nol. Chi sustain ditunda hingga kontrak W1 disepakati; loader menolak `chiPerTick` nonzero agar konfigurasi tidak menyiratkan biaya yang tidak diterapkan.
+
+Jika file override ada tetapi gagal dibaca karena `IOException`, loader mencatat error lalu mencoba bundled resource. Jika JSON/schema override malformed, loader melaporkan sumber dan path JSON lalu gagal saat startup; override invalid tidak diam-diam diganti dengan bundled config. Resource slot bundled juga divalidasi dan kegagalan konfigurasi dilaporkan sebagai error startup.
 
 ### Snapshot definisi dan slot aktif
 
@@ -43,9 +45,18 @@ Daftar ID di bawah adalah isi `skill_definitions.json` yang diaudit. Nilai numer
 | FIRE | `avatar:fire_jab`, `avatar:fire_blast`, `avatar:flame_sweep`, `avatar:fire_jet`, `avatar:fire_guard` |
 | AIR | `avatar:air_palm`, `avatar:air_blast`, `avatar:air_staff_attack`, `avatar:air_vortex` |
 | WATER | `avatar:water_whip` |
-| EARTH | `avatar:earth_boulder` |
+| EARTH | `avatar:earth_boulder`, `avatar:boulder_launch`, `avatar:earth_pillar` |
 
-`element_slots.json` dan `ElementSlotMap` menggunakan lima slot (0–4; tombol Z/X/C/V/B). Mapping saat ini menempatkan Fire Jab/Blast/Sweep/Guard/Jet pada lima slot FIRE; slot AIR kelima mengulang Air Staff Attack, sedangkan seluruh slot WATER mengulang Water Whip dan seluruh slot EARTH mengulang Earth Boulder. Pengulangan ini adalah keadaan data saat audit, bukan rekomendasi desain; jangan menggantinya tanpa keputusan pemetaan gameplay.
+`element_slots.json` dan `ElementSlotMap` menggunakan lima slot (0–4; tombol Z/X/C/V/B). Mapping aktif:
+
+| Elemen | Z | X | C | V | B |
+|---|---|---|---|---|---|
+| FIRE | Fire Jab | Fire Blast | Flame Sweep | Fire Guard | Fire Jet |
+| AIR | Air Staff Attack | Air Blast | Air Palm | Air Vortex | Kosong |
+| WATER | Water Whip | Kosong | Kosong | Kosong | Kosong |
+| EARTH | Earth Boulder | Boulder Launch | Earth Pillar | Kosong | Kosong |
+
+Slot kosong memakai `null` dan tidak menjalankan cast. Karena belum ada skill tambahan untuk WATER/EARTH, pilihan konservatif untuk fase ini adalah mempertahankan hanya skill yang tersedia dan tidak menggandakan atau mengarang ability. Assignment ini merupakan default kerja sementara, bukan keputusan desain final yang telah dikonfirmasi pengguna; slot dapat diisi saat skill baru siap dan assignment gameplay ditinjau.
 
 Contoh stat di bagian berikut merupakan katalog desain historis. Contoh yang tidak hadir di daftar runtime di atas masih direncanakan; jika nilai contoh berbeda dari JSON aktif, JSON aktif menang sampai nilai tersebut secara eksplisit direkonsiliasi.
 
@@ -296,6 +307,48 @@ Contoh stat di bagian berikut merupakan katalog desain historis. Contoh yang tid
 }
 ```
 
+### Earth Pillar
+```json
+{
+  "id": "avatar:earth_pillar",
+  "element": "EARTH",
+  "mastery_required": 0,
+  "chi_cost": 15,
+  "cooldown_ticks": 18,
+  "windup_ticks": 4,
+  "active_ticks": 3,
+  "recovery_ticks": 8,
+  "damage": 5.0,
+  "range": 8.0,
+  "hitbox_shape": "SPHERE",
+  "knockback": 0.0,
+  "combo_window_ticks": 0
+}
+```
+Kolom batu menyembur dari tanah di bawah target terdekat pada arah pandang (atau di jarak maksimum bila kosong). Entity dalam radius tapak 1.6 blok menerima damage dan diluncurkan ke atas (velocity Y ≈ 1.05). Tidak mengubah blok dunia (aturan prototipe) — kolom berupa VFX partikel blok tanah aktual.
+
+### Boulder Launch (hold → charge → release projectile)
+```json
+{
+  "id": "avatar:boulder_launch",
+  "element": "EARTH",
+  "mastery_required": 0,
+  "chi_cost": 20,
+  "cooldown_ticks": 25,
+  "windup_ticks": 0,
+  "active_ticks": 25,
+  "recovery_ticks": 6,
+  "damage": 8.0,
+  "range": 20.0,
+  "hitbox_shape": "SPHERE",
+  "knockback": 1.2,
+  "combo_window_ticks": 0,
+  "cast_type": "HOLD_RELEASE",
+  "max_charge_ticks": 40
+}
+```
+Memakai framework hold-release generik (Phase.HOLD, `C2SHoldStart`/`C2SHoldRelease`). Scaling dengan charge ratio: damage 40%–100% dari 8.0, radius hitbox 0.5–1.2 blok, AOE impact 1.0–2.5 blok, kecepatan 1.0–1.4 blok/tik, lifetime 24 tik. Charge orb warna tanah (opt-in `OrbVisualConfig`, fase WINDUP+HOLD). Tidak mengubah blok dunia.
+
 ### Earth Wall
 ```json
 {
@@ -414,10 +467,10 @@ Contoh stat di bagian berikut merupakan katalog desain historis. Contoh yang tid
 | `avatar:earth_wall` | Earth Wall | instant/construct actions | planned | W3 |
 | `avatar:earth_boulder` | Earth Boulder | instant | done | — |
 | `avatar:earth_bullet` | Earth Bullet | instant | planned | T3 |
-| `avatar:earth_pillar` | Earth Pillar | instant | planned | T3 |
+| `avatar:earth_pillar` | Earth Pillar | instant | built (belum diuji) | — |
 | `avatar:earth_rampart` | Earth Rampart | instant | planned | T3 |
 | `avatar:ground_stomp` | Ground Stomp | instant | planned | T3 |
-| `avatar:boulder_launch` | Boulder Launch | hold→release | planned | T3 |
+| `avatar:boulder_launch` | Boulder Launch | hold→release | built (belum diuji) | — |
 | `avatar:earth_armor` | Earth Armor | instant | planned | T4 |
 | `avatar:rock_cage` | Rock Cage | instant | planned | T4 |
 | `avatar:earth_surf` | Earth Surf | hold | planned | T4 |

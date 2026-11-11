@@ -83,21 +83,26 @@ public final class FirstPersonOrbRenderer {
     }
 
     private static float computeRadius(ChargeOrbClientState.OrbState state) {
-        float t = Math.min(1f, state.interpolatedTicks() / CHARGE_MAX_TICKS);
-        return BASE_RADIUS + (MAX_RADIUS - BASE_RADIUS) * t;
+        boolean holdCharged = "avatar:fire_blast".equals(state.skillId())
+                || "avatar:boulder_launch".equals(state.skillId());
+        int maxTicks = holdCharged ? 40 : CHARGE_MAX_TICKS;
+        float baseR = holdCharged ? 0.06f : BASE_RADIUS;
+        float maxR  = holdCharged ? 0.14f : MAX_RADIUS;
+        float t = Math.min(1f, state.interpolatedTicks() / maxTicks);
+        return baseR + (maxR - baseR) * t;
     }
 
     private static float[] elementColor(String skillId) {
         if (skillId == null) return new float[]{1f, 0.4f, 0.1f, 0.85f};
         return switch (skillId) {
-            case "avatar:fire_jab", "avatar:fire_jet", "avatar:flame_sweep" ->
+            case "avatar:fire_jab", "avatar:fire_blast", "avatar:fire_jet", "avatar:flame_sweep" ->
                     new float[]{1f, 0.35f, 0.05f, 0.40f};
             case "avatar:air_blast", "avatar:air_vortex" ->
                     new float[]{0.8f, 0.95f, 1f, 0.60f};
             case "avatar:water_whip" ->
                     new float[]{0.1f, 0.5f, 1f, 0.75f};
-            case "avatar:earth_boulder", "avatar:earth_wall" ->
-                    new float[]{0.55f, 0.4f, 0.2f, 0.90f};
+            case "avatar:earth_boulder", "avatar:earth_wall", "avatar:boulder_launch", "avatar:earth_pillar" ->
+                    new float[]{0.55f, 0.4f, 0.2f, 0.45f};
             default -> new float[]{1f, 0.4f, 0.1f, 0.85f};
         };
     }

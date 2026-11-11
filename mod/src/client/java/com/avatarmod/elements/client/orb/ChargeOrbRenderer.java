@@ -2,12 +2,15 @@ package com.avatarmod.elements.client.orb;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.avatarmod.elements.client.vfx.KnuckleVfxHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
 
@@ -56,9 +59,18 @@ public final class ChargeOrbRenderer {
             // Skip self only in 1st person — FirstPersonOrbRenderer handles that view
             if (player == mc.player && mc.options.getPerspective().isFirstPerson()) continue;
 
-            // Orb position: right-hand approximate world position
-            Vec3d pos = player.getPos()
-                    .add(HAND_OFFSET_X, HAND_OFFSET_Y, HAND_OFFSET_Z);
+            // Orb position: use KnuckleVfxHelper to follow right arm/knuckle in 3rd-person, fallback to body yaw offset
+            float tickDelta = ctx.tickCounter() != null ? ctx.tickCounter().getTickDelta(false) : 1.0f;
+            Vec3d pos;
+            if (player instanceof AbstractClientPlayerEntity acp) {
+                pos = KnuckleVfxHelper.getKnucklePosition(acp, tickDelta);
+            } else {
+                float bodyYaw = MathHelper.lerpAngleDegrees(tickDelta, player.prevBodyYaw, player.bodyYaw);
+                float yawRad = -(float) Math.toRadians(bodyYaw);
+                Vec3d rotatedOffset = new Vec3d(HAND_OFFSET_X, 0.0, HAND_OFFSET_Z).rotateY(yawRad);
+                Vec3d playerPos = player.getLerpedPos(tickDelta);
+                pos = playerPos.add(rotatedOffset.x, HAND_OFFSET_Y, rotatedOffset.z);
+            }
 
             float radius = computeRadius(state);
             float[] color = elementColor(state.skillId());
@@ -73,22 +85,27 @@ public final class ChargeOrbRenderer {
     }
 
     private static float computeRadius(ChargeOrbClientState.OrbState state) {
-        float t = Math.min(1f, state.interpolatedTicks() / CHARGE_MAX_TICKS);
-        return BASE_RADIUS + (MAX_RADIUS - BASE_RADIUS) * t;
+        boolean holdCharged = "avatar:fire_blast".equals(state.skillId())
+                || "avatar:boulder_launch".equals(state.skillId());
+        int maxTicks = holdCharged ? 40 : CHARGE_MAX_TICKS;
+        float baseR = holdCharged ? 0.20f : BASE_RADIUS;
+        float maxR  = holdCharged ? 0.45f : MAX_RADIUS;
+        float t = Math.min(1f, state.interpolatedTicks() / maxTicks);
+        return baseR + (maxR - baseR) * t;
     }
 
     /** RGBA color based on skill element. */
     private static float[] elementColor(String skillId) {
         if (skillId == null) return new float[]{1f, 0.4f, 0.1f, 0.85f};
         return switch (skillId) {
-            case "avatar:fire_jab", "avatar:fire_jet", "avatar:flame_sweep" ->
+            case "avatar:fire_jab", "avatar:fire_blast", "avatar:fire_jet", "avatar:flame_sweep" ->
                     new float[]{1f, 0.35f, 0.05f, 0.40f};   // orange-red
             case "avatar:air_blast", "avatar:air_vortex" ->
                     new float[]{0.8f, 0.95f, 1f, 0.60f};    // pale blue-white
             case "avatar:water_whip" ->
                     new float[]{0.1f, 0.5f, 1f, 0.75f};     // deep blue
-            case "avatar:earth_boulder", "avatar:earth_wall" ->
-                    new float[]{0.55f, 0.4f, 0.2f, 0.90f};  // brown
+            case "avatar:earth_boulder", "avatar:earth_wall", "avatar:boulder_launch", "avatar:earth_pillar" ->
+                    new float[]{0.55f, 0.4f, 0.2f, 0.45f};  // brown (additive blend — keep alpha low)
             default -> new float[]{1f, 0.4f, 0.1f, 0.85f};
         };
     }

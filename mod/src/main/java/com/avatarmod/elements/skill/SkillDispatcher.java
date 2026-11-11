@@ -3,9 +3,14 @@ package com.avatarmod.elements.skill;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.network.SkillNetworking;
+import com.avatarmod.elements.skill.impl.AirBlastSkill;
+import com.avatarmod.elements.skill.impl.AirPalmSkill;
 import com.avatarmod.elements.skill.impl.AirStaffAttackSkill;
 import com.avatarmod.elements.skill.impl.AirVortexSkill;
+import com.avatarmod.elements.skill.impl.BoulderLaunchSkill;
 import com.avatarmod.elements.skill.impl.EarthBoulderSkill;
+import com.avatarmod.elements.skill.impl.EarthPillarSkill;
+import com.avatarmod.elements.skill.impl.FireBlastSkill;
 import com.avatarmod.elements.skill.impl.FireGuardSkill;
 import com.avatarmod.elements.skill.impl.FireJabSkill;
 import com.avatarmod.elements.skill.impl.FireJetSkill;
@@ -42,6 +47,17 @@ public final class SkillDispatcher {
             int serial = SkillNetworking.currentSerial(player.getUuid());
             SkillNetworking.broadcastPhaseSync(player, activeSkill,
                     phaseAfter.name(), timeline.ticksInPhase(), serial);
+
+            // If transitioned from HOLD to ACTIVE (e.g. auto-release safety timeout),
+            // ensure cooldown is applied and HUD is updated if not already on cooldown.
+            if (phaseBefore == SkillTimeline.Phase.HOLD && phaseAfter == SkillTimeline.Phase.ACTIVE) {
+                SkillRegistry.get(activeSkill).ifPresent(def -> {
+                    if (!data.isOnCooldown(activeSkill)) {
+                        data.setCooldown(activeSkill, def.cooldownTicks());
+                        SkillNetworking.sendHudUpdate(player, data, activeSkill);
+                    }
+                });
+            }
         }
 
         // Clean up idle timeline after broadcasting
@@ -53,13 +69,18 @@ public final class SkillDispatcher {
     private static void dispatch(ServerPlayerEntity player, SkillDefinition def) {
         switch (def.id()) {
             case "avatar:fire_jab"          -> FireJabSkill.tick(player, def);
+            case "avatar:fire_blast"        -> FireBlastSkill.tick(player, def);
             case "avatar:flame_sweep"       -> FlameSweepSkill.tick(player, def);
             case "avatar:fire_jet"          -> FireJetSkill.tick(player, def);
             case "avatar:fire_guard"        -> FireGuardSkill.tick(player, def);
             case "avatar:air_staff_attack"  -> AirStaffAttackSkill.tick(player, def);
+            case "avatar:air_blast"         -> AirBlastSkill.tick(player, def);
+            case "avatar:air_palm"          -> AirPalmSkill.tick(player, def);
             case "avatar:air_vortex"        -> AirVortexSkill.tick(player, def);
             case "avatar:water_whip"        -> WaterWhipSkill.tick(player, def);
             case "avatar:earth_boulder"     -> EarthBoulderSkill.tick(player, def);
+            case "avatar:earth_pillar"      -> EarthPillarSkill.tick(player, def);
+            case "avatar:boulder_launch"    -> BoulderLaunchSkill.tick(player, def);
         }
     }
 

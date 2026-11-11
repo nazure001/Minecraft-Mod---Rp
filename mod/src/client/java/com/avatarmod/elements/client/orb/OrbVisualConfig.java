@@ -22,9 +22,13 @@ public final class OrbVisualConfig {
 
     private static final Map<String, Config> REGISTRY = Map.of(
         // fire_jab: WINDUP(2t) + ACTIVE(3t) = 5 ticks visible — short jab, orb dissolves on hit
-        "avatar:fire_jab",  new Config(Set.of("WINDUP", "ACTIVE")),
-        "avatar:fire_jet",  new Config(Set.of("WINDUP", "ACTIVE")),
-        "avatar:air_blast", new Config(Set.of("WINDUP", "ACTIVE"))
+        "avatar:fire_jab",   new Config(Set.of("WINDUP", "ACTIVE")),
+        // fire_blast: WINDUP + HOLD — charge orb builds on hand, then dissolves upon launch in ACTIVE
+        "avatar:fire_blast", new Config(Set.of("WINDUP", "HOLD")),
+        // boulder_launch: same hold-release pattern as fire_blast, earth-toned orb
+        "avatar:boulder_launch", new Config(Set.of("WINDUP", "HOLD")),
+        "avatar:fire_jet",   new Config(Set.of("WINDUP", "ACTIVE")),
+        "avatar:air_blast",  new Config(Set.of("WINDUP", "ACTIVE"))
     );
 
     /** Returns true if this skill+phase combination should show an orb. */

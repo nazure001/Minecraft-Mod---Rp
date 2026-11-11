@@ -124,7 +124,10 @@ Efek PvP utilitas didefinisikan eksplisit; tidak semua VFX memberi damage.
 
 ## D014 — Aktivasi berbeda dari durasi dan sustain
 TOGGLE/CHANNEL/HOLD_RELEASE menjelaskan input; UNTIL_INTERRUPTED menjelaskan durasi.
-Air riding dapat tanpa timer tetap. Biaya sustain dan ambang interrupt TBD.
+Untuk vertical slice saat ini, hanya INSTANT/HOLD_RELEASE yang didukung runtime. CHANNEL,
+TOGGLE, dan chiPerTick sustain ditunda sampai kontrak W1 menentukan biaya/interupsi;
+loader menolak cast type tersebut dan chiPerTick nonzero. Air riding tanpa timer tetap
+masih arah desain; biaya sustain dan ambang interrupt tetap TBD.
 
 ## D015 — Material nyata dan konstruksi bergerak
 Earth Wall mengambil material dunia dan dapat diluncurkan seluruhnya sebagai satu massa.
@@ -144,7 +147,7 @@ D001 dikoreksi: pemilihan Fabric tidak didasarkan pada klaim Epic Fight Fabric t
 
 ### Hasil audit schema runtime — 2026-11-08
 
-Definisi aktif dimuat dari `mod/src/main/resources/data/avatar_elements/skill_definitions.json`, dengan override opsional pada `config/avatar_elements/skill_definitions.json`. Pemetaan slot berasal dari `data/avatar_elements/element_slots.json` dan memiliki lima slot; source saat ini mengulang skill Water/Earth di semua slot. `CONTENT_SPEC.md` menandai nilai/katalog non-runtime secara terpisah. Audit ini tidak mengubah angka balance maupun penempatan slot.
+Definisi aktif dimuat dari `mod/src/main/resources/data/avatar_elements/skill_definitions.json`, dengan override opsional pada `config/avatar_elements/skill_definitions.json`. Pemetaan slot berasal dari `data/avatar_elements/element_slots.json` dan memiliki lima slot. Pada saat audit awal, WATER/EARTH dan slot AIR terakhir masih mengulang skill; tindak lanjut konservatif dicatat di D019. `CONTENT_SPEC.md` menandai nilai/katalog non-runtime secara terpisah.
 
 Schema loader memakai camelCase; hanya `cast_type` dan `max_charge_ticks` yang mempunyai alias snake_case. `CHANNEL`, `TOGGLE`, dan `chiPerTick` belum didukung sebagai perilaku runtime; hanya `HOLD_RELEASE` mendapat jalur khusus. Penyelarasan nilai atau assignment gameplay berikutnya harus mengubah data dan/atau implementasi secara eksplisit, tidak cukup dengan memperbarui katalog.
 
@@ -153,12 +156,31 @@ Audit source juga menemukan bahwa pemetaan slot yang hilang atau gagal diparse d
 
 Client mengimpor Player Animation Library dari Gradle, tetapi metadata `fabric.mod.json` tidak mencantumkannya sebagai dependency. Reconciliation metadata dicatat di `TASKS.md` SC-4; tidak mengubah manifest dependency saat audit ini.
 
+#### Penyelesaian SC-1
+
+Validasi schema skill dan slot kini berjalan saat load. Override yang gagal dibaca karena I/O masih mencoba bundled resource; JSON/schema override invalid atau referensi slot tidak konsisten dilaporkan dengan sumber/path dan menghentikan startup, bukan fallback diam-diam. Saat SC-1 selesai, validasi mempertahankan slot kosong `null` dan mapping berulang yang saat itu ada. Uji otomatis mencakup resource bundled serta kasus invalid; lihat `TESTING.md`.
+
+#### Penyelesaian SC-3 — 2026-11-09
+
+Perilaku `CHANNEL`, `TOGGLE`, dan chi sustain `chiPerTick` ditunda sampai kontrak ability W1 disetujui. Runtime hanya menerima `INSTANT`/`HOLD_RELEASE`; parser menolak dua cast type yang belum didukung dan nilai `chiPerTick` nonzero. Nilai `fire_guard` dinormalisasi dari 2 ke 0 karena tidak pernah dikonsumsi runtime; biaya aktivasi dan perilaku gameplay tidak berubah. Tes mencakup kedua cast type dan sustain nonzero.
+
+#### Penyelesaian SC-4 — 2026-11-09
+
+Player Animation Library adalah dependency runtime yang wajib karena entrypoint client memakai API PAL secara langsung. Artifact Fabric `1.1.6+mc.1.21.1` sudah dipakai Gradle; metadata Fabric kini mensyaratkan mod ID `player_animation_library >=1.1.6`. PAL pada artifact terverifikasi memakai environment `*`, sehingga dependency harus tersedia pada instalasi/server yang memuat Avatar: Elements dan client yang memuatnya. HUD lain tetap opsional.
+
 ---
 
 ## D018 — GUI gulungan dengan navigasi modern
 Tanggal: 2026-11-08. Status: arah visual dipilih pengguna; implementasi belum diverifikasi.
 Menu utama/settings dan profil memakai gulungan perkamen; HUD ringkas, bukan lembar yang menghalangi combat.
+
+## D019 — Slot duplikat menjadi kosong sementara
+Untuk melanjutkan SC-2 tanpa menciptakan ability atau menetapkan assignment gameplay baru, pertahankan mapping FIRE dan skill unik AIR yang sudah ada, lalu ubah hanya slot berulang menjadi `null`: AIR/B, WATER/X–B, dan EARTH/X–B. Ini adalah default konservatif sementara karena pengguna belum memilih perlakuan slot; bukan klaim bahwa mapping final sudah disetujui. Perbarui `element_slots.json`, `CONTENT_SPEC.md`, dan tes bundled agar slot kosong tetap eksplisit. Tidak ada perubahan pada skill, balance, atau tombol.
 Essential menjadi referensi navigasi; RPG-HUD referensi modularitas; keduanya bukan dependency wajib.
 AUTO mengikuti tribe, aksen skill mengikuti elemen aktif; pilihan manual/minimal tidak memengaruhi gameplay.
 Aset original; satu theme system, preferensi client terpisah dari izin/data server.
 Kontrak detail pada UI_THEME_SPEC.md. UI masuk tahap presentasi setelah checkpoint aktif A–D, bukan migrasi input baru.
+
+## D020 — Pengisian slot EARTH X/C (T3-11, T3-12)
+Tanggal: 2026-11-11. Status: default kerja, belum diuji in-game.
+Earth Pillar dan Boulder Launch diimplementasikan mengikuti pola yang sudah ada (instant ala Earth Boulder; hold-release generik ala Fire Blast, tanpa sistem paralel). Slot EARTH diisi: Z=Earth Boulder, X=Boulder Launch (cermin FIRE X=Fire Blast untuk konsistensi hold-release), C=Earth Pillar; V/B tetap `null`. Assignment ini melanjutkan D019 sebagai default konservatif — mengisi slot kosong hanya dengan skill yang benar-benar tersedia — dan bukan mapping desain final yang dikonfirmasi pengguna. Kedua skill mematuhi aturan prototipe tanpa world mutation; kolom/batu berupa VFX partikel. Nilai runtime direkonsiliasi di `skill_definitions.json` + blok stat `CONTENT_SPEC.md`.

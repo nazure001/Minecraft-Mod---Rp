@@ -83,16 +83,24 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 
 ## Follow-up audit schema
 
-- [ ] **SC-1** Validasi schema skill dan slot saat load: field wajib/enum, duplikasi ID, referensi slot yang tidak dikenal, serta laporkan resource/override invalid secara eksplisit.
-- [ ] **SC-2** Tetapkan assignment slot WATER/EARTH; saat ini lima slot per elemen mengulang satu skill.
-- [ ] **SC-3** Putuskan implementasi atau penghapusan perilaku `CHANNEL`, `TOGGLE`, dan chi sustain `chiPerTick`; enum/field saat ini belum menggerakkan perilaku runtime.
-- [ ] **SC-4** Rekonsiliasi dependency PAL di Gradle dan metadata Fabric; client mengimpor PAL tetapi `fabric.mod.json` belum mendeklarasikannya di `depends`.
+- [x] **SC-1** Validasi schema skill dan slot saat load: field wajib/enum, tipe/rentang, duplikasi ID, referensi slot, dan pelaporan sumber/path. Unit test Gradle mencakup bundled config dan kasus invalid; in-game behavior tidak terdampak.
+- [x] **SC-2** Rekonsiliasi assignment slot secara konservatif: pertahankan skill yang tersedia dan ubah placeholder berulang menjadi slot kosong (`null`) — WATER/EARTH X–B dan AIR B. Default kerja sementara, belum diverifikasi in-game dan bukan mapping desain final yang dikonfirmasi pengguna.
+- [x] **SC-3** Untuk vertical slice, tunda `CHANNEL`, `TOGGLE`, dan chi sustain sampai kontrak W1 disetujui; parser menolak nilai yang belum didukung dan konfigurasi runtime tidak lagi menyatakan sustain yang tidak berjalan. Tes mencakup cast type serta biaya sustain.
+- [x] **SC-4** PAL versi `1.1.6+mc.1.21.1` sudah dideklarasikan di Gradle dan `player_animation_library >=1.1.6` di metadata Fabric. Pasang PAL pada instance yang menjalankan mod; metadata PAL kompatibel dengan client/server. Build terverifikasi, launch in-game masih perlu diuji manual.
 
 - [ ] **T3-10** Water Jet: channel skill, tekan+tahan untuk semburan air berkelanjutan
 
-- [ ] **T3-11** Earth Pillar: raise column dari bawah target, launch ke atas
+- [x] **T3-11** Earth Pillar: raise column dari bawah target, launch ke atas — Claude Code — 2026-11-11
+  - `EarthPillarSkill.java`: cari target terdekat di arah pandang (step 1 blok s/d range 8), snap ke permukaan tanah
+  - Damage 5.0 + launch vertikal (velocity Y 1.05) untuk entity di tapak radius 1.6
+  - VFX partikel blok tanah aktual (BlockStateParticleEffect) + kolom debu naik selama ACTIVE; tanpa world mutation
+  - Slot EARTH C; BUILD ✅ unit test lulus (belum diuji in-game)
 
-- [ ] **T3-12** Boulder Launch: hold→release, batu makin besar sesuai charge
+- [x] **T3-12** Boulder Launch: hold→release, batu makin besar sesuai charge — Claude Code — 2026-11-11
+  - `BoulderLaunchSkill.java` memakai framework hold-release generik (Phase.HOLD, C2SHoldStart/Release)
+  - Scaling charge: damage 40–100% dari 8.0, hitbox 0.5–1.2, AOE impact 1.0–2.5, speed 1.0–1.4 b/t, lifetime 24 tik
+  - Charge orb tanah terdaftar di `OrbVisualConfig` (WINDUP+HOLD), radius orb mengikuti pola fire_blast
+  - Slot EARTH X; BUILD ✅ unit test lulus (belum diuji in-game)
 
 ---
 
@@ -150,14 +158,21 @@ W-13/14 dijadwalkan setelah fondasi terkait terbukti, bukan diimplementasikan se
 
 ## Backlog UI — gulungan bertema tribe (2026-11-08)
 
-Status semua task: BELUM DIIMPLEMENTASIKAN; detail `UI_THEME_SPEC.md`.
-- [ ] UI-01 Audit HUD, data dan konflik input aktual; tetapkan mode overlay/pengganti dengan jelas.
+Status task diperbarui 2026-11-09; detail `UI_THEME_SPEC.md`. HUD baru adalah irisan visual pertama dan belum diverifikasi in-game.
+- [x] UI-01 Audit HUD, data dan konflik input aktual; mode tetap overlay dan screen vanilla/inventory tidak diganti.
 - [ ] UI-02 Wireframe menu gulungan, HUD minimal dan tema tribe; buat preview, bukan klaim runtime.
 - [ ] UI-03 Komponen scalable/background modular, text, tab, slider, toggle, tooltip dan pencarian.
 - [ ] UI-04 Config client berversi, AUTO/manual/minimal, layout preview dan apply/cancel/reset.
-- [ ] UI-05 Tema Fire/Water/Earth/Air/Nonbender memakai token yang sama.
+- [~] UI-05 Mulai tema HUD Fire/Water/Earth/Air memakai token aksen bersama; tema Nonbender/AUTO manual menunggu konfigurasi UI.
 - [ ] UI-06 Ikon chi/stamina/health, cooldown dan charge dari snapshot server; tanpa data dummy live.
 - [ ] UI-07 Profil mastery/profesi dan widget material sesudah data terkait tersedia.
 - [ ] UI-08 Keyboard, kontras, reduced motion/flash, resolusi dan GUI scale.
 - [ ] UI-09 Uji overlap HUD/mod lain, input bocor, close saat charge, SP/MP dan izin server.
 - [ ] UI-10 Catat provenance aset dan hasil build/runtime; tidak memasang Essential/RPG-HUD sebagai syarat inti.
+
+## Jalur visual martial art & Blockbench
+
+- [x] **VA-01** Mulai satu animasi PAL per `castSerial` dan gunakan nama tulang player `body` untuk clip Fire Jab; Gradle `test build` lulus (15 unit test, 2026-11-11).
+- [ ] **VA-02** Uji Fire Jab di client: stance/guard, transfer berat, frame impact, recovery, kulit normal/slim, armor, orang pertama/ketiga, dan observer multiplayer.
+- [ ] **VA-03** Integrasikan satu VFX hasil Blockbench melalui format/render pipeline Fabric yang terverifikasi; source `.bbmodel` saat ini belum dirender runtime.
+- [ ] **VA-04** Tambahkan rig siku/forearm atau adapter yang terbukti sebelum mengklaim artikulasi pukulan setara studi Blockbench.
