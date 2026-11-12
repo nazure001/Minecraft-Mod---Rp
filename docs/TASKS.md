@@ -39,7 +39,50 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 - [x] **T2-5** Kombo Jab→Sweep→Jab: +50% dmg step3, range x1.3, lava particles — BUILD ✅ (belum diuji terpisah)
 - [x] **T2-6** Air Staff Attack: 3-hit kombo (H), CLOUD particles — TERVERIFIKASI in-game ✅
 - [x] **T2-7** Air Vortex: pull r6, 40 tik, spiral particles (V) — TERVERIFIKASI damage ✅ (pull VFX belum dikonfirmasi visual)
-- [ ] **T2-8** Test sinkronisasi: dua pemain, dedicated server (chi/cooldown independen, kombo tidak tertukar)
+- [~] **T2-8** Test sinkronisasi: dua pemain, dedicated server (chi/cooldown independen, kombo tidak tertukar) — User — 2026-11-12
+  - Test completed; **BLOCKED** by element switching bug (critical)
+  - Chi/cooldown mechanics appear OK, multiplayer issues same as singleplayer
+  - Cannot verify T2-8 properly until element bug fixed
+
+---
+
+## Tahap 3 — Verifikasi In-Game Wave 2 Blocker (2026-11-12)
+
+- [~] **VA-02** Uji Fire Jab di client: stance/guard, transfer berat, frame impact, recovery — User — 2026-11-12
+  - ⚠️ **PARTIAL FAIL**: Animasi ada tapi martial arts minimal (mostly vanilla cast)
+  - Charge orb visible (5 ticks), glow OK, tapi orb shape piringan 2D bukan sphere 3D
+  - 1st person: tangan/item tidak bergerak saat cast
+  - 3rd person: player body visible tapi martial arts gerakan belum ada
+  - Action: Investigate PAL layer `fire_jab_test` + blockbench animation sequence
+
+- [~] **T3-3** Verifikasi Air Blast: JSON handler kini ada, uji in-game — User — 2026-11-12
+  - ✅ **PASS mechanics**: chi 12 cost, cooldown 10, damage 3.0, knockback 2.5 working
+  - ⚠️ **Targeting issue**: Z-skill (Air Blast) sering miss meskipun target ada
+  - Action: Review hitbox logic di AirBlastSkill.tick() + raycast distance check
+
+## Tahap 3 — Critical Issues Found (2026-11-12)
+
+- [🔴] **BLOCKER** Element Switching Bug: Setelah cast skill 2–3x, active element berubah random
+  - Element bar di HUD berubah warna tanpa user input
+  - Skill yang di-cast jadi elemen lain
+  - Gameplay broken — harus fix sebelum lanjut testing
+  - Suspect: `ElementSlotMap.setActiveElement()` atau server state race condition
+  - Action: Investigate element state management + server sync
+
+- [🟠] **HIGH** Z-Skill Targeting Accuracy: Fire Jab, Water Whip sering miss
+  - Hit rate lebih rendah dari expected
+  - Suspect: Eye position vs hitbox center offset, atau timing fase WINDUP terlalu pendek
+  - Action: Verify FireJabSkill + WaterWhipSkill hitbox calculation, tambah raycast validation
+
+- [🟠] **HIGH** Earth Pillar Block Visual Missing: Erupsi tidak tampil kolom 3D
+  - Damage + knockback ✅, tapi VFX hanya partikel, tidak ada struktur kolom
+  - Action: Enhance VFX — spawn block entity atau render holo-column particle mesh
+
+- [⚠️] **MEDIUM** Orb 3D Shape: Terlihat piringan tipis, bukan bola sphere
+  - Action: Increase sphere segments + brightness gradient untuk depth perception
+
+- [⚠️] **MEDIUM** HUD Layout Not Proportional: Menghalangi gameplay view
+  - Action: UI-05 theme tuning, scale/position agar overlay, tidak block center
 
 ---
 
