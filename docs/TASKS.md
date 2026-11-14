@@ -42,7 +42,7 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 - [~] **T2-8** Test sinkronisasi: dua pemain, dedicated server (chi/cooldown independen, kombo tidak tertukar) — User — 2026-11-12
   - Test completed; **BLOCKED** by element switching bug (critical)
   - Chi/cooldown mechanics appear OK, multiplayer issues same as singleplayer
-  - Cannot verify T2-8 properly until element bug fixed
+  - Retest after server-authoritative element-cycle change before treating multiplayer results as reliable
 
 ---
 
@@ -53,26 +53,28 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
   - Charge orb visible (5 ticks), glow OK, tapi orb shape piringan 2D bukan sphere 3D
   - 1st person: tangan/item tidak bergerak saat cast
   - 3rd person: player body visible tapi martial arts gerakan belum ada
-  - Action: Investigate PAL layer `fire_jab_test` + blockbench animation sequence
+  - 2026-11-13: Hilangkan pemicu animasi ganda dari hasil cast dan sinkronisasi fase; fase server kini menjadi satu-satunya jalur pemicu, dengan deduplikasi `castSerial`.
+  - Action: Uji in-game tampak orang pertama/ketiga dan observer; pastikan impact dan recovery terbaca sebelum mengubah choreography lebih lanjut.
 
-- [~] **T3-3** Verifikasi Air Blast: JSON handler kini ada, uji in-game — User — 2026-11-12
+- [~] **T3-3** Verifikasi Air Blast: JSON/handler dan hitbox garis pandang terarah ada; verifikasi in-game masih pending — User — 2026-11-12
   - ✅ **PASS mechanics**: chi 12 cost, cooldown 10, damage 3.0, knockback 2.5 working
   - ⚠️ **Targeting issue**: Z-skill (Air Blast) sering miss meskipun target ada
   - Action: Review hitbox logic di AirBlastSkill.tick() + raycast distance check
 
 ## Tahap 3 — Critical Issues Found (2026-11-12)
 
-- [🔴] **BLOCKER** Element Switching Bug: Setelah cast skill 2–3x, active element berubah random
+- [~] **BLOCKER — retest required** Element Switching Bug: Setelah cast skill 2–3x, active element berubah random
   - Element bar di HUD berubah warna tanpa user input
   - Skill yang di-cast jadi elemen lain
-  - Gameplay broken — harus fix sebelum lanjut testing
-  - Suspect: `ElementSlotMap.setActiveElement()` atau server state race condition
-  - Action: Investigate element state management + server sync
+  - 2026-11-13: element cycle request kini hanya mengirim intent; server memajukan state per pemain dan mengirim hasilnya kembali. Automated cycle tests (2), seluruh Gradle tests (17), `test build`, dan adversarial network suite (32) lulus; belum membuktikan laporan gameplay teratasi.
+  - 2026-11-14 FIX #1: Server-side debounce di SkillNetworking (elementCycleCooldown map, 6-tick throttle sama seperti client). Build ✅. Root cause analysis di DEBUG_ELEMENT_BUG_2026-11-14.md (3 suspect causes tersisa: concurrent PlayerBendingData creation, client/server sync desync).
+  - Action: Uji in-game dengan cast Fire Jab 5+ kali, confirm elemen tetap FIRE. Jika bug masih ada, debug dengan logging untuk identify Cause 2 atau 3.
 
 - [🟠] **HIGH** Z-Skill Targeting Accuracy: Fire Jab, Water Whip sering miss
   - Hit rate lebih rendah dari expected
-  - Suspect: Eye position vs hitbox center offset, atau timing fase WINDUP terlalu pendek
-  - Action: Verify FireJabSkill + WaterWhipSkill hitbox calculation, tambah raycast validation
+  - 2026-11-13: tambah uji segment vs bounding box; Fire Jab menghitung jarak dari tepi hitbox, Air Blast/Water Whip memakai segment terarah dari eye position dan menolak target yang terhalang blok.
+  - Automated: 21 unit test + `test build` lulus; Fire Jab suite 18/18 lulus. Akurasi aktual tetap menunggu uji Minecraft.
+  - Action: Uji target tepat di depan, pinggir jarak, sedikit di samping, di belakang, dan terhalang blok.
 
 - [🟠] **HIGH** Earth Pillar Block Visual Missing: Erupsi tidak tampil kolom 3D
   - Damage + knockback ✅, tapi VFX hanya partikel, tidak ada struktur kolom
@@ -90,7 +92,7 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 
 - [x] **T3-1** Water Whip: LINE hitbox r6, dmg 3.0, pull knockback, DRIPPING_WATER+SPLASH VFX — keybinding C — BUILD ✅ (belum diuji)
 - [x] **T3-2** Earth Boulder: projectile traveling 0.8b/t, dmg 5.0, lifetime 20 tik, no block modify — keybinding B — BUILD ✅ (belum diuji)
-- [ ] **T3-3** Verifikasi Air Palm/Air Blast: definisi JSON dan handler `SkillDispatcher` kini ada; uji implementasi, nilai, dan pemetaan slot masih pending
+- [~] **T3-3** Verifikasi Air Palm/Air Blast: implementasi JSON/handler ada; targeting Air Blast diperketat ke garis pandang, uji in-game nilai/akurasi/slot masih pending
 - [ ] **T3-4** Test sinkronisasi T2-8 sebelum lanjut gelombang 2
 
 ---
