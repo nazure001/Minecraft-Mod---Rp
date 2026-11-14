@@ -29,6 +29,11 @@ public final class SkillNetworking {
     // Sent in every S2CPhaseSync so the client can discard stale IDLE resets.
     private static final Map<UUID, AtomicInteger> castSerials = new HashMap<>();
 
+    // Element cycle cooldown: prevents rapid successive element changes (300ms debounce).
+    // Server-side throttle (client has 300ms, server validates too).
+    private static final Map<UUID, Integer> elementCycleCooldown = new HashMap<>();
+    private static final int ELEMENT_CYCLE_COOLDOWN_TICKS = 6;
+
     private static int nextSerial(UUID uuid) {
         return castSerials.computeIfAbsent(uuid, k -> new AtomicInteger(0))
                           .incrementAndGet();
@@ -53,9 +58,12 @@ public final class SkillNetworking {
     public static void registerPayloads() {
         PayloadTypeRegistry.playC2S().register(SkillPackets.C2SSkillInput.ID, SkillPackets.C2SSkillInput.CODEC);
         PayloadTypeRegistry.playC2S().register(SkillPackets.C2SSlotCast.ID, SkillPackets.C2SSlotCast.CODEC);
-        PayloadTypeRegistry.playC2S().register(SkillPackets.C2SSetElement.ID, SkillPackets.C2SSetElement.CODEC);
+        PayloadTypeRegistry.playC2S().register(SkillPackets.C2SHoldStart.ID, SkillPackets.C2SHoldStart.CODEC);
+        PayloadTypeRegistry.playC2S().register(SkillPackets.C2SHoldRelease.ID, SkillPackets.C2SHoldRelease.CODEC);
+        PayloadTypeRegistry.playC2S().register(SkillPackets.C2SCycleElement.ID, SkillPackets.C2SCycleElement.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSkillResult.ID, SkillPackets.S2CSkillResult.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CHudUpdate.ID, SkillPackets.S2CHudUpdate.CODEC);
+        PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSyncElement.ID, SkillPackets.S2CSyncElement.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CPhaseSync.ID, SkillPackets.S2CPhaseSync.CODEC);
     }
 
@@ -106,10 +114,7 @@ public final class SkillNetworking {
                     }
 
                     // Track combo chain state
-                    data.recordComboSkill(skillId, currentTick);
-                    if ("avatar:air_staff_attack".equals(skillId)) {
-                        data.advanceAirStaffCombo(currentTick, def.comboWindowTicks());
-                    }
+                    handleComboTracking(data, skillId, def, currentTick);
 
                     AvatarElementsMod.LOGGER.debug(
                             "Skill '{}' used by {} (chi: {}/{})",
@@ -120,6 +125,93 @@ public final class SkillNetworking {
                             skillId, true, SkillPackets.S2CSkillResult.DenyReason.NONE, 0));
                     sendHudUpdate(player, data, skillId);
                 });
+
+        ServerPlayNetworking.registerGlobalReceiver(
+                SkillPackets.C2SHoldStart.ID,
+                (payload, context) -> {
+                    ServerPlayerEntity player = context.player();
+                    handleHoldStart(player, payload.slotIndex());
+                });
+
+        ServerPlayNetworking.registerGlobalReceiver(
+                SkillPackets.C2SHoldRelease.ID,
+                (payload, context) -> {
+                    ServerPlayerEntity player = context.player();
+                    handleHoldRelease(player, payload.slotIndex(), payload.heldTicks());
+                });
+    }
+
+    public static void handleHoldStart(ServerPlayerEntity player, int slotIndex) {
+        handleHoldStart(player, slotIndex, null);
+    }
+
+    public static void handleHoldStart(ServerPlayerEntity player, int slotIndex, String skillId) {
+        PlayerBendingData data = PlayerBendingData.get(player);
+        if (skillId == null || skillId.isBlank()) {
+            if (slotIndex >= 0 && slotIndex < ElementSlotMap.SLOT_COUNT) {
+                skillId = ElementSlotMap.getSkillId(data.getActiveElement(), slotIndex);
+            }
+        }
+        if (skillId == null || skillId.isBlank()) return;
+
+        long currentTick = player.getServerWorld().getTime();
+        UUID uuid = player.getUuid();
+        long lastTick = getLastTick(uuid, skillId);
+        if (currentTick - lastTick < RATE_LIMIT_TICKS) {
+            ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
+                    skillId, false, SkillPackets.S2CSkillResult.DenyReason.RATE_LIMITED, 0));
+            return;
+        }
+        setLastTick(uuid, skillId, currentTick);
+
+        SkillValidator.ValidationResult result = SkillValidator.validate(player, skillId);
+        if (!result.allowed()) {
+            ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
+                    skillId, false, result.denyReason(), result.cooldownTicks()));
+            sendHudUpdate(player, data, skillId);
+            return;
+        }
+
+        SkillDefinition def = SkillRegistry.get(skillId).orElse(null);
+        if (def == null) return;
+
+        // Spend chi upfront and start charging timeline without setting cooldown until release
+        data.trySpendChi(def.chiCost());
+        data.startTimeline(skillId, def.windupTicks(), def.activeTicks(), def.recoveryTicks(),
+                def.isHoldRelease(), def.maxChargeTicks());
+
+        int serial = nextSerial(uuid);
+        SkillTimeline.Phase initialPhase = data.getTimeline().phase();
+        if (initialPhase != SkillTimeline.Phase.IDLE) {
+            broadcastPhaseSync(player, skillId, initialPhase.name(), 0, serial);
+        }
+
+        handleComboTracking(data, skillId, def, currentTick);
+
+        ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
+                skillId, true, SkillPackets.S2CSkillResult.DenyReason.NONE, 0));
+        sendHudUpdate(player, data, skillId);
+    }
+
+    public static void handleHoldRelease(ServerPlayerEntity player, int slotIndex, int heldTicks) {
+        PlayerBendingData data = PlayerBendingData.get(player);
+        SkillTimeline timeline = data.getTimeline();
+
+        if (timeline.phase() == SkillTimeline.Phase.HOLD || (timeline.isHoldSkill() && timeline.phase() == SkillTimeline.Phase.WINDUP)) {
+            String activeSkill = timeline.skillId();
+            timeline.releaseHold();
+            SkillDefinition def = SkillRegistry.get(activeSkill).orElse(null);
+            if (def != null) {
+                data.setCooldown(activeSkill, def.cooldownTicks());
+            }
+            int serial = currentSerial(player.getUuid());
+            broadcastPhaseSync(player, activeSkill, SkillTimeline.Phase.ACTIVE.name(), 0, serial);
+            sendHudUpdate(player, data, activeSkill);
+        }
+    }
+
+    public static void handleHoldRelease(ServerPlayerEntity player, int slotIndex, String skillId) {
+        handleHoldRelease(player, slotIndex, 0);
     }
 
     public static void broadcastPhaseSync(ServerPlayerEntity caster, String skillId,
@@ -159,9 +251,10 @@ public final class SkillNetworking {
         ServerPlayNetworking.send(watcher, packet);
     }
 
-    private static void sendHudUpdate(ServerPlayerEntity player, PlayerBendingData data, String skillId) {
+    public static void sendHudUpdate(ServerPlayerEntity player, PlayerBendingData data, String skillId) {
         ServerPlayNetworking.send(player, new SkillPackets.S2CHudUpdate(
                 data.getChi(), data.getMaxChi(), skillId, data.getCooldown(skillId)));
+        ServerPlayNetworking.send(player, new SkillPackets.S2CSyncElement(data.getActiveElement()));
     }
 
     // C2SSlotCast: resolve skillId from server-side element, then run normal pipeline
@@ -203,10 +296,7 @@ public final class SkillNetworking {
                     if (initialPhase != SkillTimeline.Phase.IDLE) {
                         broadcastPhaseSync(player, skillId, initialPhase.name(), 0, serial);
                     }
-                    data.recordComboSkill(skillId, currentTick);
-                    if ("avatar:air_staff_attack".equals(skillId)) {
-                        data.advanceAirStaffCombo(currentTick, def.comboWindowTicks());
-                    }
+                    handleComboTracking(data, skillId, def, currentTick);
 
                     ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
                             skillId, true, SkillPackets.S2CSkillResult.DenyReason.NONE, 0));
@@ -214,28 +304,73 @@ public final class SkillNetworking {
                 });
     }
 
-    // C2SSetElement: update active element for this player
-    public static void registerSetElementReceiver() {
+    // C2SCycleElement: advance the server-authoritative active element with debounce.
+    public static void registerCycleElementReceiver() {
         ServerPlayNetworking.registerGlobalReceiver(
-                SkillPackets.C2SSetElement.ID,
+                SkillPackets.C2SCycleElement.ID,
                 (payload, context) -> {
                     ServerPlayerEntity player = context.player();
-                    String element = payload.element();
-                    // Validate it's a known element
-                    for (String known : ElementSlotMap.ELEMENTS) {
-                        if (known.equals(element)) {
-                            PlayerBendingData.get(player).setActiveElement(element);
-                            player.sendMessage(
-                                    Text.literal("[Avatar] Element: " + element), true); // action bar
-                            return;
-                        }
+                    UUID uuid = player.getUuid();
+
+                    // Server-side debounce: ignore if cooldown active
+                    int cooldown = elementCycleCooldown.getOrDefault(uuid, 0);
+                    if (cooldown > 0) {
+                        // Silently ignore duplicate requests within 300ms
+                        return;
                     }
+
+                    PlayerBendingData data = PlayerBendingData.get(player);
+                    if (!data.getTimeline().isIdle()) {
+                        data.getTimeline().cancel();
+                        broadcastOrbReset(player);
+                    }
+                    String element = ElementSlotMap.nextElement(data.getActiveElement());
+                    data.setActiveElement(element);
+
+                    // Set cooldown to block next cycle for 300ms
+                    elementCycleCooldown.put(uuid, ELEMENT_CYCLE_COOLDOWN_TICKS);
+
+                    ServerPlayNetworking.send(player, new SkillPackets.S2CSyncElement(element));
+                    player.sendMessage(
+                            Text.literal("[Avatar] Element: " + element), true);
                 });
+    }
+
+    /** Tick cooldowns on server (called once per tick). */
+    public static void tickElementCycleCooldowns() {
+        elementCycleCooldown.entrySet().removeIf(e -> {
+            int remaining = e.getValue() - 1;
+            if (remaining <= 0) {
+                return true; // Remove this entry
+            } else {
+                e.setValue(remaining);
+                return false;
+            }
+        });
     }
 
     public static void onPlayerDisconnect(UUID uuid) {
         lastSkillTick.remove(uuid);
         castSerials.remove(uuid);
+        elementCycleCooldown.remove(uuid);
+    }
+
+    private static void handleComboTracking(PlayerBendingData data, String skillId, SkillDefinition def, long currentTick) {
+        boolean isCombo = false;
+        if ("avatar:fire_jab".equals(skillId)) {
+            isCombo = "avatar:flame_sweep".equals(data.getLastComboSkillId())
+                    && (currentTick <= data.getComboExpiryTick() || (currentTick - data.getLastComboSkillTick()) <= 8);
+        } else if ("avatar:flame_sweep".equals(skillId)) {
+            isCombo = "avatar:fire_jab".equals(data.getLastComboSkillId())
+                    && (currentTick <= data.getComboExpiryTick() || (currentTick - data.getLastComboSkillTick()) <= 6);
+        }
+        data.setActiveCastCombo(isCombo);
+
+        int totalDurationTicks = def.windupTicks() + def.activeTicks() + def.recoveryTicks();
+        data.recordComboCast(skillId, currentTick, totalDurationTicks, def.comboWindowTicks());
+        if ("avatar:air_staff_attack".equals(skillId)) {
+            data.advanceAirStaffCombo(currentTick, def.comboWindowTicks());
+        }
     }
 
     private SkillNetworking() {}
