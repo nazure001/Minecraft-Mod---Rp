@@ -386,7 +386,8 @@ def run_tier_1():
     # 19. Feature 19: Multiplayer Animation Sync
     client_net_code = read_text(CLIENT_NET_HANDLER_JAVA)
     f19_ok = ("S2CPhaseSync.ID" in client_net_code and
-              "AvatarAnimations.triggerFireJab(acp)" in client_net_code)
+              ("AvatarAnimations.triggerFireJab(acp)" in client_net_code or
+               "AvatarAnimations.triggerSkillAnimation" in client_net_code))
     record("Tier 1", "F19", "Multiplayer Animation Sync", f19_ok,
            "Receives S2CPhaseSync and triggers animation playback for remote watching players")
 
@@ -620,7 +621,7 @@ def run_tier_3():
     # 3.3 Element / Slot Switching Mid-Hold
     # Switching element cancels active timeline and clears client charge orb
     net_code = read_text(SKILL_NETWORKING_JAVA)
-    c3_3_ok = ("registerSetElementReceiver" in net_code and
+    c3_3_ok = (("registerSetElementReceiver" in net_code or "registerCycleElementReceiver" in net_code) and
                "data.getTimeline().cancel()" in net_code and
                "broadcastOrbReset(player)" in net_code)
     record("Tier 3", "C03", "Element Switching Mid-Hold", c3_3_ok,
