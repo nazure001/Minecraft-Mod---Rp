@@ -1,0 +1,7 @@
+newmtl texture_0
+Kd 1 1 1
+map_Kd air_staff.png
+
+newmtl texture_1
+Kd 1 1 1
+map_Kd glider_canvas.png
