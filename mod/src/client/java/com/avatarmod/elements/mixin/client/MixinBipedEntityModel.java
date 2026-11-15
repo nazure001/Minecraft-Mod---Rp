@@ -38,8 +38,15 @@ public abstract class MixinBipedEntityModel<T extends LivingEntity> {
         // Only apply when holding air_staff in main hand
         if (!player.getMainHandStack().isOf(AvatarItems.AIR_STAFF)) return;
 
-        // Skip during locomotion to avoid jank (limbDistance > 0.1 means moving fast)
-        // For PoC we apply regardless; refine after visual review
+        // Do not override when player is swinging arm (left click attack / breaking blocks)
+        if (player.handSwingProgress > 0.0f) return;
+
+        // Do not override during locomotion (walking / running / jumping)
+        if (limbDistance > 0.05f) return;
+
+        // Do not override while using an item (blocking / eating)
+        if (player.isUsingItem()) return;
+
         applyReadyPose();
     }
 

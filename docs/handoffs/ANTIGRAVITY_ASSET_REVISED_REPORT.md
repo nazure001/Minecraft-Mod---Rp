@@ -13,17 +13,17 @@
 
 ## 1. Hasil Pengujian Interaktif Blockbench 5.2.2 (Live GUI Bridge)
 
-Pengujian interaktif dilakukan secara terisolasi pada salinan model di direktori terpisah [`art-source/test_blockbench_interactive/`](file:///D:/repo/Minecraft%20Mod%20&%20Rp/art-source/test_blockbench_interactive/) untuk memastikan aset beku tidak tertimpa:
+Pengujian interaktif dilakukan secara terisolasi pada salinan model di direktori terpisah [`art-source/tools/blockbench_interactive/`](file:///D:/repo/Minecraft%20Mod%20&%20Rp/art-source/tools/blockbench_interactive/) untuk memastikan aset beku tidak tertimpa:
 
 | Langkah Pengujian | Target Pemeriksaan | Hasil Aktual Blockbench 5.2.2 | Status |
 |:---:|---|---|:---:|
 | **1. Buka Model** | Buka `air_staff_copy.bbmodel` di Blockbench live editor | Terbuka sukses: format `java_block` (Java Block/Item), 5 kubus, 1 tekstur 32×32, mode `edit`. | **PASS** |
 | **2. Audit Peringatan** | Eksekusi `check_model` internal Blockbench | `issue_count: 0`, `issues: []` (Nol peringatan, nol untextured face, nol overlap). | **PASS (NOL PERINGATAN)** |
-| **3. Screenshot Viewport** | Ambil tangkapan layar 3D viewport bertekstur asli | Tangkapan layar beranotasi disimpan: [`screenshot_viewport_textured.png`](file:///D:/repo/Minecraft%20Mod%20&%20Rp/art-source/test_blockbench_interactive/screenshot_viewport_textured.png) (68 KB). 4 view sudut tersimpan terpisah. | **PASS (BUKTI ASLI)** |
-| **4. UV & Tekstur** | Ekstraksi tekstur aktif & UV editor | Tekstur 32×32 aktif terekstraksi utuh: [`screenshot_uv_texture.png`](file:///D:/repo/Minecraft%20Mod%20&%20Rp/art-source/test_blockbench_interactive/screenshot_uv_texture.png). | **PASS** |
+| **3. Screenshot Viewport** | Ambil tangkapan layar 3D viewport bertekstur asli | Tangkapan layar beranotasi disimpan: [`screenshot_viewport_textured.png`](file:///D:/repo/Minecraft%20Mod%20&%20Rp/art-source/tools/blockbench_interactive/screenshot_viewport_textured.png) (68 KB). 4 view sudut tersimpan terpisah. | **PASS (BUKTI ASLI)** |
+| **4. UV & Tekstur** | Ekstraksi tekstur aktif & UV editor | Tekstur 32×32 aktif terekstraksi utuh: [`screenshot_uv_texture.png`](file:///D:/repo/Minecraft%20Mod%20&%20Rp/art-source/tools/blockbench_interactive/screenshot_uv_texture.png). | **PASS** |
 | **5. Display Slots** | Periksa slot orang pertama, ketiga, GUI, ground, fixed | 7 slot terdefinisi lengkap dengan pemisahan parameter rotasi/translasi/skala ground vs fixed. Dilabeli tegas sebagai **Preview Blockbench (Bukan Hasil Minecraft)**. | **PASS** |
 | **6. Siklus Simpan & Reload** | Simpan salinan, tutup/reload, buka kembali | Model berhasil dibuka kembali secara identik dengan 5 kubus utuh tanpa kerusakan outliner. | **PASS** |
-| **7. Ekspor Java JSON** | Ekspor JSON resmi melalui engine Blockbench | Berhasil diekspor ke [`air_staff_exported_from_blockbench.json`](file:///D:/repo/Minecraft%20Mod%20&%20Rp/art-source/test_blockbench_interactive/air_staff_exported_from_blockbench.json). | **PASS** |
+| **7. Ekspor Java JSON** | Ekspor JSON resmi melalui engine Blockbench | Berhasil diekspor ke [`air_staff_exported_from_blockbench.json`](file:///D:/repo/Minecraft%20Mod%20&%20Rp/art-source/tools/blockbench_interactive/air_staff_exported_from_blockbench.json). | **PASS** |
 | **8. Perbandingan Semantik** | Bandingkan JSON ekspor Blockbench vs JSON generator | **100% IDENTIK SECARA GEOMETRI & UV**: Seluruh 5 kubus, 30 sisi/face, dan 120 koordinat UV cocok presisi. Nilai rotasi `fixed` adalah -180° vs 180° (secara semantik identik pada rotasi 360°). | **LOLOS PERBANDINGAN** |
 
 ---
@@ -51,12 +51,14 @@ Pengujian interaktif dilakukan secara terisolasi pada salinan model di direktori
 
 ## 3. Integritas Arsip ZIP Review Terkini
 
-* **Berkas Arsip**: [`art-source/avatar_prototype_assets_v02_review.zip`](file:///D:/repo/Minecraft%20Mod%20&%20Rp/art-source/avatar_prototype_assets_v02_review.zip)
-* **Ukuran Berkas**: `1.500.851 bytes` (~1,43 MB)
+* **Berkas Arsip**: [`art-source/archive/avatar_prototype_assets_v02_review.zip`](file:///D:/repo/Minecraft%20Mod%20&%20Rp/art-source/archive/avatar_prototype_assets_v02_review.zip)
+* **Ukuran Berkas pada checkout ini**: `1.675.065 bytes` (~1,60 MiB)
 * **Checksum SHA-256**:
   ```text
-  18eab10417ca9db347480a02b5e0332f332ff9a1b829a1e3fd7bd1ab1d7b3ca0
+  5190144128699ac780621ab103b3a441c1b39fe01b70ed8d2bb0f4ba17d65d3f
   ```
+* Catatan: ukuran dan checksum yang tercatat sebelumnya tidak cocok dengan arsip pada checkout ini.
+  Arsip hanya dipindahkan ke `art-source/archive/`; tidak diekstrak atau diubah.
 
 ### Struktur Lengkap Arsip ZIP:
 1. `air_staff/v0.2/`:

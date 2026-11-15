@@ -10,12 +10,17 @@ import com.avatarmod.elements.client.network.SkillClientHandler;
 import com.avatarmod.elements.client.orb.ChargeOrbClientState;
 import com.avatarmod.elements.client.orb.ChargeOrbRenderer;
 import com.avatarmod.elements.client.orb.FirstPersonOrbRenderer;
+import com.avatarmod.elements.client.particle.AvatarClientParticles;
+import com.avatarmod.elements.client.vfx.CinematicVfxController;
+import com.avatarmod.elements.skill.ElementSlotMap;
+import com.avatarmod.elements.skill.SkillRegistry;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import com.avatarmod.elements.network.SkillPackets;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.option.KeyBinding;
 
 public class AvatarElementsClient implements ClientModInitializer {
 
@@ -29,39 +34,174 @@ public class AvatarElementsClient implements ClientModInitializer {
         AvatarHudRenderer.register();
         ChargeOrbRenderer.register();
         FirstPersonOrbRenderer.register();
+        AvatarClientParticles.registerClientFactories();
+
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                AvatarElementsMod.FIRE_BLAST_PROJECTILE,
+                context -> new net.minecraft.client.render.entity.EntityRenderer<com.avatarmod.elements.entity.FireBlastProjectileEntity>(context) {
+                    @Override
+                    public net.minecraft.util.Identifier getTexture(com.avatarmod.elements.entity.FireBlastProjectileEntity entity) {
+                        return null;
+                    }
+                });
 
         // Clear orb state on disconnect or world change to avoid stale visuals
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) ->
-                ChargeOrbClientState.clear());
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            ChargeOrbClientState.clear();
+            CinematicVfxController.clear();
+            java.util.Arrays.fill(slotHolding, false);
+            java.util.Arrays.fill(slotHoldTicks, 0);
+            java.util.Arrays.fill(slotHeldSkillId, null);
+        });
         // JOIN clears stale state from a previous session/world
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) ->
-                ChargeOrbClientState.clear());
-
-        // Show current element in action bar (simple HUD)
-        HudRenderCallback.EVENT.register((context, tickCounter) -> {
-            ElementWheelRenderer.renderCurrentElement(context);
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
+            ChargeOrbClientState.clear();
+            CinematicVfxController.clear();
+            java.util.Arrays.fill(slotHolding, false);
+            java.util.Arrays.fill(slotHoldTicks, 0);
+            java.util.Arrays.fill(slotHeldSkillId, null);
+        });
+        // Dimension / world transition cleanup: wipe stale orbs from previous world
+        ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE.register((client, world) -> {
+            ChargeOrbClientState.clear();
+            CinematicVfxController.clear();
+            java.util.Arrays.fill(slotHolding, false);
+            java.util.Arrays.fill(slotHoldTicks, 0);
+            java.util.Arrays.fill(slotHeldSkillId, null);
         });
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            CinematicVfxController.tick(client);
+
             if (client.player == null) return;
 
-            // --- Element wheel: press R once → cycle to next element ---
-            if (drainPressed(AvatarKeyBindings.ELEMENT_WHEEL)) {
-                String next = ElementWheelRenderer.cycleElement();
-                ClientPlayNetworking.send(new SkillPackets.C2SSetElement(next));
+            // --- Element wheel: cycle to next element with debounce ---
+            // Continuously drain buffered presses so queued keys (from typing in chat or opening menus) never fire later
+            while (AvatarKeyBindings.ELEMENT_WHEEL.wasPressed()) {}
+
+            if (elementCycleCooldown > 0) {
+                elementCycleCooldown--;
             }
 
-            // --- Skill slot keys (Z/X/C/V) ---
-            // Drain OS key-repeat events but send only ONE cast per tick.
-            if (drainPressed(AvatarKeyBindings.SLOT_1)) SkillClientHandler.sendSlotCast(0);
-            if (drainPressed(AvatarKeyBindings.SLOT_2)) SkillClientHandler.sendSlotCast(1);
-            if (drainPressed(AvatarKeyBindings.SLOT_3)) SkillClientHandler.sendSlotCast(2);
-            if (drainPressed(AvatarKeyBindings.SLOT_4)) SkillClientHandler.sendSlotCast(3);
+            int wheelCode = getKeyCode(AvatarKeyBindings.ELEMENT_WHEEL);
+            boolean wheelDown = (client.currentScreen == null) && (wheelCode > 0)
+                    && net.minecraft.client.util.InputUtil.isKeyPressed(client.getWindow().getHandle(), wheelCode);
+
+            if (wheelDown && !wheelWasDown && elementCycleCooldown == 0) {
+                elementCycleCooldown = 6; // 300ms debounce
+                ClientPlayNetworking.send(new SkillPackets.C2SCycleElement());
+            }
+            wheelWasDown = wheelDown;
+
+            // --- Skill slot keys (Z/X/C/V/B) ---
+            handleSlotKey(client, 0, AvatarKeyBindings.SLOT_1);
+            handleSlotKey(client, 1, AvatarKeyBindings.SLOT_2);
+            handleSlotKey(client, 2, AvatarKeyBindings.SLOT_3);
+            handleSlotKey(client, 3, AvatarKeyBindings.SLOT_4);
+            handleSlotKey(client, 4, AvatarKeyBindings.SLOT_5);
         });
     }
 
+    private static boolean wheelWasDown = false;
+    private static int elementCycleCooldown = 0;
+    private static final boolean[] slotHolding = new boolean[5];
+    private static final int[] slotHoldTicks = new int[5];
+    private static final String[] slotHeldSkillId = new String[5];
+    private static final boolean[] slotWasDown = new boolean[5];
+
+    private static int getKeyCode(KeyBinding key) {
+        try {
+            int code = net.minecraft.client.util.InputUtil.fromTranslationKey(key.getBoundKeyTranslationKey()).getCode();
+            if (code > 0) return code;
+        } catch (Exception ignored) {}
+        return key.getDefaultKey().getCode();
+    }
+
+    private static boolean isSlotKeyDown(net.minecraft.client.MinecraftClient client, KeyBinding key) {
+        if (client.currentScreen != null) return false;
+        long windowHandle = client.getWindow().getHandle();
+        int code = getKeyCode(key);
+        boolean glfwPressed = (code > 0) && net.minecraft.client.util.InputUtil.isKeyPressed(windowHandle, code);
+        return glfwPressed || key.isPressed();
+    }
+
+    private static void handleSlotKey(net.minecraft.client.MinecraftClient client, int slot, KeyBinding key) {
+        String activeElement = ElementWheelRenderer.getCurrentElement();
+        String skillId = ElementSlotMap.getSkillId(activeElement, slot);
+        boolean isHoldSkill = false;
+        if (skillId != null) {
+            var optDef = SkillRegistry.get(skillId);
+            if (optDef.isPresent() && optDef.get().isHoldRelease()) {
+                isHoldSkill = true;
+            }
+        }
+
+        // Guard: Cancel holds immediately when a GUI screen is opened
+        if (client.currentScreen != null) {
+            if (slotHolding[slot]) {
+                slotHolding[slot] = false;
+                String heldId = slotHeldSkillId[slot];
+                slotHeldSkillId[slot] = null;
+                SkillClientHandler.sendHoldRelease(slot, heldId != null ? heldId : "");
+                slotHoldTicks[slot] = 0;
+            }
+            slotWasDown[slot] = false;
+            while (key.wasPressed()) {}
+            return;
+        }
+
+        boolean isDown = isSlotKeyDown(client, key);
+        boolean tapped = drainPressed(key);
+        boolean justPressed = (isDown && !slotWasDown[slot]) || tapped;
+        boolean justReleased = (!isDown && slotWasDown[slot]);
+        slotWasDown[slot] = isDown;
+
+        if (isHoldSkill) {
+            if (justPressed) {
+                if (!slotHolding[slot]) {
+                    // Rising edge
+                    slotHolding[slot] = true;
+                    slotHoldTicks[slot] = 1;
+                    slotHeldSkillId[slot] = skillId;
+                    SkillClientHandler.sendHoldStart(slot, skillId);
+
+                    // Sub-tick quick tap (< 50ms): key was tapped and released before tick
+                    if (!isDown) {
+                        slotHolding[slot] = false;
+                        slotHeldSkillId[slot] = null;
+                        SkillClientHandler.sendHoldRelease(slot, skillId);
+                        slotHoldTicks[slot] = 0;
+                    }
+                }
+            } else if (isDown && slotHolding[slot]) {
+                slotHoldTicks[slot]++;
+            } else if (justReleased) {
+                // Falling edge: key released
+                if (slotHolding[slot]) {
+                    slotHolding[slot] = false;
+                    String heldId = slotHeldSkillId[slot] != null ? slotHeldSkillId[slot] : skillId;
+                    slotHeldSkillId[slot] = null;
+                    SkillClientHandler.sendHoldRelease(slot, heldId);
+                    slotHoldTicks[slot] = 0;
+                }
+            }
+        } else {
+            // Instant cast
+            if (slotHolding[slot]) {
+                slotHolding[slot] = false;
+                String heldId = slotHeldSkillId[slot] != null ? slotHeldSkillId[slot] : skillId;
+                slotHeldSkillId[slot] = null;
+                SkillClientHandler.sendHoldRelease(slot, heldId);
+                slotHoldTicks[slot] = 0;
+            }
+            if (justPressed) {
+                SkillClientHandler.sendSlotCast(slot);
+            }
+        }
+    }
+
     /** Drain all queued key-press events; return true if at least one was queued. */
-    private static boolean drainPressed(net.minecraft.client.option.KeyBinding key) {
+    private static boolean drainPressed(KeyBinding key) {
         boolean any = false;
         while (key.wasPressed()) any = true;
         return any;

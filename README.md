@@ -6,32 +6,36 @@ Empat elemen, sub-bending, senjata, animasi, dan sistem pertarungan dengan timel
 
 ## Status proyek
 
-Tahap 0–1: Audit + fondasi. Lihat [`docs/TASKS.md`](docs/TASKS.md) untuk status terkini.
+Status implementasi, build, dan uji runtime harus dibaca terpisah dari milestone/roadmap. Lihat [`docs/TASKS.md`](docs/TASKS.md) untuk rincian pekerjaan; milestone yang direncanakan bukan klaim seluruh fitur sudah selesai atau diterima.
 
 ## Struktur folder
 
 ```
-avatar-project/
-├── AGENTS.md           # Aturan kerja multi-agent
+Minecraft Mod & Rp/
+├── AGENTS.md           # Aturan kerja dan verifikasi
 ├── README.md
 ├── .gitignore
 ├── docs/
-│   ├── PROJECT_PLAN.md   # Rencana menyeluruh
-│   ├── ARCHITECTURE.md   # Arsitektur teknis
-│   ├── CONTENT_SPEC.md   # Spesifikasi gameplay
-│   ├── TASKS.md          # Daftar tugas aktif
-│   ├── TESTING.md        # Panduan pengujian
-│   └── DECISIONS.md      # Keputusan teknis
+│   ├── PROJECT_PLAN.md  # Roadmap dan gate
+│   ├── ARCHITECTURE.md  # Arsitektur aktual dan rancangan
+│   ├── CONTENT_SPEC.md  # Schema/runtime snapshot dan katalog desain
+│   ├── TASKS.md         # Status dan backlog
+│   ├── TESTING.md       # Alur verifikasi
+│   └── DECISIONS.md     # Keputusan teknis
 ├── reference/          # JAR referensi dan addon Bedrock (tidak didistribusikan)
 ├── legacy/             # Datapack dan resourcepack lama
 └── mod/                # Source mod Fabric 1.21.1
 ```
 
-## Prasyarat
+`tests/` berisi suite Python terpisah dari source set test Gradle. Angka skill yang aktif dimuat dari `mod/src/main/resources/data/avatar_elements/skill_definitions.json`; `docs/CONTENT_SPEC.md` membedakan nilai aktif dari katalog desain.
 
-- Java 17+
-- Git 2.x
-- Gradle (via wrapper di `mod/`)
+## Prasyarat & Toolchain
+
+- **Gradle Daemon Runtime (Loom 1.19.3)**: Membutuhkan **JVM 25** (misalnya Eclipse Temurin JDK 25 di `C:/Users/USER/.jdks/jdk-25.0.5+8` atau disetel via `org.gradle.java.home` di `gradle.properties`).
+  > **Penting**: Menjalankan Gradle daemon hanya dengan Java 17 akan **gagal** (`Dependency requires at least JVM runtime version 25` per keputusan `docs/DECISIONS.md` D012).
+- **Mod Compiler Toolchain**: Menargetkan **Java 21** (`sourceCompatibility = JavaVersion.VERSION_21`, `targetCompatibility = JavaVersion.VERSION_21`, `release = 21` via Gradle Java toolchain).
+- **Git**: 2.x
+- **Gradle**: Menggunakan wrapper yang disediakan di folder `mod/` (`gradlew` / `gradlew.bat`).
 
 ## Memulai
 

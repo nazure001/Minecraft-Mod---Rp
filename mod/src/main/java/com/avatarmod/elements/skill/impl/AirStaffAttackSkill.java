@@ -36,7 +36,7 @@ public final class AirStaffAttackSkill {
 
     private static void executeComboStep(ServerPlayerEntity player, SkillDefinition def, int step) {
         ServerWorld world = player.getServerWorld();
-        Vec3d origin = player.getPos().add(0, player.getStandingEyeHeight() / 2.0, 0);
+        Vec3d origin = player.getEyePos();
         Vec3d look = player.getRotationVec(1.0f);
 
         float damage;
@@ -51,11 +51,19 @@ public final class AirStaffAttackSkill {
         }
 
         Vec3d center = origin.add(look.multiply(range * 0.6));
-        Box box = Box.of(center, range * 2, range * 2, range * 2);
+        Box box = Box.of(center, (range + 1.0) * 2, (range + 1.0) * 2, (range + 1.0) * 2);
 
         List<LivingEntity> targets = world.getEntitiesByClass(
                 LivingEntity.class, box,
-                e -> e != player && e.isAlive() && e.squaredDistanceTo(center) <= range * range
+                e -> {
+                    if (e == player || !e.isAlive()) return false;
+                    Vec3d targetCenter = e.getBoundingBox().getCenter();
+                    double distSq = origin.squaredDistanceTo(targetCenter);
+                    if (distSq <= 1.44) return true;
+                    if (distSq > (range + 0.5) * (range + 0.5)) return false;
+                    Vec3d toTarget = targetCenter.subtract(origin);
+                    return toTarget.normalize().dotProduct(look) > 0.0;
+                }
         );
 
         DamageSource source = world.getDamageSources().playerAttack(player);

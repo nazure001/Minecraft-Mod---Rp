@@ -1,7 +1,8 @@
 # UI_THEME_SPEC.md — HUD & GUI Avatar
 
-Revisi: 2026-11-08, tambahan GUI v2. Status: arah visual disetujui pengguna;
-implementasi, mockup, aset final dan runtime **belum dikerjakan dalam revisi dokumentasi ini**.
+Revisi: 2026-11-09. Arah visual disetujui pengguna. Irisan awal HUD perkamen telah
+diimplementasikan, tetapi belum diuji in-game; menu, konfigurasi tema, mockup dan aset final
+masih belum dikerjakan.
 
 ## 1. Keputusan utama
 
@@ -102,7 +103,16 @@ HUD memperhitungkan chat, subtitle, bossbar, debug, hotbar, status effect dan mo
 
 Status desain bukan gate build/runtime. Tidak perlu menunggu seluruh profesi selesai untuk membuat tema dasar.
 
-## 9. Referensi yang diperiksa
+## 9. Implementasi visual pertama — HUD (2026-11-09)
+
+- Overlay tetap di atas HUD vanilla; inventory dan container tidak diganti.
+- Chi dan cooldown tetap membaca snapshot S2C yang sudah tersedia.
+- Panel chi memakai latar perkamen ringkas dan aksen warna elemen yang sedang dipilih lokal.
+- Badge elemen adalah pilihan client; belum ada klaim bahwa state itu sudah dikonfirmasi server.
+- Belum ada charge/health/stamina palsu atau data profesi/material.
+- Build membuktikan kompilasi, bukan keterbacaan visual atau posisi pada semua resolusi. Uji in-game masih diperlukan.
+
+## 10. Referensi yang diperiksa
 
 - RPG-HUD 3.13 Fabric 1.21.1: struktur komponen HUD, tipe tampilan, settings/warna dari isi JAR.
   Metadata mencantumkan GPL-3.0. Belum diuji runtime dalam audit referensi ini.

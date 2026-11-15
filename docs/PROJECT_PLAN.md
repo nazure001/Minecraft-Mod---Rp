@@ -6,6 +6,11 @@ Platform: Minecraft Java 1.21.1, Fabric
 Target: Singleplayer dan dedicated server  
 Prinsip utama: **Satu serangan = satu timeline** (animasi, hitbox, VFX, suara, kombo)
 
+Rincian hierarki Epic → Feature → Story/Enabler → Test dan checklist issue lokal:
+[Roadmap Project Plan](ways-of-work/plan/avatar-elements-roadmap/project-plan.md) ·
+[Issue Creation Checklist](ways-of-work/plan/avatar-elements-roadmap/issues-checklist.md).
+Dokumen tersebut adalah rencana; status implementasi tetap bersumber dari `TASKS.md`.
+
 ## Tahapan pengerjaan
 
 | Tahap | Hasil konkret | Syarat selesai |

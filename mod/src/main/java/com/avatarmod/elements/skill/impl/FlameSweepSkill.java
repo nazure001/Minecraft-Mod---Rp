@@ -2,6 +2,7 @@ package com.avatarmod.elements.skill.impl;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
+import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -78,8 +79,12 @@ public final class FlameSweepSkill {
             double px = origin.x + (look.x * cos - look.z * sin) * r * 0.8;
             double pz = origin.z + (look.x * sin + look.z * cos) * r * 0.8;
             world.spawnParticles(ParticleTypes.FLAME, px, origin.y, pz, 3, 0.15, 0.2, 0.15, 0.04);
+            world.spawnParticles(AvatarParticles.FLAME_TONGUE, px, origin.y, pz, 3, 0.15, 0.2, 0.15, 0.04);
+            world.spawnParticles(AvatarParticles.EMBER, px, origin.y, pz, 2, 0.10, 0.1, 0.10, 0.02);
         }
         world.spawnParticles(ParticleTypes.LAVA, origin.x, origin.y, origin.z, 2, 0.3, 0.1, 0.3, 0.0);
+        world.spawnParticles(AvatarParticles.FLAME_BURST, origin.x + look.x * 2.0, origin.y, origin.z + look.z * 2.0, 2, 0.2, 0.1, 0.2, 0.0);
+        world.spawnParticles(AvatarParticles.IMPACT_FLASH, origin.x + look.x * 2.5, origin.y, origin.z + look.z * 2.5, 1, 0.0, 0.0, 0.0, 0.0);
 
         // SFX
         world.playSound(null, player.getBlockPos(),

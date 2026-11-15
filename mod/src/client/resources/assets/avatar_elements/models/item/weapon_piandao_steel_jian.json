@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "avatar_elements:item/weapon_piandao_steel_jian"
+  }
+}

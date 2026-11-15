@@ -1,27 +1,30 @@
 package com.avatarmod.elements.skill;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.avatarmod.elements.AvatarElementsMod;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * Maps element → 4 skill IDs loaded from element_slots.json.
+ * Maps elements to skill IDs loaded from element_slots.json.
  * Null slot entries mean "empty — no cast".
  */
 public final class ElementSlotMap {
 
-    public static final int SLOT_COUNT = 4;
+    public static final int SLOT_COUNT = 5;
     public static final String[] ELEMENTS = {"FIRE", "AIR", "WATER", "EARTH"};
 
-    // element → String[4] (null = empty slot)
+    private static final String RESOURCE_PATH = "/data/avatar_elements/element_slots.json";
     private static final Map<String, String[]> MAP = new HashMap<>();
 
     static {
@@ -29,45 +32,67 @@ public final class ElementSlotMap {
     }
 
     private static void load() {
-        try (InputStream in = ElementSlotMap.class.getResourceAsStream(
-                "/data/avatar_elements/element_slots.json")) {
+        try (InputStream in = ElementSlotMap.class.getResourceAsStream(RESOURCE_PATH)) {
             if (in == null) {
-                defaultFallback();
-                return;
+                throw new IllegalStateException(
+                        "Bundled element slot resource not found at " + RESOURCE_PATH);
             }
-            JsonObject root = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8))
-                    .getAsJsonObject();
+            Map<String, List<String>> parsed = SkillConfigParser.parseSlots(
+                    "bundled resource " + RESOURCE_PATH,
+                    JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)));
             for (String element : ELEMENTS) {
-                String[] slots = new String[SLOT_COUNT];
-                if (root.has(element)) {
-                    JsonArray arr = root.getAsJsonArray(element);
-                    for (int i = 0; i < Math.min(arr.size(), SLOT_COUNT); i++) {
-                        JsonElement e = arr.get(i);
-                        slots[i] = (e.isJsonNull()) ? null : e.getAsString();
-                    }
-                }
-                MAP.put(element, slots);
+                MAP.put(element, parsed.get(element).toArray(new String[SLOT_COUNT]));
             }
-        } catch (Exception e) {
-            defaultFallback();
+        } catch (JsonIOException e) {
+            AvatarElementsMod.LOGGER.error("[Avatar] Failed to read bundled element slots at {}",
+                    RESOURCE_PATH, e);
+            throw new IllegalStateException(
+                    "Failed to read bundled element slots from " + RESOURCE_PATH, e);
+        } catch (IOException e) {
+            throw new IllegalStateException(
+                    "Failed to read bundled element slots from " + RESOURCE_PATH, e);
+        } catch (IllegalArgumentException | JsonParseException e) {
+            AvatarElementsMod.LOGGER.error("[Avatar] Invalid bundled element slots: {}",
+                    e.getMessage());
+            throw new IllegalStateException(
+                    "Invalid bundled element slots at " + RESOURCE_PATH + ": " + e.getMessage(), e);
         }
     }
 
-    private static void defaultFallback() {
-        MAP.put("FIRE",  new String[]{"avatar:fire_jab", "avatar:flame_sweep", "avatar:fire_guard", "avatar:fire_jet"});
-        MAP.put("AIR",   new String[]{"avatar:air_staff_attack", "avatar:air_vortex", null, null});
-        MAP.put("WATER", new String[]{"avatar:water_whip", null, null, null});
-        MAP.put("EARTH", new String[]{"avatar:earth_boulder", null, null, null});
+    static void validateSkillReferences(List<SkillDefinition> skills) {
+        Map<String, List<String>> slots = new HashMap<>();
+        for (String element : ELEMENTS) {
+            slots.put(element, new ArrayList<>(Arrays.asList(MAP.get(element).clone())));
+        }
+        try {
+            SkillConfigParser.validateSlotReferences(
+                    "bundled resource " + RESOURCE_PATH, slots, skills);
+        } catch (IllegalArgumentException e) {
+            AvatarElementsMod.LOGGER.error("[Avatar] Invalid bundled element slots: {}",
+                    e.getMessage());
+            throw new IllegalStateException(
+                    "Invalid bundled element slots at " + RESOURCE_PATH + ": " + e.getMessage(), e);
+        }
     }
 
-    /** Returns the skill ID for the given element and slot (0–3), or null if empty. */
+    /** Returns the skill ID for the given element and slot (0–4), or null if empty. */
     public static String getSkillId(String element, int slot) {
         String[] slots = MAP.getOrDefault(element, new String[SLOT_COUNT]);
         if (slot < 0 || slot >= SLOT_COUNT) return null;
         return slots[slot];
     }
 
-    /** Returns a copy of the 4 slots for HUD display. */
+    /** Returns the next element in the configured selector order. */
+    public static String nextElement(String element) {
+        for (int i = 0; i < ELEMENTS.length; i++) {
+            if (ELEMENTS[i].equals(element)) {
+                return ELEMENTS[(i + 1) % ELEMENTS.length];
+            }
+        }
+        return ELEMENTS[0];
+    }
+
+    /** Returns a copy of the five slots for HUD display. */
     public static String[] getSlots(String element) {
         return Arrays.copyOf(MAP.getOrDefault(element, new String[SLOT_COUNT]), SLOT_COUNT);
     }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "avatar_elements:item/weapon_jet_hook_swords"
+  }
+}

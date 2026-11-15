@@ -12,10 +12,10 @@ Payload aktual didefinisikan di `SkillPackets`:
 
 | Arah | Payload |
 |---|---|
-| Client → Server | `C2SSkillInput`, `C2SSlotCast`, `C2SHoldStart`, `C2SHoldRelease`, `C2SSetElement` |
-| Server → Client | `S2CSkillResult`, `S2CHudUpdate`, `S2CPhaseSync` |
+| Client → Server | `C2SSkillInput`, `C2SSlotCast`, `C2SHoldStart`, `C2SHoldRelease`, `C2SCycleElement` |
+| Server → Client | `S2CSkillResult`, `S2CHudUpdate`, `S2CSyncElement`, `S2CPhaseSync` |
 
-`S2CPhaseSync` menyertakan UUID caster, skill ID, nama phase, tick phase, dan cast serial. Ini bukan packet `S2C_AnimationTrigger` seperti deskripsi scaffold lama.
+Pemilihan elemen dimulai sebagai intent siklus dari client; server memajukan state per pemain dan mengirim pilihan authoritative melalui `S2CSyncElement`. `S2CPhaseSync` menyertakan UUID caster, skill ID, nama phase, tick phase, dan cast serial. Ini bukan packet `S2C_AnimationTrigger` seperti deskripsi scaffold lama.
 
 ### State dan konfigurasi
 

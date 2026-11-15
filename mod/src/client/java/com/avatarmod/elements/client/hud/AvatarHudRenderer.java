@@ -5,26 +5,23 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
 
+import java.util.Locale;
+
 /**
- * Renders the Avatar HUD overlay:
- *   - Chi bar: horizontal bar above hotbar, air-blue fill
- *   - Cooldown text: skill id + ticks remaining, shown when active
- *
- * Layout is intentionally simple for T1-8; visual polish in T2+.
+ * Renders a compact parchment-style overlay above the vanilla hotbar.
  */
 public final class AvatarHudRenderer {
 
-    // Chi bar dimensions and position (relative to screen bottom-center)
-    private static final int BAR_WIDTH  = 80;
-    private static final int BAR_HEIGHT = 6;
-    private static final int BAR_Y_OFFSET = 32; // pixels above bottom edge
+    private static final int PANEL_WIDTH = 96;
+    private static final int PANEL_HEIGHT = 18;
+    private static final int BAR_INSET = 6;
+    private static final int BAR_HEIGHT = 4;
 
-    // Colors (ARGB)
-    private static final int COLOR_BG       = 0xAA000000;
-    private static final int COLOR_CHI_FILL = 0xFF5BB8E8; // air blue
-    private static final int COLOR_CHI_LOW  = 0xFFE85B5B; // red when < 20%
-    private static final int COLOR_BORDER   = 0xFF224466;
-    private static final int COLOR_CD_TEXT  = 0xFFFFCC44;
+    private static final int COLOR_PARCHMENT = 0xE8D8C39A;
+    private static final int COLOR_INK = 0xFF38291E;
+    private static final int COLOR_FRAME = 0xFF4A3423;
+    private static final int COLOR_BAR_BG = 0xFF755E45;
+    private static final int COLOR_CHI_LOW = 0xFFB63F36;
 
     public static void register() {
         HudRenderCallback.EVENT.register(AvatarHudRenderer::render);
@@ -38,49 +35,58 @@ public final class AvatarHudRenderer {
 
         HudState.tickDisplay(ticker.getTickDelta(false));
 
-        int screenW = ctx.getScaledWindowWidth();
         int screenH = ctx.getScaledWindowHeight();
 
-        int barX = (screenW - BAR_WIDTH) / 2;
-        int barY = screenH - BAR_Y_OFFSET - BAR_HEIGHT;
+        ElementWheelRenderer.renderCurrentElement(ctx);
 
-        drawChiBar(ctx, barX, barY);
+        // Position HUD cleanly in bottom-left above element badge to keep center screen unobstructed
+        int panelX = 6;
+        int panelY = screenH - 42;
+        int accent = ElementWheelRenderer.getCurrentColor();
+
+        drawChiPanel(ctx, panelX, panelY, accent);
 
         if (HudState.hasCooldown()) {
-            drawCooldown(ctx, screenW, barY - 10);
+            drawCooldown(ctx, panelX, panelY - 14, accent);
         }
     }
 
-    private static void drawChiBar(DrawContext ctx, int x, int y) {
-        // Background
-        ctx.fill(x - 1, y - 1, x + BAR_WIDTH + 1, y + BAR_HEIGHT + 1, COLOR_BORDER);
-        ctx.fill(x, y, x + BAR_WIDTH, y + BAR_HEIGHT, COLOR_BG);
+    private static void drawChiPanel(DrawContext ctx, int x, int y, int accent) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        int barWidth = PANEL_WIDTH - BAR_INSET * 2;
 
-        // Fill
+        ctx.fill(x, y, x + PANEL_WIDTH, y + PANEL_HEIGHT, COLOR_FRAME);
+        ctx.fill(x + 1, y + 1, x + PANEL_WIDTH - 1, y + PANEL_HEIGHT - 1, COLOR_PARCHMENT);
+        ctx.fill(x + 2, y + 2, x + 3, y + PANEL_HEIGHT - 2, accent);
+
+        String chiText = "Chi " + HudState.getCurrentChi() + "/" + HudState.getMaxChi();
+        ctx.drawTextWithShadow(client.textRenderer, chiText, x + 6, y + 3, COLOR_INK);
+
+        int barX = x + BAR_INSET;
+        int barY = y + PANEL_HEIGHT - BAR_HEIGHT - 3;
+        ctx.fill(barX, barY, barX + barWidth, barY + BAR_HEIGHT, COLOR_BAR_BG);
         float fraction = HudState.getDisplayChiFraction();
-        int fillW = Math.round(BAR_WIDTH * fraction);
+        int fillW = Math.round(barWidth * fraction);
         if (fillW > 0) {
-            int color = fraction < 0.2f ? COLOR_CHI_LOW : COLOR_CHI_FILL;
-            ctx.fill(x, y, x + fillW, y + BAR_HEIGHT, color);
+            int color = fraction < 0.2f ? COLOR_CHI_LOW : accent;
+            ctx.fill(barX, barY, barX + fillW, barY + BAR_HEIGHT, color);
         }
-
-        // Chi text (chi/max), right-aligned above bar
-        String chiText = HudState.getCurrentChi() + "/" + HudState.getMaxChi();
-        int textX = x + BAR_WIDTH - MinecraftClient.getInstance().textRenderer.getWidth(chiText);
-        ctx.drawText(MinecraftClient.getInstance().textRenderer,
-                chiText, textX, y - 9, 0xFFCCDDEE, true);
     }
 
-    private static void drawCooldown(DrawContext ctx, int screenW, int y) {
+    private static void drawCooldown(DrawContext ctx, int x, int y, int accent) {
+        MinecraftClient client = MinecraftClient.getInstance();
         String raw = HudState.getActiveCooldownSkillId();
-        // Show only the last segment of the skill id (e.g. "fire_jab" from "avatar:fire_jab")
         String name = raw.contains(":") ? raw.substring(raw.indexOf(':') + 1) : raw;
+        name = name.replace('_', ' ');
         float seconds = HudState.getCooldownTicksRemaining() / 20f;
-        String text = name + " §r§7(" + String.format("%.1fs", seconds) + ")";
+        String text = name + " · " + String.format(Locale.ROOT, "%.1fs", seconds);
 
-        int textW = MinecraftClient.getInstance().textRenderer.getWidth(text);
-        ctx.drawText(MinecraftClient.getInstance().textRenderer,
-                text, (screenW - textW) / 2, y, COLOR_CD_TEXT, true);
+        int textW = client.textRenderer.getWidth(text);
+        int panelWidth = textW + 10;
+        ctx.fill(x, y, x + panelWidth, y + 11, COLOR_FRAME);
+        ctx.fill(x + 1, y + 1, x + panelWidth - 1, y + 10, COLOR_PARCHMENT);
+        ctx.fill(x + 2, y + 2, x + 3, y + 9, accent);
+        ctx.drawTextWithShadow(client.textRenderer, text, x + 6, y + 2, COLOR_INK);
     }
 
     private AvatarHudRenderer() {}

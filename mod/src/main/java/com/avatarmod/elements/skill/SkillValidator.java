@@ -55,10 +55,11 @@ public final class SkillValidator {
                     SkillPackets.S2CSkillResult.DenyReason.NOT_ENOUGH_CHI, 0);
         }
 
-        // 5. Timeline: cannot start new skill while one is in WINDUP or ACTIVE
+        // 5. Timeline: cannot start new skill while one is in WINDUP, HOLD, or ACTIVE
         if (data.hasActiveTimeline()) {
             var tl = data.getActiveTimeline();
             if (tl.phase() == com.avatarmod.elements.data.SkillTimeline.Phase.WINDUP
+                    || tl.phase() == com.avatarmod.elements.data.SkillTimeline.Phase.HOLD
                     || tl.phase() == com.avatarmod.elements.data.SkillTimeline.Phase.ACTIVE) {
                 return ValidationResult.deny(
                         SkillPackets.S2CSkillResult.DenyReason.COOLDOWN,
@@ -76,7 +77,8 @@ public final class SkillValidator {
         PlayerBendingData data = PlayerBendingData.get(player);
         data.trySpendChi(def.chiCost());
         data.setCooldown(skillId, def.cooldownTicks());
-        data.startTimeline(skillId, def.windupTicks(), def.activeTicks(), def.recoveryTicks());
+        data.startTimeline(skillId, def.windupTicks(), def.activeTicks(), def.recoveryTicks(),
+                def.isHoldRelease(), def.maxChargeTicks());
     }
 
     private SkillValidator() {}

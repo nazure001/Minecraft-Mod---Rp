@@ -131,21 +131,34 @@ public final class EarthPillarSkill {
                 SoundEvents.BLOCK_GRAVEL_BREAK, SoundCategory.PLAYERS, 1.0f, 0.7f);
     }
 
-    /** Rising dust column, one layer per ACTIVE tick (height grows with tick index). */
+    /** Rising volumetric pillar column with core + perimeter rings at multiple heights. */
     private static void spawnColumnParticles(ServerWorld world, Vec3d center, int tickInActive) {
-        double height = Math.min(PILLAR_HEIGHT, 0.8 + tickInActive * 0.9);
+        double maxHeight = Math.min(PILLAR_HEIGHT, 1.0 + tickInActive * 1.0);
         BlockPos groundPos = BlockPos.ofFloored(center.subtract(0, 0.5, 0));
         BlockState ground = world.getBlockState(groundPos);
-        if (ground.isAir()) return;
+        if (ground.isAir()) {
+            ground = net.minecraft.block.Blocks.STONE.getDefaultState();
+        }
 
         BlockStateParticleEffect dust = new BlockStateParticleEffect(ParticleTypes.BLOCK, ground);
-        int points = 10;
-        for (int i = 0; i < points; i++) {
-            double angle = (Math.PI * 2 * i) / points;
-            double px = center.x + Math.cos(angle) * FOOTPRINT_RADIUS * 0.7;
-            double pz = center.z + Math.sin(angle) * FOOTPRINT_RADIUS * 0.7;
-            world.spawnParticles(dust, px, center.y + height, pz, 2, 0.1, 0.25, 0.1, 0.05);
+
+        // Render stacked horizontal cross-sections from ground up to current height
+        for (double h = 0.2; h <= maxHeight; h += 0.6) {
+            // Core pillar center
+            world.spawnParticles(dust, center.x, center.y + h, center.z, 4, 0.15, 0.15, 0.15, 0.05);
+
+            // Perimeter ring
+            int points = 12;
+            for (int i = 0; i < points; i++) {
+                double angle = (Math.PI * 2 * i) / points;
+                double px = center.x + Math.cos(angle) * (FOOTPRINT_RADIUS * 0.6);
+                double pz = center.z + Math.sin(angle) * (FOOTPRINT_RADIUS * 0.6);
+                world.spawnParticles(dust, px, center.y + h, pz, 2, 0.08, 0.15, 0.08, 0.04);
+            }
         }
+
+        // Top impact cap
+        world.spawnParticles(ParticleTypes.POOF, center.x, center.y + maxHeight, center.z, 3, 0.3, 0.1, 0.3, 0.02);
     }
 
     private EarthPillarSkill() {}

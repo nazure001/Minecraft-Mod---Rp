@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "avatar_elements:item/weapon_kyoshi_war_fans"
+  }
+}

@@ -184,3 +184,7 @@ Kontrak detail pada UI_THEME_SPEC.md. UI masuk tahap presentasi setelah checkpoi
 ## D020 — Pengisian slot EARTH X/C (T3-11, T3-12)
 Tanggal: 2026-11-11. Status: default kerja, belum diuji in-game.
 Earth Pillar dan Boulder Launch diimplementasikan mengikuti pola yang sudah ada (instant ala Earth Boulder; hold-release generik ala Fire Blast, tanpa sistem paralel). Slot EARTH diisi: Z=Earth Boulder, X=Boulder Launch (cermin FIRE X=Fire Blast untuk konsistensi hold-release), C=Earth Pillar; V/B tetap `null`. Assignment ini melanjutkan D019 sebagai default konservatif — mengisi slot kosong hanya dengan skill yang benar-benar tersedia — dan bukan mapping desain final yang dikonfirmasi pengguna. Kedua skill mematuhi aturan prototipe tanpa world mutation; kolom/batu berupa VFX partikel. Nilai runtime direkonsiliasi di `skill_definitions.json` + blok stat `CONTENT_SPEC.md`.
+
+## D021 — Siklus elemen server-authoritative
+Tanggal: 2026-11-13. Status: implementasi menunggu retest Minecraft.
+Client mengirim intent tanpa nama elemen yang dipilih; server memajukan elemen aktif berdasarkan state per pemain lalu mengirim hasilnya ke client. Ini menghindari client menulis pilihan absolut yang mungkin stale ke state server. Perubahan ini mengurangi jalur desinkronisasi yang mungkin, tetapi penyebab laporan elemen berganti acak belum direproduksi/dibuktikan dan tidak dianggap selesai sebelum uji singleplayer serta multiplayer.

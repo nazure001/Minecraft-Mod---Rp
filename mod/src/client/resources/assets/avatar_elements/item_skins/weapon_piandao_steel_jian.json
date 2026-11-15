@@ -1,0 +1,73 @@
+{
+  "trail": {
+    "color": [
+      250,
+      254,
+      255
+    ],
+    "begin_pos": [
+      0.0,
+      0.0,
+      -0.1
+    ],
+    "end_pos": [
+      0.0,
+      0.0,
+      -1.6
+    ],
+    "lifetime": 6,
+    "interpolations": 5,
+    "texture_path": "avatar_elements:textures/vfx/trail_steel_flash_128x32.png",
+    "particle_type": "avatar_elements:swing_trail"
+  },
+  "elemental_imbue_overrides": {
+    "FIRE": {
+      "texture_path": "avatar_elements:textures/vfx/trail_fire_imbue_128x32.png",
+      "color": [
+        255,
+        140,
+        24
+      ]
+    },
+    "BLUE_FIRE": {
+      "texture_path": "avatar_elements:textures/vfx/trail_blue_fire_imbue_128x32.png",
+      "color": [
+        32,
+        200,
+        255
+      ]
+    },
+    "AIR": {
+      "texture_path": "avatar_elements:textures/vfx/trail_wind_fan_128x32.png",
+      "color": [
+        210,
+        248,
+        240
+      ]
+    },
+    "WATER": {
+      "texture_path": "avatar_elements:textures/vfx/trail_water_frost_128x32.png",
+      "color": [
+        64,
+        190,
+        255
+      ]
+    },
+    "EARTH": {
+      "texture_path": "avatar_elements:textures/vfx/trail_earth_seismic_128x32.png",
+      "color": [
+        148,
+        212,
+        88
+      ]
+    },
+    "LIGHTNING": {
+      "texture_path": "avatar_elements:textures/vfx/trail_equalist_voltaic_128x32.png",
+      "color": [
+        120,
+        215,
+        255
+      ]
+    }
+  }
+}

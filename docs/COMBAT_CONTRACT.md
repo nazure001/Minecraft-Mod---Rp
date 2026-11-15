@@ -78,6 +78,14 @@ Legenda:
 - `[~]` Ada sebagian — definisi ada, belum ada animasi/trail/VFX
 - `[x]` Selesai dan terverifikasi di game
 
+## Catatan runtime animasi — 2026-11-11
+
+- Studi Blockbench Fire Jab berada di `art-source/animation_studies/fire_jab/player_fire_jab_study.bbmodel`; animasi runtime PAL berada terpisah di `mod/src/client/resources/assets/avatar_elements/player_animations/fire_jab_test.json`. File `.bbmodel` adalah sumber/studi authoring, bukan aset yang otomatis dimuat oleh Fabric.
+- PAL Fabric `1.1.6+mc.1.21.1` menormalisasi nama tulang Bedrock ke snake_case; ia tidak menerjemahkan `torso` menjadi `body` pada parser ini. Runtime clip karena itu memakai nama bagian pemain `body`, `head`, `right_arm`, `left_arm`, `right_leg`, dan `left_leg`. Grup `right_upper_arm`/`right_forearm` dalam studi belum membuktikan bahwa sendi siku teranimasi pada rig pemain runtime.
+- Sinkronisasi `S2CPhaseSync` tetap diperbarui setiap fase untuk VFX, tetapi klip gerak dimulai sekali per `castSerial`, bukan diulang saat WINDUP beralih ke ACTIVE atau HOLD beralih ke ACTIVE.
+- VFX Fire Jab runtime saat ini memakai partikel vanilla dan partikel mod; mesh prosedural digunakan pada efek lain. Belum ada VFX `.bbmodel` yang dibuktikan termuat/render oleh client mod.
+- Status visual tetap **belum diverifikasi in-game**. Acceptance berikutnya: pukulan dan penjagaan terbaca dari tampak orang ketiga, transfer berat dan stance tidak tersilang, benturan bertepatan dengan frame aktif, pose pulih tanpa snap, dan observer melihat urutan yang sama. Validasi siku/armor/lengan normal dan slim memerlukan uji renderer nyata; build bukan bukti visual.
+
 ---
 
 ## avatar:fire_jab — PRIORITAS 1 (Prove first)

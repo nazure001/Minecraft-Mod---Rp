@@ -13,19 +13,13 @@ public final class ElementWheelRenderer {
 
     private static final String[] ELEMENTS = {"FIRE", "AIR", "WATER", "EARTH"};
     private static final int[] COLORS = {
-            0xFFFF5500, // FIRE  — orange-red
-            0xFFAAAAAA, // AIR   — light grey
-            0xFF55AAFF, // WATER — blue
-            0xFF88AA44, // EARTH — green-brown
+            0xFFBD4B36, // FIRE
+            0xFFBE8B35, // AIR
+            0xFF3D82A8, // WATER
+            0xFF687E3C, // EARTH
     };
 
     private static int currentIndex = 0; // FIRE is default
-
-    /** Advance to next element and return its name. */
-    public static String cycleElement() {
-        currentIndex = (currentIndex + 1) % ELEMENTS.length;
-        return ELEMENTS[currentIndex];
-    }
 
     /** Set active element directly (e.g. on server sync). */
     public static void setElement(String element) {
@@ -41,9 +35,12 @@ public final class ElementWheelRenderer {
         return ELEMENTS[currentIndex];
     }
 
+    public static int getCurrentColor() {
+        return COLORS[currentIndex];
+    }
+
     /**
-     * Renders a compact element indicator bottom-left.
-     * Shows: [◆ FIRE] with element color. Fades out after 60 ticks of no change.
+     * Renders the locally selected element as a compact parchment badge.
      */
     public static void renderCurrentElement(DrawContext context) {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -51,9 +48,13 @@ public final class ElementWheelRenderer {
 
         String label = "◆ " + ELEMENTS[currentIndex];
         int color = COLORS[currentIndex];
-        int x = 4;
+        int x = 6;
         int y = client.getWindow().getScaledHeight() - 20;
-        context.drawTextWithShadow(client.textRenderer, label, x, y, color);
+        int labelWidth = client.textRenderer.getWidth(label);
+        context.fill(x, y - 3, x + labelWidth + 10, y + 11, 0xFF4A3423);
+        context.fill(x + 1, y - 2, x + labelWidth + 9, y + 10, 0xE8D8C39A);
+        context.fill(x + 2, y - 1, x + 4, y + 9, color);
+        context.drawTextWithShadow(client.textRenderer, label, x + 7, y, 0xFF38291E);
     }
 
     private ElementWheelRenderer() {}

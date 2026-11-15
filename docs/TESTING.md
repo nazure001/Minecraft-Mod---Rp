@@ -6,12 +6,18 @@
 
 ## Alur verifikasi yang berlaku
 
-1. `.\gradlew.bat build` dari `mod/` untuk kompilasi Fabric.
+1. `.\gradlew.bat test` dari `mod/` untuk menjalankan unit test schema; `.\gradlew.bat build` untuk kompilasi dan verifikasi paket Fabric.
 2. Jalankan suite Python yang relevan dari `tests/` secara terpisah; file-file tersebut bukan test source Gradle dan belum memiliki manifest dependency/runner proyek yang terverifikasi. Sebagian script menetapkan `D:\repo\Minecraft Mod & Rp` sebagai root, jadi periksa path sebelum dijalankan di workspace lain.
 3. Uji manual hanya pada world QA terisolasi, ikuti `MANUAL_TESTING_GUIDE.md` setelah memastikan langkahnya cocok dengan source aktif.
 4. Catat build, automated test, dan hasil Minecraft sebagai status terpisah di `TASKS.md`. Jangan menandai in-game verification hanya berdasarkan build atau keberadaan test.
 
+Untuk launch client visual, gunakan Minecraft 1.21.1, Fabric Loader, Fabric API, Avatar: Elements, dan Player Animation Library Fabric (`1.1.6+mc.1.21.1`). Dependency PAL dicantumkan di metadata mod; siapkan pada instance/server yang menjalankan mod dan semua client. Mod HUD lain bersifat opsional untuk pemeriksaan kompatibilitas terpisah, bukan prasyarat uji dasar.
+
 State pemain saat ini menggunakan Fabric `AttachmentType` dan tidak persisten lintas sesi; jangan memakai scoreboard datapack sebagai pemeriksaan state mod.
+
+`SkillConfigParserTest` memvalidasi konfigurasi bundled dan kasus schema skill/slot (field, enum, angka, alias, ID duplikat, serta referensi elemen), termasuk penolakan `CHANNEL`, `TOGGLE`, dan sustain `chiPerTick` nonzero. Test tersebut berjalan pada task Gradle `test`.
+
+Test konfigurasi bundled juga mengunci assignment slot aktif: FIRE lima skill, AIR empat skill dan slot B kosong, WATER/EARTH masing-masing hanya slot Z terisi. Slot kosong harus tidak melakukan cast serta tidak mengurangi chi atau memulai cooldown saat diverifikasi di Minecraft.
 
 ## Status pengujian
 
@@ -29,9 +35,21 @@ Setiap fitur harus mencatat status berikut secara terpisah sebelum merge:
 - [ ] Chi berkurang sesuai nilai di CONTENT_SPEC.md
 - [ ] Cooldown dimulai setelah cast, bukan sebelum
 - [ ] Animasi mulai sebelum hitbox aktif (windup_ticks)
+- [ ] Satu animasi dimulai per cast saat fase server pertama diterima; paket hasil cast tidak memicu replay tambahan
 - [ ] Hitbox aktif pada frame yang benar
 - [ ] VFX muncul bersamaan hitbox
 - [ ] Suara muncul bersamaan hitbox
+- [ ] Fire Jab mengenai target di depan pada jarak dekat dan tepi range, tetapi tidak mengenai target di belakang
+- [ ] Air Blast dan Water Whip mengikuti garis pandang pada target tepat di depan; catat miss/hit saat target bergeser samping, melampaui range, atau tertutup blok
+
+### Slot elemen
+- [ ] Tekan-lepas R per siklus: FIRE → AIR → WATER → EARTH → FIRE; HUD hanya berubah setelah sinkronisasi server.
+- [ ] Lakukan beberapa cast setelah tiap perubahan; pastikan elemen/skill tidak berubah tanpa input dan skill berasal dari slot yang tampil.
+- [ ] Di multiplayer, sikluskan elemen pada dua pemain secara terpisah; perubahan satu pemain tidak boleh mengubah HUD atau skill pemain lain.
+- [ ] FIRE: Z/X/C/V/B menjalankan Fire Jab/Blast/Sweep/Guard/Jet.
+- [ ] AIR: Z/X/C/V menjalankan skill yang dipetakan; B kosong dan tidak menjalankan cast.
+- [ ] WATER: Z menjalankan Water Whip; X/C/V/B kosong dan tidak menjalankan cast.
+- [ ] EARTH: Z menjalankan Earth Boulder; X/C/V/B kosong dan tidak menjalankan cast.
 
 ### Kombo
 - [ ] Serangan kedua hanya bisa masuk dalam combo_window_ticks

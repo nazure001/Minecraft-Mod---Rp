@@ -111,8 +111,7 @@ public final class ChargeOrbRenderer {
     }
 
     /**
-     * Renders a UV-sphere using immediate-mode quads.
-     * Kept simple (12×8 segments) for MVP — no shader, no texture.
+     * Renders a 3D volumetric UV-sphere with inner glowing core and smooth outer falloff shell.
      */
     private static void renderOrb(MatrixStack matrices, float r,
                                    float red, float green, float blue, float alpha) {
@@ -127,9 +126,25 @@ public final class ChargeOrbRenderer {
 
         Matrix4f mat = matrices.peek().getPositionMatrix();
 
-        int stacks = 8;
-        int slices = 12;
+        int stacks = 12;
+        int slices = 16;
 
+        // 1. Inner core: bright hot center
+        renderSphereLayer(buf, mat, r * 0.55f, 1.0f, 0.95f, 0.85f, Math.min(1.0f, alpha * 1.6f), stacks, slices);
+
+        // 2. Outer shell: element-tinted soft halo
+        renderSphereLayer(buf, mat, r, red, green, blue, alpha * 0.75f, stacks, slices);
+
+        BufferRenderer.drawWithGlobalProgram(buf.end());
+
+        RenderSystem.enableDepthTest();
+        RenderSystem.enableCull();
+        RenderSystem.disableBlend();
+    }
+
+    private static void renderSphereLayer(BufferBuilder buf, Matrix4f mat, float r,
+                                          float red, float green, float blue, float alpha,
+                                          int stacks, int slices) {
         for (int i = 0; i < stacks; i++) {
             double phi0 = Math.PI * i / stacks - Math.PI / 2.0;
             double phi1 = Math.PI * (i + 1) / stacks - Math.PI / 2.0;
@@ -158,12 +173,6 @@ public final class ChargeOrbRenderer {
                 buf.vertex(mat, x01, (float) y0, z01).color(red, green, blue, alpha);
             }
         }
-
-        BufferRenderer.drawWithGlobalProgram(buf.end());
-
-        RenderSystem.enableDepthTest();
-        RenderSystem.enableCull();
-        RenderSystem.disableBlend();
     }
 
     private ChargeOrbRenderer() {}

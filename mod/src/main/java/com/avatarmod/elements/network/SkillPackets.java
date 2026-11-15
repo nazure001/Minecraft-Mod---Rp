@@ -82,6 +82,19 @@ public final class SkillPackets {
         public CustomPayload.Id<S2CHudUpdate> getId() { return ID; }
     }
 
+    // Server → Client: active element synchronization (server-authoritative)
+    public record S2CSyncElement(String element) implements CustomPayload {
+        public static final CustomPayload.Id<S2CSyncElement> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "s2c_sync_element"));
+        public static final PacketCodec<PacketByteBuf, S2CSyncElement> CODEC = PacketCodec.of(
+                (value, buf) -> buf.writeString(value.element()),
+                buf -> new S2CSyncElement(buf.readString(16))
+        );
+
+        @Override
+        public CustomPayload.Id<S2CSyncElement> getId() { return ID; }
+    }
+
     // Client → Server: cast skill in slot N of active element
     public record C2SSlotCast(int slotIndex) implements CustomPayload {
         public static final CustomPayload.Id<C2SSlotCast> ID =
@@ -93,15 +106,47 @@ public final class SkillPackets {
         @Override public CustomPayload.Id<C2SSlotCast> getId() { return ID; }
     }
 
-    // Client → Server: player selected a new active element
-    public record C2SSetElement(String element) implements CustomPayload {
-        public static final CustomPayload.Id<C2SSetElement> ID =
-                new CustomPayload.Id<>(Identifier.of("avatar_elements", "c2s_set_element"));
-        public static final PacketCodec<PacketByteBuf, C2SSetElement> CODEC = PacketCodec.of(
-                (value, buf) -> buf.writeString(value.element()),
-                buf -> new C2SSetElement(buf.readString(16))
+    // Client → Server: player starts holding a hold-release skill
+    public record C2SHoldStart(int slotIndex) implements CustomPayload {
+        public static final CustomPayload.Id<C2SHoldStart> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "c2s_hold_start"));
+        public static final PacketCodec<PacketByteBuf, C2SHoldStart> CODEC = PacketCodec.of(
+                (value, buf) -> buf.writeByte(value.slotIndex()),
+                buf -> new C2SHoldStart(buf.readByte())
         );
-        @Override public CustomPayload.Id<C2SSetElement> getId() { return ID; }
+        public C2SHoldStart(int slotIndex, String skillId) {
+            this(slotIndex);
+        }
+        public String skillId() { return ""; }
+        @Override public CustomPayload.Id<C2SHoldStart> getId() { return ID; }
+    }
+
+    // Client → Server: player releases a hold-release skill
+    public record C2SHoldRelease(int slotIndex, int heldTicks) implements CustomPayload {
+        public static final CustomPayload.Id<C2SHoldRelease> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "c2s_hold_release"));
+        public static final PacketCodec<PacketByteBuf, C2SHoldRelease> CODEC = PacketCodec.of(
+                (value, buf) -> {
+                    buf.writeByte(value.slotIndex());
+                    buf.writeVarInt(value.heldTicks());
+                },
+                buf -> new C2SHoldRelease(buf.readByte(), buf.readVarInt())
+        );
+        public C2SHoldRelease(int slotIndex, String skillId) {
+            this(slotIndex, 0);
+        }
+        public String skillId() { return ""; }
+        @Override public CustomPayload.Id<C2SHoldRelease> getId() { return ID; }
+    }
+
+    // Client → Server: request advancing to the next active element
+    public record C2SCycleElement() implements CustomPayload {
+        public static final CustomPayload.Id<C2SCycleElement> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "c2s_cycle_element"));
+        public static final PacketCodec<PacketByteBuf, C2SCycleElement> CODEC =
+                PacketCodec.unit(new C2SCycleElement());
+
+        @Override public CustomPayload.Id<C2SCycleElement> getId() { return ID; }
     }
 
     // Server → Client (broadcast): phase transition for any caster, so nearby players

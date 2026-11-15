@@ -24,6 +24,10 @@ public final class AvatarKeyBindings {
             "key.avatar_elements.slot_4", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V,
             "category.avatar_elements.general"));
 
+    public static final KeyBinding SLOT_5 = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.avatar_elements.slot_5", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B,
+            "category.avatar_elements.general"));
+
     // --- Element wheel (hold R) ---
     public static final KeyBinding ELEMENT_WHEEL = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.avatar_elements.element_wheel", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R,

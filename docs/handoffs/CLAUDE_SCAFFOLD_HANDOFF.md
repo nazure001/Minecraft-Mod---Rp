@@ -153,7 +153,7 @@ Hasil in-game (screenshot 2026-11-07):
 ## 6. File Berubah yang Belum Di-commit (milik agent lain)
 
 **Milik Antigravity IDE — jangan di-stage oleh Claude:**
-- `art-source/air_staff/v0.2/` — model dan aset air staff v0.2
+- `art-source/models/air_staff/v0.2/` — model dan aset air staff v0.2
 - `art-source/audio/prototype/v0.2/` — file audio SFX prototype dan WAV
 - `docs/handoffs/ANTIGRAVITY_ASSET_REVISED_REPORT.md`
 - File baru: `art-source/audio/prototype/v0.2/*.wav`, `verify_assets.py`, dll.

@@ -17,12 +17,12 @@ public final class PlayerBendingData {
 
     public static final int MAX_CHI_DEFAULT = ChiManager.BASE_MAX_CHI;
 
-    // Fabric attachment type — registered once at mod init
+    // Fabric attachment type — registered once at mod init, copied across player death/respawn
     public static final AttachmentType<PlayerBendingData> ATTACHMENT =
-            AttachmentRegistry.createDefaulted(
-                    AvatarElementsMod.id("bending_data"),
-                    PlayerBendingData::new
-            );
+            AttachmentRegistry.<PlayerBendingData>builder()
+                    .initializer(PlayerBendingData::new)
+                    .copyOnDeath()
+                    .buildAndRegister(AvatarElementsMod.id("bending_data"));
 
     private int chi;
     private final int maxChi;
@@ -32,8 +32,10 @@ public final class PlayerBendingData {
     private final ChiManager chiManager;
 
     // T2-5 fire combo chain tracking
+    private boolean activeCastCombo = false;
     private String lastComboSkillId = null;
     private long lastComboSkillTick = -9999L;
+    private long comboExpiryTick = -9999L;
 
     // T2-6 air staff 3-hit combo
     private int airStaffComboStep = 0;
@@ -94,7 +96,12 @@ public final class PlayerBendingData {
 
     /** Start a new timeline; cancels any current one. */
     public void startTimeline(String skillId, int windup, int active, int recovery) {
-        activeTimeline = new SkillTimeline(skillId, windup, active, recovery);
+        startTimeline(skillId, windup, active, recovery, false, 0);
+    }
+
+    /** Start a new timeline with hold-release capability; cancels any current one. */
+    public void startTimeline(String skillId, int windup, int active, int recovery, boolean isHoldSkill, int maxHoldTicks) {
+        activeTimeline = new SkillTimeline(skillId, windup, active, recovery, isHoldSkill, maxHoldTicks);
         activeTimeline.start();
     }
 
@@ -126,12 +133,23 @@ public final class PlayerBendingData {
 
     // --- fire combo chain (T2-5) ---
 
+    public boolean isActiveCastCombo() { return activeCastCombo; }
+    public void setActiveCastCombo(boolean activeCastCombo) { this.activeCastCombo = activeCastCombo; }
+
     public void recordComboSkill(String skillId, long tick) {
         lastComboSkillId = skillId;
         lastComboSkillTick = tick;
     }
+
+    public void recordComboCast(String skillId, long currentTick, int totalDurationTicks, int comboWindowTicks) {
+        this.lastComboSkillId = skillId;
+        this.lastComboSkillTick = currentTick;
+        this.comboExpiryTick = currentTick + totalDurationTicks + comboWindowTicks;
+    }
+
     public String getLastComboSkillId() { return lastComboSkillId; }
     public long getLastComboSkillTick() { return lastComboSkillTick; }
+    public long getComboExpiryTick() { return comboExpiryTick; }
 
     // --- air staff combo step (T2-6) ---
 

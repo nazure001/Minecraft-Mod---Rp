@@ -1,6 +1,5 @@
 package com.avatarmod.elements.client.network;
 
-import com.avatarmod.elements.client.anim.AvatarAnimations;
 import com.avatarmod.elements.client.hud.HudState;
 import com.avatarmod.elements.network.SkillPackets;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -17,10 +16,6 @@ public final class SkillClientHandler {
                     client.execute(() -> {
                         if (client.player == null) return;
                         if (payload.allowed()) {
-                            if ("avatar:fire_jab".equals(payload.skillId())
-                                    && client.player instanceof net.minecraft.client.network.AbstractClientPlayerEntity acp) {
-                                AvatarAnimations.triggerFireJab(acp);
-                            }
                             client.player.sendMessage(
                                     Text.literal("§a[Avatar] " + payload.skillId() + " — OK"), true);
                         } else {
@@ -49,6 +44,15 @@ public final class SkillClientHandler {
                                 payload.cooldownTicksRemaining());
                     });
                 });
+
+        ClientPlayNetworking.registerGlobalReceiver(
+                SkillPackets.S2CSyncElement.ID,
+                (payload, context) -> {
+                    MinecraftClient client = context.client();
+                    client.execute(() -> {
+                        com.avatarmod.elements.client.hud.ElementWheelRenderer.setElement(payload.element());
+                    });
+                });
     }
 
     public static void sendSkillInput(String skillId) {
@@ -57,6 +61,14 @@ public final class SkillClientHandler {
 
     public static void sendSlotCast(int slotIndex) {
         ClientPlayNetworking.send(new SkillPackets.C2SSlotCast(slotIndex));
+    }
+
+    public static void sendHoldStart(int slotIndex, String skillId) {
+        ClientPlayNetworking.send(new SkillPackets.C2SHoldStart(slotIndex, skillId));
+    }
+
+    public static void sendHoldRelease(int slotIndex, String skillId) {
+        ClientPlayNetworking.send(new SkillPackets.C2SHoldRelease(slotIndex, skillId));
     }
 
     private SkillClientHandler() {}

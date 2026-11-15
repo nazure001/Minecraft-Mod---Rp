@@ -70,8 +70,13 @@ public final class FirstPersonOrbRenderer {
         BufferBuilder buf = Tessellator.getInstance().begin(
                 VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 
+        // 1. Inner core: bright hot center
         renderSphere(buf, matrices.peek().getPositionMatrix(),
-                radius, color[0], color[1], color[2], color[3]);
+                radius * 0.55f, 1.0f, 0.95f, 0.85f, Math.min(1.0f, color[3] * 1.6f));
+
+        // 2. Outer shell: element-tinted soft halo
+        renderSphere(buf, matrices.peek().getPositionMatrix(),
+                radius, color[0], color[1], color[2], color[3] * 0.75f);
 
         BufferRenderer.drawWithGlobalProgram(buf.end());
 

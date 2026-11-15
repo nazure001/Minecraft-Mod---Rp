@@ -1,0 +1,209 @@
+{
+  "fire.release": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.fire.release",
+    "sounds": [
+      {
+        "name": "avatar_elements:fire_release_1",
+        "stream": false
+      }
+    ]
+  },
+  "skill.fire.fire_jab.strike": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.fire.release",
+    "sounds": [
+      {
+        "name": "avatar_elements:fire_release_1",
+        "stream": false
+      }
+    ]
+  },
+  "fire.fire_jab_cast": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.fire_jab_cast",
+    "sounds": [
+      {
+        "name": "avatar_elements:fire/fire_jab_cast",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "fire.flame_sweep_slash": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.flame_sweep_slash",
+    "sounds": [
+      {
+        "name": "avatar_elements:fire/flame_sweep_slash",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "fire.fire_jet_dash": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.fire_jet_dash",
+    "sounds": [
+      {
+        "name": "avatar_elements:fire/fire_jet_dash",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "fire.fire_blast_charge_start": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.fire_blast_charge_start",
+    "sounds": [
+      {
+        "name": "avatar_elements:fire/fire_blast_charge_start",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "fire.fire_blast_charge_loop": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.fire_blast_charge_loop",
+    "sounds": [
+      {
+        "name": "avatar_elements:fire/fire_blast_charge_loop",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "fire.fire_blast_release": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.fire_blast_release",
+    "sounds": [
+      {
+        "name": "avatar_elements:fire/fire_blast_release",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "fire.fire_blast_impact": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.fire_blast_impact",
+    "sounds": [
+      {
+        "name": "avatar_elements:fire/fire_blast_impact",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "fire.fire_cancel_fizzle": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.fire_cancel_fizzle",
+    "sounds": [
+      {
+        "name": "avatar_elements:fire/fire_cancel_fizzle",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "lightning.lightning_crackle": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.lightning_crackle",
+    "sounds": [
+      {
+        "name": "avatar_elements:lightning/lightning_crackle",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "air.air_staff_swing": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.air_staff_swing",
+    "sounds": [
+      {
+        "name": "avatar_elements:air/air_staff_swing",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "air.air_vortex_loop": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.air_vortex_loop",
+    "sounds": [
+      {
+        "name": "avatar_elements:air/air_vortex_loop",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "water.water_whip_lash": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.water_whip_lash",
+    "sounds": [
+      {
+        "name": "avatar_elements:water/water_whip_lash",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "water.water_splash_impact": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.water_splash_impact",
+    "sounds": [
+      {
+        "name": "avatar_elements:water/water_splash_impact",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "earth.earth_boulder_launch": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.earth_boulder_launch",
+    "sounds": [
+      {
+        "name": "avatar_elements:earth/earth_boulder_launch",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "earth.earth_impact_heavy": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.earth_impact_heavy",
+    "sounds": [
+      {
+        "name": "avatar_elements:earth/earth_impact_heavy",
+        "stream": false,
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "ui.ui_scroll_open": {
+    "category": "master",
+    "subtitle": "subtitles.avatar_elements.ui_scroll_open",
+    "sounds": [
+      {
+        "name": "avatar_elements:ui/ui_scroll_open",
+        "stream": false,
+        "attenuation_distance": 0
+      }
+    ]
+  },
+  "ui.ui_button_click": {
+    "category": "master",
+    "subtitle": "subtitles.avatar_elements.ui_button_click",
+    "sounds": [
+      {
+        "name": "avatar_elements:ui/ui_button_click",
+        "stream": false,
+        "attenuation_distance": 0
+      }
+    ]
+  }
+}

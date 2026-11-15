@@ -3,6 +3,7 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.skill.SkillDefinition;
+import com.avatarmod.elements.skill.SkillTargeting;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.particle.ParticleTypes;
@@ -25,23 +26,23 @@ public final class WaterWhipSkill {
     public static void tick(ServerPlayerEntity player, SkillDefinition def) {
         SkillTimeline timeline = PlayerBendingData.get(player).getTimeline();
         if (timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
-        // Fire on first ACTIVE tick (ticksInPhase == 0 at phase entry)
-        if (timeline.ticksInPhase() != 0) return;
+        // Fire on first active tick
+        if (timeline.ticksInPhase() > 1) return;
 
         ServerWorld world = player.getServerWorld();
         Vec3d origin = player.getPos().add(0, player.getStandingEyeHeight(), 0);
         Vec3d look = player.getRotationVec(1.0f);
         double range = def.range();
 
-        // LINE hitbox: thin box along look vector
-        Vec3d end = origin.add(look.multiply(range));
-        Vec3d mid = origin.add(look.multiply(range * 0.5));
-        double width = 0.6;
-        Box box = Box.of(mid, range + width, width * 2, range + width);
+        double padding = 1.4;
+        Vec3d end = origin.add(look.multiply(range + 0.5));
+        Box searchBounds = SkillTargeting.segmentBounds(origin, end, padding);
 
         List<LivingEntity> targets = world.getEntitiesByClass(
-                LivingEntity.class, box,
-                e -> e != player && e.isAlive() && isInLine(origin, look, e, range, width)
+                LivingEntity.class, searchBounds,
+                e -> e != player && e.isAlive()
+                        && SkillTargeting.intersectsSegment(origin, end, e.getBoundingBox(), padding)
+                        && SkillTargeting.hasLineOfSight(world, origin, e.getBoundingBox(), player)
         );
 
         DamageSource source = world.getDamageSources().playerAttack(player);
@@ -67,15 +68,6 @@ public final class WaterWhipSkill {
         world.playSound(null, player.getBlockPos(),
                 SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP,
                 SoundCategory.PLAYERS, 0.9f, 0.6f);
-    }
-
-    private static boolean isInLine(Vec3d origin, Vec3d look, LivingEntity e, double range, double width) {
-        Vec3d toEntity = e.getPos().add(0, e.getHeight() / 2.0, 0).subtract(origin);
-        double dot = toEntity.dotProduct(look);
-        if (dot < 0 || dot > range) return false;
-        Vec3d proj = look.multiply(dot);
-        double perpDist = toEntity.subtract(proj).length();
-        return perpDist <= width + 0.5;
     }
 
     private WaterWhipSkill() {}
