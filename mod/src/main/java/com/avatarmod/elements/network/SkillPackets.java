@@ -41,7 +41,7 @@ public final class SkillPackets {
                 new CustomPayload.Id<>(Identifier.of("avatar_elements", "s2c_skill_result"));
         public static final PacketCodec<PacketByteBuf, S2CSkillResult> CODEC = PacketCodec.of(
                 (value, buf) -> {
-                    buf.writeString(value.skillId());
+                    buf.writeString(value.skillId() != null ? value.skillId() : "");
                     buf.writeBoolean(value.allowed());
                     buf.writeByte(value.denyReason().ordinal());
                     buf.writeVarInt(value.cooldownTicks());
@@ -67,7 +67,7 @@ public final class SkillPackets {
                 (value, buf) -> {
                     buf.writeVarInt(value.currentChi());
                     buf.writeVarInt(value.maxChi());
-                    buf.writeString(value.activeCooldownSkillId());
+                    buf.writeString(value.activeCooldownSkillId() != null ? value.activeCooldownSkillId() : "");
                     buf.writeVarInt(value.cooldownTicksRemaining());
                 },
                 buf -> new S2CHudUpdate(
@@ -87,7 +87,7 @@ public final class SkillPackets {
         public static final CustomPayload.Id<S2CSyncElement> ID =
                 new CustomPayload.Id<>(Identifier.of("avatar_elements", "s2c_sync_element"));
         public static final PacketCodec<PacketByteBuf, S2CSyncElement> CODEC = PacketCodec.of(
-                (value, buf) -> buf.writeString(value.element()),
+                (value, buf) -> buf.writeString(value.element() != null ? value.element() : "FIRE"),
                 buf -> new S2CSyncElement(buf.readString(16))
         );
 
@@ -165,8 +165,8 @@ public final class SkillPackets {
         public static final PacketCodec<PacketByteBuf, S2CPhaseSync> CODEC = PacketCodec.of(
                 (value, buf) -> {
                     buf.writeUuid(value.casterUuid());
-                    buf.writeString(value.skillId());
-                    buf.writeString(value.phase());
+                    buf.writeString(value.skillId() != null ? value.skillId() : "");
+                    buf.writeString(value.phase() != null ? value.phase() : "IDLE");
                     buf.writeVarInt(value.ticksIn());
                     buf.writeVarInt(value.castSerial());
                 },

@@ -252,9 +252,12 @@ public final class SkillNetworking {
     }
 
     public static void sendHudUpdate(ServerPlayerEntity player, PlayerBendingData data, String skillId) {
+        String safeSkillId = skillId != null ? skillId : "";
+        int cd = !safeSkillId.isEmpty() ? data.getCooldown(safeSkillId) : 0;
+        String element = data.getActiveElement() != null ? data.getActiveElement() : "FIRE";
         ServerPlayNetworking.send(player, new SkillPackets.S2CHudUpdate(
-                data.getChi(), data.getMaxChi(), skillId, data.getCooldown(skillId)));
-        ServerPlayNetworking.send(player, new SkillPackets.S2CSyncElement(data.getActiveElement()));
+                data.getChi(), data.getMaxChi(), safeSkillId, cd));
+        ServerPlayNetworking.send(player, new SkillPackets.S2CSyncElement(element));
     }
 
     // C2SSlotCast: resolve skillId from server-side element, then run normal pipeline
