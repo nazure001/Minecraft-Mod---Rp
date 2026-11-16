@@ -30,7 +30,8 @@ public final class AirBlastSkill {
         Vec3d origin = player.getEyePos();
         Vec3d look = player.getRotationVec(1.0f);
         double range = def.range();
-        double padding = 0.9;
+        // Padding scales with range: 0.5 for melee, up to 1.2 for long-range
+        double padding = Math.min(1.2, 0.5 + range * 0.05);
         Vec3d end = origin.add(look.multiply(range));
 
         Box searchBounds = SkillTargeting.segmentBounds(origin, end, padding);

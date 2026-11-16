@@ -56,12 +56,14 @@ public final class AvatarAnimations {
             return null;
         }
         if (PlayerAnimResources.hasAnimation(animId)) {
+            System.out.println("[Avatar DEBUG] resolveAnimationId: exact match " + animId);
             return animId;
         }
 
         // Check canonical Bedrock full key: animation.avatar_elements.<path>
         Identifier fullId = Identifier.of(animId.getNamespace(), "animation." + animId.getNamespace() + "." + animId.getPath());
         if (PlayerAnimResources.hasAnimation(fullId)) {
+            System.out.println("[Avatar DEBUG] resolveAnimationId: full key match " + fullId);
             return fullId;
         }
 
@@ -72,20 +74,24 @@ public final class AvatarAnimations {
             String shortPath = path.substring(prefix.length());
             Identifier shortId = Identifier.of(animId.getNamespace(), shortPath);
             if (PlayerAnimResources.hasAnimation(shortId)) {
+                System.out.println("[Avatar DEBUG] resolveAnimationId: short path match " + shortId);
                 return shortId;
             }
         }
 
         // Dynamic match: scan loaded animations for path matching
+        System.out.println("[Avatar DEBUG] resolveAnimationId: scanning " + PlayerAnimResources.getAnimations().size() + " loaded animations for " + animId);
         for (Identifier id : PlayerAnimResources.getAnimations().keySet()) {
             if (id.getNamespace().equals(animId.getNamespace())) {
                 String p = id.getPath();
                 if (p.endsWith(animId.getPath()) || p.contains(animId.getPath())) {
+                    System.out.println("[Avatar DEBUG] resolveAnimationId: dynamic match " + id);
                     return id;
                 }
             }
         }
 
+        System.out.println("[Avatar DEBUG] resolveAnimationId: NO MATCH for " + animId);
         return null;
     }
 
@@ -106,6 +112,7 @@ public final class AvatarAnimations {
         Identifier resolved = resolveAnimationId(animId);
         if (resolved == null) {
             // Graceful fallback when asset is not loaded/found, preventing NPE
+            System.out.println("[Avatar DEBUG] Failed to resolve animation: " + animId);
             return false;
         }
 
@@ -113,12 +120,17 @@ public final class AvatarAnimations {
         if (layer instanceof PlayerAnimationController controller) {
             if (blendTicks > 0 && easing != null && controller.isPlayingTriggeredAnimation()) {
                 AbstractFadeModifier fadeModifier = AbstractFadeModifier.standardFadeIn(blendTicks, easing);
-                return controller.replaceAnimationWithFade(fadeModifier, resolved);
+                boolean result = controller.replaceAnimationWithFade(fadeModifier, resolved);
+                System.out.println("[Avatar DEBUG] replaceAnimationWithFade(" + resolved + ") = " + result);
+                return result;
             } else {
-                return controller.triggerAnimation(resolved);
+                boolean result = controller.triggerAnimation(resolved);
+                System.out.println("[Avatar DEBUG] triggerAnimation(" + resolved + ") = " + result);
+                return result;
             }
         }
 
+        System.out.println("[Avatar DEBUG] Layer not PlayerAnimationController: " + layer);
         return false;
     }
 
@@ -159,10 +171,13 @@ public final class AvatarAnimations {
 
         Identifier animId = getAnimationForSkill(skillId);
         if (animId == null) {
+            System.out.println("[Avatar DEBUG] Animation ID null for skill: " + skillId);
             return false;
         }
 
-        return triggerComboAnimation(player, animId, 3, EasingType.EASE_IN_OUT_CUBIC);
+        boolean result = triggerComboAnimation(player, animId, 3, EasingType.EASE_IN_OUT_CUBIC);
+        System.out.println("[Avatar DEBUG] triggerSkillAnimation(" + skillId + ", " + phase + ") -> " + animId + " = " + result);
+        return result;
     }
 
     /**
