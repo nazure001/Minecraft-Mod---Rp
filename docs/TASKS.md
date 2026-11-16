@@ -1,3 +1,7 @@
+> **STATUS 2026-11-16: Code-ready, Testing-Blocked**
+> Phase 0-2 complete [x]. Phase 3 implementation done [~] but blocked on in-game verification.
+> Blockers: Element bug retest required, Fire Jab animation not confirmed, Air Blast targeting not verified, T3-4 & T3-10 not started.
+> See: docs/BLOCKERS_2026-11-16.md for dependency chain and unblock procedures.
 > Revisi desain 2026-11-08: bagian tambahan di akhir dokumen menjadi acuan untuk perluasan W. Status historis tetap dipertahankan; tidak ada implementasi atau uji baru yang diklaim.
 
 # TASKS.md — Daftar Tugas Aktif
@@ -40,9 +44,10 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 - [x] **T2-6** Air Staff Attack: 3-hit kombo (H), CLOUD particles — TERVERIFIKASI in-game ✅
 - [x] **T2-7** Air Vortex: pull r6, 40 tik, spiral particles (V) — TERVERIFIKASI damage ✅ (pull VFX belum dikonfirmasi visual)
 - [~] **T2-8** Test sinkronisasi: dua pemain, dedicated server (chi/cooldown independen, kombo tidak tertukar) — User — 2026-11-12
-  - Test completed; **BLOCKED** by element switching bug (critical)
+  - Test completed; **BLOCKED** by element switching bug (critical) — RETEST REQUIRED after Fix #1
   - Chi/cooldown mechanics appear OK, multiplayer issues same as singleplayer
   - Retest after server-authoritative element-cycle change before treating multiplayer results as reliable
+  - **Status 2026-11-16:** Element debounce deployed, awaiting in-game verification before T2-8 retest
 
 ---
 
@@ -54,12 +59,14 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
   - 1st person: tangan/item tidak bergerak saat cast
   - 3rd person: player body visible tapi martial arts gerakan belum ada
   - 2026-11-13: Hilangkan pemicu animasi ganda dari hasil cast dan sinkronisasi fase; fase server kini menjadi satu-satunya jalur pemicu, dengan deduplikasi `castSerial`.
-  - Action: Uji in-game tampak orang pertama/ketiga dan observer; pastikan impact dan recovery terbaca sebelum mengubah choreography lebih lanjut.
+  - **Status 2026-11-16:** Animation JSON ready + PAL framework ready + debug logging added. **AWAITING IN-GAME TEST**.
+  - Action: Uji in-game tampak orang pertama/ketiga dan observer; pastikan impact dan recovery terbaca sebelum mengubah choreography lebih lanjut. See docs/BLOCKERS_2026-11-16.md for test procedure.
 
 - [~] **T3-3** Verifikasi Air Blast: JSON/handler dan hitbox garis pandang terarah ada; verifikasi in-game masih pending — User — 2026-11-12
   - ✅ **PASS mechanics**: chi 12 cost, cooldown 10, damage 3.0, knockback 2.5 working
   - ⚠️ **Targeting issue**: Z-skill (Air Blast) sering miss meskipun target ada
-  - Action: Review hitbox logic di AirBlastSkill.tick() + raycast distance check
+  - **Status 2026-11-16:** Hitbox logic reviewed, padding calculation improved. Build successful. **AWAITING IN-GAME TEST**.
+  - Action: Uji in-game dengan 5 mobs di distance 2/4/6/8/12 blocks. See docs/BLOCKERS_2026-11-16.md for test procedure.
 
 ## Tahap 3 — Critical Issues Found (2026-11-12)
 
@@ -68,7 +75,8 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
   - Skill yang di-cast jadi elemen lain
   - 2026-11-13: element cycle request kini hanya mengirim intent; server memajukan state per pemain dan mengirim hasilnya kembali. Automated cycle tests (2), seluruh Gradle tests (17), `test build`, dan adversarial network suite (32) lulus; belum membuktikan laporan gameplay teratasi.
   - 2026-11-14 FIX #1: Server-side debounce di SkillNetworking (elementCycleCooldown map, 6-tick throttle sama seperti client). Build ✅. Root cause analysis di DEBUG_ELEMENT_BUG_2026-11-14.md (3 suspect causes tersisa: concurrent PlayerBendingData creation, client/server sync desync).
-  - Action: Uji in-game dengan cast Fire Jab 5+ kali, confirm elemen tetap FIRE. Jika bug masih ada, debug dengan logging untuk identify Cause 2 atau 3.
+  - **Status 2026-11-16:** Fix #1 deployed, debug logging added (AvatarAnimations.java). Build successful. **AWAITING IN-GAME TEST**.
+  - Action: Uji in-game dengan cast Fire Jab 5+ kali, confirm elemen tetap FIRE. Jika bug masih ada, debug dengan logging untuk identify Cause 2 atau 3. See docs/BLOCKERS_2026-11-16.md for unblock procedure.
 
 - [🟠] **HIGH** Z-Skill Targeting Accuracy: Fire Jab, Water Whip sering miss
   - Hit rate lebih rendah dari expected
