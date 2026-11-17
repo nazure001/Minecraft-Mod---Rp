@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "avatar_skills:item/avatar_relic"
-  }
+  "parent": "avatar_skills:item/avatar_relic_3d"
 }

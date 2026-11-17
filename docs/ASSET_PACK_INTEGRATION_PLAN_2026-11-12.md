@@ -1,6 +1,6 @@
 # Avatar Elements Asset Pack — Integration Plan 2026-11-12
 
-**Asset pack location:** `reference/avatar_elements_asset_pack/`  
+**Asset pack location:** `art-source/asset_pack/` (dipindahkan dari `reference/` agar terlacak Git)  
 **Status:** Production-ready, but needs runtime integration + verification  
 **Target:** Minecraft Java 1.21.1 Fabric  
 

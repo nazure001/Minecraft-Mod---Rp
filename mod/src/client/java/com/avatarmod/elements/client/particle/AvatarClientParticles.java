@@ -14,7 +14,7 @@ public final class AvatarClientParticles {
 
         // --- Animated Flipbook Sequences ---
         reg.register(AvatarParticles.FLAME_BURST, AvatarAnimatedParticle.createFactory(12, 0.65f, true));
-        reg.register(AvatarParticles.IMPACT_FLASH, AvatarAnimatedParticle.createFactory(8, 0.80f, true));
+        reg.register(AvatarParticles.IMPACT_FLASH, AvatarAnimatedParticle.createFactory(8, 0.40f, true));
         reg.register(AvatarParticles.SMOKE_EXPANSION, AvatarAnimatedParticle.createFactory(16, 0.70f, false));
         reg.register(AvatarParticles.SMALL_SPLASH, AvatarAnimatedParticle.createFactory(10, 0.45f, false));
         reg.register(AvatarParticles.CRACKLE, AvatarAnimatedParticle.createFactory(8, 0.50f, true));

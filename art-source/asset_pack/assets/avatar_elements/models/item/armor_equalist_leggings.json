@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "avatar_elements:item/armor_equalist_leggings"
+  }
+}

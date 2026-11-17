@@ -1,0 +1,463 @@
+{
+  "credit": "Avatar Elemental Skills - Earth Boulder (Minecraft 1.21.1)",
+  "texture_size": [
+    32,
+    32
+  ],
+  "textures": {
+    "0": "avatar_skills:item/earth_boulder",
+    "particle": "avatar_skills:item/earth_boulder"
+  },
+  "elements": [
+    {
+      "name": "core_boulder",
+      "from": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "to": [
+        13.0,
+        13.0,
+        13.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            10,
+            10
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            10,
+            10
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            10,
+            10
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            10,
+            10
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            10,
+            10
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            10,
+            10
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "top_crag",
+      "from": [
+        5.0,
+        13.0,
+        4.0
+      ],
+      "to": [
+        11.0,
+        16.0,
+        12.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            0,
+            22,
+            3
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            16,
+            0,
+            24,
+            3
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            16,
+            0,
+            22,
+            3
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            16,
+            0,
+            24,
+            3
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            16,
+            0,
+            22,
+            8
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            16,
+            0,
+            22,
+            8
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "bottom_wedge",
+      "from": [
+        4.0,
+        0.0,
+        5.0
+      ],
+      "to": [
+        12.0,
+        3.0,
+        11.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            16,
+            8,
+            19
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            0,
+            16,
+            6,
+            19
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0,
+            16,
+            8,
+            19
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            0,
+            16,
+            6,
+            19
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            16,
+            8,
+            22
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            0,
+            16,
+            8,
+            22
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "right_shear",
+      "from": [
+        13.0,
+        5.0,
+        4.0
+      ],
+      "to": [
+        15.5,
+        11.0,
+        12.0
+      ],
+      "rotation": {
+        "origin": [
+          13.0,
+          8.0,
+          8.0
+        ],
+        "axis": "z",
+        "angle": -22.5
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            0,
+            19,
+            6
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            16,
+            0,
+            24,
+            6
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            16,
+            0,
+            19,
+            6
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            16,
+            0,
+            24,
+            6
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            16,
+            0,
+            19,
+            8
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            16,
+            0,
+            19,
+            8
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "jade_vein",
+      "from": [
+        1.0,
+        4.0,
+        5.0
+      ],
+      "to": [
+        3.0,
+        12.0,
+        11.0
+      ],
+      "rotation": {
+        "origin": [
+          3.0,
+          8.0,
+          8.0
+        ],
+        "axis": "y",
+        "angle": 22.5
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            16,
+            18,
+            24
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            16,
+            16,
+            22,
+            24
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            16,
+            16,
+            18,
+            24
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            16,
+            16,
+            22,
+            24
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            16,
+            16,
+            18,
+            22
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            16,
+            16,
+            18,
+            22
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        45,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        3,
+        -1
+      ],
+      "scale": [
+        0.65,
+        0.65,
+        0.65
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        15,
+        30,
+        -5
+      ],
+      "translation": [
+        2.5,
+        4.0,
+        1.0
+      ],
+      "scale": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    },
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.6,
+        0.6,
+        0.6
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    }
+  }
+}

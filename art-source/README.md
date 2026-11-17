@@ -8,13 +8,15 @@ format, lisensi/provenance, dan referensi pemakaiannya diperiksa.
 
 | Folder/file | Isi |
 |---|---|
+| `asset_pack/` | Aset master proyek Avatar Elements (animasi PAL, tekstur, sounds, models) |
+| `asset_pack_t2_vfx/` | Aset master T2 volumetric VFX |
 | `models/air_staff/` | Sumber Blockbench, ekspor model, tekstur, preview, dan handoff Air Staff |
 | `animation_studies/` | Studi rig dan gerak Fire Jab serta staff thrust |
 | `audio/` | Kandidat dan prototype SFX beserta manifest |
-| `vfx/` | Prototype tekstur dan spesifikasi VFX |
+| `vfx/` | Prototype tekstur, model 3D, dan spesifikasi VFX |
 | `ui/concepts/` | Mockup dan konsep antarmuka |
 | `tools/` | Generator, verifikasi, dan pengujian editor/aset |
-| `archive/` | Arsip review; jangan ekstrak atau gabungkan otomatis ke runtime |
+| `archive/` | Arsip review & paket ZIP sumber aset master |
 
 ## Aturan integrasi
 

@@ -1,0 +1,438 @@
+{
+  "credit": "Avatar Elemental Skills - Water Whip Tendril (Minecraft 1.21.1)",
+  "texture_size": [
+    32,
+    32
+  ],
+  "textures": {
+    "0": "avatar_skills:item/water_whip",
+    "particle": "avatar_skills:item/water_whip"
+  },
+  "elements": [
+    {
+      "name": "water_grip",
+      "from": [
+        7.0,
+        0.0,
+        7.0
+      ],
+      "to": [
+        9.0,
+        5.0,
+        9.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            2,
+            5
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            2,
+            5
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2,
+            5
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2,
+            5
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "water_arc_1",
+      "from": [
+        6.5,
+        4.5,
+        6.0
+      ],
+      "to": [
+        9.5,
+        10.5,
+        9.0
+      ],
+      "rotation": {
+        "origin": [
+          8.0,
+          5.0,
+          8.0
+        ],
+        "axis": "x",
+        "angle": -22.5
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            0,
+            5,
+            6
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            2,
+            0,
+            5,
+            6
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            2,
+            0,
+            5,
+            6
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            2,
+            0,
+            5,
+            6
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            2,
+            0,
+            5,
+            3
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            2,
+            0,
+            5,
+            3
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "water_crest",
+      "from": [
+        6.0,
+        9.0,
+        3.0
+      ],
+      "to": [
+        10.0,
+        14.0,
+        7.0
+      ],
+      "rotation": {
+        "origin": [
+          8.0,
+          10.0,
+          5.0
+        ],
+        "axis": "x",
+        "angle": -45.0
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            6,
+            0,
+            10,
+            5
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            6,
+            0,
+            10,
+            5
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            6,
+            0,
+            10,
+            5
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            6,
+            0,
+            10,
+            5
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            6,
+            0,
+            10,
+            4
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            6,
+            0,
+            10,
+            4
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "water_tip",
+      "from": [
+        7.0,
+        11.0,
+        -3.0
+      ],
+      "to": [
+        9.0,
+        13.0,
+        4.0
+      ],
+      "rotation": {
+        "origin": [
+          8.0,
+          12.0,
+          1.0
+        ],
+        "axis": "y",
+        "angle": 22.5
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            0,
+            12,
+            2
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            10,
+            0,
+            17,
+            2
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            10,
+            0,
+            12,
+            2
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            10,
+            0,
+            17,
+            2
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            10,
+            0,
+            12,
+            7
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            10,
+            0,
+            12,
+            7
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "splash_droplet",
+      "from": [
+        4.0,
+        8.0,
+        6.0
+      ],
+      "to": [
+        6.0,
+        10.0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            8,
+            2,
+            10
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            0,
+            8,
+            2,
+            10
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0,
+            8,
+            2,
+            10
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            0,
+            8,
+            2,
+            10
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            8,
+            2,
+            10
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            0,
+            8,
+            2,
+            10
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        60,
+        -45,
+        0
+      ],
+      "translation": [
+        0,
+        4,
+        3
+      ],
+      "scale": [
+        0.85,
+        0.85,
+        0.85
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        10,
+        -20,
+        10
+      ],
+      "translation": [
+        1.5,
+        3.5,
+        -2.0
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ]
+    },
+    "gui": {
+      "rotation": [
+        25,
+        135,
+        0
+      ],
+      "translation": [
+        0,
+        1,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    }
+  }
+}

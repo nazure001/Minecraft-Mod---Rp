@@ -1,0 +1,159 @@
+{
+  "meta": {
+    "format_version": "4.10",
+    "model_format": "java_block",
+    "box_uv": false
+  },
+  "name": "lava_crucible_container",
+  "resolution": {
+    "width": 128,
+    "height": 128
+  },
+  "elements": [
+    {
+      "name": "vessel_body",
+      "from": [
+        4,
+        2,
+        4
+      ],
+      "to": [
+        12,
+        13,
+        12
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            16,
+            112,
+            112
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            16,
+            16,
+            112,
+            112
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            16,
+            16,
+            112,
+            112
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            16,
+            16,
+            112,
+            112
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            16,
+            16,
+            112,
+            112
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            16,
+            16,
+            112,
+            112
+          ],
+          "texture": 0
+        }
+      }
+    },
+    {
+      "name": "vessel_neck",
+      "from": [
+        6,
+        13,
+        6
+      ],
+      "to": [
+        10,
+        15,
+        10
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            8,
+            96,
+            24
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            8,
+            96,
+            24
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            8,
+            96,
+            24
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            8,
+            96,
+            24
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            8,
+            96,
+            24
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            8,
+            96,
+            24
+          ],
+          "texture": 0
+        }
+      }
+    }
+  ],
+  "locators": {
+    "fluid_nozzle": [
+      8.0,
+      15.0,
+      8.0
+    ]
+  }
+}

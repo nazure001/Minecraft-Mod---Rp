@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "format_version": "4.10",
+    "model_format": "java_block",
+    "box_uv": false
+  },
+  "name": "weapon_water_jaw_blade",
+  "resolution": {
+    "width": 128,
+    "height": 128
+  },
+  "elements": [
+    {
+      "name": "weapon_core",
+      "from": [
+        7.2,
+        0.0,
+        7.2
+      ],
+      "to": [
+        8.8,
+        22.0,
+        8.8
+      ]
+    }
+  ],
+  "locators": {
+    "trail_begin": [
+      0.0,
+      0.0,
+      -0.8
+    ],
+    "trail_end": [
+      0.0,
+      0.0,
+      -12.0
+    ],
+    "imbue_emitter": [
+      8.0,
+      14.0,
+      8.0
+    ]
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "schema_version": "1.0.0",
+  "target": "Minecraft Java 1.21.1 Fabric",
+  "design_contract": "Declarative Weapon + Full-Set Armor + Element Bender Synergy Matrix. Server validates equipped weapon, full armor set (or alternate bender unlock), chi cost, and cooldown before activating combo.",
+  "armor_sets": {
+    "fire_nation": {
+      "display_name": "Fire Nation Imperial",
+      "element_affinity": "fire",
+      "full_set_bonus": "+10% Fire Chi Efficiency & Heat Resistance",
+      "pieces": [
+        "avatar_elements:armor_fire_nation_helmet",
+        "avatar_elements:armor_fire_nation_chestplate",
+        "avatar_elements:armor_fire_nation_leggings",
+        "avatar_elements:armor_fire_nation_boots"
+      ]
+    },
+    "water_wolf": {
+      "display_name": "Water Tribe Wolf",
+      "element_affinity": "water",
+      "full_set_bonus": "+10% Water Defense & Rain/Water Chi Regen",
+      "pieces": [
+        "avatar_elements:armor_water_wolf_helmet",
+        "avatar_elements:armor_water_wolf_chestplate",
+        "avatar_elements:armor_water_wolf_leggings",
+        "avatar_elements:armor_water_wolf_boots"
+      ]
+    },
+    "earth_kingdom": {
+      "display_name": "Earth Kingdom Military",
+      "element_affinity": "earth",
+      "full_set_bonus": "+20% Knockback Resistance, Guard Bonus & Barefoot Seismic Sense",
+      "pieces": [
+        "avatar_elements:armor_earth_kingdom_helmet",
+        "avatar_elements:armor_earth_kingdom_chestplate",
+        "avatar_elements:armor_earth_kingdom_leggings",
+        "avatar_elements:armor_earth_kingdom_boots"
+      ]
+    },
+    "air_wingsuit": {
+      "display_name": "Air Nomad Wingsuit",
+      "element_affinity": "air",
+      "full_set_bonus": "-15% Mobility Chi Cost, Fall Protection & Hands-Free Gliding",
+      "pieces": [
+        "avatar_elements:armor_air_wingsuit_helmet",
+        "avatar_elements:armor_air_wingsuit_chestplate",
+        "avatar_elements:armor_air_wingsuit_leggings",
+        "avatar_elements:armor_air_wingsuit_boots"
+      ]
+    },
+    "equalist": {
+      "display_name": "Equalist Chi-Blocker",
+      "element_affinity": "nonbender",
+      "full_set_bonus": "+10% Stamina, Sprint Agility & Chi-Block Duration Bonus",
+      "pieces": [
+        "avatar_elements:armor_equalist_helmet",
+        "avatar_elements:armor_equalist_chestplate",
+        "avatar_elements:armor_equalist_leggings",
+        "avatar_elements:armor_equalist_boots"
+      ]
+    },
+    "metal_police": {
+      "display_name": "Republic City Police",
+      "element_affinity": "metal",
+      "full_set_bonus": "Unlocks Dual Back-Spool Metal Cables & Retractable Wrist Blades",
+      "pieces": [
+        "avatar_elements:armor_metal_police_helmet",
+        "avatar_elements:armor_metal_police_chestplate",
+        "avatar_elements:armor_metal_police_leggings",
+        "avatar_elements:armor_metal_police_boots"
+      ]
+    },
+    "zaofu_clan": {
+      "display_name": "Zaofu Metal Clan",
+      "element_affinity": "metal",
+      "full_set_bonus": "Stores 12 Deployable Metal Strips & Beifong Anti-Chi-Block Chainmail",
+      "pieces": [
+        "avatar_elements:armor_zaofu_clan_helmet",
+        "avatar_elements:armor_zaofu_clan_chestplate",
+        "avatar_elements:armor_zaofu_clan_leggings",
+        "avatar_elements:armor_zaofu_clan_boots"
+      ]
+    }
+  },
+  "active_combos": [
+    {
+      "combo_id": "avatar:combo_twin_dragon_fire_vortex",
+      "display_name": "Twin Dragon Fire Vortex",
+      "icon": "avatar_elements:individual/combo_twin_dragon_fire_vortex.png",
+      "required_weapon": "weapon_zuko_dual_dao",
+      "required_armor_set": "fire_nation",
+      "required_bender_element": "FIRE",
+      "animation": "animations/pal/combos/combo_twin_dragon_fire_vortex.animation.json",
+      "trail_override": "trail_fire_imbue",
+      "description": "Spinning dual-dao cyclone imbuing slashes with roaring fire arcs (or Blue Fire if unlocked) + 360-degree Fire Ring finisher.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    },
+    {
+      "combo_id": "avatar:combo_meteor_lotus_sever",
+      "display_name": "White Lotus Meteor Sever",
+      "icon": "avatar_elements:individual/combo_meteor_lotus_sever.png",
+      "required_weapon": "weapon_meteorite_space_sword",
+      "required_armor_set": "ANY_FULL_SET",
+      "required_bender_element": "ANY_OR_SWORDSMAN",
+      "animation": "animations/pal/combos/combo_meteor_lotus_sever.animation.json",
+      "trail_override": "trail_wind_fan",
+      "description": "High-velocity Piandao draw-cut ignoring 50% armor, slicing incoming projectiles, and inflicting White Lotus stagger.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    },
+    {
+      "combo_id": "avatar:combo_kyoshi_tempest_fan_dance",
+      "display_name": "Kyoshi Tempest Fan Dance",
+      "icon": "avatar_elements:individual/combo_kyoshi_tempest_fan_dance.png",
+      "required_weapon": "weapon_kyoshi_war_fans",
+      "required_armor_set": "earth_kingdom",
+      "required_bender_element": "AIR_OR_EARTH",
+      "animation": "animations/pal/combos/combo_kyoshi_tempest_fan_dance.animation.json",
+      "trail_override": "trail_wind_fan",
+      "description": "360-degree Dance of Fans amplifying Air/Earth waves and launching twin returning fan projectiles on release.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    },
+    {
+      "combo_id": "avatar:combo_glider_gale_vault",
+      "display_name": "Nomad Gale Staff Vault",
+      "icon": "avatar_elements:individual/combo_glider_gale_vault.png",
+      "required_weapon": "weapon_glider_staff_closed",
+      "required_armor_set": "air_wingsuit",
+      "required_bender_element": "AIR",
+      "animation": "animations/pal/combos/combo_glider_gale_vault.animation.json",
+      "trail_override": "trail_wind_fan",
+      "description": "Pole-vault crescent wind sweep that launches the caster airborne and opens Glider/Wingsuit flight seamlessly.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    },
+    {
+      "combo_id": "avatar:combo_wolf_pack_ricochet_ambush",
+      "display_name": "Wolf Pack Ricochet Ambush",
+      "icon": "avatar_elements:individual/combo_wolf_pack_ricochet_ambush.png",
+      "required_weapon": "weapon_sokka_boomerang",
+      "required_armor_set": "water_wolf",
+      "required_bender_element": "WATER_OR_NONBENDER",
+      "animation": "animations/pal/combos/combo_wolf_pack_ricochet_ambush.animation.json",
+      "trail_override": "trail_wind_fan",
+      "description": "Jaw Blade seismic pulse reveals nearby enemies, followed by a 3-target ricochet Boomerang throw that interrupts charge casts.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    },
+    {
+      "combo_id": "avatar:combo_tectonic_hammer_shatter",
+      "display_name": "Tectonic Hammer Shatter",
+      "icon": "avatar_elements:individual/combo_tectonic_hammer_shatter.png",
+      "required_weapon": "weapon_earth_war_hammer",
+      "required_armor_set": "earth_kingdom",
+      "required_bender_element": "EARTH",
+      "animation": "animations/pal/combos/combo_tectonic_hammer_shatter.animation.json",
+      "trail_override": "trail_wind_fan",
+      "description": "Dual war-hammer ground slam triggering an amplified Ground Stomp fissure and launching 3 high-velocity Earth Bullets.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    },
+    {
+      "combo_id": "avatar:combo_beifong_cable_grapple_slash",
+      "display_name": "Beifong Cable Grapple & Blade Slash",
+      "icon": "avatar_elements:individual/combo_beifong_cable_grapple_slash.png",
+      "required_weapon": "weapon_piandao_steel_jian",
+      "required_armor_set": "metal_police",
+      "required_bender_element": "METAL",
+      "animation": "animations/pal/combos/combo_beifong_cable_grapple_slash.animation.json",
+      "trail_override": "trail_wind_fan",
+      "description": "Fires dual back-spool Metal Cables to reel in or orbit the target, finishing with Lin's retractable gauntlet blades.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    },
+    {
+      "combo_id": "avatar:combo_daili_stone_shackle_snatch",
+      "display_name": "Dai Li Stone Shackle Snatch",
+      "icon": "avatar_elements:individual/combo_daili_stone_shackle_snatch.png",
+      "required_weapon": "weapon_daili_rock_glove",
+      "required_armor_set": "earth_kingdom",
+      "required_bender_element": "EARTH",
+      "animation": "animations/pal/combos/combo_daili_stone_shackle_snatch.animation.json",
+      "trail_override": "trail_wind_fan",
+      "description": "Launches articulated rock-tile hands that clamp and root the target or pull the caster to walls/ceilings.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    },
+    {
+      "combo_id": "avatar:combo_tiger_hook_linked_whirlwind",
+      "display_name": "Linked Tiger-Hook Whirlwind",
+      "icon": "avatar_elements:individual/combo_tiger_hook_linked_whirlwind.png",
+      "required_weapon": "weapon_jet_hook_swords",
+      "required_armor_set": "equalist",
+      "required_bender_element": "ANY_OR_NONBENDER",
+      "animation": "animations/pal/combos/combo_tiger_hook_linked_whirlwind.animation.json",
+      "trail_override": "trail_wind_fan",
+      "description": "Hooks both sword tips together to double melee reach (5.5m), sweeping a wide disarming arc.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    },
+    {
+      "combo_id": "avatar:combo_equalist_voltaic_chi_lock",
+      "display_name": "Equalist Voltaic Chi-Lock",
+      "icon": "avatar_elements:individual/combo_equalist_voltaic_chi_lock.png",
+      "required_weapon": "weapon_equalist_electrified_glove",
+      "required_armor_set": "equalist",
+      "required_bender_element": "NONBENDER",
+      "animation": "animations/pal/combos/combo_equalist_voltaic_chi_lock.animation.json",
+      "trail_override": "trail_wind_fan",
+      "description": "4-hit acrobatic electroshock & pressure-point combo that bypasses metal armor and temporarily blocks target bending.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    },
+    {
+      "combo_id": "avatar:combo_crimson_stiletto_pin_barrage",
+      "display_name": "Crimson Stiletto Pin Barrage",
+      "icon": "avatar_elements:individual/combo_crimson_stiletto_pin_barrage.png",
+      "required_weapon": "weapon_mai_stiletto_darts",
+      "required_armor_set": "fire_nation",
+      "required_bender_element": "FIRE_OR_NONBENDER",
+      "animation": "animations/pal/combos/combo_crimson_stiletto_pin_barrage.animation.json",
+      "trail_override": "trail_fire_imbue",
+      "description": "Fan-volley of 5 stiletto darts that pins enemy clothing to blocks behind/below them while executing an evasive backflip.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    },
+    {
+      "combo_id": "avatar:combo_avatar_four_nations_arsenal",
+      "display_name": "Avatar Four-Nations Arsenal",
+      "icon": "avatar_elements:individual/combo_avatar_four_nations_arsenal.png",
+      "required_weapon": "ANY_WEAPON",
+      "required_armor_set": "ANY_FULL_SET",
+      "required_bender_element": "AVATAR_STATE",
+      "animation": "animations/pal/combos/combo_avatar_four_nations_arsenal.animation.json",
+      "trail_override": "trail_wind_fan",
+      "description": "Imbues every weapon attack with four-elemental harmonic trails and unlocks instant zero-chi weapon-to-bending cancels.",
+      "server_authority_note": "Agent/Server configures exact damage, chi_cost, cooldown_ticks, and hitbox in CONTENT_SPEC.md."
+    }
+  ]
+}

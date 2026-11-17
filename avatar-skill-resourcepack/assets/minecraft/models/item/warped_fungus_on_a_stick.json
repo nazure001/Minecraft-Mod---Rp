@@ -87,6 +87,18 @@
         "custom_model_data": 5014
       },
       "model": "avatar_skills:item/focus_flight"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5015
+      },
+      "model": "avatar_skills:item/earth_boulder"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5016
+      },
+      "model": "avatar_skills:item/water_whip"
     }
   ]
 }

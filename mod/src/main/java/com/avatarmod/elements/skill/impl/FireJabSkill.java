@@ -105,8 +105,8 @@ public final class FireJabSkill {
         // 2. Strike jet midpoint: P_mid = P_fist + u_look * 0.55
         Vec3d jetMid = fistPos.add(look.multiply(0.55));
 
-        // 3. Apex burst: P_apex = eyePos + u_look * 1.50
-        Vec3d apexPos = eyePos.add(look.multiply(1.50));
+        // 3. Apex burst: P_apex = fistPos + u_look * 1.20 (aligned with strike vector, below eye level)
+        Vec3d apexPos = fistPos.add(look.multiply(1.20));
 
         // Knuckle flash: ParticleTypes.FLAME (4/6) and ParticleTypes.SMALL_FLAME (4/6)
         world.spawnParticles(ParticleTypes.FLAME,

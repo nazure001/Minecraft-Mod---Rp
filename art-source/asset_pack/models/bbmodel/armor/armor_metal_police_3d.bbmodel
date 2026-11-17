@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "format_version": "4.10",
+    "model_format": "java_block",
+    "box_uv": false
+  },
+  "name": "armor_metal_police_3d",
+  "resolution": {
+    "width": 64,
+    "height": 32
+  },
+  "outliner": [
+    {
+      "name": "bipedHead",
+      "origin": [
+        0,
+        24,
+        0
+      ],
+      "children": [
+        "helm_base",
+        "helm_crest"
+      ]
+    },
+    {
+      "name": "bipedBody",
+      "origin": [
+        0,
+        24,
+        0
+      ],
+      "children": [
+        "chest_plate",
+        "back_attachment"
+      ]
+    },
+    {
+      "name": "bipedRightArm",
+      "origin": [
+        -5,
+        22,
+        0
+      ],
+      "children": [
+        "right_pauldron"
+      ]
+    },
+    {
+      "name": "bipedLeftArm",
+      "origin": [
+        5,
+        22,
+        0
+      ],
+      "children": [
+        "left_pauldron"
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "name": "helm_base",
+      "from": [
+        -4.5,
+        24,
+        -4.5
+      ],
+      "to": [
+        4.5,
+        32.5,
+        4.5
+      ]
+    },
+    {
+      "name": "chest_plate",
+      "from": [
+        -4.5,
+        12,
+        -2.5
+      ],
+      "to": [
+        4.5,
+        24,
+        2.5
+      ]
+    },
+    {
+      "name": "back_attachment",
+      "from": [
+        -3.5,
+        14,
+        2.5
+      ],
+      "to": [
+        3.5,
+        23,
+        5.5
+      ],
+      "comment": "Cable spools for Police / Wingsuit pack for Air / Cape mount"
+    },
+    {
+      "name": "right_pauldron",
+      "from": [
+        -8.5,
+        20,
+        -3.0
+      ],
+      "to": [
+        -4.0,
+        25.5,
+        3.0
+      ]
+    },
+    {
+      "name": "left_pauldron",
+      "from": [
+        4.0,
+        20,
+        -3.0
+      ],
+      "to": [
+        8.5,
+        25.5,
+        3.0
+      ]
+    }
+  ],
+  "locators": {
+    "back_spool_left": [
+      -2.2,
+      20.0,
+      4.5
+    ],
+    "back_spool_right": [
+      2.2,
+      20.0,
+      4.5
+    ],
+    "wrist_emitter_right": [
+      -6.5,
+      14.0,
+      0.0
+    ],
+    "wrist_emitter_left": [
+      6.5,
+      14.0,
+      0.0
+    ]
+  }
+}

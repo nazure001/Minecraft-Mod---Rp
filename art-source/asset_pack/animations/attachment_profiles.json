@@ -1,0 +1,397 @@
+{
+  "schema_version": "1.0.0",
+  "target": "Minecraft Java 1.21.1 Fabric + PAL",
+  "first_person_policy": "Keep all hand/charge/ribbon attachments offset >= 0.32m laterally/vertically from camera ray so crosshair is never occluded.",
+  "profiles": {
+    "avatar:fire_jab": {
+      "animation_id": "avatar_elements:fire_jab",
+      "file": "animations/pal/fire_jab.animation.json",
+      "primary_locator": "right_knuckle",
+      "phases_sec": {
+        "WINDUP": [
+          0.0,
+          0.1
+        ],
+        "ACTIVE": [
+          0.1,
+          0.25
+        ],
+        "RECOVERY": [
+          0.25,
+          0.45
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:flame_sweep": {
+      "animation_id": "avatar_elements:flame_sweep",
+      "file": "animations/pal/flame_sweep.animation.json",
+      "primary_locator": "right_palm",
+      "phases_sec": {
+        "WINDUP": [
+          0.0,
+          0.15
+        ],
+        "ACTIVE": [
+          0.15,
+          0.55
+        ],
+        "RECOVERY": [
+          0.55,
+          0.85
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:fire_jet": {
+      "animation_id": "avatar_elements:fire_jet",
+      "file": "animations/pal/fire_jet.animation.json",
+      "primary_locator": "both_hands_and_feet",
+      "phases_sec": {
+        "WINDUP": [
+          0.0,
+          0.05
+        ],
+        "ACTIVE": [
+          0.05,
+          0.15
+        ],
+        "RECOVERY": [
+          0.15,
+          0.6
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:fire_guard": {
+      "animation_id": "avatar_elements:fire_guard",
+      "file": "animations/pal/fire_guard.animation.json",
+      "primary_locator": "forearms_crossed",
+      "phases_sec": {
+        "WINDUP": [
+          0.0,
+          0.1
+        ],
+        "SUSTAIN_LOOP": [
+          0.1,
+          0.85
+        ],
+        "RECOVERY": [
+          0.85,
+          1.0
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:fire_blast": {
+      "animation_id": "avatar_elements:fire_blast",
+      "file": "animations/pal/fire_blast.animation.json",
+      "primary_locator": "both_hands_center",
+      "phases_sec": {
+        "CHARGE_LOOP": [
+          0.0,
+          2.0
+        ],
+        "RELEASE": [
+          2.0,
+          2.15
+        ],
+        "RECOVERY": [
+          2.15,
+          2.4
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:air_staff_attack": {
+      "animation_id": "avatar_elements:air_staff_attack",
+      "file": "animations/pal/air_staff_attack.animation.json",
+      "primary_locator": "staff_tip_and_base",
+      "phases_sec": {
+        "THRUST": [
+          0.0,
+          0.25
+        ],
+        "SPIN": [
+          0.25,
+          0.5
+        ],
+        "SWEEP": [
+          0.5,
+          0.75
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:air_vortex": {
+      "animation_id": "avatar_elements:air_vortex",
+      "file": "animations/pal/air_vortex.animation.json",
+      "primary_locator": "both_hands_spiral",
+      "phases_sec": {
+        "SUSTAIN_LOOP": [
+          0.0,
+          1.2
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:air_scooter": {
+      "animation_id": "avatar_elements:air_scooter",
+      "file": "animations/pal/air_scooter.animation.json",
+      "primary_locator": "feet_sphere_mount",
+      "phases_sec": {
+        "START": [
+          0.0,
+          0.15
+        ],
+        "RIDE_LOOP": [
+          0.15,
+          0.85
+        ],
+        "STOP": [
+          0.85,
+          1.0
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:water_whip": {
+      "animation_id": "avatar_elements:water_whip",
+      "file": "animations/pal/water_whip.animation.json",
+      "primary_locator": "right_wrist_spline",
+      "phases_sec": {
+        "WINDUP": [
+          0.0,
+          0.15
+        ],
+        "ACTIVE": [
+          0.15,
+          0.4
+        ],
+        "RECOVERY": [
+          0.4,
+          0.65
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:octopus_form": {
+      "animation_id": "avatar_elements:octopus_form",
+      "file": "animations/pal/octopus_form.animation.json",
+      "primary_locator": "waist_ring_8_splines",
+      "phases_sec": {
+        "CHANNEL_LOOP": [
+          0.0,
+          1.6
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:earth_boulder": {
+      "animation_id": "avatar_elements:earth_boulder",
+      "file": "animations/pal/earth_boulder.animation.json",
+      "primary_locator": "front_ground_to_right_fist",
+      "phases_sec": {
+        "WINDUP_RAISE": [
+          0.0,
+          0.3
+        ],
+        "ACTIVE_LAUNCH": [
+          0.3,
+          0.38
+        ],
+        "RECOVERY": [
+          0.38,
+          0.85
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:earth_wall": {
+      "animation_id": "avatar_elements:earth_wall",
+      "file": "animations/pal/earth_wall.animation.json",
+      "primary_locator": "front_ground_line",
+      "phases_sec": {
+        "WINDUP": [
+          0.0,
+          0.2
+        ],
+        "ACTIVE_RAISE": [
+          0.2,
+          0.28
+        ],
+        "RECOVERY": [
+          0.28,
+          0.65
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:lightning_strike": {
+      "animation_id": "avatar_elements:lightning_strike",
+      "file": "animations/pal/lightning_strike.animation.json",
+      "primary_locator": "right_index_middle_fingers",
+      "phases_sec": {
+        "CHI_CIRCLE_CHARGE": [
+          0.0,
+          3.0
+        ],
+        "STRIKE_RELEASE": [
+          3.0,
+          3.1
+        ],
+        "RECOVERY": [
+          3.1,
+          3.75
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "avatar:lightning_redirect": {
+      "animation_id": "avatar_elements:lightning_redirect",
+      "file": "animations/pal/lightning_redirect.animation.json",
+      "primary_locator": "left_fingers_through_stomach_to_right_fingers",
+      "phases_sec": {
+        "ABSORB": [
+          0.0,
+          0.3
+        ],
+        "STOMACH_SEA_OF_CHI": [
+          0.3,
+          0.55
+        ],
+        "REDIRECT_OUT": [
+          0.55,
+          0.9
+        ]
+      },
+      "first_person_offset": [
+        0.38,
+        -0.26,
+        -0.52
+      ],
+      "third_person_offset": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  }
+}

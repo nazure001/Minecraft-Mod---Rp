@@ -1,0 +1,321 @@
+atlas_file,component,construction,display_name,element,file,height,kind,layer,material,name,no_gameplay_effect,node_state,note,particle,phase,priority,profession,ribbon,skill_id,slice_col,slice_row,state,status_id,text_runtime,theme,theme_changes_visuals_only,tier,tileable,type,uv_direction,width,wrap,x,y
+01_skill_icons_8x8.png,,,Fire Jab,fire,individual/skill_fire_jab.png,128,,,,skill_fire_jab,,,,,,P0,,,avatar:fire_jab,,,,,,,,,,,,128,,0,0
+01_skill_icons_8x8.png,,,Flame Sweep,fire,individual/skill_flame_sweep.png,128,,,,skill_flame_sweep,,,,,,P1,,,avatar:flame_sweep,,,,,,,,,,,,128,,128,0
+01_skill_icons_8x8.png,,,Fire Jet,fire,individual/skill_fire_jet.png,128,,,,skill_fire_jet,,,,,,P1,,,avatar:fire_jet,,,,,,,,,,,,128,,256,0
+01_skill_icons_8x8.png,,,Fire Guard,fire,individual/skill_fire_guard.png,128,,,,skill_fire_guard,,,,,,P1,,,avatar:fire_guard,,,,,,,,,,,,128,,384,0
+01_skill_icons_8x8.png,,,Fire Blast,fire,individual/skill_fire_blast.png,128,,,,skill_fire_blast,,,,,,P0,,,avatar:fire_blast,,,,,,,,,,,,128,,512,0
+01_skill_icons_8x8.png,,,Fire Stream,fire,individual/skill_fire_stream.png,128,,,,skill_fire_stream,,,,,,P2,,,avatar:fire_stream,,,,,,,,,,,,128,,640,0
+01_skill_icons_8x8.png,,,Fire Ring,fire,individual/skill_fire_ring.png,128,,,,skill_fire_ring,,,,,,P2,,,avatar:fire_ring,,,,,,,,,,,,128,,768,0
+01_skill_icons_8x8.png,,,Fire Whip,fire,individual/skill_fire_whip.png,128,,,,skill_fire_whip,,,,,,P2,,,avatar:fire_whip,,,,,,,,,,,,128,,896,0
+01_skill_icons_8x8.png,,,Fire Arc,fire,individual/skill_fire_arc.png,128,,,,skill_fire_arc,,,,,,P2,,,avatar:fire_arc,,,,,,,,,,,,128,,0,128
+01_skill_icons_8x8.png,,,Fire Wall,fire,individual/skill_fire_wall.png,128,,,,skill_fire_wall,,,,,,P2,,,avatar:fire_wall,,,,,,,,,,,,128,,128,128
+01_skill_icons_8x8.png,,,Fire Shield,fire,individual/skill_fire_shield.png,128,,,,skill_fire_shield,,,,,,P2,,,avatar:fire_shield,,,,,,,,,,,,128,,256,128
+01_skill_icons_8x8.png,,,Fire Breath,fire,individual/skill_fire_breath.png,128,,,,skill_fire_breath,,,,,,P2,,,avatar:fire_breath,,,,,,,,,,,,128,,384,128
+01_skill_icons_8x8.png,,,Jet Propulsion,fire,individual/skill_jet_propulsion.png,128,,,,skill_jet_propulsion,,,,,,P2,,,avatar:jet_propulsion,,,,,,,,,,,,128,,512,128
+01_skill_icons_8x8.png,,,Flame Vortex,fire,individual/skill_flame_vortex.png,128,,,,skill_flame_vortex,,,,,,P2,,,avatar:flame_vortex,,,,,,,,,,,,128,,640,128
+01_skill_icons_8x8.png,,,Lightning Strike,lightning,individual/skill_lightning_strike.png,128,,,,skill_lightning_strike,,,,,,P2,,,avatar:lightning_strike,,,,,,,,,,,,128,,768,128
+01_skill_icons_8x8.png,,,Lightning Redirect,lightning,individual/skill_lightning_redirect.png,128,,,,skill_lightning_redirect,,,,,,P2,,,avatar:lightning_redirect,,,,,,,,,,,,128,,896,128
+01_skill_icons_8x8.png,,,Combustion Beam,fire,individual/skill_combustion_beam.png,128,,,,skill_combustion_beam,,,,,,P2,,,avatar:combustion_beam,,,,,,,,,,,,128,,0,256
+01_skill_icons_8x8.png,,,Blue Fire,fire,individual/skill_blue_fire.png,128,,,,skill_blue_fire,,,,,,P2,,,avatar:blue_fire,,,,,,,,,,,,128,,128,256
+01_skill_icons_8x8.png,,,Air Palm,air,individual/skill_air_palm.png,128,,,,skill_air_palm,,,,,,P2,,,avatar:air_palm,,,,,,,,,,,,128,,256,256
+01_skill_icons_8x8.png,,,Air Blast,air,individual/skill_air_blast.png,128,,,,skill_air_blast,,,,,,P2,,,avatar:air_blast,,,,,,,,,,,,128,,384,256
+01_skill_icons_8x8.png,,,Air Staff Attack,air,individual/skill_air_staff_attack.png,128,,,,skill_air_staff_attack,,,,,,P1,,,avatar:air_staff_attack,,,,,,,,,,,,128,,512,256
+01_skill_icons_8x8.png,,,Air Vortex,air,individual/skill_air_vortex.png,128,,,,skill_air_vortex,,,,,,P1,,,avatar:air_vortex,,,,,,,,,,,,128,,640,256
+01_skill_icons_8x8.png,,,Air Swipe,air,individual/skill_air_swipe.png,128,,,,skill_air_swipe,,,,,,P2,,,avatar:air_swipe,,,,,,,,,,,,128,,768,256
+01_skill_icons_8x8.png,,,Air Wave,air,individual/skill_air_wave.png,128,,,,skill_air_wave,,,,,,P2,,,avatar:air_wave,,,,,,,,,,,,128,,896,256
+01_skill_icons_8x8.png,,,Air Funnel,air,individual/skill_air_funnel.png,128,,,,skill_air_funnel,,,,,,P2,,,avatar:air_funnel,,,,,,,,,,,,128,,0,384
+01_skill_icons_8x8.png,,,Air Shield,air,individual/skill_air_shield.png,128,,,,skill_air_shield,,,,,,P2,,,avatar:air_shield,,,,,,,,,,,,128,,128,384
+01_skill_icons_8x8.png,,,Air Cushion,air,individual/skill_air_cushion.png,128,,,,skill_air_cushion,,,,,,P2,,,avatar:air_cushion,,,,,,,,,,,,128,,256,384
+01_skill_icons_8x8.png,,,Air Spout,air,individual/skill_air_spout.png,128,,,,skill_air_spout,,,,,,P2,,,avatar:air_spout,,,,,,,,,,,,128,,384,384
+01_skill_icons_8x8.png,,,Air Scooter,air,individual/skill_air_scooter.png,128,,,,skill_air_scooter,,,,,,P2,,,avatar:air_scooter,,,,,,,,,,,,128,,512,384
+01_skill_icons_8x8.png,,,Breath of Wind,air,individual/skill_breath_of_wind.png,128,,,,skill_breath_of_wind,,,,,,P2,,,avatar:breath_of_wind,,,,,,,,,,,,128,,640,384
+01_skill_icons_8x8.png,,,True Flight,air,individual/skill_true_flight.png,128,,,,skill_true_flight,,,,,,P2,,,avatar:true_flight,,,,,,,,,,,,128,,768,384
+01_skill_icons_8x8.png,,,Sound Vibration,air,individual/skill_sound_vibration.png,128,,,,skill_sound_vibration,,,,,,P2,,,avatar:sound_vibration,,,,,,,,,,,,128,,896,384
+01_skill_icons_8x8.png,,,Air Suffocation,air,individual/skill_air_suffocation.png,128,,,,skill_air_suffocation,,,,,,P2,,,avatar:air_suffocation,,,,,,,,,,,,128,,0,512
+01_skill_icons_8x8.png,,,Water Whip,water,individual/skill_water_whip.png,128,,,,skill_water_whip,,,,,,P1,,,avatar:water_whip,,,,,,,,,,,,128,,128,512
+01_skill_icons_8x8.png,,,Water Jet,water,individual/skill_water_jet.png,128,,,,skill_water_jet,,,,,,P2,,,avatar:water_jet,,,,,,,,,,,,128,,256,512
+01_skill_icons_8x8.png,,,Ice Spear,ice,individual/skill_ice_spear.png,128,,,,skill_ice_spear,,,,,,P2,,,avatar:ice_spear,,,,,,,,,,,,128,,384,512
+01_skill_icons_8x8.png,,,Ice Disk,ice,individual/skill_ice_disk.png,128,,,,skill_ice_disk,,,,,,P2,,,avatar:ice_disk,,,,,,,,,,,,128,,512,512
+01_skill_icons_8x8.png,,,Ice Shield,ice,individual/skill_ice_shield.png,128,,,,skill_ice_shield,,,,,,P2,,,avatar:ice_shield,,,,,,,,,,,,128,,640,512
+01_skill_icons_8x8.png,,,Water Wave,water,individual/skill_water_wave.png,128,,,,skill_water_wave,,,,,,P2,,,avatar:water_wave,,,,,,,,,,,,128,,768,512
+01_skill_icons_8x8.png,,,Ice Prison,ice,individual/skill_ice_prison.png,128,,,,skill_ice_prison,,,,,,P2,,,avatar:ice_prison,,,,,,,,,,,,128,,896,512
+01_skill_icons_8x8.png,,,Water Arms,water,individual/skill_water_arms.png,128,,,,skill_water_arms,,,,,,P2,,,avatar:water_arms,,,,,,,,,,,,128,,0,640
+01_skill_icons_8x8.png,,,Octopus Form,water,individual/skill_octopus_form.png,128,,,,skill_octopus_form,,,,,,P2,,,avatar:octopus_form,,,,,,,,,,,,128,,128,640
+01_skill_icons_8x8.png,,,Steam Cloud,water,individual/skill_steam_cloud.png,128,,,,skill_steam_cloud,,,,,,P2,,,avatar:steam_cloud,,,,,,,,,,,,128,,256,640
+01_skill_icons_8x8.png,,,Ice Path,ice,individual/skill_ice_path.png,128,,,,skill_ice_path,,,,,,P2,,,avatar:ice_path,,,,,,,,,,,,128,,384,640
+01_skill_icons_8x8.png,,,Healing,water,individual/skill_healing.png,128,,,,skill_healing,,,,,,P2,,,avatar:healing,,,,,,,,,,,,128,,512,640
+01_skill_icons_8x8.png,,,Bloodbending,water,individual/skill_bloodbending.png,128,,,,skill_bloodbending,,,,,,P2,,,avatar:bloodbending,,,,,,,,,,,,128,,640,640
+01_skill_icons_8x8.png,,,Plantbending,plant,individual/skill_plantbending.png,128,,,,skill_plantbending,,,,,,P2,,,avatar:plantbending,,,,,,,,,,,,128,,768,640
+01_skill_icons_8x8.png,,,Earth Wall,earth,individual/skill_earth_wall.png,128,,,,skill_earth_wall,,,,,,P2,,,avatar:earth_wall,,,,,,,,,,,,128,,896,640
+01_skill_icons_8x8.png,,,Earth Boulder,earth,individual/skill_earth_boulder.png,128,,,,skill_earth_boulder,,,,,,P1,,,avatar:earth_boulder,,,,,,,,,,,,128,,0,768
+01_skill_icons_8x8.png,,,Earth Bullet,earth,individual/skill_earth_bullet.png,128,,,,skill_earth_bullet,,,,,,P2,,,avatar:earth_bullet,,,,,,,,,,,,128,,128,768
+01_skill_icons_8x8.png,,,Earth Pillar,earth,individual/skill_earth_pillar.png,128,,,,skill_earth_pillar,,,,,,P2,,,avatar:earth_pillar,,,,,,,,,,,,128,,256,768
+01_skill_icons_8x8.png,,,Earth Rampart,earth,individual/skill_earth_rampart.png,128,,,,skill_earth_rampart,,,,,,P2,,,avatar:earth_rampart,,,,,,,,,,,,128,,384,768
+01_skill_icons_8x8.png,,,Ground Stomp,earth,individual/skill_ground_stomp.png,128,,,,skill_ground_stomp,,,,,,P2,,,avatar:ground_stomp,,,,,,,,,,,,128,,512,768
+01_skill_icons_8x8.png,,,Boulder Launch,earth,individual/skill_boulder_launch.png,128,,,,skill_boulder_launch,,,,,,P2,,,avatar:boulder_launch,,,,,,,,,,,,128,,640,768
+01_skill_icons_8x8.png,,,Earth Armor,earth,individual/skill_earth_armor.png,128,,,,skill_earth_armor,,,,,,P2,,,avatar:earth_armor,,,,,,,,,,,,128,,768,768
+01_skill_icons_8x8.png,,,Rock Cage,earth,individual/skill_rock_cage.png,128,,,,skill_rock_cage,,,,,,P2,,,avatar:rock_cage,,,,,,,,,,,,128,,896,768
+01_skill_icons_8x8.png,,,Earth Surf,earth,individual/skill_earth_surf.png,128,,,,skill_earth_surf,,,,,,P2,,,avatar:earth_surf,,,,,,,,,,,,128,,0,896
+01_skill_icons_8x8.png,,,Earth Tunnel,earth,individual/skill_earth_tunnel.png,128,,,,skill_earth_tunnel,,,,,,P2,,,avatar:earth_tunnel,,,,,,,,,,,,128,,128,896
+01_skill_icons_8x8.png,,,Seismic Sense,earth,individual/skill_seismic_sense.png,128,,,,skill_seismic_sense,,,,,,P2,,,avatar:seismic_sense,,,,,,,,,,,,128,,256,896
+01_skill_icons_8x8.png,,,Metalbending Whip,metal,individual/skill_metalbending_whip.png,128,,,,skill_metalbending_whip,,,,,,P2,,,avatar:metalbending_whip,,,,,,,,,,,,128,,384,896
+01_skill_icons_8x8.png,,,Metal Cable,metal,individual/skill_metal_cable.png,128,,,,skill_metal_cable,,,,,,P2,,,avatar:metal_cable,,,,,,,,,,,,128,,512,896
+01_skill_icons_8x8.png,,,Lavabending,lava,individual/skill_lavabending.png,128,,,,skill_lavabending,,,,,,P2,,,avatar:lavabending,,,,,,,,,,,,128,,640,896
+02_status_icons.png,,,,fire,individual/status_burn.png,128,,,,status_burn,,,,,,,,,,,,,burn,,,,,,,,128,,0,0
+02_status_icons.png,,,,water,individual/status_wet.png,128,,,,status_wet,,,,,,,,,,,,,wet,,,,,,,,128,,128,0
+02_status_icons.png,,,,ice,individual/status_chilled.png,128,,,,status_chilled,,,,,,,,,,,,,chilled,,,,,,,,128,,256,0
+02_status_icons.png,,,,earth,individual/status_stagger.png,128,,,,status_stagger,,,,,,,,,,,,,stagger,,,,,,,,128,,384,0
+02_status_icons.png,,,,neutral,individual/status_guard.png,128,,,,status_guard,,,,,,,,,,,,,guard,,,,,,,,128,,0,128
+02_status_icons.png,,,,lightning,individual/status_charge.png,128,,,,status_charge,,,,,,,,,,,,,charge,,,,,,,,128,,128,128
+02_status_icons.png,,,,neutral,individual/status_source_missing.png,128,,,,status_source_missing,,,,,,,,,,,,,source_missing,,,,,,,,128,,256,128
+03_micro_particles.png,,,,fire,individual/particle_ember.png,128,,,,particle_ember,,,,ember,,,,,,,,,,,,,,,,,128,,0,0
+03_micro_particles.png,,,,fire,individual/particle_flame_tongue.png,128,,,,particle_flame_tongue,,,,flame_tongue,,,,,,,,,,,,,,,,,128,,128,0
+03_micro_particles.png,,,,neutral,individual/particle_smoke_puff.png,128,,,,particle_smoke_puff,,,,smoke_puff,,,,,,,,,,,,,,,,,128,,256,0
+03_micro_particles.png,,,,air,individual/particle_gust_curl.png,128,,,,particle_gust_curl,,,,gust_curl,,,,,,,,,,,,,,,,,128,,384,0
+03_micro_particles.png,,,,water,individual/particle_droplet.png,128,,,,particle_droplet,,,,droplet,,,,,,,,,,,,,,,,,128,,512,0
+03_micro_particles.png,,,,water,individual/particle_splash.png,128,,,,particle_splash,,,,splash,,,,,,,,,,,,,,,,,128,,640,0
+03_micro_particles.png,,,,water,individual/particle_foam.png,128,,,,particle_foam,,,,foam,,,,,,,,,,,,,,,,,128,,0,128
+03_micro_particles.png,,,,earth,individual/particle_dust.png,128,,,,particle_dust,,,,dust,,,,,,,,,,,,,,,,,128,,128,128
+03_micro_particles.png,,,,earth,individual/particle_stone_chip.png,128,,,,particle_stone_chip,,,,stone_chip,,,,,,,,,,,,,,,,,128,,256,128
+03_micro_particles.png,,,,ice,individual/particle_frost.png,128,,,,particle_frost,,,,frost,,,,,,,,,,,,,,,,,128,,384,128
+03_micro_particles.png,,,,lightning,individual/particle_spark.png,128,,,,particle_spark,,,,spark,,,,,,,,,,,,,,,,,128,,512,128
+04_flipbook_crackle_6f.png,,,,,individual/flip_crackle_00.png,64,,,,flip_crackle_00,,,,,frame_00,,,,,,,,,,,,,,,,64,,0,0
+04_flipbook_crackle_6f.png,,,,,individual/flip_crackle_01.png,64,,,,flip_crackle_01,,,,,frame_01,,,,,,,,,,,,,,,,64,,64,0
+04_flipbook_crackle_6f.png,,,,,individual/flip_crackle_02.png,64,,,,flip_crackle_02,,,,,frame_02,,,,,,,,,,,,,,,,64,,128,0
+04_flipbook_crackle_6f.png,,,,,individual/flip_crackle_03.png,64,,,,flip_crackle_03,,,,,frame_03,,,,,,,,,,,,,,,,64,,192,0
+04_flipbook_crackle_6f.png,,,,,individual/flip_crackle_04.png,64,,,,flip_crackle_04,,,,,frame_04,,,,,,,,,,,,,,,,64,,256,0
+04_flipbook_crackle_6f.png,,,,,individual/flip_crackle_05.png,64,,,,flip_crackle_05,,,,,frame_05,,,,,,,,,,,,,,,,64,,320,0
+04_flipbook_flame_burst_6f.png,,,,,individual/flip_flame_burst_00.png,64,,,,flip_flame_burst_00,,,,,frame_00,,,,,,,,,,,,,,,,64,,0,0
+04_flipbook_flame_burst_6f.png,,,,,individual/flip_flame_burst_01.png,64,,,,flip_flame_burst_01,,,,,frame_01,,,,,,,,,,,,,,,,64,,64,0
+04_flipbook_flame_burst_6f.png,,,,,individual/flip_flame_burst_02.png,64,,,,flip_flame_burst_02,,,,,frame_02,,,,,,,,,,,,,,,,64,,128,0
+04_flipbook_flame_burst_6f.png,,,,,individual/flip_flame_burst_03.png,64,,,,flip_flame_burst_03,,,,,frame_03,,,,,,,,,,,,,,,,64,,192,0
+04_flipbook_flame_burst_6f.png,,,,,individual/flip_flame_burst_04.png,64,,,,flip_flame_burst_04,,,,,frame_04,,,,,,,,,,,,,,,,64,,256,0
+04_flipbook_flame_burst_6f.png,,,,,individual/flip_flame_burst_05.png,64,,,,flip_flame_burst_05,,,,,frame_05,,,,,,,,,,,,,,,,64,,320,0
+04_flipbook_impact_flash_6f.png,,,,,individual/flip_impact_flash_00.png,64,,,,flip_impact_flash_00,,,,,frame_00,,,,,,,,,,,,,,,,64,,0,0
+04_flipbook_impact_flash_6f.png,,,,,individual/flip_impact_flash_01.png,64,,,,flip_impact_flash_01,,,,,frame_01,,,,,,,,,,,,,,,,64,,64,0
+04_flipbook_impact_flash_6f.png,,,,,individual/flip_impact_flash_02.png,64,,,,flip_impact_flash_02,,,,,frame_02,,,,,,,,,,,,,,,,64,,128,0
+04_flipbook_impact_flash_6f.png,,,,,individual/flip_impact_flash_03.png,64,,,,flip_impact_flash_03,,,,,frame_03,,,,,,,,,,,,,,,,64,,192,0
+04_flipbook_impact_flash_6f.png,,,,,individual/flip_impact_flash_04.png,64,,,,flip_impact_flash_04,,,,,frame_04,,,,,,,,,,,,,,,,64,,256,0
+04_flipbook_impact_flash_6f.png,,,,,individual/flip_impact_flash_05.png,64,,,,flip_impact_flash_05,,,,,frame_05,,,,,,,,,,,,,,,,64,,320,0
+04_flipbook_small_splash_6f.png,,,,,individual/flip_small_splash_00.png,64,,,,flip_small_splash_00,,,,,frame_00,,,,,,,,,,,,,,,,64,,0,0
+04_flipbook_small_splash_6f.png,,,,,individual/flip_small_splash_01.png,64,,,,flip_small_splash_01,,,,,frame_01,,,,,,,,,,,,,,,,64,,64,0
+04_flipbook_small_splash_6f.png,,,,,individual/flip_small_splash_02.png,64,,,,flip_small_splash_02,,,,,frame_02,,,,,,,,,,,,,,,,64,,128,0
+04_flipbook_small_splash_6f.png,,,,,individual/flip_small_splash_03.png,64,,,,flip_small_splash_03,,,,,frame_03,,,,,,,,,,,,,,,,64,,192,0
+04_flipbook_small_splash_6f.png,,,,,individual/flip_small_splash_04.png,64,,,,flip_small_splash_04,,,,,frame_04,,,,,,,,,,,,,,,,64,,256,0
+04_flipbook_small_splash_6f.png,,,,,individual/flip_small_splash_05.png,64,,,,flip_small_splash_05,,,,,frame_05,,,,,,,,,,,,,,,,64,,320,0
+04_flipbook_smoke_expansion_6f.png,,,,,individual/flip_smoke_expansion_00.png,64,,,,flip_smoke_expansion_00,,,,,frame_00,,,,,,,,,,,,,,,,64,,0,0
+04_flipbook_smoke_expansion_6f.png,,,,,individual/flip_smoke_expansion_01.png,64,,,,flip_smoke_expansion_01,,,,,frame_01,,,,,,,,,,,,,,,,64,,64,0
+04_flipbook_smoke_expansion_6f.png,,,,,individual/flip_smoke_expansion_02.png,64,,,,flip_smoke_expansion_02,,,,,frame_02,,,,,,,,,,,,,,,,64,,128,0
+04_flipbook_smoke_expansion_6f.png,,,,,individual/flip_smoke_expansion_03.png,64,,,,flip_smoke_expansion_03,,,,,frame_03,,,,,,,,,,,,,,,,64,,192,0
+04_flipbook_smoke_expansion_6f.png,,,,,individual/flip_smoke_expansion_04.png,64,,,,flip_smoke_expansion_04,,,,,frame_04,,,,,,,,,,,,,,,,64,,256,0
+04_flipbook_smoke_expansion_6f.png,,,,,individual/flip_smoke_expansion_05.png,64,,,,flip_smoke_expansion_05,,,,,frame_05,,,,,,,,,,,,,,,,64,,320,0
+05_ribbon_textures.png,,,,,individual/ribbon_soft_streak.png,128,,,,ribbon_soft_streak,,,,,,,,soft_streak,,,,,,,,,,True,,left_to_right,128,,0,0
+05_ribbon_textures.png,,,,,individual/ribbon_hard_crescent.png,128,,,,ribbon_hard_crescent,,,,,,,,hard_crescent,,,,,,,,,,True,,left_to_right,128,,128,0
+05_ribbon_textures.png,,,,,individual/ribbon_water_flow.png,128,,,,ribbon_water_flow,,,,,,,,water_flow,,,,,,,,,,True,,left_to_right,128,,256,0
+05_ribbon_textures.png,,,,,individual/ribbon_flame_edge.png,128,,,,ribbon_flame_edge,,,,,,,,flame_edge,,,,,,,,,,True,,left_to_right,128,,384,0
+05_ribbon_textures.png,,,,,individual/ribbon_cable_highlight.png,128,,,,ribbon_cable_highlight,,,,,,,,cable_highlight,,,,,,,,,,True,,left_to_right,128,,512,0
+06_material_textures.png,,,,,individual/material_fire_turbulence.png,128,,,fire_turbulence,material_fire_turbulence,,,,,,,,,,,,,,,,,,True,,,128,repeat,0,0
+06_material_textures.png,,,,,individual/material_water_flow.png,128,,,water_flow,material_water_flow,,,,,,,,,,,,,,,,,,True,,,128,repeat,128,0
+06_material_textures.png,,,,,individual/material_water_foam.png,128,,,water_foam,material_water_foam,,,,,,,,,,,,,,,,,,True,,,128,repeat,256,0
+06_material_textures.png,,,,,individual/material_air_streak.png,128,,,air_streak,material_air_streak,,,,,,,,,,,,,,,,,,True,,,128,repeat,384,0
+06_material_textures.png,,,,,individual/material_earth_dust.png,128,,,earth_dust,material_earth_dust,,,,,,,,,,,,,,,,,,True,,,128,repeat,0,128
+06_material_textures.png,,,,,individual/material_lava_crust.png,128,,,lava_crust,material_lava_crust,,,,,,,,,,,,,,,,,,True,,,128,repeat,128,128
+06_material_textures.png,,,,,individual/material_ice_cracks.png,128,,,ice_cracks,material_ice_cracks,,,,,,,,,,,,,,,,,,True,,,128,repeat,256,128
+07_charge_orb_layers.png,,,,fire,individual/orb_fire_core.png,128,,core,,orb_fire_core,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,0,0
+07_charge_orb_layers.png,,,,fire,individual/orb_fire_shell.png,128,,shell,,orb_fire_shell,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,128,0
+07_charge_orb_layers.png,,,,fire,individual/orb_fire_orbit_ring.png,128,,orbit_ring,,orb_fire_orbit_ring,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,256,0
+07_charge_orb_layers.png,,,,fire,individual/orb_fire_accent_particles.png,128,,accent_particles,,orb_fire_accent_particles,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,384,0
+07_charge_orb_layers.png,,,,air,individual/orb_air_core.png,128,,core,,orb_air_core,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,0,128
+07_charge_orb_layers.png,,,,air,individual/orb_air_shell.png,128,,shell,,orb_air_shell,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,128,128
+07_charge_orb_layers.png,,,,air,individual/orb_air_orbit_ring.png,128,,orbit_ring,,orb_air_orbit_ring,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,256,128
+07_charge_orb_layers.png,,,,air,individual/orb_air_accent_particles.png,128,,accent_particles,,orb_air_accent_particles,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,384,128
+07_charge_orb_layers.png,,,,water,individual/orb_water_core.png,128,,core,,orb_water_core,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,0,256
+07_charge_orb_layers.png,,,,water,individual/orb_water_shell.png,128,,shell,,orb_water_shell,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,128,256
+07_charge_orb_layers.png,,,,water,individual/orb_water_orbit_ring.png,128,,orbit_ring,,orb_water_orbit_ring,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,256,256
+07_charge_orb_layers.png,,,,water,individual/orb_water_accent_particles.png,128,,accent_particles,,orb_water_accent_particles,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,384,256
+07_charge_orb_layers.png,,,,earth,individual/orb_earth_core.png,128,,core,,orb_earth_core,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,0,384
+07_charge_orb_layers.png,,,,earth,individual/orb_earth_shell.png,128,,shell,,orb_earth_shell,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,128,384
+07_charge_orb_layers.png,,,,earth,individual/orb_earth_orbit_ring.png,128,,orbit_ring,,orb_earth_orbit_ring,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,256,384
+07_charge_orb_layers.png,,,,earth,individual/orb_earth_accent_particles.png,128,,accent_particles,,orb_earth_accent_particles,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,384,384
+07_charge_orb_layers.png,,,,lightning,individual/orb_lightning_core.png,128,,core,,orb_lightning_core,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,0,512
+07_charge_orb_layers.png,,,,lightning,individual/orb_lightning_shell.png,128,,shell,,orb_lightning_shell,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,128,512
+07_charge_orb_layers.png,,,,lightning,individual/orb_lightning_orbit_ring.png,128,,orbit_ring,,orb_lightning_orbit_ring,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,256,512
+07_charge_orb_layers.png,,,,lightning,individual/orb_lightning_accent_particles.png,128,,accent_particles,,orb_lightning_accent_particles,,,show only from verified server charge state,,,,,,,,,,,,,,,,,,128,,384,512
+08_theme_emblems.png,,,,,individual/theme_fire_nation.png,128,,,,theme_fire_nation,,,,,,,,,,,,,,,fire_nation,,,,,,128,,0,0
+08_theme_emblems.png,,,,,individual/theme_water_tribe.png,128,,,,theme_water_tribe,,,,,,,,,,,,,,,water_tribe,,,,,,128,,128,0
+08_theme_emblems.png,,,,,individual/theme_earth_kingdom.png,128,,,,theme_earth_kingdom,,,,,,,,,,,,,,,earth_kingdom,,,,,,128,,256,0
+08_theme_emblems.png,,,,,individual/theme_air_nomad.png,128,,,,theme_air_nomad,,,,,,,,,,,,,,,air_nomad,,,,,,128,,384,0
+08_theme_emblems.png,,,,,individual/theme_nonbender.png,128,,,,theme_nonbender,,,,,,,,,,,,,,,nonbender,,,,,,128,,512,0
+09_progression_badges.png,,,,,individual/tier_seal_1.png,128,,,,tier_seal_1,,,,,,,,,,,,,,,,,1,,,,128,,0,0
+09_progression_badges.png,,,,,individual/tier_seal_2.png,128,,,,tier_seal_2,,,,,,,,,,,,,,,,,2,,,,128,,128,0
+09_progression_badges.png,,,,,individual/tier_seal_3.png,128,,,,tier_seal_3,,,,,,,,,,,,,,,,,3,,,,128,,256,0
+09_progression_badges.png,,,,,individual/tier_seal_4.png,128,,,,tier_seal_4,,,,,,,,,,,,,,,,,4,,,,128,,384,0
+09_progression_badges.png,,,,,individual/tier_seal_5.png,128,,,,tier_seal_5,,,,,,,,,,,,,,,,,5,,,,128,,0,128
+09_progression_badges.png,,,,,individual/tier_seal_6.png,128,,,,tier_seal_6,,,,,,,,,,,,,,,,,6,,,,128,,128,128
+09_progression_badges.png,,,,,individual/tier_seal_7.png,128,,,,tier_seal_7,,,,,,,,,,,,,,,,,7,,,,128,,256,128
+09_progression_badges.png,,,,,individual/profession_cook.png,128,,,,profession_cook,,,,,,,cook,,,,,,,,,,,,,,128,,384,128
+09_progression_badges.png,,,,,individual/profession_waterkeeper.png,128,,,,profession_waterkeeper,,,,,,,waterkeeper,,,,,,,,,,,,,,128,,0,256
+09_progression_badges.png,,,,,individual/profession_healer.png,128,,,,profession_healer,,,,,,,healer,,,,,,,,,,,,,,128,,128,256
+09_progression_badges.png,,,,,individual/profession_builder.png,128,,,,profession_builder,,,,,,,builder,,,,,,,,,,,,,,128,,256,256
+09_progression_badges.png,,,,,individual/profession_courier.png,128,,,,profession_courier,,,,,,,courier,,,,,,,,,,,,,,128,,384,256
+09_progression_badges.png,,,,,individual/skill_node_available.png,128,,,,skill_node_available,,available,,,,,,,,,,,,,,,,,,,128,,0,384
+09_progression_badges.png,,,,,individual/skill_node_selected.png,128,,,,skill_node_selected,,selected,,,,,,,,,,,,,,,,,,,128,,128,384
+09_progression_badges.png,,,,,individual/skill_node_locked.png,128,,,,skill_node_locked,,locked,,,,,,,,,,,,,,,,,,,128,,256,384
+09_progression_badges.png,,,,,individual/skill_node_unavailable.png,128,,,,skill_node_unavailable,,unavailable,,,,,,,,,,,,,,,,,,,128,,384,384
+10_construction_materials.png,,valid,,,individual/construct_valid.png,128,,,,construct_valid,,,,,,,,,,,,,,,,,,,,,128,,0,0
+10_construction_materials.png,,invalid,,,individual/construct_invalid.png,128,,,,construct_invalid,,,,,,,,,,,,,,,,,,,,,128,,128,0
+10_construction_materials.png,,material_wood,,,individual/construct_material_wood.png,128,,,,construct_material_wood,,,,,,,,,,,,,,,,,,,,,128,,256,0
+10_construction_materials.png,,material_stone,,,individual/construct_material_stone.png,128,,,,construct_material_stone,,,,,,,,,,,,,,,,,,,,,128,,384,0
+10_construction_materials.png,,material_water,,,individual/construct_material_water.png,128,,,,construct_material_water,,,,,,,,,,,,,,,,,,,,,128,,0,128
+10_construction_materials.png,,material_ice,,,individual/construct_material_ice.png,128,,,,construct_material_ice,,,,,,,,,,,,,,,,,,,,,128,,128,128
+10_construction_materials.png,,material_metal,,,individual/construct_material_metal.png,128,,,,construct_material_metal,,,,,,,,,,,,,,,,,,,,,128,,256,128
+10_construction_materials.png,,material_lava,,,individual/construct_material_lava.png,128,,,,construct_material_lava,,,,,,,,,,,,,,,,,,,,,128,,384,128
+11_gui_panel_9slice.png,,,,,gui/panel_9slice_r1_c1.png,128,,,,panel_9slice_r1_c1,,,,,,,,,,1,1,,,,,,,,,,128,,0,0
+11_gui_panel_9slice.png,,,,,gui/panel_9slice_r1_c2.png,128,,,,panel_9slice_r1_c2,,,,,,,,,,2,1,,,,,,,,,,128,,128,0
+11_gui_panel_9slice.png,,,,,gui/panel_9slice_r1_c3.png,128,,,,panel_9slice_r1_c3,,,,,,,,,,3,1,,,,,,,,,,128,,256,0
+11_gui_panel_9slice.png,,,,,gui/panel_9slice_r2_c1.png,128,,,,panel_9slice_r2_c1,,,,,,,,,,1,2,,,,,,,,,,128,,0,128
+11_gui_panel_9slice.png,,,,,gui/panel_9slice_r2_c2.png,128,,,,panel_9slice_r2_c2,,,,,,,,,,2,2,,,,,,,,,,128,,128,128
+11_gui_panel_9slice.png,,,,,gui/panel_9slice_r2_c3.png,128,,,,panel_9slice_r2_c3,,,,,,,,,,3,2,,,,,,,,,,128,,256,128
+11_gui_panel_9slice.png,,,,,gui/panel_9slice_r3_c1.png,128,,,,panel_9slice_r3_c1,,,,,,,,,,1,3,,,,,,,,,,128,,0,256
+11_gui_panel_9slice.png,,,,,gui/panel_9slice_r3_c2.png,128,,,,panel_9slice_r3_c2,,,,,,,,,,2,3,,,,,,,,,,128,,128,256
+11_gui_panel_9slice.png,,,,,gui/panel_9slice_r3_c3.png,128,,,,panel_9slice_r3_c3,,,,,,,,,,3,3,,,,,,,,,,128,,256,256
+12_gui_rollers.png,left,,,,gui/roller_left.png,128,,,,roller_left,,,,,,,,,,,,,,,,,,,,,128,,0,0
+12_gui_rollers.png,middle,,,,gui/roller_middle.png,128,,,,roller_middle,,,,,,,,,,,,,,,,,,,,,128,,128,0
+12_gui_rollers.png,right,,,,gui/roller_right.png,128,,,,roller_right,,,,,,,,,,,,,,,,,,,,,128,,256,0
+13_gui_buttons.png,,,,,gui/button_normal.png,64,,,,button_normal,,,,,,,,,,,,normal,,,,,,,,,160,,0,0
+13_gui_buttons.png,,,,,gui/button_hover.png,64,,,,button_hover,,,,,,,,,,,,hover,,,,,,,,,160,,160,0
+13_gui_buttons.png,,,,,gui/button_focus.png,64,,,,button_focus,,,,,,,,,,,,focus,,,,,,,,,160,,320,0
+13_gui_buttons.png,,,,,gui/button_pressed.png,64,,,,button_pressed,,,,,,,,,,,,pressed,,,,,,,,,160,,480,0
+13_gui_buttons.png,,,,,gui/button_disabled.png,64,,,,button_disabled,,,,,,,,,,,,disabled,,,,,,,,,160,,640,0
+14_gui_controls.png,,,,,gui/checkbox_unchecked.png,64,checkbox,,,checkbox_unchecked,,,,,,,,,,,,unchecked,,,,,,,,,96,,0,0
+14_gui_controls.png,,,,,gui/checkbox_checked.png,64,checkbox,,,checkbox_checked,,,,,,,,,,,,checked,,,,,,,,,96,,96,0
+14_gui_controls.png,,,,,gui/toggle_off.png,64,toggle,,,toggle_off,,,,,,,,,,,,off,,,,,,,,,96,,192,0
+14_gui_controls.png,,,,,gui/toggle_on.png,64,toggle,,,toggle_on,,,,,,,,,,,,on,,,,,,,,,96,,288,0
+14_gui_controls.png,,,,,gui/tab_normal.png,64,tab,,,tab_normal,,,,,,,,,,,,normal,,,,,,,,,96,,384,0
+14_gui_controls.png,,,,,gui/tab_selected.png,64,tab,,,tab_selected,,,,,,,,,,,,selected,,,,,,,,,96,,0,64
+14_gui_controls.png,,,,,gui/tab_hover.png,64,tab,,,tab_hover,,,,,,,,,,,,hover,,,,,,,,,96,,96,64
+14_gui_controls.png,,,,,gui/tab_disabled.png,64,tab,,,tab_disabled,,,,,,,,,,,,disabled,,,,,,,,,96,,192,64
+14_gui_controls.png,,,,,gui/slider_track.png,64,slider_track,,,slider_track,,,,,,,,,,,,,,,,,,,,,96,,288,64
+14_gui_controls.png,,,,,gui/slider_thumb.png,64,slider_thumb,,,slider_thumb,,,,,,,,,,,,,,,,,,,,,96,,384,64
+15_hud_components.png,bar_track,,,,individual/hud_bar_track.png,128,,,,hud_bar_track,,,,,,,,,,,,,,,,,,,,,128,,0,0
+15_hud_components.png,health_fill,,,,individual/hud_health_fill.png,128,,,,hud_health_fill,,,,,,,,,,,,,,,,,,,,,128,,128,0
+15_hud_components.png,chi_fill,,,,individual/hud_chi_fill.png,128,,,,hud_chi_fill,,,,,,,,,,,,,,,,,,,,,128,,256,0
+15_hud_components.png,slot_frame,,,,individual/hud_slot_frame.png,128,,,,hud_slot_frame,,,,,,,,,,,,,,,,,,,,,128,,384,0
+15_hud_components.png,active_seal,,,,individual/hud_active_seal.png,128,,,,hud_active_seal,,,,,,,,,,,,,,,,,,,,,128,,0,128
+15_hud_components.png,charge_ring,,,,individual/hud_charge_ring.png,128,,,,hud_charge_ring,,,,,,,,,,,,,,,,,,,,,128,,128,128
+15_hud_components.png,health_icon,,,,individual/hud_health_icon.png,128,,,,hud_health_icon,,,,,,,,,,,,,,,,,,,,,128,,256,128
+15_hud_components.png,chi_icon,,,,individual/hud_chi_icon.png,128,,,,hud_chi_icon,,,,,,,,,,,,,,,,,,,,,128,,384,128
+16_impact_primitives.png,,,,fire,individual/fire_impact.png,128,,,,fire_impact,,,,,impact,,,,,,,,,,,,,,,,128,,0,0
+16_impact_primitives.png,,,,air,individual/air_shockwave.png,128,,,,air_shockwave,,,,,impact,,,,,,,,,,,,,,,,128,,128,0
+16_impact_primitives.png,,,,water,individual/water_impact.png,128,,,,water_impact,,,,,impact,,,,,,,,,,,,,,,,128,,256,0
+16_impact_primitives.png,,,,earth,individual/earth_impact.png,128,,,,earth_impact,,,,,impact,,,,,,,,,,,,,,,,128,,384,0
+16_impact_primitives.png,,,,ice,individual/ice_shatter.png,128,,,,ice_shatter,,,,,impact,,,,,,,,,,,,,,,,128,,512,0
+17_aura_loop_seeds.png,,,,fire,individual/fire_aura.png,128,,,,fire_aura,True,,,,,,,,,,,,,,,,,,cosmetic_loop_seed,,128,,0,0
+17_aura_loop_seeds.png,,,,air,individual/air_aura.png,128,,,,air_aura,True,,,,,,,,,,,,,,,,,,cosmetic_loop_seed,,128,,128,0
+17_aura_loop_seeds.png,,,,water,individual/water_aura.png,128,,,,water_aura,True,,,,,,,,,,,,,,,,,,cosmetic_loop_seed,,128,,256,0
+17_aura_loop_seeds.png,,,,earth,individual/earth_aura.png,128,,,,earth_aura,True,,,,,,,,,,,,,,,,,,cosmetic_loop_seed,,128,,384,0
+17_aura_loop_seeds.png,,,,neutral,individual/neutral_mastery_aura.png,128,,,,neutral_mastery_aura,True,,,,,,,,,,,,,,,,,,cosmetic_loop_seed,,128,,512,0
+18_theme_ui_trims.png,frame_overlay,,,,individual/ui_trim_fire.png,128,,,,ui_trim_fire,,,,,,,,,,,,,,,fire,True,,,,,128,,0,0
+18_theme_ui_trims.png,frame_overlay,,,,individual/ui_trim_water.png,128,,,,ui_trim_water,,,,,,,,,,,,,,,water,True,,,,,128,,128,0
+18_theme_ui_trims.png,frame_overlay,,,,individual/ui_trim_earth.png,128,,,,ui_trim_earth,,,,,,,,,,,,,,,earth,True,,,,,128,,256,0
+18_theme_ui_trims.png,frame_overlay,,,,individual/ui_trim_air.png,128,,,,ui_trim_air,,,,,,,,,,,,,,,air,True,,,,,128,,384,0
+18_theme_ui_trims.png,frame_overlay,,,,individual/ui_trim_neutral.png,128,,,,ui_trim_neutral,,,,,,,,,,,,,,,neutral,True,,,,,128,,512,0
+19_gui_decorations.png,divider,,,,gui/gui_divider.png,128,,,,gui_divider,,,,,,,,,,,,,,True,,,,,,,128,,0,0
+19_gui_decorations.png,cloth_strip,,,,gui/gui_cloth_strip.png,128,,,,gui_cloth_strip,,,,,,,,,,,,,,True,,,,,,,128,,128,0
+19_gui_decorations.png,title_medallion,,,,gui/gui_title_medallion.png,128,,,,gui_title_medallion,,,,,,,,,,,,,,True,,,,,,,128,,256,0
+19_gui_decorations.png,tab_marker,,,,gui/gui_tab_marker.png,128,,,,gui_tab_marker,,,,,,,,,,,,,,True,,,,,,,128,,384,0
+19_gui_decorations.png,profile_frame,,,,gui/gui_profile_frame.png,128,,,,gui_profile_frame,,,,,,,,,,,,,,True,,,,,,,128,,0,128
+19_gui_decorations.png,connector_horizontal,,,,gui/gui_connector_horizontal.png,128,,,,gui_connector_horizontal,,,,,,,,,,,,,,True,,,,,,,128,,128,128
+19_gui_decorations.png,connector_vertical,,,,gui/gui_connector_vertical.png,128,,,,gui_connector_vertical,,,,,,,,,,,,,,True,,,,,,,128,,256,128
+05b_ribbon_runtime_128x32.png,,,,,individual/ribbon_soft_streak_128x32.png,32,,,,ribbon_soft_streak_128x32,,,,,,,,soft_streak,,,,,,,,,,True,,left_to_right,128,,0,0
+05b_ribbon_runtime_128x32.png,,,,,individual/ribbon_hard_crescent_128x32.png,32,,,,ribbon_hard_crescent_128x32,,,,,,,,hard_crescent,,,,,,,,,,True,,left_to_right,128,,0,32
+05b_ribbon_runtime_128x32.png,,,,,individual/ribbon_water_flow_128x32.png,32,,,,ribbon_water_flow_128x32,,,,,,,,water_flow,,,,,,,,,,True,,left_to_right,128,,0,64
+05b_ribbon_runtime_128x32.png,,,,,individual/ribbon_flame_edge_128x32.png,32,,,,ribbon_flame_edge_128x32,,,,,,,,flame_edge,,,,,,,,,,True,,left_to_right,128,,0,96
+05b_ribbon_runtime_128x32.png,,,,,individual/ribbon_cable_highlight_128x32.png,32,,,,ribbon_cable_highlight_128x32,,,,,,,,cable_highlight,,,,,,,,,,True,,left_to_right,128,,0,128
+20_charge_release_cancel.png,,,,fire,individual/orb_fire_release.png,128,,release,,orb_fire_release,,,HOLD_RELEASE release burst or clean cancel dissolve without projectile,,,,,,,,,,,,,,,,,,128,,0,0
+20_charge_release_cancel.png,,,,fire,individual/orb_fire_cancel.png,128,,cancel,,orb_fire_cancel,,,HOLD_RELEASE release burst or clean cancel dissolve without projectile,,,,,,,,,,,,,,,,,,128,,128,0
+20_charge_release_cancel.png,,,,air,individual/orb_air_release.png,128,,release,,orb_air_release,,,HOLD_RELEASE release burst or clean cancel dissolve without projectile,,,,,,,,,,,,,,,,,,128,,256,0
+20_charge_release_cancel.png,,,,air,individual/orb_air_cancel.png,128,,cancel,,orb_air_cancel,,,HOLD_RELEASE release burst or clean cancel dissolve without projectile,,,,,,,,,,,,,,,,,,128,,384,0
+20_charge_release_cancel.png,,,,water,individual/orb_water_release.png,128,,release,,orb_water_release,,,HOLD_RELEASE release burst or clean cancel dissolve without projectile,,,,,,,,,,,,,,,,,,128,,0,128
+20_charge_release_cancel.png,,,,water,individual/orb_water_cancel.png,128,,cancel,,orb_water_cancel,,,HOLD_RELEASE release burst or clean cancel dissolve without projectile,,,,,,,,,,,,,,,,,,128,,128,128
+20_charge_release_cancel.png,,,,earth,individual/orb_earth_release.png,128,,release,,orb_earth_release,,,HOLD_RELEASE release burst or clean cancel dissolve without projectile,,,,,,,,,,,,,,,,,,128,,256,128
+20_charge_release_cancel.png,,,,earth,individual/orb_earth_cancel.png,128,,cancel,,orb_earth_cancel,,,HOLD_RELEASE release burst or clean cancel dissolve without projectile,,,,,,,,,,,,,,,,,,128,,384,128
+20_charge_release_cancel.png,,,,lightning,individual/orb_lightning_release.png,128,,release,,orb_lightning_release,,,HOLD_RELEASE release burst or clean cancel dissolve without projectile,,,,,,,,,,,,,,,,,,128,,0,256
+20_charge_release_cancel.png,,,,lightning,individual/orb_lightning_cancel.png,128,,cancel,,orb_lightning_cancel,,,HOLD_RELEASE release burst or clean cancel dissolve without projectile,,,,,,,,,,,,,,,,,,128,,128,256
+21_world_manipulation_cracks.png,,damage_stage_0,,,individual/construct_damage_stage_0.png,128,,,,construct_damage_stage_0,,,,,,,,,,,,,,,,,,,,,128,,0,0
+21_world_manipulation_cracks.png,,damage_stage_1,,,individual/construct_damage_stage_1.png,128,,,,construct_damage_stage_1,,,,,,,,,,,,,,,,,,,,,128,,128,0
+21_world_manipulation_cracks.png,,damage_stage_2,,,individual/construct_damage_stage_2.png,128,,,,construct_damage_stage_2,,,,,,,,,,,,,,,,,,,,,128,,256,0
+21_world_manipulation_cracks.png,,damage_stage_3,,,individual/construct_damage_stage_3.png,128,,,,construct_damage_stage_3,,,,,,,,,,,,,,,,,,,,,128,,384,0
+21_world_manipulation_cracks.png,,source_highlight,,water,individual/source_highlight_water.png,128,,,,source_highlight_water,,,,,,,,,,,,,,,,,,,,,128,,0,128
+21_world_manipulation_cracks.png,,source_highlight,,earth,individual/source_highlight_earth.png,128,,,,source_highlight_earth,,,,,,,,,,,,,,,,,,,,,128,,128,128
+21_world_manipulation_cracks.png,,source_highlight,,lava,individual/source_highlight_lava.png,128,,,,source_highlight_lava,,,,,,,,,,,,,,,,,,,,,128,,256,128
+21_world_manipulation_cracks.png,,source_highlight,,ice,individual/source_highlight_ice.png,128,,,,source_highlight_ice,,,,,,,,,,,,,,,,,,,,,128,,384,128
+22_qol_feedback_cues.png,,,,fire,individual/qol_ignition_spark.png,128,,,,qol_ignition_spark,,,,,,,,,,,,,,,,,,,qol_feedback,,128,,0,0
+22_qol_feedback_cues.png,,,,fire,individual/qol_cooking_heat.png,128,,,,qol_cooking_heat,,,,,,,,,,,,,,,,,,,qol_feedback,,128,,128,0
+22_qol_feedback_cues.png,,,,water,individual/qol_fill_stream.png,128,,,,qol_fill_stream,,,,,,,,,,,,,,,,,,,qol_feedback,,128,,256,0
+22_qol_feedback_cues.png,,,,earth,individual/qol_till_dust.png,128,,,,qol_till_dust,,,,,,,,,,,,,,,,,,,qol_feedback,,128,,384,0
+22_qol_feedback_cues.png,,,,metal,individual/qol_ore_extraction_cue.png,128,,,,qol_ore_extraction_cue,,,,,,,,,,,,,,,,,,,qol_feedback,,128,,512,0
+23_armor_sets_icons.png,,,Fire Nation Imperial Helmet,fire,individual/armor_fire_nation_helmet.png,128,armor_helmet,,,armor_fire_nation_helmet,,,,,,,,,,,,,,,fire_nation,,,,,,128,,0,0
+23_armor_sets_icons.png,,,Fire Nation Imperial Chestplate,fire,individual/armor_fire_nation_chestplate.png,128,armor_chestplate,,,armor_fire_nation_chestplate,,,,,,,,,,,,,,,fire_nation,,,,,,128,,128,0
+23_armor_sets_icons.png,,,Fire Nation Imperial Leggings,fire,individual/armor_fire_nation_leggings.png,128,armor_leggings,,,armor_fire_nation_leggings,,,,,,,,,,,,,,,fire_nation,,,,,,128,,256,0
+23_armor_sets_icons.png,,,Fire Nation Imperial Boots,fire,individual/armor_fire_nation_boots.png,128,armor_boots,,,armor_fire_nation_boots,,,,,,,,,,,,,,,fire_nation,,,,,,128,,384,0
+23_armor_sets_icons.png,,,Water Tribe Wolf Helmet,water,individual/armor_water_wolf_helmet.png,128,armor_helmet,,,armor_water_wolf_helmet,,,,,,,,,,,,,,,water_wolf,,,,,,128,,0,128
+23_armor_sets_icons.png,,,Water Tribe Wolf Chestplate,water,individual/armor_water_wolf_chestplate.png,128,armor_chestplate,,,armor_water_wolf_chestplate,,,,,,,,,,,,,,,water_wolf,,,,,,128,,128,128
+23_armor_sets_icons.png,,,Water Tribe Wolf Leggings,water,individual/armor_water_wolf_leggings.png,128,armor_leggings,,,armor_water_wolf_leggings,,,,,,,,,,,,,,,water_wolf,,,,,,128,,256,128
+23_armor_sets_icons.png,,,Water Tribe Wolf Boots,water,individual/armor_water_wolf_boots.png,128,armor_boots,,,armor_water_wolf_boots,,,,,,,,,,,,,,,water_wolf,,,,,,128,,384,128
+23_armor_sets_icons.png,,,Earth Kingdom Military Helmet,earth,individual/armor_earth_kingdom_helmet.png,128,armor_helmet,,,armor_earth_kingdom_helmet,,,,,,,,,,,,,,,earth_kingdom,,,,,,128,,0,256
+23_armor_sets_icons.png,,,Earth Kingdom Military Chestplate,earth,individual/armor_earth_kingdom_chestplate.png,128,armor_chestplate,,,armor_earth_kingdom_chestplate,,,,,,,,,,,,,,,earth_kingdom,,,,,,128,,128,256
+23_armor_sets_icons.png,,,Earth Kingdom Military Leggings,earth,individual/armor_earth_kingdom_leggings.png,128,armor_leggings,,,armor_earth_kingdom_leggings,,,,,,,,,,,,,,,earth_kingdom,,,,,,128,,256,256
+23_armor_sets_icons.png,,,Earth Kingdom Military Boots,earth,individual/armor_earth_kingdom_boots.png,128,armor_boots,,,armor_earth_kingdom_boots,,,,,,,,,,,,,,,earth_kingdom,,,,,,128,,384,256
+23_armor_sets_icons.png,,,Air Nomad Wingsuit Helmet,air,individual/armor_air_wingsuit_helmet.png,128,armor_helmet,,,armor_air_wingsuit_helmet,,,,,,,,,,,,,,,air_wingsuit,,,,,,128,,0,384
+23_armor_sets_icons.png,,,Air Nomad Wingsuit Chestplate,air,individual/armor_air_wingsuit_chestplate.png,128,armor_chestplate,,,armor_air_wingsuit_chestplate,,,,,,,,,,,,,,,air_wingsuit,,,,,,128,,128,384
+23_armor_sets_icons.png,,,Air Nomad Wingsuit Leggings,air,individual/armor_air_wingsuit_leggings.png,128,armor_leggings,,,armor_air_wingsuit_leggings,,,,,,,,,,,,,,,air_wingsuit,,,,,,128,,256,384
+23_armor_sets_icons.png,,,Air Nomad Wingsuit Boots,air,individual/armor_air_wingsuit_boots.png,128,armor_boots,,,armor_air_wingsuit_boots,,,,,,,,,,,,,,,air_wingsuit,,,,,,128,,384,384
+23_armor_sets_icons.png,,,Equalist Chi-Blocker Helmet,neutral,individual/armor_equalist_helmet.png,128,armor_helmet,,,armor_equalist_helmet,,,,,,,,,,,,,,,equalist,,,,,,128,,0,512
+23_armor_sets_icons.png,,,Equalist Chi-Blocker Chestplate,neutral,individual/armor_equalist_chestplate.png,128,armor_chestplate,,,armor_equalist_chestplate,,,,,,,,,,,,,,,equalist,,,,,,128,,128,512
+23_armor_sets_icons.png,,,Equalist Chi-Blocker Leggings,neutral,individual/armor_equalist_leggings.png,128,armor_leggings,,,armor_equalist_leggings,,,,,,,,,,,,,,,equalist,,,,,,128,,256,512
+23_armor_sets_icons.png,,,Equalist Chi-Blocker Boots,neutral,individual/armor_equalist_boots.png,128,armor_boots,,,armor_equalist_boots,,,,,,,,,,,,,,,equalist,,,,,,128,,384,512
+23_armor_sets_icons.png,,,Republic City Police Helmet,metal,individual/armor_metal_police_helmet.png,128,armor_helmet,,,armor_metal_police_helmet,,,,,,,,,,,,,,,metal_police,,,,,,128,,0,640
+23_armor_sets_icons.png,,,Republic City Police Chestplate,metal,individual/armor_metal_police_chestplate.png,128,armor_chestplate,,,armor_metal_police_chestplate,,,,,,,,,,,,,,,metal_police,,,,,,128,,128,640
+23_armor_sets_icons.png,,,Republic City Police Leggings,metal,individual/armor_metal_police_leggings.png,128,armor_leggings,,,armor_metal_police_leggings,,,,,,,,,,,,,,,metal_police,,,,,,128,,256,640
+23_armor_sets_icons.png,,,Republic City Police Boots,metal,individual/armor_metal_police_boots.png,128,armor_boots,,,armor_metal_police_boots,,,,,,,,,,,,,,,metal_police,,,,,,128,,384,640
+23_armor_sets_icons.png,,,Zaofu Metal Clan Helmet,metal,individual/armor_zaofu_clan_helmet.png,128,armor_helmet,,,armor_zaofu_clan_helmet,,,,,,,,,,,,,,,zaofu_clan,,,,,,128,,0,768
+23_armor_sets_icons.png,,,Zaofu Metal Clan Chestplate,metal,individual/armor_zaofu_clan_chestplate.png,128,armor_chestplate,,,armor_zaofu_clan_chestplate,,,,,,,,,,,,,,,zaofu_clan,,,,,,128,,128,768
+23_armor_sets_icons.png,,,Zaofu Metal Clan Leggings,metal,individual/armor_zaofu_clan_leggings.png,128,armor_leggings,,,armor_zaofu_clan_leggings,,,,,,,,,,,,,,,zaofu_clan,,,,,,128,,256,768
+23_armor_sets_icons.png,,,Zaofu Metal Clan Boots,metal,individual/armor_zaofu_clan_boots.png,128,armor_boots,,,armor_zaofu_clan_boots,,,,,,,,,,,,,,,zaofu_clan,,,,,,128,,384,768
+24_canonical_weapons.png,,,Airbender Glider Staff (Closed),air,individual/weapon_glider_staff_closed.png,128,staff,,,weapon_glider_staff_closed,,,,,,,,,,,,,,,,,,,,,128,,0,0
+24_canonical_weapons.png,,,Airbender Glider Staff (Open Glider),air,individual/weapon_glider_staff_open.png,128,glider,,,weapon_glider_staff_open,,,,,,,,,,,,,,,,,,,,,128,,128,0
+24_canonical_weapons.png,,,Sokka's Meteorite Space Sword,metal,individual/weapon_meteorite_space_sword.png,128,jian,,,weapon_meteorite_space_sword,,,,,,,,,,,,,,,,,,,,,128,,256,0
+24_canonical_weapons.png,,,Master Piandao's Steel Jian,metal,individual/weapon_piandao_steel_jian.png,128,jian,,,weapon_piandao_steel_jian,,,,,,,,,,,,,,,,,,,,,128,,384,0
+24_canonical_weapons.png,,,Zuko's Dual Broadswords (Twin Dao),fire,individual/weapon_zuko_dual_dao.png,128,dual_dao,,,weapon_zuko_dual_dao,,,,,,,,,,,,,,,,,,,,,128,,0,128
+24_canonical_weapons.png,,,Kyoshi Warrior Iron War Fans,earth,individual/weapon_kyoshi_war_fans.png,128,war_fans,,,weapon_kyoshi_war_fans,,,,,,,,,,,,,,,,,,,,,128,,128,128
+24_canonical_weapons.png,,,Kyoshi Collapsible Wrist-Shield,earth,individual/weapon_kyoshi_wrist_shield.png,128,shield,,,weapon_kyoshi_wrist_shield,,,,,,,,,,,,,,,,,,,,,128,,256,128
+24_canonical_weapons.png,,,Water Tribe Returning Boomerang,water,individual/weapon_sokka_boomerang.png,128,boomerang,,,weapon_sokka_boomerang,,,,,,,,,,,,,,,,,,,,,128,,384,128
+24_canonical_weapons.png,,,Water Tribe Polar Femur Club,water,individual/weapon_water_wolf_club.png,128,club,,,weapon_water_wolf_club,,,,,,,,,,,,,,,,,,,,,128,,0,256
+24_canonical_weapons.png,,,Arctic Wolf Jawbone Dagger,ice,individual/weapon_water_jaw_blade.png,128,dagger,,,weapon_water_jaw_blade,,,,,,,,,,,,,,,,,,,,,128,,128,256
+24_canonical_weapons.png,,,Gow's Twin Earth War Hammer,earth,individual/weapon_earth_war_hammer.png,128,hammer,,,weapon_earth_war_hammer,,,,,,,,,,,,,,,,,,,,,128,,256,256
+24_canonical_weapons.png,,,Jet's Twin Tiger Hook Swords,metal,individual/weapon_jet_hook_swords.png,128,hook_swords,,,weapon_jet_hook_swords,,,,,,,,,,,,,,,,,,,,,128,,384,256
+24_canonical_weapons.png,,,Dai Li Launchable Rock Glove,earth,individual/weapon_daili_rock_glove.png,128,gauntlet,,,weapon_daili_rock_glove,,,,,,,,,,,,,,,,,,,,,128,,0,384
+24_canonical_weapons.png,,,Equalist Electrified Glove,lightning,individual/weapon_equalist_electrified_glove.png,128,gauntlet,,,weapon_equalist_electrified_glove,,,,,,,,,,,,,,,,,,,,,128,,128,384
+24_canonical_weapons.png,,,Lieutenant's Electrified Kali Sticks,lightning,individual/weapon_lieutenant_kali_sticks.png,128,kali_sticks,,,weapon_lieutenant_kali_sticks,,,,,,,,,,,,,,,,,,,,,128,,256,384
+24_canonical_weapons.png,,,Mai's Stiletto Darts & Throwing Knives,fire,individual/weapon_mai_stiletto_darts.png,128,throwing_knives,,,weapon_mai_stiletto_darts,,,,,,,,,,,,,,,,,,,,,128,,384,384
+25_weapon_swing_trails.png,,,,,individual/trail_meteor_void.png,128,,,,trail_meteor_void,,,,,,,,trail_meteor_void,,,,,,,,,,True,,left_to_right,128,,0,0
+25_weapon_swing_trails.png,,,,,individual/trail_steel_flash.png,128,,,,trail_steel_flash,,,,,,,,trail_steel_flash,,,,,,,,,,True,,left_to_right,128,,128,0
+25_weapon_swing_trails.png,,,,,individual/trail_fire_imbue.png,128,,,,trail_fire_imbue,,,,,,,,trail_fire_imbue,,,,,,,,,,True,,left_to_right,128,,256,0
+25_weapon_swing_trails.png,,,,,individual/trail_blue_fire_imbue.png,128,,,,trail_blue_fire_imbue,,,,,,,,trail_blue_fire_imbue,,,,,,,,,,True,,left_to_right,128,,384,0
+25_weapon_swing_trails.png,,,,,individual/trail_wind_fan.png,128,,,,trail_wind_fan,,,,,,,,trail_wind_fan,,,,,,,,,,True,,left_to_right,128,,0,128
+25_weapon_swing_trails.png,,,,,individual/trail_water_frost.png,128,,,,trail_water_frost,,,,,,,,trail_water_frost,,,,,,,,,,True,,left_to_right,128,,128,128
+25_weapon_swing_trails.png,,,,,individual/trail_earth_seismic.png,128,,,,trail_earth_seismic,,,,,,,,trail_earth_seismic,,,,,,,,,,True,,left_to_right,128,,256,128
+25_weapon_swing_trails.png,,,,,individual/trail_equalist_voltaic.png,128,,,,trail_equalist_voltaic,,,,,,,,trail_equalist_voltaic,,,,,,,,,,True,,left_to_right,128,,384,128
+26_weapon_combo_icons.png,,,Twin Dragon Fire Vortex,fire,individual/combo_twin_dragon_fire_vortex.png,128,,,,combo_twin_dragon_fire_vortex,,,,,,P1,,,avatar:combo_twin_dragon_fire_vortex,,,,,,,,,,,,128,,0,0
+26_weapon_combo_icons.png,,,White Lotus Meteor Sever,metal,individual/combo_meteor_lotus_sever.png,128,,,,combo_meteor_lotus_sever,,,,,,P1,,,avatar:combo_meteor_lotus_sever,,,,,,,,,,,,128,,128,0
+26_weapon_combo_icons.png,,,Kyoshi Tempest Fan Dance,earth,individual/combo_kyoshi_tempest_fan_dance.png,128,,,,combo_kyoshi_tempest_fan_dance,,,,,,P1,,,avatar:combo_kyoshi_tempest_fan_dance,,,,,,,,,,,,128,,256,0
+26_weapon_combo_icons.png,,,Nomad Gale Staff Vault,air,individual/combo_glider_gale_vault.png,128,,,,combo_glider_gale_vault,,,,,,P1,,,avatar:combo_glider_gale_vault,,,,,,,,,,,,128,,384,0
+26_weapon_combo_icons.png,,,Wolf Pack Ricochet Ambush,water,individual/combo_wolf_pack_ricochet_ambush.png,128,,,,combo_wolf_pack_ricochet_ambush,,,,,,P1,,,avatar:combo_wolf_pack_ricochet_ambush,,,,,,,,,,,,128,,0,128
+26_weapon_combo_icons.png,,,Tectonic Hammer Shatter,earth,individual/combo_tectonic_hammer_shatter.png,128,,,,combo_tectonic_hammer_shatter,,,,,,P1,,,avatar:combo_tectonic_hammer_shatter,,,,,,,,,,,,128,,128,128
+26_weapon_combo_icons.png,,,Beifong Cable Grapple & Blade Slash,metal,individual/combo_beifong_cable_grapple_slash.png,128,,,,combo_beifong_cable_grapple_slash,,,,,,P1,,,avatar:combo_beifong_cable_grapple_slash,,,,,,,,,,,,128,,256,128
+26_weapon_combo_icons.png,,,Dai Li Stone Shackle Snatch,earth,individual/combo_daili_stone_shackle_snatch.png,128,,,,combo_daili_stone_shackle_snatch,,,,,,P1,,,avatar:combo_daili_stone_shackle_snatch,,,,,,,,,,,,128,,384,128
+26_weapon_combo_icons.png,,,Linked Tiger-Hook Whirlwind,metal,individual/combo_tiger_hook_linked_whirlwind.png,128,,,,combo_tiger_hook_linked_whirlwind,,,,,,P1,,,avatar:combo_tiger_hook_linked_whirlwind,,,,,,,,,,,,128,,0,256
+26_weapon_combo_icons.png,,,Equalist Voltaic Chi-Lock,lightning,individual/combo_equalist_voltaic_chi_lock.png,128,,,,combo_equalist_voltaic_chi_lock,,,,,,P1,,,avatar:combo_equalist_voltaic_chi_lock,,,,,,,,,,,,128,,128,256
+26_weapon_combo_icons.png,,,Crimson Stiletto Pin Barrage,fire,individual/combo_crimson_stiletto_pin_barrage.png,128,,,,combo_crimson_stiletto_pin_barrage,,,,,,P1,,,avatar:combo_crimson_stiletto_pin_barrage,,,,,,,,,,,,128,,256,256
+26_weapon_combo_icons.png,,,Avatar Four-Nations Arsenal,lightning,individual/combo_avatar_four_nations_arsenal.png,128,,,,combo_avatar_four_nations_arsenal,,,,,,P1,,,avatar:combo_avatar_four_nations_arsenal,,,,,,,,,,,,128,,384,256

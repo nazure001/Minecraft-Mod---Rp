@@ -1,0 +1,49 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.avatar_elements.octopus_form": {
+      "loop": true,
+      "animation_length": 1.6,
+      "bones": {
+        "right_arm": {
+          "rotation": {
+            "0.0": [
+              -68,
+              -42,
+              18
+            ],
+            "0.80": [
+              -82,
+              -28,
+              28
+            ],
+            "1.60": [
+              -68,
+              -42,
+              18
+            ]
+          }
+        },
+        "left_arm": {
+          "rotation": {
+            "0.0": [
+              -68,
+              42,
+              -18
+            ],
+            "0.80": [
+              -82,
+              28,
+              -28
+            ],
+            "1.60": [
+              -68,
+              42,
+              -18
+            ]
+          }
+        }
+      }
+    }
+  }
+}
