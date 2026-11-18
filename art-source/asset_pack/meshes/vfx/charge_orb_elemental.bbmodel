@@ -1,0 +1,995 @@
+{
+  "meta": {
+    "format_version": "4.10",
+    "model_format": "bedrock",
+    "box_uv": false
+  },
+  "name": "charge_orb_elemental",
+  "model_identifier": "geometry.charge_orb_elemental",
+  "resolution": {
+    "width": 64,
+    "height": 64
+  },
+  "elements": [
+    {
+      "name": "core_sphere",
+      "box_uv": false,
+      "from": [
+        -3.0,
+        -3.0,
+        -3.0
+      ],
+      "to": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "954809dd-8a39-4b98-9ddc-ba263f716375",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "core_facet_x",
+      "box_uv": false,
+      "from": [
+        -2.5,
+        -2.5,
+        -2.5
+      ],
+      "to": [
+        2.5,
+        2.5,
+        2.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "d61e4be3-7eb6-4962-9bfd-2d13ee358d5c",
+      "rotation": [
+        45.0,
+        0,
+        0
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "core_facet_y",
+      "box_uv": false,
+      "from": [
+        -2.5,
+        -2.5,
+        -2.5
+      ],
+      "to": [
+        2.5,
+        2.5,
+        2.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "221a6f0d-e0ef-4a0d-a4c3-6f51e1bbdc50",
+      "rotation": [
+        0,
+        45.0,
+        0
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "core_facet_z",
+      "box_uv": false,
+      "from": [
+        -2.5,
+        -2.5,
+        -2.5
+      ],
+      "to": [
+        2.5,
+        2.5,
+        2.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "7146c5a3-073a-463f-a4b9-995ead3b8a35",
+      "rotation": [
+        0,
+        0,
+        45.0
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "corona_ring_horizontal",
+      "box_uv": false,
+      "from": [
+        -5.5,
+        -0.6,
+        -5.5
+      ],
+      "to": [
+        5.5,
+        0.6,
+        5.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "8399bedf-877a-492f-8601-985e4bc3963a",
+      "rotation": [
+        0,
+        25.0,
+        0
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "corona_ring_inclined",
+      "box_uv": false,
+      "from": [
+        -5.5,
+        -0.6,
+        -5.5
+      ],
+      "to": [
+        5.5,
+        0.6,
+        5.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "ac8d2a7e-f8ca-4db8-9684-20685320c876",
+      "rotation": [
+        35.0,
+        0,
+        0
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "corona_ring_perpendicular",
+      "box_uv": false,
+      "from": [
+        -5.5,
+        -0.6,
+        -5.5
+      ],
+      "to": [
+        5.5,
+        0.6,
+        5.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "a7933bda-682f-451f-93c0-2ea7e71675f5",
+      "rotation": [
+        0,
+        0,
+        55.0
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "shard_north",
+      "box_uv": false,
+      "from": [
+        -1.0,
+        4.0,
+        -1.0
+      ],
+      "to": [
+        1.0,
+        6.0,
+        1.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "a4c28a13-cd9b-4ae3-ae12-ed478a993304",
+      "rotation": [
+        15.0,
+        0,
+        0
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "shard_south",
+      "box_uv": false,
+      "from": [
+        -1.0,
+        -6.0,
+        -1.0
+      ],
+      "to": [
+        1.0,
+        -4.0,
+        1.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "ad2796f5-d965-43ca-8d23-39c8fc3dad52",
+      "rotation": [
+        -15.0,
+        0,
+        0
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "shard_east",
+      "box_uv": false,
+      "from": [
+        4.0,
+        -1.0,
+        -1.0
+      ],
+      "to": [
+        6.0,
+        1.0,
+        1.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "a55b2a1b-6e52-4ff4-8745-c44ac9997fc1",
+      "rotation": [
+        0,
+        0,
+        15.0
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "shard_west",
+      "box_uv": false,
+      "from": [
+        -6.0,
+        -1.0,
+        -1.0
+      ],
+      "to": [
+        -4.0,
+        1.0,
+        1.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            32,
+            48,
+            48
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "fcb459b8-0e62-4277-8914-de71a0edb838",
+      "rotation": [
+        0,
+        0,
+        -15.0
+      ],
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "outliner": [
+    {
+      "name": "root",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "children": [
+        "954809dd-8a39-4b98-9ddc-ba263f716375",
+        "d61e4be3-7eb6-4962-9bfd-2d13ee358d5c",
+        "221a6f0d-e0ef-4a0d-a4c3-6f51e1bbdc50",
+        "7146c5a3-073a-463f-a4b9-995ead3b8a35",
+        "8399bedf-877a-492f-8601-985e4bc3963a",
+        "ac8d2a7e-f8ca-4db8-9684-20685320c876",
+        "a7933bda-682f-451f-93c0-2ea7e71675f5",
+        "a4c28a13-cd9b-4ae3-ae12-ed478a993304",
+        "ad2796f5-d965-43ca-8d23-39c8fc3dad52",
+        "a55b2a1b-6e52-4ff4-8745-c44ac9997fc1",
+        "fcb459b8-0e62-4277-8914-de71a0edb838"
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "path": "charge_orb_elemental.png",
+      "name": "charge_orb_elemental.png",
+      "folder": "textures/vfx",
+      "namespace": "avatar_elements",
+      "id": "0",
+      "particle": false,
+      "render_mode": "default",
+      "visible": true,
+      "mode": "bitmap",
+      "saved": true,
+      "uuid": "cb258fed-152d-4a26-a062-315b4568ea73",
+      "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADvUlEQVR4nO1ZPW8TQRDdHdmNmzRO4YYmFAkCCjeR6JDo8C+gSUMDtcWPQKlJQ0PDLzAdUjqkNC4AQQrS0LjATRo3KUBbnHRaZnbfzqxtwvlJlmLfzey++Xi3mfOnw77bJqbLm62uT67jIKuDk+PBD7dFDJ9/nlnsfUkLlJB9d7G6W7sFSsgu3z6cVAvAiSHLuUAgAbBkORcIWneJW+2tJZ6zp030t9YPQv7w2cEdix8vtQC66eGL0Wh5tlho20FqAWnTCOHL91c/0XbwXABS5APh3AZSAYmDwAWAI48QRwIRB4Fqk8/dl6usWuQlu9g/oc5Q8tr7JWjJo/aEZEdLRrIT11Eo/pvjwbB4X611etmbc+Sfzgbuw2RVQyTR7MWk299fXqyWnB9JGMlpEYiHT/z3mpHLeGlFkGoXEtkNBaEmyHUclBImtv9zWWauc37i9WIB5PofLW/uvthfsx6lTmmseCUET7rO+YnXiw8onGhxAseBuy/216xHruMglZVUBbnq+AdBastAtiHc/nvNyLUB2ibwQWh5tlgkD0MZ4tpDUNO3nBi2SQbBy5GWDkF/VYA0vdGSkOzEdcAxliXj8ToEGxUGwZJ5NHs17KlkhoeSKpkHIFWgDQIyD/C7idCwv5GZv5T51FQYnQkiFSLpC9WY7eeg9YOIooU8JILWIFjtNU+GEnu/ezM0tL0dDjphybL17XDQCUuV+K6/Ht/htmP2/depxd5bN/D40fj3+ae52U9tspOj/Slyny8li95bMyiWLOcC4WsTrxkIa3kjgaB1krfYo+QPRntjiz9v3fyD+/fcl6/fqlZCijxC+GpxPUcrwZeSD4RzkAKCBEEij2YaCUQ7CISSD8QR8ql7te2gIY/aEUpeg9IgcNnXkk/Zt9ehnAMt+Rr2CPnDvf7Y4oesJTp4/aTUhF2n5JEXSDcf7juCZr2eJnsx6fb31auP6icFkrUcyXD98vpmzvnjRJFqZ1xTESjQDJdUArmOg1zH4SVh4vq/pLw5LYh1oDkYxQLI9X9JWTfgtCDWAYo3I21WImUlzx1PObHiyFjJT472p51vAXIdB5Ua5NoAbRMN0DYoaZde6mLoW04M2ySDMOZIlx6Cmn7lxDCQSwmiRF76z9DHPyBPg1KkBLAN5GmAnvwQAXRIC2iyV8s+NdhooCHfBsU/cNnRkuDsUkMRbm6HBCEFzj47EDkXgoAGQrpXOyDVBgGx86mLnZ4J1poKazNfMhVGK4RrMd/19wK+xEln3wz9z+8G3W2HtU3+AERUrruRIAhfAAAAAElFTkSuQmCC"
+    }
+  ],
+  "animations": [
+    {
+      "name": "orb_idle_spin",
+      "loop": "loop",
+      "length": 0.8,
+      "animators": {
+        "root": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.4": [
+              180,
+              180,
+              0
+            ],
+            "0.8": [
+              360,
+              360,
+              0
+            ]
+          },
+          "scale": {
+            "0.0": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "0.2": [
+              1.15,
+              1.15,
+              1.15
+            ],
+            "0.4": [
+              0.95,
+              0.95,
+              0.95
+            ],
+            "0.6": [
+              1.1,
+              1.1,
+              1.1
+            ],
+            "0.8": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

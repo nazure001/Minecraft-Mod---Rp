@@ -1,0 +1,620 @@
+{
+  "credit": "Avatar Elements Mod - Water Whip Stream (Fabric 1.21.1)",
+  "texture_size": [
+    64,
+    64
+  ],
+  "textures": {
+    "texture": "avatar_elements:textures/vfx/water_whip_stream",
+    "particle": "avatar_elements:textures/vfx/water_whip_stream"
+  },
+  "elements": [
+    {
+      "name": "segment_0_handle",
+      "from": [
+        6.8,
+        6.8,
+        8.0
+      ],
+      "to": [
+        9.2,
+        9.2,
+        14.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "segment_1_shaft",
+      "from": [
+        6.5,
+        6.5,
+        13.0
+      ],
+      "to": [
+        9.5,
+        9.5,
+        21.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          13.0
+        ],
+        "axis": "y",
+        "angle": 10.0
+      }
+    },
+    {
+      "name": "segment_2_bend",
+      "from": [
+        6.6,
+        6.6,
+        20.0
+      ],
+      "to": [
+        9.4,
+        9.4,
+        29.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          20.0
+        ],
+        "axis": "y",
+        "angle": -15.0
+      }
+    },
+    {
+      "name": "segment_3_loop",
+      "from": [
+        6.8,
+        6.8,
+        28.0
+      ],
+      "to": [
+        9.2,
+        9.2,
+        38.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          28.0
+        ],
+        "axis": "x",
+        "angle": 12.0
+      }
+    },
+    {
+      "name": "segment_4_arc",
+      "from": [
+        7.0,
+        7.0,
+        37.0
+      ],
+      "to": [
+        9.0,
+        9.0,
+        48.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          37.0
+        ],
+        "axis": "y",
+        "angle": 20.0
+      }
+    },
+    {
+      "name": "segment_5_lash",
+      "from": [
+        7.2,
+        7.2,
+        47.0
+      ],
+      "to": [
+        8.8,
+        8.8,
+        58.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            8.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          47.0
+        ],
+        "axis": "x",
+        "angle": -18.0
+      }
+    },
+    {
+      "name": "segment_6_tip",
+      "from": [
+        7.5,
+        7.5,
+        57.0
+      ],
+      "to": [
+        8.5,
+        8.5,
+        68.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4.0,
+            4.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            4.0,
+            4.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            4.0,
+            4.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            4.0,
+            4.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            4.0,
+            4.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            4.0,
+            4.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          57.0
+        ],
+        "axis": "y",
+        "angle": -25.0
+      }
+    }
+  ],
+  "display": {
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.65,
+        0.65,
+        0.65
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    }
+  }
+}

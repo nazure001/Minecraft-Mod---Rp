@@ -1,0 +1,7 @@
+# Avatar Elements Material: air_vortex_funnel
+newmtl air_vortex_funnel_mat
+Kd 1.0 1.0 1.0
+Ks 0.2 0.2 0.2
+Ns 20.0
+d 1.0
+map_Kd air_vortex_funnel.png

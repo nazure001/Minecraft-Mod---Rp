@@ -1,0 +1,640 @@
+{
+  "meta": {
+    "format_version": "4.10",
+    "model_format": "bedrock",
+    "box_uv": false
+  },
+  "name": "air_vortex_funnel",
+  "model_identifier": "geometry.air_vortex_funnel",
+  "resolution": {
+    "width": 64,
+    "height": 64
+  },
+  "elements": [
+    {
+      "name": "vortex_eye_base",
+      "box_uv": false,
+      "from": [
+        -3.0,
+        0.0,
+        -3.0
+      ],
+      "to": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "c8162f53-c39b-4384-a2f8-7f71d2dffb3b",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "funnel_tier_1",
+      "box_uv": false,
+      "from": [
+        -5.0,
+        3.0,
+        -5.0
+      ],
+      "to": [
+        5.0,
+        8.0,
+        5.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "0f746606-54b2-4f57-aae5-88c7c807d38e",
+      "rotation": [
+        0,
+        30.0,
+        0
+      ],
+      "origin": [
+        0,
+        5.5,
+        0
+      ]
+    },
+    {
+      "name": "funnel_tier_2",
+      "box_uv": false,
+      "from": [
+        -7.5,
+        8.0,
+        -7.5
+      ],
+      "to": [
+        7.5,
+        15.0,
+        7.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            16,
+            32,
+            32
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "ea6a6eb6-2273-403b-ace5-d83209bec08f",
+      "rotation": [
+        0,
+        60.0,
+        0
+      ],
+      "origin": [
+        0,
+        11.5,
+        0
+      ]
+    },
+    {
+      "name": "funnel_tier_3",
+      "box_uv": false,
+      "from": [
+        -10.5,
+        15.0,
+        -10.5
+      ],
+      "to": [
+        10.5,
+        24.0,
+        10.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "bd505ca0-5eee-4f74-b7b9-fd5066cf7199",
+      "rotation": [
+        0,
+        90.0,
+        0
+      ],
+      "origin": [
+        0,
+        19.5,
+        0
+      ]
+    },
+    {
+      "name": "funnel_canopy",
+      "box_uv": false,
+      "from": [
+        -14.0,
+        24.0,
+        -14.0
+      ],
+      "to": [
+        14.0,
+        34.0,
+        14.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            0,
+            64,
+            32
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "9a62770a-64c1-4c5a-855b-0e3c89def48c",
+      "rotation": [
+        0,
+        120.0,
+        0
+      ],
+      "origin": [
+        0,
+        29.0,
+        0
+      ]
+    },
+    {
+      "name": "ribbon_swirl_a",
+      "box_uv": false,
+      "from": [
+        -12.0,
+        6.0,
+        -2.0
+      ],
+      "to": [
+        -9.0,
+        26.0,
+        2.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "3089081e-1f17-4063-b85d-48434ea45f46",
+      "rotation": [
+        0,
+        45.0,
+        0
+      ],
+      "origin": [
+        0,
+        16,
+        0
+      ]
+    },
+    {
+      "name": "ribbon_swirl_b",
+      "box_uv": false,
+      "from": [
+        9.0,
+        10.0,
+        -2.0
+      ],
+      "to": [
+        12.0,
+        30.0,
+        2.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            32,
+            32,
+            64
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "a89b1832-7bfb-43e8-8971-7a18cfe8af45",
+      "rotation": [
+        0,
+        -45.0,
+        0
+      ],
+      "origin": [
+        0,
+        20,
+        0
+      ]
+    }
+  ],
+  "outliner": [
+    {
+      "name": "root",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "children": [
+        "c8162f53-c39b-4384-a2f8-7f71d2dffb3b",
+        "0f746606-54b2-4f57-aae5-88c7c807d38e",
+        "ea6a6eb6-2273-403b-ace5-d83209bec08f",
+        "bd505ca0-5eee-4f74-b7b9-fd5066cf7199",
+        "9a62770a-64c1-4c5a-855b-0e3c89def48c",
+        "3089081e-1f17-4063-b85d-48434ea45f46",
+        "a89b1832-7bfb-43e8-8971-7a18cfe8af45"
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "path": "air_vortex_funnel.png",
+      "name": "air_vortex_funnel.png",
+      "folder": "textures/vfx",
+      "namespace": "avatar_elements",
+      "id": "0",
+      "particle": false,
+      "render_mode": "default",
+      "visible": true,
+      "mode": "bitmap",
+      "saved": true,
+      "uuid": "2beac5a4-f159-4425-8c95-8744c0c1907e",
+      "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACpElEQVR4nO3aT4hPURTA8XN1ol4mCTVTL7FUNkq9lWyUJTaTnSzEhsVYEMIIUViwmixkN9lIsVBKUuqUsqAsKNIpU9efZJzuaJqr9N6v0+ts53lO77c6r8986/W70+33u+8XYsrXoH4Ryydovaqy2OjZEQDWEcsrI9ymQreObazKYpcKnxihK0cFkwruGaFLDzHl1wpuG+Ehz44AMEYsN4xwSoVuHdtYlcVpFV4yQleOCs4rGM3ePcSUvys4Z4TTnh0BYIlYpo2w+WPXHh6+/3WsBSebmViuGKErRwXNGyHEctMIXXqIKY8+CRLLHSM86NlDTPkpsdw3wn0qdOvB2AN2qvCZEbpyVLC1Hr8SyxsjdOkhpny5uSCWOSMc9+whpjxFLItGOPrv8OzYxqosfqhwjRG6clQwOi4iltExkncPMeW9fbyxrhz7emNdObaxLzfWlWNfb6wrD8MeAP1aka4dhz2gZyvStYdhD4C/zwXWGu9Yc1jq2oNxHrCimYllyQhdOSrYoCAaoUvHqiy2KHhrhK4dAWA9sTw3wh0qdOvYxqos9qjwgRG6clRwQMFdI3TpIab8TsEtIzzq2REACmK5aoQnVOjWsY1VWZxV4QUjdOX4vzzGXi4PMeVvffzhQleOALBILBeN8Ew9uvZgfBc43szEct0IXTkqOFyP88QyY4QuPcSUXzQXxDJrhPs9e4gpPyKWx0a4W4VuPRh7wHYVvjRCV44KNtXjF2L5aIQuPcSUTzUXxDJvhKs9O9a/mFhlhAv1uODZsY1VWXxuZmKZMEJXjn0/t19uD8NzAejXinTtODwb7NmKdO1h2AOgXyvSteOwB/RsRf7FHjCpYNwI5zx7iCkfIZaVRvhbhW4d21iVxZgKfxqhK0cFmxV8MEKX/gcj7Jt41q2+eQAAAABJRU5ErkJggg=="
+    }
+  ],
+  "animations": [
+    {
+      "name": "tornado_spin",
+      "loop": "loop",
+      "length": 0.5,
+      "animators": {
+        "root": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.25": [
+              0,
+              180,
+              0
+            ],
+            "0.5": [
+              0,
+              360,
+              0
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

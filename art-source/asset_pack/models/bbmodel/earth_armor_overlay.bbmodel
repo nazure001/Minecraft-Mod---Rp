@@ -1,0 +1,593 @@
+{
+  "meta": {
+    "format_version": "4.10",
+    "model_format": "bedrock",
+    "box_uv": false
+  },
+  "name": "earth_armor_overlay",
+  "model_identifier": "geometry.earth_armor_overlay",
+  "resolution": {
+    "width": 64,
+    "height": 64
+  },
+  "elements": [
+    {
+      "name": "chest_slab_main",
+      "box_uv": false,
+      "from": [
+        -5.5,
+        12.0,
+        -3.8
+      ],
+      "to": [
+        5.5,
+        23.0,
+        -2.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            24,
+            24
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            24,
+            24
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            24,
+            24
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            24,
+            24
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            24,
+            24
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            24,
+            24
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "115299a0-8849-4487-8c93-b03b4b609520",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "chest_ridge_v",
+      "box_uv": false,
+      "from": [
+        -1.2,
+        13.0,
+        -4.5
+      ],
+      "to": [
+        1.2,
+        22.0,
+        -3.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            24,
+            0,
+            32,
+            24
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            24,
+            0,
+            32,
+            24
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            24,
+            0,
+            32,
+            24
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            24,
+            0,
+            32,
+            24
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            24,
+            0,
+            32,
+            24
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            24,
+            0,
+            32,
+            24
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "5add7034-17c7-498f-82c4-e5305aad6bfb",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "pauldron_right",
+      "box_uv": false,
+      "from": [
+        4.5,
+        20.0,
+        -3.0
+      ],
+      "to": [
+        9.5,
+        25.5,
+        3.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "8bd93f67-c8f3-4419-883d-a1c9821f98ec",
+      "rotation": [
+        0,
+        0,
+        -18.0
+      ],
+      "origin": [
+        4.5,
+        20.0,
+        0
+      ]
+    },
+    {
+      "name": "pauldron_left",
+      "box_uv": false,
+      "from": [
+        -9.5,
+        20.0,
+        -3.0
+      ],
+      "to": [
+        -4.5,
+        25.5,
+        3.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "e2ebd6d3-515f-4930-a0d5-9599867a1541",
+      "rotation": [
+        0,
+        0,
+        18.0
+      ],
+      "origin": [
+        -4.5,
+        20.0,
+        0
+      ]
+    },
+    {
+      "name": "gauntlet_right",
+      "box_uv": false,
+      "from": [
+        4.2,
+        11.0,
+        -2.8
+      ],
+      "to": [
+        8.8,
+        17.5,
+        2.8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "dc1f6a03-8461-463c-bb21-d237213da7c2",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "gauntlet_left",
+      "box_uv": false,
+      "from": [
+        -8.8,
+        11.0,
+        -2.8
+      ],
+      "to": [
+        -4.2,
+        17.5,
+        2.8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            32,
+            16,
+            48
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "3a57cbc9-eeeb-4968-89bc-cef5d0ad48ef",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "back_slab",
+      "box_uv": false,
+      "from": [
+        -5.0,
+        12.0,
+        2.0
+      ],
+      "to": [
+        5.0,
+        22.5,
+        3.8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            32,
+            32,
+            48
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            16,
+            32,
+            32,
+            48
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            16,
+            32,
+            32,
+            48
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            16,
+            32,
+            32,
+            48
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            16,
+            32,
+            32,
+            48
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            16,
+            32,
+            32,
+            48
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "e8ea40cb-60a5-4525-b69c-afce18f8eca8",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "outliner": [
+    {
+      "name": "root",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "children": [
+        "115299a0-8849-4487-8c93-b03b4b609520",
+        "5add7034-17c7-498f-82c4-e5305aad6bfb",
+        "8bd93f67-c8f3-4419-883d-a1c9821f98ec",
+        "e2ebd6d3-515f-4930-a0d5-9599867a1541",
+        "dc1f6a03-8461-463c-bb21-d237213da7c2",
+        "3a57cbc9-eeeb-4968-89bc-cef5d0ad48ef",
+        "e8ea40cb-60a5-4525-b69c-afce18f8eca8"
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "path": "earth_armor_overlay.png",
+      "name": "earth_armor_overlay.png",
+      "folder": "textures/vfx",
+      "namespace": "avatar_elements",
+      "id": "0",
+      "particle": false,
+      "render_mode": "default",
+      "visible": true,
+      "mode": "bitmap",
+      "saved": true,
+      "uuid": "70f6b6c9-f0a8-4ae8-8913-20a3753627c8",
+      "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACbklEQVR4nO1bQUrEQBDsKfMCEY/ignrwJAiK4jd8hC/aR/gPBUHwrILiURafoBIhMNskme6ZyaxDpy67NqnuSWpWprqJOz85/iHDABlH031Z7O+piG/vH2t/18oHGUfDA4dHB7Szs02r1Rfd7r7R9efiL97FXp5fRxNeXJ79Xddd73Pbz/u7h1G+X79FtwZtfV63i3E+eAL/5m++T9diEvDrNFwOXwAt+uq2MQ4MFW5vXpJAU3yJRzG3lADggXaR/lNPUdDn8rxjKCkAeMD/vYWSSotrtnJpASBNEFucb+UQSgsASYLY3+DQVpaihADQFG+TSYvHbuXSArjOC9R6kkvlg4zDzW7QOEDGATKOpvb/4ql8kHE0qX66z8/7XN5T0PQD+noKMf0Iv6fA6yPVT+e2tDlPghIjhlAC7qikmMIHTCEAclvaFB+wCQGgfZIhdDefQ8ESAiBUXLuV+SJzW9rcAkD7JDULD8Uk3KkFAA/wFlKullQMt4QAbu4HGIeb+wHGATIOkHE0tfv5VD7IOJqQn/ZPYjHzfe7tY+b7vg8I8Z+uttYOcHwtwX7AqrLRVupsEbWPtrRrET2A5UQ+4D/OFsEDfb47R0Mjl6XNLQB4YKyFFOvGNFu5tACQJohB31YOobQAkCQYioW4MVu5tABu7gcYh5v7AcYBMg6QcTS1+/lUPsg4mtB8P+Sn+/ic65/EtH6eryW2H9EdsYPvC9Q22pKsZcyIQZIgtngNs0Voikv8fG2zRUiLa/x8iqUtLQCGEvjFY972GLoZKUoJgFBx7VYeetUlxQ5PKQA2/dbWpgVwcz/AONzcDyDb+AWimdRfYDm1lgAAAABJRU5ErkJggg=="
+    }
+  ],
+  "animations": []
+}

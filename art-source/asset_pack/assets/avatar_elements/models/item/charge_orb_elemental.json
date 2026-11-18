@@ -1,0 +1,932 @@
+{
+  "credit": "Avatar Elements Mod - Elemental Charge Orb (Fabric 1.21.1)",
+  "texture_size": [
+    64,
+    64
+  ],
+  "textures": {
+    "texture": "avatar_elements:textures/vfx/charge_orb_elemental",
+    "particle": "avatar_elements:textures/vfx/charge_orb_elemental"
+  },
+  "elements": [
+    {
+      "name": "core_sphere",
+      "from": [
+        5.0,
+        5.0,
+        5.0
+      ],
+      "to": [
+        11.0,
+        11.0,
+        11.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "core_facet_x",
+      "from": [
+        5.5,
+        5.5,
+        5.5
+      ],
+      "to": [
+        10.5,
+        10.5,
+        10.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "x",
+        "angle": 45.0
+      }
+    },
+    {
+      "name": "core_facet_y",
+      "from": [
+        5.5,
+        5.5,
+        5.5
+      ],
+      "to": [
+        10.5,
+        10.5,
+        10.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "y",
+        "angle": 45.0
+      }
+    },
+    {
+      "name": "core_facet_z",
+      "from": [
+        5.5,
+        5.5,
+        5.5
+      ],
+      "to": [
+        10.5,
+        10.5,
+        10.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "z",
+        "angle": 45.0
+      }
+    },
+    {
+      "name": "corona_ring_horizontal",
+      "from": [
+        2.5,
+        7.4,
+        2.5
+      ],
+      "to": [
+        13.5,
+        8.6,
+        13.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "y",
+        "angle": 25.0
+      }
+    },
+    {
+      "name": "corona_ring_inclined",
+      "from": [
+        2.5,
+        7.4,
+        2.5
+      ],
+      "to": [
+        13.5,
+        8.6,
+        13.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "x",
+        "angle": 35.0
+      }
+    },
+    {
+      "name": "corona_ring_perpendicular",
+      "from": [
+        2.5,
+        7.4,
+        2.5
+      ],
+      "to": [
+        13.5,
+        8.6,
+        13.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "z",
+        "angle": 55.0
+      }
+    },
+    {
+      "name": "shard_north",
+      "from": [
+        7.0,
+        12.0,
+        7.0
+      ],
+      "to": [
+        9.0,
+        14.0,
+        9.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "x",
+        "angle": 15.0
+      }
+    },
+    {
+      "name": "shard_south",
+      "from": [
+        7.0,
+        2.0,
+        7.0
+      ],
+      "to": [
+        9.0,
+        4.0,
+        9.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "x",
+        "angle": -15.0
+      }
+    },
+    {
+      "name": "shard_east",
+      "from": [
+        12.0,
+        7.0,
+        7.0
+      ],
+      "to": [
+        14.0,
+        9.0,
+        9.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "z",
+        "angle": 15.0
+      }
+    },
+    {
+      "name": "shard_west",
+      "from": [
+        2.0,
+        7.0,
+        7.0
+      ],
+      "to": [
+        4.0,
+        9.0,
+        9.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#texture"
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "z",
+        "angle": -15.0
+      }
+    }
+  ],
+  "display": {
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.65,
+        0.65,
+        0.65
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    }
+  }
+}

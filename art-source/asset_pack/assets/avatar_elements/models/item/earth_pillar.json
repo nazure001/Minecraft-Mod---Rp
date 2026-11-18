@@ -1,25 +1,26 @@
 {
-  "credit": "Avatar Elements Mod - Earth Pillar 3D Column (Fabric 1.21.1)",
+  "credit": "Avatar Elements Mod - Earth Pillar 3D Column (ATLA Canon Edition)",
+  "parent": "minecraft:block/block",
   "texture_size": [
     64,
     64
   ],
   "textures": {
-    "pillar": "avatar_elements:textures/vfx/earth_pillar",
-    "particle": "avatar_elements:textures/vfx/earth_pillar"
+    "pillar": "avatar_elements:vfx/earth_pillar",
+    "particle": "avatar_elements:vfx/earth_pillar"
   },
   "elements": [
     {
-      "name": "subterranean_anchor",
+      "name": "subterranean_root",
       "from": [
-        -1.0,
-        -4.0,
-        -1.0
+        0.0,
+        -12.0,
+        0.0
       ],
       "to": [
-        17.0,
-        0.0,
-        17.0
+        16.0,
+        -8.0,
+        16.0
       ],
       "faces": {
         "north": {
@@ -79,16 +80,16 @@
       }
     },
     {
-      "name": "base_rupture_slab",
+      "name": "crater_slab_base",
       "from": [
-        -3.0,
-        0.0,
-        -3.0
+        -2.5,
+        -8.0,
+        -2.5
       ],
       "to": [
-        19.0,
-        3.0,
-        19.0
+        18.5,
+        -5.0,
+        18.5
       ],
       "faces": {
         "north": {
@@ -148,16 +149,16 @@
       }
     },
     {
-      "name": "rupture_shard_ne",
+      "name": "rupture_slab_north",
       "from": [
+        1.0,
+        -8.0,
+        -5.0
+      ],
+      "to": [
         15.0,
-        0.0,
-        15.0
-      ],
-      "to": [
-        22.0,
-        4.0,
-        22.0
+        -2.0,
+        -1.0
       ],
       "faces": {
         "north": {
@@ -217,24 +218,24 @@
       },
       "rotation": {
         "origin": [
-          15.0,
-          0.0,
-          15.0
+          8.0,
+          -8.0,
+          -1.0
         ],
-        "axis": "z",
-        "angle": -15.0
+        "axis": "x",
+        "angle": -25.0
       }
     },
     {
-      "name": "rupture_shard_nw",
+      "name": "rupture_slab_south",
       "from": [
-        -6.0,
-        0.0,
-        15.0
+        1.0,
+        -8.0,
+        17.0
       ],
       "to": [
-        1.0,
-        3.5,
+        15.0,
+        -2.0,
         21.0
       ],
       "faces": {
@@ -295,302 +296,77 @@
       },
       "rotation": {
         "origin": [
-          1.0,
-          0.0,
-          15.0
+          8.0,
+          -8.0,
+          17.0
         ],
         "axis": "x",
-        "angle": 15.0
+        "angle": 25.0
       }
     },
     {
-      "name": "rupture_shard_se",
+      "name": "rupture_slab_east",
       "from": [
-        15.0,
-        0.0,
-        -6.0
+        17.0,
+        -8.0,
+        1.0
       ],
       "to": [
         21.0,
-        4.5,
-        1.0
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "east": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "south": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "west": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "up": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "down": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        }
-      },
-      "rotation": {
-        "origin": [
-          15.0,
-          0.0,
-          1.0
-        ],
-        "axis": "x",
-        "angle": -15.0
-      }
-    },
-    {
-      "name": "rupture_shard_sw",
-      "from": [
-        -5.0,
-        0.0,
-        -5.0
-      ],
-      "to": [
-        1.0,
-        3.0,
-        1.0
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "east": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "south": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "west": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "up": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "down": {
-          "uv": [
-            8.0,
-            0.0,
-            12.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        }
-      },
-      "rotation": {
-        "origin": [
-          1.0,
-          0.0,
-          1.0
-        ],
-        "axis": "z",
-        "angle": 15.0
-      }
-    },
-    {
-      "name": "shaft_tier1_core",
-      "from": [
-        0.0,
-        3.0,
-        0.0
-      ],
-      "to": [
-        16.0,
-        20.0,
-        16.0
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            0.0,
-            0.0,
-            4.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "east": {
-          "uv": [
-            0.0,
-            0.0,
-            4.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "south": {
-          "uv": [
-            0.0,
-            0.0,
-            4.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "west": {
-          "uv": [
-            0.0,
-            0.0,
-            4.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "up": {
-          "uv": [
-            0.0,
-            0.0,
-            4.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        },
-        "down": {
-          "uv": [
-            0.0,
-            0.0,
-            4.0,
-            4.0
-          ],
-          "texture": "#pillar"
-        }
-      }
-    },
-    {
-      "name": "shaft_tier1_bevel",
-      "from": [
-        1.0,
-        3.0,
-        1.0
-      ],
-      "to": [
-        15.0,
-        20.0,
+        -2.0,
         15.0
       ],
       "faces": {
         "north": {
           "uv": [
+            8.0,
             0.0,
-            0.0,
-            4.0,
+            12.0,
             4.0
           ],
           "texture": "#pillar"
         },
         "east": {
           "uv": [
+            8.0,
             0.0,
-            0.0,
-            4.0,
+            12.0,
             4.0
           ],
           "texture": "#pillar"
         },
         "south": {
           "uv": [
+            8.0,
             0.0,
-            0.0,
-            4.0,
+            12.0,
             4.0
           ],
           "texture": "#pillar"
         },
         "west": {
           "uv": [
+            8.0,
             0.0,
-            0.0,
-            4.0,
+            12.0,
             4.0
           ],
           "texture": "#pillar"
         },
         "up": {
           "uv": [
+            8.0,
             0.0,
-            0.0,
-            4.0,
+            12.0,
             4.0
           ],
           "texture": "#pillar"
         },
         "down": {
           "uv": [
+            8.0,
             0.0,
-            0.0,
-            4.0,
+            12.0,
             4.0
           ],
           "texture": "#pillar"
@@ -598,24 +374,102 @@
       },
       "rotation": {
         "origin": [
-          8.0,
-          11.5,
+          17.0,
+          -8.0,
           8.0
         ],
-        "axis": "y",
-        "angle": 45.0
+        "axis": "z",
+        "angle": -25.0
       }
     },
     {
-      "name": "shaft_tier2_core",
+      "name": "rupture_slab_west",
+      "from": [
+        -5.0,
+        -8.0,
+        1.0
+      ],
+      "to": [
+        -1.0,
+        -2.0,
+        15.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8.0,
+            0.0,
+            12.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        },
+        "east": {
+          "uv": [
+            8.0,
+            0.0,
+            12.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        },
+        "south": {
+          "uv": [
+            8.0,
+            0.0,
+            12.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        },
+        "west": {
+          "uv": [
+            8.0,
+            0.0,
+            12.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        },
+        "up": {
+          "uv": [
+            8.0,
+            0.0,
+            12.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        },
+        "down": {
+          "uv": [
+            8.0,
+            0.0,
+            12.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        }
+      },
+      "rotation": {
+        "origin": [
+          -1.0,
+          -8.0,
+          8.0
+        ],
+        "axis": "z",
+        "angle": 25.0
+      }
+    },
+    {
+      "name": "shaft_lower_core",
       "from": [
         0.5,
-        20.0,
+        -5.0,
         0.5
       ],
       "to": [
         15.5,
-        32.0,
+        8.0,
         15.5
       ],
       "faces": {
@@ -676,15 +530,15 @@
       }
     },
     {
-      "name": "shaft_tier2_bevel",
+      "name": "shaft_lower_bevel",
       "from": [
         1.5,
-        20.0,
+        -5.0,
         1.5
       ],
       "to": [
         14.5,
-        32.0,
+        8.0,
         14.5
       ],
       "faces": {
@@ -746,7 +600,7 @@
       "rotation": {
         "origin": [
           8.0,
-          26.0,
+          1.5,
           8.0
         ],
         "axis": "y",
@@ -754,154 +608,241 @@
       }
     },
     {
-      "name": "shaft_tier3_core",
+      "name": "shaft_mid_core",
       "from": [
-        2.0,
-        32.0,
-        2.0
+        1.5,
+        8.0,
+        1.5
       ],
       "to": [
-        14.0,
-        40.0,
-        14.0
+        14.5,
+        21.0,
+        14.5
       ],
       "faces": {
         "north": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         },
         "east": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         },
         "south": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         },
         "west": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         },
         "up": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         },
         "down": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         }
       }
     },
     {
-      "name": "crown_protrusion_a",
+      "name": "shaft_mid_bevel",
       "from": [
-        2.0,
-        40.0,
-        2.0
+        2.5,
+        8.0,
+        2.5
       ],
       "to": [
-        7.0,
-        46.0,
-        7.0
+        13.5,
+        21.0,
+        13.5
       ],
       "faces": {
         "north": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         },
         "east": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         },
         "south": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         },
         "west": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         },
         "up": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         },
         "down": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             4.0,
-            12.0
+            4.0
           ],
           "texture": "#pillar"
         }
+      },
+      "rotation": {
+        "origin": [
+          8.0,
+          14.5,
+          8.0
+        ],
+        "axis": "y",
+        "angle": 45.0
       }
     },
     {
-      "name": "crown_protrusion_b",
+      "name": "jade_strata_seam",
       "from": [
+        1.0,
         9.0,
-        40.0,
-        9.0
+        5.0
       ],
       "to": [
+        2.5,
+        19.0,
+        11.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "east": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "south": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "west": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "up": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "down": {
+          "uv": [
+            8.0,
+            8.0,
+            12.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        }
+      },
+      "rotation": {
+        "origin": [
+          1.75,
+          14.0,
+          8.0
+        ],
+        "axis": "z",
+        "angle": 10.0
+      }
+    },
+    {
+      "name": "architectural_belt",
+      "from": [
+        0.7999999999999998,
+        11.5,
+        0.7999999999999998
+      ],
+      "to": [
+        15.2,
         14.0,
-        44.5,
-        14.0
+        15.2
       ],
       "faces": {
         "north": {
@@ -961,16 +902,223 @@
       }
     },
     {
-      "name": "crown_platform_slab",
+      "name": "shaft_upper_neck",
       "from": [
-        4.5,
-        40.0,
-        4.5
+        2.5,
+        21.0,
+        2.5
       ],
       "to": [
-        11.5,
-        42.0,
-        11.5
+        13.5,
+        27.0,
+        13.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#pillar"
+        }
+      }
+    },
+    {
+      "name": "cornice_rim",
+      "from": [
+        1.7999999999999998,
+        26.0,
+        1.7999999999999998
+      ],
+      "to": [
+        14.2,
+        28.5,
+        14.2
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        }
+      }
+    },
+    {
+      "name": "launch_piston_cap",
+      "from": [
+        2.5,
+        28.5,
+        2.5
+      ],
+      "to": [
+        13.5,
+        31.0,
+        13.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            8.0,
+            4.0,
+            12.0
+          ],
+          "texture": "#pillar"
+        }
+      }
+    },
+    {
+      "name": "center_strike_anvil",
+      "from": [
+        5.0,
+        31.0,
+        5.0
+      ],
+      "to": [
+        11.0,
+        32.0,
+        11.0
       ],
       "faces": {
         "north": {

@@ -1,0 +1,508 @@
+{
+  "meta": {
+    "format_version": "4.10",
+    "model_format": "bedrock",
+    "box_uv": false
+  },
+  "name": "captured_earth_shards",
+  "model_identifier": "geometry.captured_earth_shards",
+  "resolution": {
+    "width": 64,
+    "height": 64
+  },
+  "elements": [
+    {
+      "name": "shard_fr",
+      "box_uv": false,
+      "from": [
+        9.0,
+        6.0,
+        -10.0
+      ],
+      "to": [
+        14.0,
+        14.0,
+        -8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "643309e6-d4ca-46d1-85d7-11ab9b503a29",
+      "rotation": [
+        0,
+        -30.0,
+        0
+      ],
+      "origin": [
+        11.5,
+        10.0,
+        -9.0
+      ]
+    },
+    {
+      "name": "shard_fl",
+      "box_uv": false,
+      "from": [
+        -14.0,
+        8.0,
+        -10.0
+      ],
+      "to": [
+        -9.0,
+        16.0,
+        -8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "7089421c-7a15-49b5-a92d-0122ee93db74",
+      "rotation": [
+        0,
+        30.0,
+        0
+      ],
+      "origin": [
+        -11.5,
+        12.0,
+        -9.0
+      ]
+    },
+    {
+      "name": "shard_br",
+      "box_uv": false,
+      "from": [
+        9.0,
+        10.0,
+        8.0
+      ],
+      "to": [
+        14.0,
+        18.0,
+        10.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "857f1a16-f40e-4679-81fc-f6fb4c17ba0e",
+      "rotation": [
+        0,
+        35.0,
+        0
+      ],
+      "origin": [
+        11.5,
+        14.0,
+        9.0
+      ]
+    },
+    {
+      "name": "shard_bl",
+      "box_uv": false,
+      "from": [
+        -14.0,
+        5.0,
+        8.0
+      ],
+      "to": [
+        -9.0,
+        13.0,
+        10.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "769a9beb-a7d3-4423-a1ea-ad9ac6588de2",
+      "rotation": [
+        0,
+        -35.0,
+        0
+      ],
+      "origin": [
+        -11.5,
+        9.0,
+        9.0
+      ]
+    },
+    {
+      "name": "kinetic_core",
+      "box_uv": false,
+      "from": [
+        -2.0,
+        9.0,
+        -11.0
+      ],
+      "to": [
+        2.0,
+        13.0,
+        -9.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            0,
+            48,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "904b87f7-a79c-4f0d-8e4b-0100303780b6",
+      "rotation": [
+        0,
+        0,
+        45.0
+      ],
+      "origin": [
+        0,
+        11,
+        -10
+      ]
+    }
+  ],
+  "outliner": [
+    {
+      "name": "root",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "children": [
+        "643309e6-d4ca-46d1-85d7-11ab9b503a29",
+        "7089421c-7a15-49b5-a92d-0122ee93db74",
+        "857f1a16-f40e-4679-81fc-f6fb4c17ba0e",
+        "769a9beb-a7d3-4423-a1ea-ad9ac6588de2",
+        "904b87f7-a79c-4f0d-8e4b-0100303780b6"
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "path": "captured_earth_shards.png",
+      "name": "captured_earth_shards.png",
+      "folder": "textures/vfx",
+      "namespace": "avatar_elements",
+      "id": "0",
+      "particle": false,
+      "render_mode": "default",
+      "visible": true,
+      "mode": "bitmap",
+      "saved": true,
+      "uuid": "1f2acdec-9928-4b79-998c-5e3fbf2c9dd6",
+      "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACbklEQVR4nO1bQUrEQBDsKfMCEY/ignrwJAiK4jd8hC/aR/gPBUHwrILiURafoBIhMNskme6ZyaxDpy67NqnuSWpWprqJOz85/iHDABlH031Z7O+piG/vH2t/18oHGUfDA4dHB7Szs02r1Rfd7r7R9efiL97FXp5fRxNeXJ79Xddd73Pbz/u7h1G+X79FtwZtfV63i3E+eAL/5m++T9diEvDrNFwOXwAt+uq2MQ4MFW5vXpJAU3yJRzG3lADggXaR/lNPUdDn8rxjKCkAeMD/vYWSSotrtnJpASBNEFucb+UQSgsASYLY3+DQVpaihADQFG+TSYvHbuXSArjOC9R6kkvlg4zDzW7QOEDGATKOpvb/4ql8kHE0qX66z8/7XN5T0PQD+noKMf0Iv6fA6yPVT+e2tDlPghIjhlAC7qikmMIHTCEAclvaFB+wCQGgfZIhdDefQ8ESAiBUXLuV+SJzW9rcAkD7JDULD8Uk3KkFAA/wFlKullQMt4QAbu4HGIeb+wHGATIOkHE0tfv5VD7IOJqQn/ZPYjHzfe7tY+b7vg8I8Z+uttYOcHwtwX7AqrLRVupsEbWPtrRrET2A5UQ+4D/OFsEDfb47R0Mjl6XNLQB4YKyFFOvGNFu5tACQJohB31YOobQAkCQYioW4MVu5tABu7gcYh5v7AcYBMg6QcTS1+/lUPsg4mtB8P+Sn+/ic65/EtH6eryW2H9EdsYPvC9Q22pKsZcyIQZIgtngNs0Voikv8fG2zRUiLa/x8iqUtLQCGEvjFY972GLoZKUoJgFBx7VYeetUlxQ5PKQA2/dbWpgVwcz/AONzcDyDb+AWimdRfYDm1lgAAAABJRU5ErkJggg=="
+    }
+  ],
+  "animations": [
+    {
+      "name": "orbit_defensive",
+      "loop": "loop",
+      "length": 1.2,
+      "animators": {
+        "root": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.6": [
+              0,
+              180,
+              0
+            ],
+            "1.2": [
+              0,
+              360,
+              0
+            ]
+          },
+          "position": {
+            "0.0": [
+              0,
+              0,
+              0
+            ],
+            "0.3": [
+              0,
+              1.5,
+              0
+            ],
+            "0.6": [
+              0,
+              0,
+              0
+            ],
+            "0.9": [
+              0,
+              -1.5,
+              0
+            ],
+            "1.2": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

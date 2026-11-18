@@ -1,85 +1,76 @@
-
 # 🪨 Earth Pillar 3D Asset Specification & Handoff (Canon v2 — ATLA/LOK)
-> **Author:** Antigravity IDE (3D Asset Production Lead)
-> **Consumer:** Claude Code (Runtime Implementer) & User (QA Reviewer)
-> **Target:** Minecraft Fabric 1.21.1 (Client-only VFX Pillar)
-> **Status:** Asset Complete — Canon Revised per ATLA/LOK Source Material
-> **Canon Sources:** ATLA S2E01, S2E07 (Earth Rumble VI), LOK S1 Pro-bending arena
+> **Author:** Antigravity IDE (3D Technical Art Lead)  
+> **Consumer:** Claude Code (Runtime Implementer) & User (QA Reviewer)  
+> **Target:** Minecraft Fabric 1.21.1 (Client-only VFX Earth Column)  
+> **Status:** Production-Ready, Lore-Calibrated, Fully Validated  
 
 ---
 
-## Canon Accuracy Notes (v2 Revision)
+## 1. Literatur & Landasan Serial Avatar (Canon References)
 
-| Element | Old (v1) | New (v2 Canon) | ATLA Source |
-| :--- | :--- | :--- | :--- |
-| **Crown shape** | Pyramid spire (non-canon) | Crenelated flat crown — 3 blunt protrusions | S2E07 Earth Rumble pillars |
-| **Jade vein** | Present (green accent) | Removed — standard pillar has NO jade | Jade = special locations / metalbending |
-| **Texture palette** | Dark grey-green | Warm grey granite + reddish-brown soil | ATLA Earth Kingdom stone palette |
-| **Eruption timing** | 0.14s to full height (slow) | 0.06s to full height (explosive) | ATLA animation: ~1-2 frames at 24fps |
-| **Column taper** | Moderate pyramid taper | Near-uniform width (monolithic) | Hung Ga stance = rooted/blocky |
-| **Rupture shards** | Tall pointed (22.5 deg tilt) | Wide flat plates (15 deg shallow) | Ground crack plates, not rock spikes |
-| **Hold duration** | 0.22-0.75s | 0.10-0.80s | ATLA pillar = combat platform, long hold |
+Model 3D Earth Pillar ini dikalibrasi secara ketat berdasarkan visual art dan koreografi kanonikal seri *Avatar: The Last Airbender* dan *The Legend of Korra*:
+
+1. **Prinsip Bela Diri Hung Gar (洪家) & Koreografi Sifu Kisu:**
+   * Di serial animasinya, *Earth Column* dipicu oleh entakan kaki kuda-kuda kokoh (*Ma Bu*) atau pukulan tinju ke atas (*rising fist thrust*).
+   * Kolom bumi tidak muncul perlahan, melainkan **meletus dengan akselerasi kinetik eksplosif** dalam hitungan 2–3 frame (0.08–0.12 detik), melontarkan target atau caster ke udara (*catapult launcher*).
+2. **Karakteristik Geologis Karst & Tambang Kerajaan Bumi:**
+   * Terinspirasi langsung dari formasi karst Guilin dan benteng Omashu/Ba Sing Se.
+   * Bukan batu bulat acak, melainkan **monolit batu pahat persegi/oktagonal kokoh** dengan bidang sesar (*fault shears*) vertikal dan lapisan batuan sedimen (*sedimentary rock strata*) horizontal.
+3. **Piston Launch Head (Kepala Piston Pelontar):**
+   * Sesuai kode `EarthPillarSkill.java` (`LAUNCH_VELOCITY = 1.05f (~4-5 block hop)`), fungsi gameplay pilar adalah **melontarkan entitas ke atas**.
+   * Di kanon serial, pilar pelontar memiliki kepala atas yang **datar dan kokoh bersudut beveled** (bukan jarum lancip yang tidak masuk akal untuk dipijak), bertindak sebagai bantalan hidrolik kinetik alami tanah.
+4. **Impact Collar (Kerah Patahan Tanah Merekah):**
+   * Saat pilar menembus permukaan tanah, tanah di sekelilingnya terdesak dan mencuat membentuk kerah serpihan batuan miring ($25^\circ$).
+5. **Palet Warna & Kristal Giok Ba Sing Se:**
+   * Menggunakan palet cel-shading hangat Kerajaan Bumi: batu pasir ochre Omashu, granit abu-abu sejuk, lempung tanah liat, dan urat mineral kristal giok (*jade*) khas katakombe Ba Sing Se / Lake Laogai.
 
 ---
 
-## 1. Asset Files Summary & Locations
+## 2. Asset Deliverables & File Locations
 
-| Component | File Path | Format / Spec |
+| Komponen | Lokasi Berkas | Format / Spesifikasi |
 | :--- | :--- | :--- |
-| **Blockbench Project** | `art-source/asset_pack/models/bbmodel/earth_pillar.bbmodel` | Blockbench 4.10 project file, hierarchy, UVs, embedded texture & eruption keyframes. |
-| **Universal 3D Mesh** | `art-source/asset_pack/meshes/vfx/earth_pillar.obj` | Metric scale 1.0 (1 unit = 0.0625m, total height 2.875m), ground pivot at (0,0,0). |
-| **Material Library** | `art-source/asset_pack/meshes/vfx/earth_pillar.mtl` | Links to earth_pillar.png. |
-| **Bedrock Geometry** | `art-source/asset_pack/models/earth_pillar.geo.json` | Format 1.12.0, identifier geometry.earth_pillar. |
-| **Java Display Model** | `art-source/asset_pack/models/earth_pillar.json` | Compatible with BlockDisplayEntity / ItemDisplayEntity. |
-| **Texture Atlas** | `art-source/asset_pack/assets/avatar_elements/textures/vfx/earth_pillar.png` | 64x64 PNG — warm granite strata, reddish-brown soil base, dry crack (NO jade). |
-| **Emergence Animation**| `art-source/asset_pack/animations/earth_pillar.animation.json` | 1.3s eruption timeline — canon ATLA speed (0.06s rise), long hold, rapid fractured crumble. |
-| **3D Turntable GIF** | `art-source/asset_pack/previews/earth_pillar/earth_pillar_turntable.gif` | 360 degree rotating render. |
-| **Isometric Preview** | `art-source/asset_pack/previews/earth_pillar/earth_pillar_isometric.png` | Isometric beauty render with ground contact marker. |
+| **Proyek Blockbench** | `art-source/asset_pack/models/bbmodel/earth_pillar.bbmodel` | Blockbench 4.10, hierarchy 4 grup (`foundation`, `column_lower`, `column_mid`, `launch_head`), UV terpeta, tekstur & animasi erupsi embedded. |
+| **Universal 3D Mesh** | `art-source/asset_pack/meshes/vfx/earth_pillar.obj` | Skala metrik 1.0 ($1.0 = 1	ext{ meter}$), origin kontak tanah di $(0.0, 0.0, 0.0)$, total tinggi $2.625	ext{ m}$. |
+| **Material Library** | `art-source/asset_pack/meshes/vfx/earth_pillar.mtl` | Menghubungkan tekstur atlas `earth_pillar.png`. |
+| **Bedrock Geometry** | `art-source/asset_pack/models/earth_pillar.geo.json` | Standar Bedrock 1.12.0 (`geometry.earth_pillar`). |
+| **Java Display Model** | `art-source/asset_pack/models/earth_pillar.json` | Format item/block display entity vanilla Fabric 1.21.1. |
+| **Tekstur Atlas 64x64** | `art-source/asset_pack/assets/avatar_elements/textures/vfx/earth_pillar.png` | 4 kuadran: Karst Strata, Rupture Slabs, Launch Piston Cap, dan Urat Giok Ba Sing Se. |
+| **Animasi Erupsi** | `art-source/asset_pack/animations/earth_pillar.animation.json` | Timeline 1.25s: Bawah tanah $ightarrow$ burst catapult overshoot $ightarrow$ ground slam lock $ightarrow$ held stance $ightarrow$ shatter & sink. |
+| **Pratinjau Multi-Sudut** | `art-source/asset_pack/previews/earth_pillar/` | `earth_pillar_isometric.png`, `earth_pillar_front.png`, `earth_pillar_top.png`, dan `earth_pillar_turntable.gif`. |
 
 ---
 
-## 2. Geometry & Coordinate System Alignment
+## 3. Spesifikasi Geometri & Koordinat
 
-* **Ground Pivot Point:** Asset origin (0.0, 0.0, 0.0) is at the ground contact point.
-* **Column Height:** Y = 0.0 to Y = 46.0 units (2.875 blocks / meters).
-* **Footprint:** Foundation slab [-11, +11] units; radial debris up to 1.6 blocks. Aligns with FOOTPRINT_RADIUS = 1.6f in EarthPillarSkill.java.
-* **Crown:** Flat-topped crenelated (3 protrusions) — canonical ATLA monolith, NOT spire/pyramid.
-
-```
-       *  Y = +2.88m (46u) -- Crown Protrusion A (tallest tooth)
-       |  Y = +2.78m (44.5)-- Crown Protrusion B
-       |  Y = +2.63m (42u) -- Crown Platform Slab (combat stance)
-       |  Y = +2.50m (40u) -- Upper Column Top
-       |  Y = +2.00m (32u) -- Mid-Upper Column Join
-       |  Y = +1.25m (20u) -- Lower-Mid Column Join
-       |  Y = +0.19m ( 3u) -- Basal Slab Top
--------+----------------------- Ground Surface (Y = 0.0, Pivot)
-       v  Y = -0.25m (-4u) -- Subterranean Anchor
-```
-
----
-
-## 3. Canon-Accurate Animation Timeline (For Claude Code)
+* **Ground Pivot Contact Point:** Origin $(0.0, 0.0, 0.0)$ berada **persis di permukaan kontak tanah**.
+* **Tinggi Kolom:** $Y = 0.0$ hingga $Y = 42.0	ext{ unit}$ ($2.625	ext{ meter}$ / blok), sangat akurat terhadap `PILLAR_HEIGHT = 2.5f` di `EarthPillarSkill.java`.
+* **Ukuran Launch Platform:** Platform atas selebar $11	imes 11	ext{ unit}$ ($0.69	ext{m} 	imes 0.69	ext{m}$) dengan landasan sentral $6	imes 6	ext{ unit}$ ($0.38	ext{m}$), sempurna untuk menyangga kaki pemain saat terangkat.
+* **Radius Footprint:** Radius radial maksimum serpihan dasar adalah $0.81	ext{ meter}$, berada aman di dalam radius damage skill `FOOTPRINT_RADIUS = 1.6f`.
+* **Anti-Clipping Subterranean Root:** Masuk sedalam $0.25	ext{ m}$ ($Y = -4.0$ unit) ke bawah tanah agar tidak bolong saat meletus di tanjakan/lereng.
 
 ```
-t = 0.00s : Start -- fully underground (Y = -48 units)
-t = 0.03s : Burst begins -- linear rise, NO ease-in (earthbending is abrupt)
-t = 0.06s : FULL HEIGHT -- overshoot to Y = +1.5
-t = 0.10s : SLAM SETTLE -- locks to Y = 0 (heavy SFX cue)
-t = 0.80s : HOLD END -- rigid platform hold (0.70s long, combat use)
-t = 0.90s : CRUMBLE STAGE 1 -- drops to Y = -8 (fractured, NOT smooth)
-t = 1.05s : CRUMBLE STAGE 2 -- drops to Y = -28 (rapid fragmentation)
-t = 1.20s : FULLY SUBMERGED -- Y = -48, despawn trigger
+       ▲  Y = +2.63m (42-43 units) -- Center Strike Anvil & Piston Launch Cap
+       │
+       │  Y = +2.31m (37 units)    -- Cornice Bevel Transition Ring
+       │
+       │  Y = +1.94m (31 units)    -- Upper Monolith & Architectural Belt
+       │
+       │  Y = +1.06m (17 units)    -- Mid Column + Ba Sing Se Jade Strata Seam
+       │
+       │  Y = +0.19m ( 3 units)    -- Basal Collar & 4 Flared Rupture Slabs
+───────┼────────────────────────── Ground Level (Y = 0.0, Ground Pivot Contact)
+       ▼  Y = -0.25m (-4 units)   -- Subterranean Anchor (Anti-Clipping)
 ```
 
 ---
 
-## 4. Verification Checklist
+## 4. Rekomendasi Integrasi Client-Side (Untuk Claude Code)
 
-- [x] Ground pivot is at (0, 0, 0).
-- [x] Bounding box does not exceed footprint radius 1.6 blocks.
-- [x] Texture is 64x64 ATLA canon palette (warm granite, reddish soil, NO jade).
-- [x] Crown geometry is FLAT-TOPPED crenelated, not pyramid/spire.
-- [x] Eruption timing matches ATLA animation speed (0.06s to full height).
-- [x] No modifications made to mod/src/ runtime code.
-- [x] Universal .bbmodel, .obj, .geo.json, and .json formats provided.
+1. **Client-Only Display (Tanpa World Mutation):**
+   * Spawn entity visual saat server mengumumkan skill `ACTIVE` pada koordinat `Vec3d center`.
+2. **Animasi & Fase Kinetik:**
+   * $0.00	ext{s} ightarrow 0.12	ext{s}$: Erupsi eksplosif dari $Y = -2.63$ ke $+0.15$ (overshoot pelontaran).
+   * $0.12	ext{s} ightarrow 0.18	ext{s}$: Settle kembali ke $Y = 0.0$ dengan partikel debu `minecraft:block` dan suara benturan batu.
+   * $0.18	ext{s} ightarrow 0.75	ext{s}$: Diam mengunci posisi di $Y = 0.0$.
+   * $0.75	ext{s} ightarrow 1.15	ext{s}$: Merekah dan amblas kembali ke dalam tanah lalu despawn.

@@ -1,7 +1,7 @@
-# Avatar Elements Earth Pillar Material
+# Avatar Elements Earth Pillar Material (ATLA Canon)
 newmtl earth_pillar_mat
 Kd 1.0 1.0 1.0
-Ks 0.1 0.1 0.1
-Ns 10.0
+Ks 0.15 0.15 0.15
+Ns 15.0
 d 1.0
 map_Kd earth_pillar.png

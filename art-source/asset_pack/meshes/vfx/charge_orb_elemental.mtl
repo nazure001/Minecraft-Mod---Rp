@@ -1,0 +1,7 @@
+# Avatar Elements Material: charge_orb_elemental
+newmtl charge_orb_elemental_mat
+Kd 1.0 1.0 1.0
+Ks 0.2 0.2 0.2
+Ns 20.0
+d 1.0
+map_Kd charge_orb_elemental.png
