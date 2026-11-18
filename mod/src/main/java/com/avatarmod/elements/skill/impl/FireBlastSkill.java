@@ -31,7 +31,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class FireBlastSkill {
 
     public static final float BASE_SPEED = 1.8f;      // blocks per tick
-    public static final float SPEED = 1.8f;
     public static final int   MAX_LIFETIME = 25;      // ticks
     public static final float MIN_DAMAGE_RATIO = 0.35f;
     public static final float MAX_DAMAGE_RATIO = 1.0f;

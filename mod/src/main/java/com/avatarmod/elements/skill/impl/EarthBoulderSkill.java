@@ -104,10 +104,5 @@ public final class EarthBoulderSkill {
         }
     }
 
-    // Called from AvatarServerEvents each tick (even outside ACTIVE, to advance in-flight boulders)
-    public static void tickBoulders(ServerPlayerEntity player) {
-        // Boulders are advanced in tick() above; this is a no-op hook for future use
-    }
-
     private EarthBoulderSkill() {}
 }

@@ -26,8 +26,7 @@ public final class WaterWhipSkill {
     public static void tick(ServerPlayerEntity player, SkillDefinition def) {
         SkillTimeline timeline = PlayerBendingData.get(player).getTimeline();
         if (timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
-        // Fire on first active tick
-        if (timeline.ticksInPhase() > 1) return;
+        if (timeline.ticksInPhase() != 1) return;
 
         ServerWorld world = player.getServerWorld();
         Vec3d origin = player.getPos().add(0, player.getStandingEyeHeight(), 0);
