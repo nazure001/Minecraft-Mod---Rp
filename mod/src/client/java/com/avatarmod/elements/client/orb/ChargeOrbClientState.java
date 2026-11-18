@@ -1,8 +1,8 @@
 package com.avatarmod.elements.client.orb;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Client-side state for charge orbs.
@@ -32,7 +32,7 @@ public final class ChargeOrbClientState {
     }
 
     // UUID → current orb state; entries removed when phase → IDLE
-    private static final Map<UUID, OrbState> states = new HashMap<>();
+    private static final Map<UUID, OrbState> states = new ConcurrentHashMap<>();
 
     public static void update(UUID casterUuid, String skillId,
                                String phase, int ticksIn, int castSerial) {

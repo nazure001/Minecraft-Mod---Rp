@@ -61,10 +61,18 @@ public final class SkillTargeting {
     }
 
     public static boolean hasLineOfSight(ServerWorld world, Vec3d start, Box targetBounds, Entity source) {
-        Vec3d end = closestPoint(start, targetBounds);
-        if (start.squaredDistanceTo(end) < 1.0e-7) return true;
+        Vec3d center = targetBounds.getCenter();
+        if (start.squaredDistanceTo(center) < 1.0e-7) return true;
+        if (world.raycast(new RaycastContext(
+                start, center, RaycastContext.ShapeType.COLLIDER,
+                RaycastContext.FluidHandling.NONE, source
+        )).getType() == HitResult.Type.MISS) {
+            return true;
+        }
+        Vec3d closest = closestPoint(start, targetBounds);
+        if (start.squaredDistanceTo(closest) < 1.0e-7) return true;
         return world.raycast(new RaycastContext(
-                start, end, RaycastContext.ShapeType.COLLIDER,
+                start, closest, RaycastContext.ShapeType.COLLIDER,
                 RaycastContext.FluidHandling.NONE, source
         )).getType() == HitResult.Type.MISS;
     }
