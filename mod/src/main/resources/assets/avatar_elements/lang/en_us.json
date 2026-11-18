@@ -1,6 +1,10 @@
 {
   "itemGroup.avatar_elements.main": "Avatar: Elements",
   "item.avatar_elements.air_staff": "Air Staff",
+  "item.avatar_elements.dual_swords": "Dual Dao Broadswords",
+  "item.avatar_elements.earth_hammer": "Earth Kingdom Warhammer",
+  "item.avatar_elements.war_fan": "Kyoshi Warriors War Fan",
+  "item.avatar_elements.water_spear": "Water Tribe Harpoon Spear",
   "item.avatar_elements.water_skin_container": "Waterbending Waterskin",
   "item.avatar_elements.lava_crucible_container": "Lavabending Crucible",
   "gui.avatar_elements.title.skills": "Bending Mastery & Skill Tree",
@@ -100,6 +104,12 @@
   "skill.avatar.metal_cable": "Metal Cable",
   "skill.avatar.lavabending": "Lavabending",
   "category.avatar_elements.general": "Avatar: Elements",
+  "key.avatar_elements.slot_1": "Skill Slot 1",
+  "key.avatar_elements.slot_2": "Skill Slot 2",
+  "key.avatar_elements.slot_3": "Skill Slot 3",
+  "key.avatar_elements.slot_4": "Skill Slot 4",
+  "key.avatar_elements.slot_5": "Skill Slot 5",
+  "key.avatar_elements.element_wheel": "Cycle Element",
   "key.avatar_elements.test_action": "Test Action (Avatar)",
   "key.avatar_elements.skill_fire_jab": "Skill: Fire Jab (Avatar)",
   "subtitles.avatar_elements.fire.release": "Fire Jab whoosh"

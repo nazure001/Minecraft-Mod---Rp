@@ -1,6 +1,10 @@
 {
   "itemGroup.avatar_elements.main": "Elemen Avatar",
   "item.avatar_elements.air_staff": "Tongkat Glider Pengembara Udara",
+  "item.avatar_elements.dual_swords": "Pedang Ganda Dao",
+  "item.avatar_elements.earth_hammer": "Palu Tempur Kerajaan Tanah",
+  "item.avatar_elements.war_fan": "Kipas Tempur Kyoshi",
+  "item.avatar_elements.water_spear": "Tombak Harpun Suku Air",
   "item.avatar_elements.water_skin_container": "Kantung Air Pengendali Air",
   "item.avatar_elements.lava_crucible_container": "Wadah Lava Pengendali Lava",
   "gui.avatar_elements.title.skills": "Pohon Jurus & Penguasaan Elemen",
@@ -98,5 +102,12 @@
   "skill.avatar.seismic_sense": "Seismic Sense",
   "skill.avatar.metalbending_whip": "Metalbending Whip",
   "skill.avatar.metal_cable": "Metal Cable",
-  "skill.avatar.lavabending": "Lavabending"
+  "skill.avatar.lavabending": "Lavabending",
+  "category.avatar_elements.general": "Avatar: Elemen",
+  "key.avatar_elements.slot_1": "Slot Jurus 1",
+  "key.avatar_elements.slot_2": "Slot Jurus 2",
+  "key.avatar_elements.slot_3": "Slot Jurus 3",
+  "key.avatar_elements.slot_4": "Slot Jurus 4",
+  "key.avatar_elements.slot_5": "Slot Jurus 5",
+  "key.avatar_elements.element_wheel": "Ganti Elemen"
 }

@@ -431,9 +431,25 @@ def export_weapon(
         z2 = y * math.sin(pitch) + z1 * math.cos(pitch)
         return (cx + x2 * scale, cy - y2 * scale, z2)
 
-    def render_one(yaw, pitch, w_px=480, h_px=480, sc=180, cx=240, cy=250, col_base=custom_preview_tint):
+    def render_one(yaw, pitch, w_px=480, h_px=480, sc=None, cx=None, cy=None, col_base=custom_preview_tint):
         im = Image.new("RGBA", (w_px, h_px), (16, 18, 22, 255))
         d = ImageDraw.Draw(im)
+
+        # Dynamic Fit-to-Bounds calculation to eliminate cropping on any weapon dimensions
+        if sc is None or cx is None or cy is None:
+            raw_pts = [project_v(v, yaw, pitch, 1.0, 0, 0) for v in vertices]
+            min_px = min(p[0] for p in raw_pts)
+            max_px = max(p[0] for p in raw_pts)
+            min_py = min(p[1] for p in raw_pts)
+            max_py = max(p[1] for p in raw_pts)
+            span_x = max(max_px - min_px, 0.05)
+            span_y = max(max_py - min_py, 0.05)
+            # Guarantee 45px padding on all sides
+            sc = min((w_px - 90.0) / span_x, (h_px - 90.0) / span_y)
+            mid_px = (min_px + max_px) / 2.0
+            mid_py = (min_py + max_py) / 2.0
+            cx = (w_px / 2.0) - mid_px * sc
+            cy = (h_px / 2.0) - mid_py * sc
 
         # Draw subtle grid at ground level
         grid_col = (30, 34, 42, 255)
@@ -463,13 +479,21 @@ def export_weapon(
             dot = max(0.15, nx * l_dir[0] + ny * l_dir[1] + nz * l_dir[2])
             inte = 0.35 + 0.65 * dot
 
-            # Check if this face has distinctive accent color based on height/part
-            mid_y = (p0[1] + p2[1]) / 2.0
-            r_c = min(255, int(col_base[0] * inte))
-            g_c = min(255, int(col_base[1] * inte))
-            b_c = min(255, int(col_base[2] * inte))
+            # Sample actual texture atlas color from quad UV coordinates
+            vt_idx0 = face[0][1] - 1
+            vt_idx2 = face[2][1] - 1
+            u_mid = (texcoords[vt_idx0][0] + texcoords[vt_idx2][0]) / 2.0
+            v_mid = (texcoords[vt_idx0][1] + texcoords[vt_idx2][1]) / 2.0
+            tx = int(max(0, min(w - 1, u_mid * (w - 1))))
+            ty = int(max(0, min(h - 1, (1.0 - v_mid) * (h - 1))))
+            base_pixel = texture_img.getpixel((tx, ty))
+
+            # Apply diffuse shading to texture color
+            r_c = min(255, max(0, int(base_pixel[0] * inte)))
+            g_c = min(255, max(0, int(base_pixel[1] * inte)))
+            b_c = min(255, max(0, int(base_pixel[2] * inte)))
             c_fill = (r_c, g_c, b_c, 255)
-            c_edge = (max(0, int(r_c * 0.4)), max(0, int(g_c * 0.4)), max(0, int(b_c * 0.4)), 255)
+            c_edge = (max(0, int(r_c * 0.45)), max(0, int(g_c * 0.45)), max(0, int(b_c * 0.45)), 255)
 
             pr0 = project_v(p0, yaw, pitch, sc, cx, cy)
             pr1 = project_v(p1, yaw, pitch, sc, cx, cy)
@@ -487,22 +511,35 @@ def export_weapon(
         d.text((15, 30), f"ID: {asset_id} | Pivot: Grip (0,0,0) | Metric (1.0 = 1m)", fill=(160, 170, 185, 255))
         return im
 
-    # Isometric Still Preview
-    iso_img = render_one(45, 25, 480, 480, 220, 240, 250)
+    # Isometric Still Preview (Auto-fitted, never cropped)
+    iso_img = render_one(45, 25, 480, 480)
     iso_path = os.path.join(preview_sub, f"{asset_id}_isometric.png")
     iso_img.save(iso_path)
     iso_img.save(os.path.join(PREVIEWS_DIR, f"{asset_id}_isometric.png"))
 
     # Front and Side orthogonal/isometric previews
-    front_img = render_one(0, 5, 400, 400, 200, 200, 210)
+    front_img = render_one(0, 5, 400, 400)
     front_img.save(os.path.join(preview_sub, f"{asset_id}_front.png"))
-    side_img = render_one(90, 5, 400, 400, 200, 200, 210)
+    side_img = render_one(90, 5, 400, 400)
     side_img.save(os.path.join(preview_sub, f"{asset_id}_side.png"))
 
-    # 360-degree Turntable GIF (24 frames, 15-degree steps)
+    # 360-degree Turntable GIF (24 frames, 15-degree steps, auto-fitted)
+    # Precompute a stable bounding box across all rotation angles to avoid frame jitter
+    max_span = 0.1
+    for deg in range(0, 360, 15):
+        raw_pts = [project_v(v, deg, 20, 1.0, 0, 0) for v in vertices]
+        w_span = max(p[0] for p in raw_pts) - min(p[0] for p in raw_pts)
+        h_span = max(p[1] for p in raw_pts) - min(p[1] for p in raw_pts)
+        max_span = max(max_span, w_span, h_span)
+    stable_sc = (300.0 - 60.0) / max(max_span, 0.05)
+    stable_cx = 150.0
+    # Average Y center across all vertices
+    mid_y_all = sum(v[1] for v in vertices) / float(len(vertices))
+    stable_cy = 150.0 + (mid_y_all * math.cos(math.radians(20)) * stable_sc * 0.3)
+
     gif_frames = []
     for deg in range(0, 360, 15):
-        frame = render_one(deg, 20, 300, 300, 140, 150, 155)
+        frame = render_one(deg, 20, 300, 300, sc=stable_sc, cx=stable_cx, cy=stable_cy)
         gif_frames.append(frame)
     gif_path = os.path.join(preview_sub, f"{asset_id}_turntable.gif")
     gif_frames[0].save(gif_path, save_all=True, append_images=gif_frames[1:], duration=65, loop=0)

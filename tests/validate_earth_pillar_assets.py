@@ -34,6 +34,21 @@ SKILL_PATH = (
     / "impl"
     / "EarthPillarSkill.java"
 )
+CLIENT_VFX_ROOT = (
+    ROOT
+    / "mod"
+    / "src"
+    / "client"
+    / "java"
+    / "com"
+    / "avatarmod"
+    / "elements"
+    / "client"
+    / "vfx"
+)
+CONTROLLER_PATH = CLIENT_VFX_ROOT / "CinematicVfxController.java"
+VFX_TYPE_PATH = CLIENT_VFX_ROOT / "VfxType.java"
+TRANSFORM_UTIL_PATH = CLIENT_VFX_ROOT / "VfxTransformUtil.java"
 DEEPSLATE_MODEL_PATH = (
     RESOURCE_ROOT / "assets" / "minecraft" / "models" / "item" / "deepslate.json"
 )
@@ -137,11 +152,53 @@ record(
 )
 
 java_top_y = max(element["to"][1] for element in elements) / 16
-java_height_ok = abs(java_top_y - runtime_height) <= 1 / 16
+controller_source = CONTROLLER_PATH.read_text(encoding="utf-8")
+vfx_type_source = VFX_TYPE_PATH.read_text(encoding="utf-8")
+transform_source = TRANSFORM_UTIL_PATH.read_text(encoding="utf-8")
+base_scale_match = re.search(
+    r"EARTH_PILLAR\s*\(.*?new Vector3f\(\s*([0-9.]+)f\s*,",
+    vfx_type_source,
+    re.DOTALL,
+)
+y_scale_match = re.search(
+    r"createPillarTransform\(\s*type\.baseScale\(\)\.x\(\)\s*,\s*"
+    r"type\.baseScale\(\)\.x\(\)\s*\*\s*([0-9.]+)f\s*\)",
+    controller_source,
+)
+helper_match = re.search(
+    r"createPillarTransform\(float xzScale, float yScale\)\s*\{\s*"
+    r"return new AffineTransformation\(\s*"
+    r"new Vector3f\(0\.0f,\s*0\.0f,\s*0\.0f\),\s*"
+    r"new Quaternionf\(\),\s*"
+    r"new Vector3f\(xzScale,\s*yScale,\s*xzScale\)",
+    transform_source,
+    re.DOTALL,
+)
+transform_details_available = (
+    base_scale_match is not None
+    and y_scale_match is not None
+    and helper_match is not None
+)
+if transform_details_available:
+    base_scale = float(base_scale_match.group(1))
+    y_scale_multiplier = float(y_scale_match.group(1))
+    runtime_java_top_y = java_top_y * base_scale * y_scale_multiplier
+    java_height_ok = abs(runtime_java_top_y - runtime_height) <= 1 / 16
+    transform_detail = (
+        f"model={java_top_y:.5f} blocks; base scale={base_scale:.3f}; "
+        f"Y multiplier={y_scale_multiplier:.3f}; transformed={runtime_java_top_y:.5f}; "
+        f"runtime={runtime_height:.5f} blocks"
+    )
+else:
+    java_height_ok = False
+    transform_detail = (
+        "could not verify Earth Pillar base scale, controller multiplier, "
+        "and zero-offset Y transform"
+    )
 record(
-    "Runtime Java model top matches PILLAR_HEIGHT at unit scale",
+    "Runtime Java model top matches PILLAR_HEIGHT after VFX transform",
     java_height_ok,
-    f"model top={java_top_y:.5f} blocks; runtime={runtime_height:.5f} blocks",
+    transform_detail,
 )
 
 failed = 0

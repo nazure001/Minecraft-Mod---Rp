@@ -409,12 +409,13 @@ Use only an isolated QA world and a stationary target. Keep the player position 
 #### Step-by-Step Instructions:
 1. Open Minecraft Options $\to$ **Controls** $\to$ **Key Binds**:
    - Scroll to category `Avatar: Elements`.
-   - Verify all 5 keys are mapped:
+   - Verify all 5 defaults are mapped (all are rebindable in Controls):
      - `Skill Slot 1`: `Z`
      - `Skill Slot 2`: `X`
      - `Skill Slot 3`: `C`
      - `Skill Slot 4`: `V`
      - `Skill Slot 5`: `B`
+   - Optional rebind check: change one slot to a comfortable unused key, confirm the new key works and the old one no longer activates it, then restore the setting.
 2. In-game, press each key sequentially and verify the Action Bar feedback:
    - Press `Z` $\to$ `[Avatar] avatar:fire_jab — OK`
    - Press `X` $\to$ Enters Fire Blast hold charge
@@ -574,8 +575,8 @@ Use only an isolated QA world and a stationary target. Keep the player position 
 
 ### 8.3 Keybinding & Hotbar Conflicts
 - **Symptom:** Pressing `Z` or `X` does not cast any skill.
-  - **Check 1:** Open Options $\to$ Controls $\to$ Key Binds. Search for conflicts (keys highlighted in red). Remap conflicting vanilla keys (e.g., vanilla zoom or hotbar swap).
-  - **Check 2:** Press `R` to ensure your active element is set to `FIRE`. If active element is `AIR` or `WATER`, Slot 3–5 may be empty.
+  - **Check 1:** Open Options $\to$ Controls $\to$ Key Binds $\to$ `Avatar: Elements`. Defaults are `Z/X/C/V/B` for skill slots and press `R` to cycle elements; all are rebindable. Avoid red conflicts and movement keys unless intentionally replacing their vanilla actions.
+  - **Check 2:** Press the element-cycle key (default `R`) once per step until the HUD shows `FIRE`. If active element is `AIR` or `WATER`, slot contents differ.
   - **Check 3:** Check your Chi pool in the HUD. If Chi is $< 8$, Fire Jab will be denied with `Chi tidak cukup`.
 
 ### 8.4 Animation Foundation Issues

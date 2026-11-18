@@ -98,10 +98,15 @@ public final class EarthBoulderSkill {
         DamageSource source = world.getDamageSources().playerAttack(player);
         for (LivingEntity target : targets) {
             target.damage(source, state.damage());
-            Vec3d knockDir = target.getPos().subtract(pos).normalize();
+            Vec3d diff = target.getPos().subtract(pos);
+            Vec3d knockDir = diff.lengthSquared() < 0.001 ? new Vec3d(0, 0, 1) : diff.normalize();
             target.addVelocity(knockDir.x * state.knockback(), 0.3, knockDir.z * state.knockback());
             target.velocityModified = true;
         }
+    }
+
+    public static void clear(UUID casterUuid) {
+        BOULDERS.remove(casterUuid);
     }
 
     private EarthBoulderSkill() {}

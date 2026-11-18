@@ -7,7 +7,7 @@ import org.lwjgl.glfw.GLFW;
 
 public final class AvatarKeyBindings {
 
-    // --- Skill slots (Z/X/C/V) ---
+    // Skill slot defaults; players can rebind these in Controls.
     public static final KeyBinding SLOT_1 = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.avatar_elements.slot_1", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Z,
             "category.avatar_elements.general"));
@@ -28,7 +28,7 @@ public final class AvatarKeyBindings {
             "key.avatar_elements.slot_5", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B,
             "category.avatar_elements.general"));
 
-    // --- Element wheel (hold R) ---
+    // Element wheel default; players can rebind this in Controls.
     public static final KeyBinding ELEMENT_WHEEL = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.avatar_elements.element_wheel", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R,
             "category.avatar_elements.general"));

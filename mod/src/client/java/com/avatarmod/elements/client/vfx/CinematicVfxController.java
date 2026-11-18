@@ -259,6 +259,8 @@ public final class CinematicVfxController {
                     type.baseScale(),
                     new org.joml.Quaternionf()
             );
+        } else if (type == VfxType.EARTH_PILLAR) {
+            initialTransform = VfxTransformUtil.createPillarTransform(type.baseScale().x(), type.baseScale().x() * 1.25f);
         } else {
             initialTransform = VfxTransformUtil.createUniformScaleTransform(type.baseScale().x());
         }

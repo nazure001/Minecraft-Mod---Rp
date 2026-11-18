@@ -99,11 +99,14 @@ If element switches randomly during casting:
 ### Test Steps
 
 **Step 1: Launch Client with Console**
-```bash
-# Keep console window visible during testing
-cd "D:\repo\Minecraft Mod & Rp\mod"
-.\gradlew.bat runClient
-# Console should show [Avatar DEBUG] messages
+```powershell
+# Debug output is opt-in via avatar.debug.anim; --no-daemon ensures the
+# temporary JAVA_TOOL_OPTIONS value reaches the client JVM.
+Set-Location "D:\repo\Minecraft Mod & Rp\mod"
+$env:JAVA_TOOL_OPTIONS = "-Davatar.debug.anim=true"
+.\gradlew.bat --no-daemon runClient
+# After closing the game:
+Remove-Item Env:JAVA_TOOL_OPTIONS
 ```
 
 **Step 2: Verify PAL Loaded**

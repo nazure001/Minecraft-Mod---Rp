@@ -59,7 +59,8 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
   - 1st person: tangan/item tidak bergerak saat cast
   - 3rd person: player body visible tapi martial arts gerakan belum ada
   - 2026-11-13: Hilangkan pemicu animasi ganda dari hasil cast dan sinkronisasi fase; fase server kini menjadi satu-satunya jalur pemicu, dengan deduplikasi `castSerial`.
-  - **Status 2026-11-16:** Animation JSON ready + PAL framework ready + debug logging added. **AWAITING IN-GAME TEST**.
+  - 2026-11-17: Animasi runtime `fire_jab.animation.json` dan keyframe impacts diperbarui; uji kontrak Gradle kini memvalidasi aset runtime tersebut, bukan hanya clip PoC lama.
+  - **Status 2026-11-18:** Build/test otomatis lulus setelah kontrak aset diperbarui; playback, pose normal/slim, armor, first/third person, dan observer tetap **AWAITING IN-GAME TEST**.
   - Action: Uji in-game tampak orang pertama/ketiga dan observer; pastikan impact dan recovery terbaca sebelum mengubah choreography lebih lanjut. See docs/BLOCKERS_2026-11-16.md for test procedure.
 
 - [~] **T3-3** Verifikasi Air Blast: JSON/handler dan hitbox garis pandang terarah ada; verifikasi in-game masih pending — User — 2026-11-12
@@ -86,10 +87,15 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 
 - [🟠] **HIGH** Earth Pillar Block Visual Missing: Erupsi tidak tampil kolom 3D
   - Damage + knockback ✅, tapi VFX hanya partikel, tidak ada struktur kolom
-  - Action: Enhance VFX — spawn block entity atau render holo-column particle mesh
+  - **Status QA 2026-11-18:** `.\gradlew.bat build` lulus (21 tes); suite Python M4 (137/137) dan M6 (45/45) lulus, keduanya simulasi. Pemeriksaan awal mengasumsikan skala unit dan menandai model Java 2.0 blok sebagai mismatch; setelah validator memeriksa base scale 1.0 dan skala Y runtime 1.25, hasilnya 7/7. BBModel/Bedrock/OBJ mencapai 2.5 blok di atas tanah. Preview masih berlabel 42 unit/2.63 m dan tidak menunjukkan detail atlas dengan jelas; visual runtime belum diuji.
+  - **2026-11-18:** Packet `S2CSkillPosition` mengirim posisi ground authoritative. Pembersihan `SERVER_POSITIONS` kini mencakup posisi yang langsung diterapkan, recovery/idle, cancel, expiry, cast serial baru, dan reset controller. Build lulus setelah perbaikan; alur packet tetap perlu diuji dalam game.
+  - **2026-11-18 (fix):** Non-uniform Y scale 1.25x diterapkan via `VfxTransformUtil.createPillarTransform()` saat spawn ItemDisplayEntity, menghasilkan visual 2.5 blok dari model 2.0 blok tanpa mengubah file model (tetap dalam batas parser -16..32).
+  - **Status validasi:** Validator statis Earth Pillar lulus 7/7 setelah mencakup rantai model × base scale × Y scale; belum membuktikan render dalam game.
+  - Action: Uji reload/playback in-game untuk target dekat, fallback jarak maksimum, dan observer multiplayer.
 
 - [⚠️] **MEDIUM** Orb 3D Shape: Terlihat piringan tipis, bukan bola sphere
-  - Action: Increase sphere segments + brightness gradient untuk depth perception
+  - **2026-11-18:** Reviewed — `ChargeOrbRenderer` dan `FirstPersonOrbRenderer` sudah menggunakan UV-sphere geometry (12x16 dan 8x12 stacks/slices) dengan inner core + outer shell additive blend. Bug piringan kemungkinan dari missing shader yang sudah diperbaiki sebelumnya. Perlu konfirmasi visual in-game.
+  - Action: Verifikasi in-game apakah orb sudah terlihat 3D sphere; jika masih flat, tambah brightness gradient per-vertex.
 
 - [⚠️] **MEDIUM** HUD Layout Not Proportional: Menghalangi gameplay view
   - Action: UI-05 theme tuning, scale/position agar overlay, tidak block center
@@ -229,3 +235,6 @@ Status task diperbarui 2026-11-09; detail `UI_THEME_SPEC.md`. HUD baru adalah ir
 - [ ] **VA-02** Uji Fire Jab di client: stance/guard, transfer berat, frame impact, recovery, kulit normal/slim, armor, orang pertama/ketiga, dan observer multiplayer.
 - [ ] **VA-03** Integrasikan satu VFX hasil Blockbench melalui format/render pipeline Fabric yang terverifikasi; source `.bbmodel` saat ini belum dirender runtime.
 - [ ] **VA-04** Tambahkan rig siku/forearm atau adapter yang terbukti sebelum mengklaim artikulasi pukulan setara studi Blockbench.
+- [x] **VA-05** Tahap 4 Canonical Weapons 3D Blockbench Suite: SM_Dual_Swords, SM_Earth_Hammer, SM_War_Fan, SM_Water_Spear lengkap (.bbmodel, .geo.json, .json [-16,32], .obj, .mtl, 64x64 texture atlas, preview isometrik & turntable GIF 360°) — Antigravity (art-producer) — 2026-11-18 — package lengkap; 52/52 pemeriksaan struktural lulus (docs/WEAPONS_SPEC.md). Ini bukan penerimaan visual atau bukti integrasi runtime.
+- [ ] **VA-06** QA visual senjata: render ulang preview dengan UV atlas/tekstur dan fit-to-bounds, lalu inspeksi keempat model di Blockbench/game. Renderer preview saat ini memberi warna solid berdasarkan `custom_preview_tint` (tidak mengambil atlas); preview isometrik Dual Swords, Earth Hammer, dan Water Spear terpotong di tepi atas.
+- [ ] **VA-07** Integrasikan dan verifikasi item senjata pada resource/runtime mod: tetapkan pemetaan item/CMD, model override, serta tampilan inventory/held/dropped. Model masih berada di `art-source/asset_pack`; belum ditemukan referensi `SM_*` runtime di `mod`.

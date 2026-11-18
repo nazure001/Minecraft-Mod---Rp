@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "minecraft:item/iron_sword"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 2001
+      },
+      "model": "avatar_elements:item/dual_swords"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2002
+      },
+      "model": "avatar_elements:item/earth_hammer"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2003
+      },
+      "model": "avatar_elements:item/war_fan"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2004
+      },
+      "model": "avatar_elements:item/water_spear"
+    }
+  ]
+}

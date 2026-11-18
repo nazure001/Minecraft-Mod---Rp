@@ -2,7 +2,7 @@
 > **Author:** Antigravity IDE (3D Technical Art Specialist)  
 > **Consumer:** Claude Code / Runtime Agent & User (QA Reviewer)  
 > **Target:** Minecraft Fabric 1.21.1 & Avatar Elements Resource Pack  
-> **Status:** Production-Ready Asset Deliverables (Blockbench, Bedrock, Java JSON, OBJ/MTL, 64x64 Atlas, 360° Turntable Previews)
+> **Status:** Asset package delivered; 52/52 structural checks pass. Visual acceptance and runtime item integration are pending: previews use flat face tints rather than the atlas, and the isometric previews clip the tops of three tall weapons.
 
 ---
 

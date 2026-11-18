@@ -166,5 +166,9 @@ public final class EarthPillarSkill {
         world.spawnParticles(ParticleTypes.POOF, center.x, center.y + maxHeight, center.z, 3, 0.3, 0.1, 0.3, 0.02);
     }
 
+    public static void clear(UUID casterUuid) {
+        ACTIVE_PILLARS.remove(casterUuid);
+    }
+
     private EarthPillarSkill() {}
 }

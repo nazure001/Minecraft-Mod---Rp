@@ -61,7 +61,9 @@ public final class AirVortexSkill {
 
         for (LivingEntity target : targets) {
             // Pull direction = toward center
-            Vec3d toCenter = center.subtract(target.getPos()).normalize();
+            Vec3d diff = center.subtract(target.getPos());
+            if (diff.lengthSquared() < 0.001) continue;
+            Vec3d toCenter = diff.normalize();
             target.addVelocity(
                     toCenter.x * pullForce,
                     toCenter.y * pullForce * 0.3,

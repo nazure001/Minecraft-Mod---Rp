@@ -335,6 +335,10 @@ public final class SkillNetworking {
         lastSkillTick.remove(uuid);
         castSerials.remove(uuid);
         elementCycleCooldown.remove(uuid);
+        com.avatarmod.elements.skill.impl.EarthBoulderSkill.clear(uuid);
+        com.avatarmod.elements.skill.impl.EarthPillarSkill.clear(uuid);
+        com.avatarmod.elements.skill.impl.BoulderLaunchSkill.clear(uuid);
+        com.avatarmod.elements.skill.impl.FireBlastSkill.clearFireball(uuid);
     }
 
     private static void handleComboTracking(PlayerBendingData data, String skillId, SkillDefinition def, long currentTick) {

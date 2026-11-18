@@ -45,7 +45,7 @@ Model 3D Earth Pillar ini dikalibrasi secara ketat berdasarkan visual art dan ko
 ## 3. Spesifikasi Geometri & Koordinat
 
 * **Ground Pivot Contact Point:** Origin $(0.0, 0.0, 0.0)$ berada **persis di permukaan kontak tanah**.
-* **Tinggi target kolom:** Y=0 sampai Y=40 unit (2.5 blok), sesuai `PILLAR_HEIGHT = 2.5f`. BBModel/Bedrock/OBJ mencapai target ini; Java display model runtime saat ini hanya mencapai Y=32 (2.0 blok) pada skala 1.0.
+* **Tinggi target kolom:** Y=0 sampai Y=40 unit (2.5 blok), sesuai `PILLAR_HEIGHT = 2.5f`. BBModel/Bedrock/OBJ mencapai target ini. Java display model mencapai Y=32 (2.0 blok) pada skala 1.0; runtime memakai base scale 1.0 dan skala Y 1.25 sehingga tinggi efektifnya 2.5 blok.
 * **Ukuran Launch Platform:** Platform atas selebar $11	imes 11	ext{ unit}$ ($0.69	ext{m} 	imes 0.69	ext{m}$) dengan landasan sentral $6	imes 6	ext{ unit}$ ($0.38	ext{m}$), sempurna untuk menyangga kaki pemain saat terangkat.
 * **Radius Footprint:** Radius radial maksimum serpihan dasar adalah $0.81	ext{ meter}$, berada aman di dalam radius damage skill `FOOTPRINT_RADIUS = 1.6f`.
 * **Anti-Clipping Subterranean Root:** Masuk sedalam $0.25	ext{ m}$ ($Y = -4.0$ unit) ke bawah tanah agar tidak bolong saat meletus di tanjakan/lereng.
@@ -66,7 +66,7 @@ Model 3D Earth Pillar ini dikalibrasi secara ketat berdasarkan visual art dan ko
 
 ---
 
-> **Pengukuran QA 2026-11-18:** BBModel/Bedrock membentang Y=-4..40 unit dan OBJ Y=-0.25..2.5 m. Java model runtime membentang Y=-12..32 unit; puncaknya 2.0 blok pada skala 1.0, sementara posisi entity saat diam tidak memiliki offset vertikal. Selaraskan model runtime dengan target 2.5 blok sebelum penerimaan visual.
+> **Pengukuran QA 2026-11-18:** BBModel/Bedrock membentang Y=-4..40 unit dan OBJ Y=-0.25..2.5 m. Java model membentang Y=-12..32 unit; puncaknya 2.0 blok pada skala 1.0. Client menerapkan base scale 1.0 dan skala Y 1.25, menghasilkan tinggi efektif 2.5 blok. Validator statis memeriksa rantai transform ini dan lulus 7/7; penerimaan visual, posisi, dan multiplayer tetap memerlukan uji dalam game.
 
 ## 4. Rekomendasi Integrasi Client-Side (Untuk Claude Code)
 
