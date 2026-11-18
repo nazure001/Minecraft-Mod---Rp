@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:block/deepslate"
+  },
+  "overrides": [
+    {
+      "predicate": { "custom_model_data": 1005 },
+      "model": "avatar_elements:vfx/earth_pillar"
+    }
+  ]
+}

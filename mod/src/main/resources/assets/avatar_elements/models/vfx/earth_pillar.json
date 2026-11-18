@@ -1,12 +1,13 @@
 {
   "credit": "Avatar Elements Mod - Earth Pillar 3D Column (ATLA Canon Edition)",
+  "parent": "minecraft:block/block",
   "texture_size": [
     64,
     64
   ],
   "textures": {
-    "pillar": "avatar_elements:textures/vfx/earth_pillar",
-    "particle": "avatar_elements:textures/vfx/earth_pillar"
+    "pillar": "avatar_elements:vfx/earth_pillar",
+    "particle": "avatar_elements:vfx/earth_pillar"
   },
   "elements": [
     {
