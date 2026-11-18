@@ -76,6 +76,7 @@ public final class CinematicVfxController {
 
     private static final Map<VfxKey, ActiveVfx> ACTIVE_ENTITIES = new ConcurrentHashMap<>();
     private static final Map<UUID, Integer> CASTER_ACTIVE_SERIALS = new ConcurrentHashMap<>();
+    private static final Map<VfxKey, Vec3d> PILLAR_GROUND_POSITIONS = new ConcurrentHashMap<>();
 
     private CinematicVfxController() {}
 
@@ -107,6 +108,7 @@ public final class CinematicVfxController {
             }
         } else if ("RECOVERY".equals(phase) || "IDLE".equals(phase)) {
             ActiveVfx removed = ACTIVE_ENTITIES.remove(key);
+            PILLAR_GROUND_POSITIONS.remove(key);
             if (removed != null && removed.entity() != null) {
                 removed.entity().discard();
             }
@@ -149,7 +151,11 @@ public final class CinematicVfxController {
         if (caster != null) {
             yaw = caster.getYaw();
             pitch = caster.getPitch();
-            if (type == VfxType.CRESCENT_SLASH) {
+            if (type == VfxType.EARTH_PILLAR) {
+                Vec3d groundPos = findPillarGroundClient(caster, 8.0);
+                PILLAR_GROUND_POSITIONS.put(key, groundPos);
+                entity.setPosition(groundPos.x, groundPos.y - 2.75, groundPos.z);
+            } else if (type == VfxType.CRESCENT_SLASH) {
                 Vec3d look = caster.getRotationVec(1.0f);
                 entity.setPosition(caster.getX() + look.x * 0.8, caster.getEyeY() - 0.2 + look.y * 0.8, caster.getZ() + look.z * 0.8);
                 entity.setYaw(yaw);
@@ -232,7 +238,13 @@ public final class CinematicVfxController {
             }
 
             DisplayEntityAccessor dispAcc = (DisplayEntityAccessor) entity;
-            if (type == VfxType.RUNE_DISC || type == VfxType.MAGIC_RUNE_CIRCLE) {
+            if (type == VfxType.EARTH_PILLAR) {
+                Vec3d groundPos = PILLAR_GROUND_POSITIONS.get(key);
+                if (groundPos != null) {
+                    double yOffset = computePillarYOffset(vfx.ageTicks());
+                    entity.setPosition(groundPos.x, groundPos.y + yOffset, groundPos.z);
+                }
+            } else if (type == VfxType.RUNE_DISC || type == VfxType.MAGIC_RUNE_CIRCLE) {
                 float spinAngle = (vfx.ageTicks() * type.rotationSpeed()) % 360.0f;
                 dispAcc.invokeSetTransformation(VfxTransformUtil.createRuneDiscTransform(type.baseScale().x(), spinAngle));
             } else if (type == VfxType.AEGIS_DOME) {
@@ -248,6 +260,7 @@ public final class CinematicVfxController {
 
         for (VfxKey k : expired) {
             ACTIVE_ENTITIES.remove(k);
+            PILLAR_GROUND_POSITIONS.remove(k);
         }
     }
 
@@ -264,6 +277,7 @@ public final class CinematicVfxController {
         }
         for (VfxKey k : toRemove) {
             ActiveVfx removed = ACTIVE_ENTITIES.remove(k);
+            PILLAR_GROUND_POSITIONS.remove(k);
             if (removed != null && removed.entity() != null) {
                 removed.entity().discard();
             }
@@ -283,6 +297,7 @@ public final class CinematicVfxController {
         }
         for (VfxKey k : toRemove) {
             ActiveVfx removed = ACTIVE_ENTITIES.remove(k);
+            PILLAR_GROUND_POSITIONS.remove(k);
             if (removed != null && removed.entity() != null) {
                 removed.entity().discard();
             }
@@ -301,6 +316,7 @@ public final class CinematicVfxController {
         }
         ACTIVE_ENTITIES.clear();
         CASTER_ACTIVE_SERIALS.clear();
+        PILLAR_GROUND_POSITIONS.clear();
     }
 
     public static int getActiveCount() {
@@ -313,5 +329,58 @@ public final class CinematicVfxController {
 
     public static Map<VfxKey, ActiveVfx> getActiveEntities() {
         return Collections.unmodifiableMap(ACTIVE_ENTITIES);
+    }
+
+    /**
+     * Computes the Y offset for the earth pillar eruption animation.
+     * Timeline (from EARTH_PILLAR_SPEC):
+     *   tick 0-2  (0.00-0.12s): burst from -2.75 to +0.15 (overshoot)
+     *   tick 2-4  (0.12-0.18s): settle to 0.0
+     *   tick 4-15 (0.18-0.75s): hold at 0.0
+     *   tick 15-23 (0.75-1.15s): sink to -2.75
+     */
+    private static double computePillarYOffset(int ageTicks) {
+        if (ageTicks <= 2) {
+            double t = ageTicks / 2.0;
+            return -2.75 + t * (2.75 + 0.15);  // lerp from -2.75 to +0.15
+        } else if (ageTicks <= 4) {
+            double t = (ageTicks - 2) / 2.0;
+            return 0.15 - t * 0.15;  // settle from +0.15 to 0.0
+        } else if (ageTicks <= 15) {
+            return 0.0;  // held stance
+        } else if (ageTicks <= 23) {
+            double t = (ageTicks - 15) / 8.0;
+            return -t * 2.75;  // sink back down
+        }
+        return -2.75;
+    }
+
+    /**
+     * Client-side approximation of EarthPillarSkill.findPillarCenter.
+     * Walks the caster's horizontal look direction to find ground in front.
+     */
+    private static Vec3d findPillarGroundClient(PlayerEntity caster, double range) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client == null || client.world == null) {
+            return caster.getPos();
+        }
+
+        Vec3d origin = caster.getPos();
+        Vec3d look = caster.getRotationVec(1.0f);
+        Vec3d dir = new Vec3d(look.x, 0, look.z);
+        if (dir.lengthSquared() < 1.0e-4) dir = Vec3d.fromPolar(0, caster.getYaw());
+        dir = dir.normalize();
+
+        Vec3d target = origin.add(dir.multiply(range));
+
+        // Snap to ground
+        net.minecraft.util.math.BlockPos cursor = net.minecraft.util.math.BlockPos.ofFloored(target);
+        for (int i = 0; i <= 4; i++) {
+            net.minecraft.util.math.BlockPos below = cursor.down(i);
+            if (!client.world.getBlockState(below).getCollisionShape(client.world, below).isEmpty()) {
+                return new Vec3d(target.x, below.getY() + 1.0, target.z);
+            }
+        }
+        return target;
     }
 }

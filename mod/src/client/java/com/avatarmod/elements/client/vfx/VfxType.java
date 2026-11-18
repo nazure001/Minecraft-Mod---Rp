@@ -53,6 +53,16 @@ public enum VfxType {
             15.0f,
             true
     ),
+    EARTH_PILLAR(
+            "avatar:earth_pillar",
+            1005,
+            Items.DEEPSLATE,
+            25,  // 1.25s = 25 ticks
+            new Vector3f(1.0f, 1.0f, 1.0f),
+            new Vector3f(1.0f, 1.0f, 1.0f),
+            0.0f,
+            false  // position fixed at ground, not following caster
+    ),
     // Compatibility aliases
     MAGIC_RUNE_CIRCLE(
             "avatar:avatar_state",
