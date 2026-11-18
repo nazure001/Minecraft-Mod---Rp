@@ -72,24 +72,59 @@ public final class FlameSweepSkill {
             target.velocityModified = true;
         }
 
-        // VFX: arc of fire particles
-        for (int i = -3; i <= 3; i++) {
-            double angle = Math.toRadians(i * 25);
-            double cos = Math.cos(angle), sin = Math.sin(angle);
-            double px = origin.x + (look.x * cos - look.z * sin) * r * 0.8;
-            double pz = origin.z + (look.x * sin + look.z * cos) * r * 0.8;
-            world.spawnParticles(ParticleTypes.FLAME, px, origin.y, pz, 3, 0.15, 0.2, 0.15, 0.04);
-            world.spawnParticles(AvatarParticles.FLAME_TONGUE, px, origin.y, pz, 3, 0.15, 0.2, 0.15, 0.04);
-            world.spawnParticles(AvatarParticles.EMBER, px, origin.y, pz, 2, 0.10, 0.1, 0.10, 0.02);
-        }
-        world.spawnParticles(ParticleTypes.LAVA, origin.x, origin.y, origin.z, 2, 0.3, 0.1, 0.3, 0.0);
-        world.spawnParticles(AvatarParticles.FLAME_BURST, origin.x + look.x * 2.0, origin.y, origin.z + look.z * 2.0, 2, 0.2, 0.1, 0.2, 0.0);
-        world.spawnParticles(AvatarParticles.IMPACT_FLASH, origin.x + look.x * 2.5, origin.y, origin.z + look.z * 2.5, 1, 0.0, 0.0, 0.0, 0.0);
+        // Slight forward lunge
+        Vec3d lunge = look.multiply(0.25);
+        player.addVelocity(lunge.x, 0.05, lunge.z);
+        player.velocityModified = true;
 
-        // SFX
+        // Volumetric 180° Curved Shaolin Flame Slash (11-point parabolic sweep)
+        double horizLen = Math.sqrt(look.x * look.x + look.z * look.z);
+        Vec3d right = horizLen > 1e-5
+                ? new Vec3d(-look.z / horizLen, 0.0, look.x / horizLen)
+                : new Vec3d(1.0, 0.0, 0.0);
+        Vec3d upVec = right.crossProduct(look).normalize();
+
+        double[][] arcPoints = {
+                {-2.20, -0.20, 2.00},
+                {-1.80, -0.10, 2.60},
+                {-1.40,  0.00, 3.30},
+                {-0.90,  0.10, 4.00},
+                {-0.40,  0.20, 4.70},
+                { 0.00,  0.25, 5.20},
+                { 0.40,  0.20, 4.70},
+                { 0.90,  0.10, 4.00},
+                { 1.40,  0.00, 3.30},
+                { 1.80, -0.10, 2.60},
+                { 2.20, -0.20, 2.00}
+        };
+
+        for (double[] pt : arcPoints) {
+            Vec3d worldPt = origin.add(right.multiply(-pt[0]))
+                    .add(upVec.multiply(pt[1]))
+                    .add(look.multiply(pt[2] * (r / 5.2)));
+
+            world.spawnParticles(ParticleTypes.FLAME, worldPt.x, worldPt.y, worldPt.z, 8, 0.15, 0.15, 0.15, 0.04);
+            world.spawnParticles(ParticleTypes.SMALL_FLAME, worldPt.x, worldPt.y, worldPt.z, 5, 0.10, 0.10, 0.10, 0.02);
+            world.spawnParticles(AvatarParticles.FLAME_TONGUE, worldPt.x, worldPt.y, worldPt.z, 3, 0.10, 0.10, 0.10, 0.03);
+            world.spawnParticles(AvatarParticles.EMBER, worldPt.x, worldPt.y, worldPt.z, 2, 0.08, 0.08, 0.08, 0.02);
+            world.spawnParticles(ParticleTypes.LAVA, worldPt.x, worldPt.y, worldPt.z, 1, 0.05, 0.05, 0.05, 0.0);
+        }
+
+        // Apex explosion & flash
+        Vec3d apex = origin.add(look.multiply(r * 0.9)).add(upVec.multiply(0.25));
+        world.spawnParticles(AvatarParticles.FLAME_BURST, apex.x, apex.y, apex.z, 4, 0.2, 0.2, 0.2, 0.02);
+        world.spawnParticles(AvatarParticles.IMPACT_FLASH, apex.x, apex.y, apex.z, 2, 0.0, 0.0, 0.0, 0.0);
+
+        // Multi-layered punchy SFX
         world.playSound(null, player.getBlockPos(),
                 SoundEvents.ITEM_FIRECHARGE_USE,
-                SoundCategory.PLAYERS, 0.8f, 0.9f);
+                SoundCategory.PLAYERS, 1.8f, 1.1f);
+        world.playSound(null, player.getBlockPos(),
+                SoundEvents.ENTITY_BLAZE_SHOOT,
+                SoundCategory.PLAYERS, 1.5f, 1.2f);
+        world.playSound(null, player.getBlockPos(),
+                SoundEvents.ENTITY_GENERIC_BURN,
+                SoundCategory.PLAYERS, 1.2f, 1.0f);
     }
 
     private FlameSweepSkill() {}

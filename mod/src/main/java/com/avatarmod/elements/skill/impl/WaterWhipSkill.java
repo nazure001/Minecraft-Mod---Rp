@@ -2,6 +2,7 @@ package com.avatarmod.elements.skill.impl;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
+import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.SkillDefinition;
 import com.avatarmod.elements.skill.SkillTargeting;
 import net.minecraft.entity.LivingEntity;
@@ -53,20 +54,53 @@ public final class WaterWhipSkill {
             target.velocityModified = true;
         }
 
-        // VFX: water droplet trail along whip path
-        int steps = 8;
-        for (int i = 1; i <= steps; i++) {
-            double t = (double) i / steps;
-            Vec3d pt = origin.add(look.multiply(range * t));
-            world.spawnParticles(ParticleTypes.DRIPPING_WATER,
-                    pt.x, pt.y, pt.z, 2, 0.1, 0.1, 0.1, 0.0);
-        }
-        world.spawnParticles(ParticleTypes.SPLASH,
-                end.x, end.y, end.z, 12, 0.3, 0.3, 0.3, 0.1);
+        // VFX: Serpentine Double-Helix Water Whip (Katara Spiraling Flow)
+        double horizLen = Math.sqrt(look.x * look.x + look.z * look.z);
+        Vec3d right = horizLen > 1e-5
+                ? new Vec3d(-look.z / horizLen, 0.0, look.x / horizLen)
+                : new Vec3d(1.0, 0.0, 0.0);
+        Vec3d upVec = right.crossProduct(look).normalize();
 
+        for (double d = 1.0; d <= range; d += 0.5) {
+            double angle = d * 1.6;
+            double rHelix = 0.38 * (1.0 - (d / (range * 1.5)));
+            Vec3d basePt = origin.add(look.multiply(d));
+
+            // Strand A
+            Vec3d ptA = basePt.add(right.multiply(Math.cos(angle) * rHelix))
+                    .add(upVec.multiply(Math.sin(angle) * rHelix));
+            // Strand B (180° opposite)
+            Vec3d ptB = basePt.add(right.multiply(-Math.cos(angle) * rHelix))
+                    .add(upVec.multiply(-Math.sin(angle) * rHelix));
+
+            world.spawnParticles(ParticleTypes.SPLASH, ptA.x, ptA.y, ptA.z, 3, 0.04, 0.04, 0.04, 0.02);
+            world.spawnParticles(ParticleTypes.FALLING_WATER, ptA.x, ptA.y, ptA.z, 2, 0.04, 0.04, 0.04, 0.01);
+            world.spawnParticles(ParticleTypes.BUBBLE, ptA.x, ptA.y, ptA.z, 2, 0.04, 0.04, 0.04, 0.02);
+            world.spawnParticles(AvatarParticles.DROPLET, ptA.x, ptA.y, ptA.z, 2, 0.04, 0.04, 0.04, 0.01);
+
+            world.spawnParticles(ParticleTypes.SPLASH, ptB.x, ptB.y, ptB.z, 3, 0.04, 0.04, 0.04, 0.02);
+            world.spawnParticles(ParticleTypes.FALLING_WATER, ptB.x, ptB.y, ptB.z, 2, 0.04, 0.04, 0.04, 0.01);
+            world.spawnParticles(AvatarParticles.FOAM, ptB.x, ptB.y, ptB.z, 1, 0.03, 0.03, 0.03, 0.01);
+        }
+
+        // Whip tip impact burst
+        world.spawnParticles(ParticleTypes.SPLASH,
+                end.x, end.y, end.z, 24, 0.35, 0.35, 0.35, 0.12);
+        world.spawnParticles(AvatarParticles.SMALL_SPLASH,
+                end.x, end.y, end.z, 12, 0.25, 0.25, 0.25, 0.08);
+        world.spawnParticles(AvatarParticles.IMPACT_FLASH,
+                end.x, end.y, end.z, 1, 0.0, 0.0, 0.0, 0.0);
+
+        // Multi-layered punchy water SFX
+        world.playSound(null, player.getBlockPos(),
+                SoundEvents.ENTITY_GENERIC_SPLASH,
+                SoundCategory.PLAYERS, 1.8f, 1.3f);
+        world.playSound(null, player.getBlockPos(),
+                SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED,
+                SoundCategory.PLAYERS, 1.5f, 1.5f);
         world.playSound(null, player.getBlockPos(),
                 SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP,
-                SoundCategory.PLAYERS, 0.9f, 0.6f);
+                SoundCategory.PLAYERS, 1.0f, 1.4f);
     }
 
     private WaterWhipSkill() {}

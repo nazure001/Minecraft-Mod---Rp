@@ -2,6 +2,7 @@ package com.avatarmod.elements.skill.impl;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
+import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -156,6 +157,10 @@ public final class BoulderLaunchSkill {
                 ParticleTypes.BLOCK, net.minecraft.block.Blocks.STONE.getDefaultState());
         world.spawnParticles(debris, center.x, center.y, center.z,
                 (int) (30 + 30 * state.chargeRatio()), aoe * 0.4, aoe * 0.4, aoe * 0.4, 0.25);
+        world.spawnParticles(AvatarParticles.STONE_CHIP, center.x, center.y, center.z,
+                (int) (20 + 20 * state.chargeRatio()), aoe * 0.4, aoe * 0.4, aoe * 0.4, 0.18);
+        world.spawnParticles(AvatarParticles.DUST, center.x, center.y, center.z,
+                (int) (25 + 25 * state.chargeRatio()), aoe * 0.5, aoe * 0.5, aoe * 0.5, 0.10);
         world.spawnParticles(ParticleTypes.LARGE_SMOKE, center.x, center.y, center.z,
                 (int) (8 + 8 * state.chargeRatio()), aoe * 0.3, aoe * 0.3, aoe * 0.3, 0.05);
         BlockState below = world.getBlockState(BlockPos.ofFloored(center).down());
@@ -166,9 +171,11 @@ public final class BoulderLaunchSkill {
 
         float volume = 1.0f + 0.4f * state.chargeRatio();
         world.playSound(null, BlockPos.ofFloored(center),
+                SoundEvents.ENTITY_IRON_GOLEM_ATTACK, SoundCategory.PLAYERS, volume, 0.6f);
+        world.playSound(null, BlockPos.ofFloored(center),
                 SoundEvents.BLOCK_DEEPSLATE_BREAK, SoundCategory.PLAYERS, volume, 0.5f);
         world.playSound(null, BlockPos.ofFloored(center),
-                SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.PLAYERS, 0.5f, 1.4f);
+                SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.PLAYERS, 0.7f, 1.2f);
     }
 
     /** Clears any in-flight boulder (caster cancelled, disconnected, etc.). */

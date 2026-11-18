@@ -2,6 +2,7 @@ package com.avatarmod.elements.skill.impl;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
+import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -79,21 +80,41 @@ public final class AirStaffAttackSkill {
             target.velocityModified = true;
         }
 
-        // VFX
-        int particleCount = 6 + step * 4;
-        world.spawnParticles(ParticleTypes.CLOUD,
-                center.x, center.y, center.z,
-                particleCount, range * 0.3, range * 0.3, range * 0.3, 0.04);
-        if (step == 3) {
+        // Multi-stage authentic Baguazhang staff VFX
+        if (step == 1) {
+            world.spawnParticles(AvatarParticles.GUST_CURL,
+                    center.x, center.y, center.z, 8, range * 0.25, range * 0.25, range * 0.25, 0.05);
+            world.spawnParticles(ParticleTypes.CLOUD,
+                    center.x, center.y, center.z, 4, range * 0.2, range * 0.2, range * 0.2, 0.02);
+            world.playSound(null, player.getBlockPos(),
+                    SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 0.9f, 1.3f);
+        } else if (step == 2) {
+            world.spawnParticles(AvatarParticles.GUST_CURL,
+                    center.x, center.y, center.z, 14, range * 0.35, range * 0.35, range * 0.35, 0.06);
+            world.spawnParticles(AvatarParticles.SMOKE_PUFF,
+                    center.x, center.y, center.z, 6, range * 0.25, range * 0.25, range * 0.25, 0.03);
+            world.spawnParticles(ParticleTypes.CLOUD,
+                    center.x, center.y, center.z, 8, range * 0.3, range * 0.3, range * 0.3, 0.03);
+            world.playSound(null, player.getBlockPos(),
+                    SoundEvents.ENTITY_BREEZE_SHOOT, SoundCategory.PLAYERS, 1.0f, 1.2f);
+            world.playSound(null, player.getBlockPos(),
+                    SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 0.8f, 1.1f);
+        } else {
+            // Step 3: Upward slam cyclone burst
+            world.spawnParticles(AvatarParticles.GUST_CURL,
+                    center.x, center.y, center.z, 20, range * 0.4, range * 0.4, range * 0.4, 0.08);
+            world.spawnParticles(ParticleTypes.CLOUD,
+                    center.x, center.y, center.z, 12, range * 0.35, range * 0.35, range * 0.35, 0.04);
             world.spawnParticles(ParticleTypes.SWEEP_ATTACK,
-                    center.x, center.y, center.z, 3, range * 0.4, 0.2, range * 0.4, 0.0);
-        }
+                    center.x, center.y + 0.3, center.z, 3, range * 0.3, 0.2, range * 0.3, 0.0);
+            world.spawnParticles(AvatarParticles.IMPACT_FLASH,
+                    center.x, center.y + 0.5, center.z, 1, 0.0, 0.0, 0.0, 0.0);
 
-        // SFX — higher pitch for final hit
-        float pitch = switch (step) { case 2 -> 1.1f; case 3 -> 0.8f; default -> 1.3f; };
-        world.playSound(null, player.getBlockPos(),
-                SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP,
-                SoundCategory.PLAYERS, 0.8f, pitch);
+            world.playSound(null, player.getBlockPos(),
+                    SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST.value(), SoundCategory.PLAYERS, 1.5f, 1.1f);
+            world.playSound(null, player.getBlockPos(),
+                    SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1.2f, 0.8f);
+        }
     }
 
     private AirStaffAttackSkill() {}

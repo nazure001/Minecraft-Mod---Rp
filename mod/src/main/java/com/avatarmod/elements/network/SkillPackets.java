@@ -149,6 +149,18 @@ public final class SkillPackets {
         @Override public CustomPayload.Id<C2SCycleElement> getId() { return ID; }
     }
 
+    // Client → Server: request selecting a specific configured element.
+    public record C2SSelectElement(String element) implements CustomPayload {
+        public static final CustomPayload.Id<C2SSelectElement> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "c2s_select_element"));
+        public static final PacketCodec<PacketByteBuf, C2SSelectElement> CODEC = PacketCodec.of(
+                (value, buf) -> buf.writeString(value.element() != null ? value.element() : ""),
+                buf -> new C2SSelectElement(buf.readString(16))
+        );
+
+        @Override public CustomPayload.Id<C2SSelectElement> getId() { return ID; }
+    }
+
     // Server → Client (broadcast): phase transition for any caster, so nearby players
     // can render the charge orb on that player.
     // castSerial increments each time a NEW cast starts; allows client to ignore

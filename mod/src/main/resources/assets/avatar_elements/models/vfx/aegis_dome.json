@@ -1,0 +1,105 @@
+{
+  "credit": "Avatar Elements Mod - Aegis Dome (Fabric 1.21.1)",
+  "texture_size": [64, 64],
+  "textures": {
+    "texture": "avatar_elements:vfx/aegis_dome",
+    "particle": "avatar_elements:vfx/aegis_dome"
+  },
+  "elements": [
+    {
+      "name": "dome_wall_north",
+      "from": [2.0, 0.0, 14.0],
+      "to": [14.0, 16.0, 15.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 0.0 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "up":    { "uv": [0.0, 0.0, 16.0, 2.0], "texture": "#texture" },
+        "down":  { "uv": [0.0, 0.0, 16.0, 2.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "dome_wall_south",
+      "from": [2.0, 0.0, 1.0],
+      "to": [14.0, 16.0, 2.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 0.0 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "up":    { "uv": [0.0, 0.0, 16.0, 2.0], "texture": "#texture" },
+        "down":  { "uv": [0.0, 0.0, 16.0, 2.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "dome_wall_east",
+      "from": [14.0, 0.0, 2.0],
+      "to": [15.0, 16.0, 14.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 0.0 },
+      "faces": {
+        "east":  { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "west":  { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "up":    { "uv": [0.0, 0.0, 2.0, 16.0], "texture": "#texture" },
+        "down":  { "uv": [0.0, 0.0, 2.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "dome_wall_west",
+      "from": [1.0, 0.0, 2.0],
+      "to": [2.0, 16.0, 14.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 0.0 },
+      "faces": {
+        "east":  { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "west":  { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "up":    { "uv": [0.0, 0.0, 2.0, 16.0], "texture": "#texture" },
+        "down":  { "uv": [0.0, 0.0, 2.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "dome_corner_ne",
+      "from": [2.0, 0.0, 14.0],
+      "to": [14.0, 16.0, 15.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 45.0 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "dome_corner_nw",
+      "from": [2.0, 0.0, 14.0],
+      "to": [14.0, 16.0, 15.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": -45.0 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "dome_corner_se",
+      "from": [2.0, 0.0, 1.0],
+      "to": [14.0, 16.0, 2.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 45.0 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "dome_corner_sw",
+      "from": [2.0, 0.0, 1.0],
+      "to": [14.0, 16.0, 2.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": -45.0 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    }
+  ],
+  "display": {
+    "fixed": {
+      "rotation": [0, 0, 0],
+      "translation": [0, 0, 0],
+      "scale": [1.0, 1.0, 1.0]
+    }
+  }
+}

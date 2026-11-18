@@ -7,6 +7,7 @@ import com.avatarmod.elements.client.hud.ElementWheelRenderer;
 import com.avatarmod.elements.client.input.AvatarKeyBindings;
 import com.avatarmod.elements.client.network.ClientNetworkHandler;
 import com.avatarmod.elements.client.network.SkillClientHandler;
+import com.avatarmod.elements.client.screen.ElementSelectorScreen;
 import com.avatarmod.elements.client.orb.ChargeOrbClientState;
 import com.avatarmod.elements.client.orb.ChargeOrbRenderer;
 import com.avatarmod.elements.client.orb.FirstPersonOrbRenderer;
@@ -74,6 +75,12 @@ public class AvatarElementsClient implements ClientModInitializer {
             CinematicVfxController.tick(client);
 
             if (client.player == null) return;
+
+            while (AvatarKeyBindings.ELEMENT_SELECTOR.wasPressed()) {
+                if (client.currentScreen == null) {
+                    client.setScreen(new ElementSelectorScreen());
+                }
+            }
 
             // --- Element wheel: cycle to next element with debounce ---
             // Continuously drain buffered presses so queued keys (from typing in chat or opening menus) never fire later

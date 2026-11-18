@@ -2,6 +2,7 @@ package com.avatarmod.elements.skill.impl;
 
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.data.PlayerBendingData;
+import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
@@ -46,18 +47,37 @@ public final class FireJetSkill {
         player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player.getId(), player.getVelocity()));
 
         ServerWorld world = player.getServerWorld();
+        // Explosive launch burst at feet
+        world.spawnParticles(ParticleTypes.EXPLOSION,
+                player.getX(), player.getY() + 0.2, player.getZ(), 1, 0.0, 0.0, 0.0, 0.0);
+        world.spawnParticles(AvatarParticles.FLAME_BURST,
+                player.getX(), player.getY() + 0.3, player.getZ(), 6, 0.2, 0.2, 0.2, 0.05);
+        world.spawnParticles(AvatarParticles.SMOKE_EXPANSION,
+                player.getX(), player.getY() + 0.2, player.getZ(), 4, 0.2, 0.2, 0.2, 0.02);
+
+        // Multi-layered rocket thrust SFX
+        world.playSound(null, player.getBlockPos(),
+                SoundEvents.ENTITY_FIREWORK_ROCKET_LAUNCH,
+                SoundCategory.PLAYERS, 1.5f, 0.8f);
+        world.playSound(null, player.getBlockPos(),
+                SoundEvents.ITEM_FIRECHARGE_USE,
+                SoundCategory.PLAYERS, 1.2f, 0.9f);
         world.playSound(null, player.getBlockPos(),
                 SoundEvents.ENTITY_BLAZE_SHOOT,
-                SoundCategory.PLAYERS, 1.0f, 0.7f);
+                SoundCategory.PLAYERS, 1.2f, 0.7f);
     }
 
     private static void trail(ServerPlayerEntity player) {
         ServerWorld world = player.getServerWorld();
-        Vec3d pos = player.getPos().add(0, 0.5, 0);
+        Vec3d pos = player.getPos().add(0, 0.4, 0);
+        world.spawnParticles(AvatarParticles.FLAME_TONGUE,
+                pos.x, pos.y, pos.z, 8, 0.2, 0.2, 0.2, 0.04);
+        world.spawnParticles(AvatarParticles.EMBER,
+                pos.x, pos.y, pos.z, 5, 0.15, 0.15, 0.15, 0.02);
         world.spawnParticles(ParticleTypes.FLAME,
-                pos.x, pos.y, pos.z, 6, 0.2, 0.2, 0.2, 0.03);
+                pos.x, pos.y, pos.z, 10, 0.2, 0.2, 0.2, 0.05);
         world.spawnParticles(ParticleTypes.LARGE_SMOKE,
-                pos.x, pos.y, pos.z, 2, 0.1, 0.1, 0.1, 0.0);
+                pos.x, pos.y, pos.z, 3, 0.1, 0.1, 0.1, 0.01);
     }
 
     private FireJetSkill() {}

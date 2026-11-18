@@ -228,6 +228,8 @@ Status task diperbarui 2026-11-09; detail `UI_THEME_SPEC.md`. HUD baru adalah ir
 - [ ] UI-08 Keyboard, kontras, reduced motion/flash, resolusi dan GUI scale.
 - [ ] UI-09 Uji overlap HUD/mod lain, input bocor, close saat charge, SP/MP dan izin server.
 - [ ] UI-10 Catat provenance aset dan hasil build/runtime; tidak memasang Essential/RPG-HUD sebagai syarat inti.
+- [x] UI-11 Selector elemen radial (G default), navigasi mouse/keyboard, sinkronisasi pilihan langsung melalui server dan validasi ID elemen; R tetap fallback cycle, scroll hotbar tidak diubah. `.\gradlew.bat test build` lulus (29 tes; worker memori dibatasi); uji GUI/in-game dua client masih pending.
+- [ ] UI-12 Tetapkan model `benderAffinity`/`unlockedElements` dan aturan lintas-elemen untuk Avatar, progression, serta combo; jangan membatasi akses runtime sebelum keputusan gameplay disepakati.
 
 ## Jalur visual martial art & Blockbench
 

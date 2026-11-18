@@ -176,6 +176,7 @@ Menu utama/settings dan profil memakai gulungan perkamen; HUD ringkas, bukan lem
 
 ## D019 — Slot duplikat menjadi kosong sementara
 Untuk melanjutkan SC-2 tanpa menciptakan ability atau menetapkan assignment gameplay baru, pertahankan mapping FIRE dan skill unik AIR yang sudah ada, lalu ubah hanya slot berulang menjadi `null`: AIR/B, WATER/X–B, dan EARTH/X–B. Ini adalah default konservatif sementara karena pengguna belum memilih perlakuan slot; bukan klaim bahwa mapping final sudah disetujui. Perbarui `element_slots.json`, `CONTENT_SPEC.md`, dan tes bundled agar slot kosong tetap eksplisit. Tidak ada perubahan pada skill, balance, atau tombol.
+
 Essential menjadi referensi navigasi; RPG-HUD referensi modularitas; keduanya bukan dependency wajib.
 AUTO mengikuti tribe, aksen skill mengikuti elemen aktif; pilihan manual/minimal tidak memengaruhi gameplay.
 Aset original; satu theme system, preferensi client terpisah dari izin/data server.
@@ -187,4 +188,9 @@ Earth Pillar dan Boulder Launch diimplementasikan mengikuti pola yang sudah ada 
 
 ## D021 — Siklus elemen server-authoritative
 Tanggal: 2026-11-13. Status: implementasi menunggu retest Minecraft.
-Client mengirim intent tanpa nama elemen yang dipilih; server memajukan elemen aktif berdasarkan state per pemain lalu mengirim hasilnya ke client. Ini menghindari client menulis pilihan absolut yang mungkin stale ke state server. Perubahan ini mengurangi jalur desinkronisasi yang mungkin, tetapi penyebab laporan elemen berganti acak belum direproduksi/dibuktikan dan tidak dianggap selesai sebelum uji singleplayer serta multiplayer.
+Untuk tombol cycle `R`, client mengirim intent tanpa nama elemen; server memajukan elemen aktif berdasarkan state per pemain lalu mengirim hasilnya ke client. Ini menghindari client menulis pilihan absolut yang mungkin stale ke state server. Perubahan ini mengurangi jalur desinkronisasi yang mungkin, tetapi penyebab laporan elemen berganti acak belum direproduksi/dibuktikan dan tidak dianggap selesai sebelum uji singleplayer serta multiplayer.
+
+## D022 — Pemilihan elemen melalui radial client dengan server authority
+Tombol skill langsung tetap menjadi input combat. Tombol `G` membuka selector radial yang dapat diklik atau dinavigasi keyboard; `R` tetap tersedia sebagai cycle fallback dan semua binding dapat diubah di Controls. Pemilihan spesifik dikirim ke server, hanya menerima elemen terdaftar, memakai debounce yang sama, lalu server mengirim keadaan aktif kembali ke client. Selector tidak menangkap scroll global agar scroll hotbar tetap berfungsi.
+
+Keputusan ini hanya menetapkan UX selector, bukan izin bending. Runtime saat ini masih mengizinkan semua pemain memilih FIRE/AIR/WATER/EARTH. `benderAffinity`, `unlockedElements`, persistence/progression, serta aturan Avatar dan combo lintas elemen memerlukan keputusan gameplay terpisah sebelum pembatasan server diterapkan.

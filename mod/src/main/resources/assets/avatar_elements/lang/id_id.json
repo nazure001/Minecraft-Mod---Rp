@@ -109,5 +109,13 @@
   "key.avatar_elements.slot_3": "Slot Jurus 3",
   "key.avatar_elements.slot_4": "Slot Jurus 4",
   "key.avatar_elements.slot_5": "Slot Jurus 5",
-  "key.avatar_elements.element_wheel": "Ganti Elemen"
+  "key.avatar_elements.element_wheel": "Ganti Elemen",
+  "key.avatar_elements.element_selector": "Buka Pemilih Elemen",
+  "element.avatar_elements.fire": "API",
+  "element.avatar_elements.air": "UDARA",
+  "element.avatar_elements.water": "AIR",
+  "element.avatar_elements.earth": "BUMI",
+  "gui.avatar_elements.element_selector.title": "Pilih Elemen Aktif",
+  "gui.avatar_elements.element_selector.active": "Aktif: %s",
+  "gui.avatar_elements.element_selector.hint": "Arahkan / klik • Tombol panah + Enter • Esc batal"
 }

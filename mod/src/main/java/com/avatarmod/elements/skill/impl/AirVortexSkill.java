@@ -2,6 +2,7 @@ package com.avatarmod.elements.skill.impl;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
+import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -32,16 +33,19 @@ public final class AirVortexSkill {
             pullEntities(player, def);
         }
 
-        // Spiral particle ring every 4 ticks
-        if (t % 4 == 0) {
+        // Helical cyclone particles every 2 ticks
+        if (t % 2 == 0) {
             spawnSpiralVFX(player, def, t);
         }
 
-        // Looping wind sound every 20 ticks
-        if (t % 20 == 1) {
+        // Looping howling wind & breeze sounds
+        if (t % 12 == 1) {
+            player.getServerWorld().playSound(null, player.getBlockPos(),
+                    SoundEvents.ENTITY_BREEZE_IDLE_AIR,
+                    SoundCategory.PLAYERS, 1.2f, 1.1f);
             player.getServerWorld().playSound(null, player.getBlockPos(),
                     SoundEvents.ENTITY_PHANTOM_FLAP,
-                    SoundCategory.PLAYERS, 0.6f, 1.4f);
+                    SoundCategory.PLAYERS, 0.8f, 1.4f);
         }
     }
 
@@ -80,17 +84,24 @@ public final class AirVortexSkill {
 
     private static void spawnSpiralVFX(ServerPlayerEntity player, SkillDefinition def, int tick) {
         ServerWorld world = player.getServerWorld();
-        Vec3d center = player.getPos().add(0, 1.0, 0);
-        double r = def.range() * 0.8;
-        double angleOffset = tick * 15.0; // rotate over time
+        Vec3d center = player.getPos().add(0, 0.2, 0);
+        double maxR = def.range() * 0.85;
 
-        for (int i = 0; i < 8; i++) {
-            double angle = Math.toRadians(i * 45 + angleOffset);
-            double px = center.x + Math.cos(angle) * r;
-            double pz = center.z + Math.sin(angle) * r;
-            world.spawnParticles(ParticleTypes.CLOUD,
-                    px, center.y + (i % 2) * 0.5, pz,
-                    1, 0.05, 0.05, 0.05, 0.02);
+        // 4 ascending spiral arms forming a volumetric cyclone funnel
+        for (int arm = 0; arm < 4; arm++) {
+            for (double h = 0.2; h <= 2.6; h += 0.8) {
+                double r = maxR * (0.35 + (h / 2.6) * 0.65);
+                double angle = Math.toRadians(arm * 90.0 + tick * 22.0 + h * 45.0);
+                double px = center.x + Math.cos(angle) * r;
+                double pz = center.z + Math.sin(angle) * r;
+
+                world.spawnParticles(AvatarParticles.GUST_CURL,
+                        px, center.y + h, pz, 2, 0.08, 0.08, 0.08, 0.03);
+                world.spawnParticles(ParticleTypes.CLOUD,
+                        px, center.y + h, pz, 2, 0.08, 0.08, 0.08, 0.02);
+                world.spawnParticles(AvatarParticles.SMOKE_PUFF,
+                        px, center.y + h, pz, 1, 0.05, 0.05, 0.05, 0.01);
+            }
         }
     }
 

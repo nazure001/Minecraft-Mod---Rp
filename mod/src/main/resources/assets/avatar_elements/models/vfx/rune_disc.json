@@ -1,0 +1,87 @@
+{
+  "credit": "Avatar Elements Mod - Rune Disc Mandala (Fabric 1.21.1)",
+  "texture_size": [64, 64],
+  "textures": {
+    "texture": "avatar_elements:vfx/rune_disc",
+    "particle": "avatar_elements:vfx/rune_disc"
+  },
+  "elements": [
+    {
+      "name": "mandala_center",
+      "from": [4.0, 7.8, 4.0],
+      "to": [12.0, 8.2, 12.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 0.0 },
+      "faces": {
+        "up":   { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "mandala_axis_x",
+      "from": [0.0, 7.8, 6.5],
+      "to": [16.0, 8.2, 9.5],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 0.0 },
+      "faces": {
+        "up":   { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "mandala_axis_z",
+      "from": [6.5, 7.8, 0.0],
+      "to": [9.5, 8.2, 16.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 0.0 },
+      "faces": {
+        "up":   { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "mandala_diag_p45",
+      "from": [0.0, 7.8, 6.5],
+      "to": [16.0, 8.2, 9.5],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 45.0 },
+      "faces": {
+        "up":   { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "mandala_diag_n45",
+      "from": [0.0, 7.8, 6.5],
+      "to": [16.0, 8.2, 9.5],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": -45.0 },
+      "faces": {
+        "up":   { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "mandala_diag_p22",
+      "from": [1.0, 7.8, 7.0],
+      "to": [15.0, 8.2, 9.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 22.5 },
+      "faces": {
+        "up":   { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "mandala_diag_n22",
+      "from": [1.0, 7.8, 7.0],
+      "to": [15.0, 8.2, 9.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": -22.5 },
+      "faces": {
+        "up":   { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down": { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    }
+  ],
+  "display": {
+    "fixed": {
+      "rotation": [0, 0, 0],
+      "translation": [0, 0, 0],
+      "scale": [1.0, 1.0, 1.0]
+    }
+  }
+}

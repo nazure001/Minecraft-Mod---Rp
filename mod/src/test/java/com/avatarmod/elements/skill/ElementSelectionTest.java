@@ -3,6 +3,8 @@ package com.avatarmod.elements.skill;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ElementSelectionTest {
 
@@ -23,5 +25,15 @@ class ElementSelectionTest {
     @Test
     void invalidElementRecoversToFirstConfiguredElement() {
         assertEquals("FIRE", ElementSlotMap.nextElement("UNKNOWN"));
+    }
+
+    @Test
+    void acceptsOnlyConfiguredElementNames() {
+        for (String element : ElementSlotMap.ELEMENTS) {
+            assertTrue(ElementSlotMap.isElement(element));
+        }
+        assertFalse(ElementSlotMap.isElement("LIGHTNING"));
+        assertFalse(ElementSlotMap.isElement("fire"));
+        assertFalse(ElementSlotMap.isElement(null));
     }
 }

@@ -2,9 +2,11 @@ package com.avatarmod.elements.skill.impl;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
+import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -52,10 +54,19 @@ public final class EarthBoulderSkill {
         ServerWorld world = player.getServerWorld();
         Vec3d nextPos = state.pos().add(state.velocity());
 
-        // VFX at current position
-        world.spawnParticles(ParticleTypes.SMOKE,
+        // VFX at current position: tumbling stone chunks & dust trail
+        world.spawnParticles(AvatarParticles.STONE_CHIP,
+                state.pos().x, state.pos().y, state.pos().z,
+                4, HITBOX_RADIUS * 0.4, HITBOX_RADIUS * 0.4, HITBOX_RADIUS * 0.4, 0.04);
+        world.spawnParticles(AvatarParticles.DUST,
                 state.pos().x, state.pos().y, state.pos().z,
                 6, HITBOX_RADIUS * 0.5, HITBOX_RADIUS * 0.5, HITBOX_RADIUS * 0.5, 0.02);
+        world.spawnParticles(ParticleTypes.POOF,
+                state.pos().x, state.pos().y, state.pos().z,
+                2, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, 0.01);
+        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, net.minecraft.block.Blocks.STONE.getDefaultState()),
+                state.pos().x, state.pos().y, state.pos().z,
+                3, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, 0.04);
 
         // Collision check: entities
         Box hitbox = Box.of(nextPos, HITBOX_RADIUS * 2, HITBOX_RADIUS * 2, HITBOX_RADIUS * 2);
@@ -87,13 +98,26 @@ public final class EarthBoulderSkill {
 
     private static void detonate(ServerPlayerEntity player, ServerWorld world, Vec3d pos,
                                   List<LivingEntity> targets, BoulderState state) {
-        // Impact VFX
+        // Impact VFX: Cataclysmic tectonic crash & stone explosion
+        world.spawnParticles(ParticleTypes.EXPLOSION,
+                pos.x, pos.y, pos.z, 2, 0.2, 0.2, 0.2, 0.0);
         world.spawnParticles(ParticleTypes.LARGE_SMOKE,
-                pos.x, pos.y, pos.z, 24, 0.5, 0.5, 0.5, 0.15);
-        world.spawnParticles(ParticleTypes.SMOKE,
-                pos.x, pos.y, pos.z, 8, 0.3, 0.3, 0.3, 0.05);
-        world.playSound(null, net.minecraft.util.math.BlockPos.ofFloored(pos),
-                SoundEvents.BLOCK_STONE_BREAK, SoundCategory.PLAYERS, 1.2f, 0.6f);
+                pos.x, pos.y, pos.z, 16, 0.5, 0.5, 0.5, 0.1);
+        world.spawnParticles(AvatarParticles.STONE_CHIP,
+                pos.x, pos.y, pos.z, 25, 0.7, 0.5, 0.7, 0.15);
+        world.spawnParticles(AvatarParticles.DUST,
+                pos.x, pos.y, pos.z, 30, 0.9, 0.5, 0.9, 0.1);
+        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, net.minecraft.block.Blocks.COBBLESTONE.getDefaultState()),
+                pos.x, pos.y, pos.z, 35, 0.7, 0.7, 0.7, 0.12);
+
+        // Multi-layered deep tectonic roar SFX
+        net.minecraft.util.math.BlockPos blockPos = net.minecraft.util.math.BlockPos.ofFloored(pos);
+        world.playSound(null, blockPos,
+                SoundEvents.ENTITY_IRON_GOLEM_ATTACK, SoundCategory.PLAYERS, 2.0f, 0.5f);
+        world.playSound(null, blockPos,
+                SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.PLAYERS, 1.5f, 0.6f);
+        world.playSound(null, blockPos,
+                SoundEvents.BLOCK_STONE_BREAK, SoundCategory.PLAYERS, 2.0f, 0.7f);
 
         DamageSource source = world.getDamageSources().playerAttack(player);
         for (LivingEntity target : targets) {

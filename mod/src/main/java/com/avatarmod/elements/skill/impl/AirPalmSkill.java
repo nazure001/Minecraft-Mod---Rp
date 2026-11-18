@@ -6,6 +6,7 @@ import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -58,15 +59,28 @@ public final class AirPalmSkill {
             target.velocityModified = true;
         }
 
-        // VFX: palm shockwave
+        // VFX: Supersonic palm shockwave cone
         world.spawnParticles(AvatarParticles.GUST_CURL,
-                center.x, center.y, center.z, 6, 0.25, 0.25, 0.25, 0.05);
+                center.x, center.y, center.z, 14, 0.3, 0.3, 0.3, 0.08);
+        world.spawnParticles(ParticleTypes.POOF,
+                center.x, center.y, center.z, 4, 0.2, 0.2, 0.2, 0.05);
+        world.spawnParticles(ParticleTypes.CLOUD,
+                center.x, center.y, center.z, 8, 0.25, 0.25, 0.25, 0.04);
+        world.spawnParticles(AvatarParticles.SMOKE_PUFF,
+                center.x, center.y, center.z, 6, 0.2, 0.2, 0.2, 0.02);
         world.spawnParticles(AvatarParticles.IMPACT_FLASH,
-                center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0.0);
+                center.x, center.y, center.z, 2, 0.0, 0.0, 0.0, 0.0);
 
+        // Multi-layered punchy air palm SFX
+        world.playSound(null, player.getBlockPos(),
+                SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST.value(),
+                SoundCategory.PLAYERS, 1.6f, 1.4f);
+        world.playSound(null, player.getBlockPos(),
+                SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK,
+                SoundCategory.PLAYERS, 1.2f, 1.1f);
         world.playSound(null, player.getBlockPos(),
                 SoundEvents.ENTITY_BREEZE_SLIDE,
-                SoundCategory.PLAYERS, 0.8f, 1.4f);
+                SoundCategory.PLAYERS, 1.0f, 1.2f);
     }
 
     private AirPalmSkill() {}

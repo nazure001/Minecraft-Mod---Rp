@@ -2,6 +2,7 @@ package com.avatarmod.elements.skill.impl;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
+import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.SkillDefinition;
 import com.avatarmod.elements.skill.SkillTargeting;
 import net.minecraft.entity.LivingEntity;
@@ -73,13 +74,16 @@ public final class WaterJetSkill {
         }
 
         // 3. VFX: High-pressure water particles streaming forward
-        spawnStreamParticles(world, origin, look, range);
+        spawnStreamParticles(world, origin, look, range, t);
 
         // 4. Looping rushing water SFX
-        if (t % 10 == 1) {
+        if (t % 6 == 1) {
             world.playSound(null, player.getBlockPos(),
                     SoundEvents.ITEM_BUCKET_EMPTY,
-                    SoundCategory.PLAYERS, 0.7f, 1.3f);
+                    SoundCategory.PLAYERS, 0.9f, 1.4f);
+            world.playSound(null, player.getBlockPos(),
+                    SoundEvents.ENTITY_GENERIC_SPLASH,
+                    SoundCategory.PLAYERS, 0.7f, 1.6f);
         }
     }
 
@@ -109,18 +113,37 @@ public final class WaterJetSkill {
         return cost;
     }
 
-    private static void spawnStreamParticles(ServerWorld world, Vec3d origin, Vec3d look, double range) {
-        int steps = Math.max(4, (int) (range * 2));
+    private static void spawnStreamParticles(ServerWorld world, Vec3d origin, Vec3d look, double range, int tick) {
+        double horizLen = Math.sqrt(look.x * look.x + look.z * look.z);
+        Vec3d right = horizLen > 1e-5
+                ? new Vec3d(-look.z / horizLen, 0.0, look.x / horizLen)
+                : new Vec3d(1.0, 0.0, 0.0);
+        Vec3d upVec = right.crossProduct(look).normalize();
+
+        int steps = Math.max(8, (int) (range * 3));
         for (int i = 1; i <= steps; i++) {
             double dist = (range * i) / steps;
-            Vec3d pt = origin.add(look.multiply(dist));
-            world.spawnParticles(ParticleTypes.SPLASH,
-                    pt.x, pt.y, pt.z, 2, 0.08, 0.08, 0.08, 0.02);
-            if (i % 2 == 0) {
-                world.spawnParticles(ParticleTypes.FALLING_WATER,
-                        pt.x, pt.y, pt.z, 1, 0.05, 0.05, 0.05, 0.01);
+            double spiralAngle = tick * 0.5 + i * 0.4;
+            double rSpiral = 0.22 * Math.min(1.0, dist * 0.5);
+
+            Vec3d basePt = origin.add(look.multiply(dist));
+            Vec3d spiralPt = basePt.add(right.multiply(Math.cos(spiralAngle) * rSpiral))
+                    .add(upVec.multiply(Math.sin(spiralAngle) * rSpiral));
+
+            world.spawnParticles(ParticleTypes.SPLASH, spiralPt.x, spiralPt.y, spiralPt.z, 2, 0.04, 0.04, 0.04, 0.02);
+            world.spawnParticles(ParticleTypes.FALLING_WATER, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.01);
+            world.spawnParticles(AvatarParticles.DROPLET, spiralPt.x, spiralPt.y, spiralPt.z, 2, 0.04, 0.04, 0.04, 0.01);
+
+            if (i % 3 == 0) {
+                world.spawnParticles(ParticleTypes.BUBBLE, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.02);
+                world.spawnParticles(AvatarParticles.FOAM, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.01);
             }
         }
+
+        // Stream terminal burst
+        Vec3d end = origin.add(look.multiply(range));
+        world.spawnParticles(ParticleTypes.SPLASH, end.x, end.y, end.z, 6, 0.2, 0.2, 0.2, 0.08);
+        world.spawnParticles(AvatarParticles.SMALL_SPLASH, end.x, end.y, end.z, 4, 0.15, 0.15, 0.15, 0.05);
     }
 
     private WaterJetSkill() {}

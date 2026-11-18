@@ -94,16 +94,18 @@ Upon loading into the world, open the in-game chat (`T`) and execute the followi
 ```
 
 ### 2.5 Element Selection Verification
-1. Use an isolated QA world and press/release `R` once per change. The order must be `FIRE → AIR → WATER → EARTH → FIRE`; wait for the HUD to update from the server before pressing a skill.
-2. With each element displayed, try one populated slot and confirm the skill corresponds to the element shown. Repeat several casts without pressing `R`; the HUD element must remain unchanged.
-3. Cycle to `FIRE` and verify its current slot mapping:
+1. Use an isolated QA world and press `G` (default) to open the element selector. Select each element by clicking its radial option; alternatively use arrow keys and Enter. `Esc` must close without changing the active element.
+2. Verify the HUD updates from the server after selecting each element. The existing cycle fallback (`R` by default) must still advance in order `FIRE → AIR → WATER → EARTH → FIRE`.
+3. With each element displayed, try one populated slot and confirm the skill corresponds to the element shown. Repeat several casts without changing elements; the HUD element must remain unchanged.
+4. Select `FIRE` and verify its current slot mapping:
    - **Slot 1 (`Z`):** `avatar:fire_jab`
    - **Slot 2 (`X`):** `avatar:fire_blast`
    - **Slot 3 (`C`):** `avatar:flame_sweep`
    - **Slot 4 (`V`):** `avatar:fire_guard`
    - **Slot 5 (`B`):** `avatar:fire_jet`
-4. In a two-client test, change one player's element several times while the other player casts. Confirm each player's HUD and skill mapping remain independent.
-5. If the HUD changes without `R`, capture the latest log and report the last input, displayed element, and skill cast. This result is a blocker; do not mark element sync or multiplayer verification passed.
+5. In a two-client test, change one player's element several times while the other player casts. Confirm each player's HUD and skill mapping remain independent.
+6. If the HUD changes without selecting an element or pressing `R`, capture the latest log and report the last input, displayed element, and skill cast. This result is a blocker; do not mark element sync or multiplayer verification passed.
+7. Confirm ordinary mouse-wheel scrolling still changes the vanilla hotbar; the element selector must not consume global scroll input.
 
 ### 2.6 Directional Hitbox Accuracy
 Use only an isolated QA world and a stationary target. Keep the player position fixed and record the element, slot, range, aim point, and whether damage/knockback occurred.

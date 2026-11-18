@@ -92,6 +92,14 @@ public final class ElementSlotMap {
         return ELEMENTS[0];
     }
 
+    /** Returns whether the value is one of the configured runtime elements. */
+    public static boolean isElement(String element) {
+        for (String configuredElement : ELEMENTS) {
+            if (configuredElement.equals(element)) return true;
+        }
+        return false;
+    }
+
     /** Returns a copy of the five slots for HUD display. */
     public static String[] getSlots(String element) {
         return Arrays.copyOf(MAP.getOrDefault(element, new String[SLOT_COUNT]), SLOT_COUNT);

@@ -63,6 +63,10 @@ public final class SkillClientHandler {
         ClientPlayNetworking.send(new SkillPackets.C2SSlotCast(slotIndex));
     }
 
+    public static void selectElement(String element) {
+        ClientPlayNetworking.send(new SkillPackets.C2SSelectElement(element));
+    }
+
     public static void sendHoldStart(int slotIndex, String skillId) {
         ClientPlayNetworking.send(new SkillPackets.C2SHoldStart(slotIndex, skillId));
     }

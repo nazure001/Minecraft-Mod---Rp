@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/shield",
+  "overrides": [
+    {
+      "predicate": { "custom_model_data": 1001 },
+      "model": "avatar_elements:vfx/aegis_dome"
+    }
+  ]
+}

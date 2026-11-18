@@ -1,0 +1,99 @@
+{
+  "credit": "Avatar Elements Mod - Crescent Slash Arc (Fabric 1.21.1)",
+  "texture_size": [64, 64],
+  "textures": {
+    "texture": "avatar_elements:vfx/crescent_slash",
+    "particle": "avatar_elements:vfx/crescent_slash"
+  },
+  "elements": [
+    {
+      "name": "slash_core_center",
+      "from": [2.0, 7.5, 12.0],
+      "to": [14.0, 8.5, 15.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 0.0 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "east":  { "uv": [0.0, 0.0, 4.0, 4.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "west":  { "uv": [0.0, 0.0, 4.0, 4.0], "texture": "#texture" },
+        "up":    { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down":  { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "slash_flank_left_1",
+      "from": [-4.0, 7.5, 8.0],
+      "to": [4.0, 8.5, 13.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": -22.5 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "east":  { "uv": [0.0, 0.0, 4.0, 4.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "west":  { "uv": [0.0, 0.0, 4.0, 4.0], "texture": "#texture" },
+        "up":    { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down":  { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "slash_tip_left",
+      "from": [-10.0, 7.8, 2.0],
+      "to": [-2.0, 8.2, 8.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": -45.0 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "east":  { "uv": [0.0, 0.0, 4.0, 4.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "west":  { "uv": [0.0, 0.0, 4.0, 4.0], "texture": "#texture" },
+        "up":    { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down":  { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "slash_flank_right_1",
+      "from": [12.0, 7.5, 8.0],
+      "to": [20.0, 8.5, 13.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 22.5 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "east":  { "uv": [0.0, 0.0, 4.0, 4.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "west":  { "uv": [0.0, 0.0, 4.0, 4.0], "texture": "#texture" },
+        "up":    { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down":  { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "slash_tip_right",
+      "from": [18.0, 7.8, 2.0],
+      "to": [26.0, 8.2, 8.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 45.0 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "east":  { "uv": [0.0, 0.0, 4.0, 4.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "west":  { "uv": [0.0, 0.0, 4.0, 4.0], "texture": "#texture" },
+        "up":    { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down":  { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    },
+    {
+      "name": "slash_glow_core",
+      "from": [4.0, 7.7, 10.0],
+      "to": [12.0, 8.3, 14.0],
+      "rotation": { "origin": [8.0, 8.0, 8.0], "axis": "y", "angle": 0.0 },
+      "faces": {
+        "north": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "south": { "uv": [0.0, 0.0, 16.0, 4.0], "texture": "#texture" },
+        "up":    { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" },
+        "down":  { "uv": [0.0, 0.0, 16.0, 16.0], "texture": "#texture" }
+      }
+    }
+  ],
+  "display": {
+    "fixed": {
+      "rotation": [0, 0, 0],
+      "translation": [0, 0, 0],
+      "scale": [1.0, 1.0, 1.0]
+    }
+  }
+}

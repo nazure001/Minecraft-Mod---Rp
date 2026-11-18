@@ -39,6 +39,13 @@ public final class ElementWheelRenderer {
         return COLORS[currentIndex];
     }
 
+    public static int getElementColor(String element) {
+        for (int i = 0; i < ELEMENTS.length; i++) {
+            if (ELEMENTS[i].equals(element)) return COLORS[i];
+        }
+        return COLORS[0];
+    }
+
     /**
      * Renders the locally selected element as a compact parchment badge.
      */

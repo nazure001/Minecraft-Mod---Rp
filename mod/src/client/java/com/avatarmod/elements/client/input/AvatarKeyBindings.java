@@ -33,6 +33,10 @@ public final class AvatarKeyBindings {
             "key.avatar_elements.element_wheel", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R,
             "category.avatar_elements.general"));
 
+    public static final KeyBinding ELEMENT_SELECTOR = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.avatar_elements.element_selector", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G,
+            "category.avatar_elements.general"));
+
     public static void register() {
         // Registration happens via KeyBindingHelper above.
     }

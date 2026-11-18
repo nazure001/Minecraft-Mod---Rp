@@ -2,6 +2,7 @@ package com.avatarmod.elements.skill.impl;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
+import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -117,23 +118,34 @@ public final class EarthPillarSkill {
             target.velocityModified = true;
         }
 
-        // Eruption VFX: crack burst of the actual ground block + dust ring
+        // Eruption VFX: crack burst of the actual ground block + stone chips + dust ring
         BlockPos groundPos = BlockPos.ofFloored(center.subtract(0, 0.5, 0));
         BlockState ground = world.getBlockState(groundPos);
-        if (!ground.isAir()) {
-            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, ground),
-                    center.x, center.y + 0.3, center.z,
-                    40, FOOTPRINT_RADIUS * 0.5, 0.4, FOOTPRINT_RADIUS * 0.5, 0.15);
+        if (ground.isAir()) {
+            ground = net.minecraft.block.Blocks.STONE.getDefaultState();
         }
+        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, ground),
+                center.x, center.y + 0.3, center.z,
+                50, FOOTPRINT_RADIUS * 0.6, 0.5, FOOTPRINT_RADIUS * 0.6, 0.2);
+        world.spawnParticles(AvatarParticles.STONE_CHIP,
+                center.x, center.y + 0.3, center.z,
+                25, FOOTPRINT_RADIUS * 0.5, 0.4, FOOTPRINT_RADIUS * 0.5, 0.15);
+        world.spawnParticles(AvatarParticles.DUST,
+                center.x, center.y + 0.2, center.z,
+                35, FOOTPRINT_RADIUS * 0.7, 0.3, FOOTPRINT_RADIUS * 0.7, 0.08);
         world.spawnParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE,
                 center.x, center.y + 0.1, center.z,
-                6, FOOTPRINT_RADIUS * 0.6, 0.1, FOOTPRINT_RADIUS * 0.6, 0.01);
+                8, FOOTPRINT_RADIUS * 0.6, 0.1, FOOTPRINT_RADIUS * 0.6, 0.02);
 
-        // Heavy stone SFX
+        // Multi-layered heavy stone & seismic roar SFX
         world.playSound(null, groundPos,
-                SoundEvents.BLOCK_DEEPSLATE_BREAK, SoundCategory.PLAYERS, 1.3f, 0.6f);
+                SoundEvents.ENTITY_IRON_GOLEM_ATTACK, SoundCategory.PLAYERS, 2.0f, 0.55f);
         world.playSound(null, groundPos,
-                SoundEvents.BLOCK_GRAVEL_BREAK, SoundCategory.PLAYERS, 1.0f, 0.7f);
+                SoundEvents.BLOCK_DEEPSLATE_BREAK, SoundCategory.PLAYERS, 1.6f, 0.6f);
+        world.playSound(null, groundPos,
+                SoundEvents.BLOCK_GRAVEL_BREAK, SoundCategory.PLAYERS, 1.2f, 0.7f);
+        world.playSound(null, groundPos,
+                SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.PLAYERS, 0.9f, 0.8f);
     }
 
     /** Rising volumetric pillar column with core + perimeter rings at multiple heights. */

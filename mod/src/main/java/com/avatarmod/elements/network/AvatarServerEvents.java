@@ -44,6 +44,7 @@ public final class AvatarServerEvents {
 
         SkillNetworking.registerSlotCastReceiver();
         SkillNetworking.registerCycleElementReceiver();
+        SkillNetworking.registerSelectElementReceiver();
 
         // Reset orb on player death; cancel active skill timeline first
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {

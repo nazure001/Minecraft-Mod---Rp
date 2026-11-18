@@ -61,6 +61,7 @@ public final class SkillNetworking {
         PayloadTypeRegistry.playC2S().register(SkillPackets.C2SHoldStart.ID, SkillPackets.C2SHoldStart.CODEC);
         PayloadTypeRegistry.playC2S().register(SkillPackets.C2SHoldRelease.ID, SkillPackets.C2SHoldRelease.CODEC);
         PayloadTypeRegistry.playC2S().register(SkillPackets.C2SCycleElement.ID, SkillPackets.C2SCycleElement.CODEC);
+        PayloadTypeRegistry.playC2S().register(SkillPackets.C2SSelectElement.ID, SkillPackets.C2SSelectElement.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSkillResult.ID, SkillPackets.S2CSkillResult.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CHudUpdate.ID, SkillPackets.S2CHudUpdate.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSyncElement.ID, SkillPackets.S2CSyncElement.CODEC);
@@ -302,20 +303,43 @@ public final class SkillNetworking {
                     }
 
                     PlayerBendingData data = PlayerBendingData.get(player);
-                    if (!data.getTimeline().isIdle()) {
-                        data.getTimeline().cancel();
-                        broadcastOrbReset(player);
-                    }
                     String element = ElementSlotMap.nextElement(data.getActiveElement());
-                    data.setActiveElement(element);
-
-                    // Set cooldown to block next cycle for 300ms
+                    applyElementSelection(player, data, element);
                     elementCycleCooldown.put(uuid, ELEMENT_CYCLE_COOLDOWN_TICKS);
-
-                    ServerPlayNetworking.send(player, new SkillPackets.S2CSyncElement(element));
-                    player.sendMessage(
-                            Text.literal("[Avatar] Element: " + element), true);
+                    player.sendMessage(Text.literal("[Avatar] Element: " + element), true);
                 });
+    }
+
+    public static void registerSelectElementReceiver() {
+        ServerPlayNetworking.registerGlobalReceiver(
+                SkillPackets.C2SSelectElement.ID,
+                (payload, context) -> {
+                    ServerPlayerEntity player = context.player();
+                    String element = payload.element();
+                    if (!ElementSlotMap.isElement(element)) return;
+
+                    UUID uuid = player.getUuid();
+                    if (elementCycleCooldown.getOrDefault(uuid, 0) > 0) return;
+
+                    PlayerBendingData data = PlayerBendingData.get(player);
+                    if (element.equals(data.getActiveElement())) {
+                        ServerPlayNetworking.send(player, new SkillPackets.S2CSyncElement(element));
+                        return;
+                    }
+
+                    applyElementSelection(player, data, element);
+                    elementCycleCooldown.put(uuid, ELEMENT_CYCLE_COOLDOWN_TICKS);
+                });
+    }
+
+    private static void applyElementSelection(
+            ServerPlayerEntity player, PlayerBendingData data, String element) {
+        if (!data.getTimeline().isIdle()) {
+            data.getTimeline().cancel();
+            broadcastOrbReset(player);
+        }
+        data.setActiveElement(element);
+        ServerPlayNetworking.send(player, new SkillPackets.S2CSyncElement(element));
     }
 
     /** Tick cooldowns on server (called once per tick). */
