@@ -156,6 +156,23 @@
       "comboWindowTicks": 0
     },
     {
+      "id": "avatar:water_jet",
+      "element": "WATER",
+      "masteryRequired": 0,
+      "chiCost": 10,
+      "chiPerTick": 0,
+      "cooldownTicks": 15,
+      "windupTicks": 2,
+      "activeTicks": 30,
+      "recoveryTicks": 6,
+      "damage": 1.5,
+      "range": 10.0,
+      "knockback": 0.4,
+      "hitboxShape": "LINE",
+      "cancelOnHit": false,
+      "comboWindowTicks": 0
+    },
+    {
       "id": "avatar:earth_boulder",
       "element": "EARTH",
       "masteryRequired": 0,

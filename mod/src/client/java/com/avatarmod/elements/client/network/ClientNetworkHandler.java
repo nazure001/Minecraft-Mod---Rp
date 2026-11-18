@@ -59,6 +59,16 @@ public final class ClientNetworkHandler {
                 });
 
         ClientPlayNetworking.registerGlobalReceiver(
+                SkillPackets.S2CSkillPosition.ID,
+                (payload, context) -> {
+                    MinecraftClient client = context.client();
+                    client.execute(() -> CinematicVfxController.onSkillPosition(
+                            payload.casterUuid(), payload.castSerial(),
+                            payload.skillId(), payload.x(), payload.y(), payload.z()
+                    ));
+                });
+
+        ClientPlayNetworking.registerGlobalReceiver(
                 TestActionPackets.S2CAck.ID,
                 (payload, context) -> {
                     MinecraftClient client = context.client();

@@ -78,7 +78,29 @@ public final class CinematicVfxController {
     private static final Map<UUID, Integer> CASTER_ACTIVE_SERIALS = new ConcurrentHashMap<>();
     private static final Map<VfxKey, Vec3d> PILLAR_GROUND_POSITIONS = new ConcurrentHashMap<>();
 
+    // Server-authoritative positions received before or alongside the ACTIVE phase sync
+    private static final Map<VfxKey, Vec3d> SERVER_POSITIONS = new ConcurrentHashMap<>();
+
     private CinematicVfxController() {}
+
+    /**
+     * Receives the server-authoritative position for a positional skill (e.g. Earth Pillar).
+     * Called from ClientNetworkHandler on the main thread, before or alongside the phase sync.
+     */
+    public static void onSkillPosition(UUID casterUuid, int castSerial, String skillId,
+                                       double x, double y, double z) {
+        if (casterUuid == null) return;
+        VfxKey key = new VfxKey(casterUuid, castSerial, skillId);
+        Vec3d position = new Vec3d(x, y, z);
+        // If the VFX entity is already spawned (phase sync arrived first), update its ground position
+        ActiveVfx existing = ACTIVE_ENTITIES.get(key);
+        if (existing != null && existing.type() == VfxType.EARTH_PILLAR) {
+            PILLAR_GROUND_POSITIONS.put(key, position);
+            SERVER_POSITIONS.remove(key);
+        } else {
+            SERVER_POSITIONS.put(key, position);
+        }
+    }
 
     /**
      * Handles S2CPhaseSync packet dispatch on the client main thread.
@@ -109,6 +131,7 @@ public final class CinematicVfxController {
         } else if ("RECOVERY".equals(phase) || "IDLE".equals(phase)) {
             ActiveVfx removed = ACTIVE_ENTITIES.remove(key);
             PILLAR_GROUND_POSITIONS.remove(key);
+            SERVER_POSITIONS.remove(key);
             if (removed != null && removed.entity() != null) {
                 removed.entity().discard();
             }
@@ -133,9 +156,17 @@ public final class CinematicVfxController {
             } else if (sid.contains("guard")) {
                 type = VfxType.AEGIS_DOME;
             } else if (sid.contains("vortex")) {
-                type = VfxType.SWIRL_VORTEX;
+                type = VfxType.AIR_VORTEX_FUNNEL;
             } else if (sid.contains("avatar_state")) {
                 type = VfxType.RUNE_DISC;
+            } else if (sid.contains("boulder_launch") || sid.contains("megalith")) {
+                type = VfxType.BOULDER_LAUNCH_MEGALITH;
+            } else if (sid.contains("water_whip") || sid.contains("whip")) {
+                type = VfxType.WATER_WHIP_STREAM;
+            } else if (sid.contains("earth_boulder") || sid.contains("shards")) {
+                type = VfxType.CAPTURED_EARTH_SHARDS;
+            } else if (sid.contains("armor")) {
+                type = VfxType.EARTH_ARMOR_OVERLAY;
             } else {
                 // Do not spawn unsolicited display entities for skills without 3D cinematic VFX
                 return;
@@ -152,7 +183,8 @@ public final class CinematicVfxController {
             yaw = caster.getYaw();
             pitch = caster.getPitch();
             if (type == VfxType.EARTH_PILLAR) {
-                Vec3d groundPos = findPillarGroundClient(caster, 8.0);
+                Vec3d serverPos = SERVER_POSITIONS.remove(key);
+                Vec3d groundPos = serverPos != null ? serverPos : findPillarGroundClient(caster, 8.0);
                 PILLAR_GROUND_POSITIONS.put(key, groundPos);
                 entity.setPosition(groundPos.x, groundPos.y - 2.75, groundPos.z);
             } else if (type == VfxType.CRESCENT_SLASH) {
@@ -160,8 +192,25 @@ public final class CinematicVfxController {
                 entity.setPosition(caster.getX() + look.x * 0.8, caster.getEyeY() - 0.2 + look.y * 0.8, caster.getZ() + look.z * 0.8);
                 entity.setYaw(yaw);
                 entity.setPitch(pitch);
+            } else if (type == VfxType.WATER_WHIP_STREAM) {
+                Vec3d look = caster.getRotationVec(1.0f);
+                entity.setPosition(caster.getX() + look.x * 0.5, caster.getEyeY() - 0.2 + look.y * 0.5, caster.getZ() + look.z * 0.5);
+                entity.setYaw(yaw);
+                entity.setPitch(pitch);
+            } else if (type == VfxType.BOULDER_LAUNCH_MEGALITH) {
+                Vec3d look = caster.getRotationVec(1.0f);
+                entity.setPosition(caster.getX() + look.x * 1.5, caster.getEyeY() - 0.2 + look.y * 1.5, caster.getZ() + look.z * 1.5);
+                entity.setYaw(yaw);
+                entity.setPitch(pitch);
             } else if (type == VfxType.RUNE_DISC || type == VfxType.MAGIC_RUNE_CIRCLE) {
                 entity.setPosition(caster.getX(), caster.getY() + 0.05, caster.getZ());
+            } else if (type == VfxType.AIR_VORTEX_FUNNEL || type == VfxType.SWIRL_VORTEX || type == VfxType.SWIRLING_VORTEX) {
+                entity.setPosition(caster.getX(), caster.getY() + 0.1, caster.getZ());
+            } else if (type == VfxType.CAPTURED_EARTH_SHARDS) {
+                entity.setPosition(caster.getX(), caster.getY() + 0.8, caster.getZ());
+            } else if (type == VfxType.EARTH_ARMOR_OVERLAY) {
+                entity.setPosition(caster.getX(), caster.getY() + 0.125, caster.getZ());
+                entity.setYaw(yaw);
             } else {
                 entity.setPosition(caster.getX(), caster.getY() + 0.5, caster.getZ());
             }
@@ -183,8 +232,33 @@ public final class CinematicVfxController {
         AffineTransformation initialTransform;
         if (type == VfxType.CRESCENT_SLASH) {
             initialTransform = VfxTransformUtil.createSlashTransform(yaw, pitch, type.baseScale(), 0.5f);
+        } else if (type == VfxType.WATER_WHIP_STREAM) {
+            initialTransform = VfxTransformUtil.createSlashTransform(yaw, pitch, type.baseScale(), 0.2f);
+        } else if (type == VfxType.BOULDER_LAUNCH_MEGALITH) {
+            initialTransform = VfxTransformUtil.createSlashTransform(yaw, pitch, type.baseScale(), 0.0f);
         } else if (type == VfxType.RUNE_DISC || type == VfxType.MAGIC_RUNE_CIRCLE) {
             initialTransform = VfxTransformUtil.createRuneDiscTransform(type.baseScale().x(), 0.0f);
+        } else if (type == VfxType.AIR_VORTEX_FUNNEL || type == VfxType.SWIRL_VORTEX || type == VfxType.SWIRLING_VORTEX) {
+            initialTransform = new AffineTransformation(
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new org.joml.Quaternionf().rotateY((float) Math.toRadians(0.0f)),
+                    type.baseScale(),
+                    new org.joml.Quaternionf()
+            );
+        } else if (type == VfxType.CAPTURED_EARTH_SHARDS) {
+            initialTransform = new AffineTransformation(
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new org.joml.Quaternionf().rotateY((float) Math.toRadians(0.0f)),
+                    type.baseScale(),
+                    new org.joml.Quaternionf()
+            );
+        } else if (type == VfxType.EARTH_ARMOR_OVERLAY) {
+            initialTransform = new AffineTransformation(
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new org.joml.Quaternionf().rotateY((float) Math.toRadians(180.0f - yaw)),
+                    type.baseScale(),
+                    new org.joml.Quaternionf()
+            );
         } else {
             initialTransform = VfxTransformUtil.createUniformScaleTransform(type.baseScale().x());
         }
@@ -232,6 +306,18 @@ public final class CinematicVfxController {
             if (type.followCaster() && caster != null) {
                 if (type == VfxType.RUNE_DISC || type == VfxType.MAGIC_RUNE_CIRCLE) {
                     entity.setPosition(caster.getX(), caster.getY() + 0.05, caster.getZ());
+                } else if (type == VfxType.AIR_VORTEX_FUNNEL || type == VfxType.SWIRL_VORTEX || type == VfxType.SWIRLING_VORTEX) {
+                    entity.setPosition(caster.getX(), caster.getY() + 0.1, caster.getZ());
+                } else if (type == VfxType.CAPTURED_EARTH_SHARDS) {
+                    entity.setPosition(caster.getX(), caster.getY() + 0.8, caster.getZ());
+                } else if (type == VfxType.EARTH_ARMOR_OVERLAY) {
+                    entity.setPosition(caster.getX(), caster.getY() + 0.125, caster.getZ());
+                    entity.setYaw(caster.getYaw());
+                } else if (type == VfxType.WATER_WHIP_STREAM) {
+                    Vec3d look = caster.getRotationVec(1.0f);
+                    entity.setPosition(caster.getX() + look.x * 0.5, caster.getEyeY() - 0.2 + look.y * 0.5, caster.getZ() + look.z * 0.5);
+                    entity.setYaw(caster.getYaw());
+                    entity.setPitch(caster.getPitch());
                 } else {
                     entity.setPosition(caster.getX(), caster.getY() + 0.5, caster.getZ());
                 }
@@ -247,6 +333,41 @@ public final class CinematicVfxController {
             } else if (type == VfxType.RUNE_DISC || type == VfxType.MAGIC_RUNE_CIRCLE) {
                 float spinAngle = (vfx.ageTicks() * type.rotationSpeed()) % 360.0f;
                 dispAcc.invokeSetTransformation(VfxTransformUtil.createRuneDiscTransform(type.baseScale().x(), spinAngle));
+            } else if (type == VfxType.AIR_VORTEX_FUNNEL || type == VfxType.SWIRL_VORTEX || type == VfxType.SWIRLING_VORTEX) {
+                float progress = Math.min(1.0f, (float) vfx.ageTicks() / (float) vfx.maxAgeTicks());
+                Vector3f scale = VfxTransformUtil.scaleInterpolation(type.baseScale(), type.targetScale(), progress);
+                float spinAngle = (vfx.ageTicks() * type.rotationSpeed()) % 360.0f;
+                dispAcc.invokeSetTransformation(new AffineTransformation(
+                        new Vector3f(0.0f, 0.0f, 0.0f),
+                        new org.joml.Quaternionf().rotateY((float) Math.toRadians(spinAngle)),
+                        scale,
+                        new org.joml.Quaternionf()
+                ));
+            } else if (type == VfxType.CAPTURED_EARTH_SHARDS) {
+                float orbitAngle = (vfx.ageTicks() * type.rotationSpeed()) % 360.0f;
+                float floatBob = (float) Math.sin(vfx.ageTicks() * 0.2f) * 0.05f;
+                dispAcc.invokeSetTransformation(new AffineTransformation(
+                        new Vector3f(0.0f, floatBob, 0.0f),
+                        new org.joml.Quaternionf().rotateY((float) Math.toRadians(orbitAngle)),
+                        type.baseScale(),
+                        new org.joml.Quaternionf()
+                ));
+            } else if (type == VfxType.EARTH_ARMOR_OVERLAY) {
+                dispAcc.invokeSetTransformation(new AffineTransformation(
+                        new Vector3f(0.0f, 0.0f, 0.0f),
+                        new org.joml.Quaternionf().rotateY((float) Math.toRadians(180.0f - entity.getYaw())),
+                        type.baseScale(),
+                        new org.joml.Quaternionf()
+                ));
+            } else if (type == VfxType.BOULDER_LAUNCH_MEGALITH) {
+                float progress = Math.min(1.0f, (float) vfx.ageTicks() / (float) vfx.maxAgeTicks());
+                Vector3f scale = VfxTransformUtil.scaleInterpolation(type.baseScale(), type.targetScale(), progress);
+                dispAcc.invokeSetTransformation(VfxTransformUtil.createSlashTransform(entity.getYaw(), entity.getPitch(), scale, vfx.ageTicks() * 0.4f));
+            } else if (type == VfxType.WATER_WHIP_STREAM) {
+                float progress = Math.min(1.0f, (float) vfx.ageTicks() / (float) vfx.maxAgeTicks());
+                float stretchZ = progress < 0.4f ? progress / 0.4f : 1.0f - (progress - 0.4f) / 0.6f;
+                Vector3f currentScale = new Vector3f(type.baseScale().x(), type.baseScale().y(), type.baseScale().z() * Math.max(0.2f, stretchZ));
+                dispAcc.invokeSetTransformation(VfxTransformUtil.createSlashTransform(entity.getYaw(), entity.getPitch(), currentScale, 0.2f + progress * 0.8f));
             } else if (type == VfxType.AEGIS_DOME) {
                 float progress = Math.min(1.0f, vfx.ageTicks() / 3.0f);
                 Vector3f scale = VfxTransformUtil.scaleInterpolation(type.baseScale(), type.targetScale(), progress);
@@ -261,6 +382,7 @@ public final class CinematicVfxController {
         for (VfxKey k : expired) {
             ACTIVE_ENTITIES.remove(k);
             PILLAR_GROUND_POSITIONS.remove(k);
+            SERVER_POSITIONS.remove(k);
         }
     }
 
@@ -278,8 +400,14 @@ public final class CinematicVfxController {
         for (VfxKey k : toRemove) {
             ActiveVfx removed = ACTIVE_ENTITIES.remove(k);
             PILLAR_GROUND_POSITIONS.remove(k);
+            SERVER_POSITIONS.remove(k);
             if (removed != null && removed.entity() != null) {
                 removed.entity().discard();
+            }
+        }
+        for (VfxKey k : SERVER_POSITIONS.keySet()) {
+            if (k.casterUuid().equals(casterUuid) && k.castSerial() == castSerial) {
+                SERVER_POSITIONS.remove(k);
             }
         }
         Integer current = CASTER_ACTIVE_SERIALS.get(casterUuid);
@@ -298,8 +426,14 @@ public final class CinematicVfxController {
         for (VfxKey k : toRemove) {
             ActiveVfx removed = ACTIVE_ENTITIES.remove(k);
             PILLAR_GROUND_POSITIONS.remove(k);
+            SERVER_POSITIONS.remove(k);
             if (removed != null && removed.entity() != null) {
                 removed.entity().discard();
+            }
+        }
+        for (VfxKey k : SERVER_POSITIONS.keySet()) {
+            if (k.casterUuid().equals(casterUuid) && k.castSerial() < newSerial) {
+                SERVER_POSITIONS.remove(k);
             }
         }
     }
@@ -317,6 +451,7 @@ public final class CinematicVfxController {
         ACTIVE_ENTITIES.clear();
         CASTER_ACTIVE_SERIALS.clear();
         PILLAR_GROUND_POSITIONS.clear();
+        SERVER_POSITIONS.clear();
     }
 
     public static int getActiveCount() {

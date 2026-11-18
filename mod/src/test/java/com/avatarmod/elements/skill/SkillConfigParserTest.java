@@ -31,7 +31,7 @@ class SkillConfigParserTest {
         Map<String, List<String>> slots =
                 SkillConfigParser.parseSlots("bundled slots", slotsJson);
 
-        assertEquals(13, skills.size());
+        assertEquals(14, skills.size());
         assertDoesNotThrow(() ->
                 SkillConfigParser.validateSlotReferences("bundled slots", slots, skills));
 
@@ -41,12 +41,12 @@ class SkillConfigParserTest {
                 "avatar:air_vortex"), slots.get("AIR").subList(0, 4));
         assertNull(slots.get("AIR").get(4));
         assertEquals("avatar:water_whip", slots.get("WATER").get(0));
-        assertNull(slots.get("WATER").get(1));
+        assertEquals("avatar:water_jet", slots.get("WATER").get(1));
         assertEquals(List.of("avatar:earth_boulder", "avatar:boulder_launch",
                 "avatar:earth_pillar"), slots.get("EARTH").subList(0, 3));
         assertNull(slots.get("EARTH").get(3));
         assertNull(slots.get("EARTH").get(4));
-        for (int slot = 1; slot < ElementSlotMap.SLOT_COUNT; slot++) {
+        for (int slot = 2; slot < ElementSlotMap.SLOT_COUNT; slot++) {
             assertNull(slots.get("WATER").get(slot));
         }
     }

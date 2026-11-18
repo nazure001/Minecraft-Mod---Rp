@@ -65,6 +65,7 @@ public final class SkillNetworking {
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CHudUpdate.ID, SkillPackets.S2CHudUpdate.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSyncElement.ID, SkillPackets.S2CSyncElement.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CPhaseSync.ID, SkillPackets.S2CPhaseSync.CODEC);
+        PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSkillPosition.ID, SkillPackets.S2CSkillPosition.CODEC);
     }
 
     public static void registerServerReceivers() {
@@ -174,6 +175,15 @@ public final class SkillNetworking {
     public static void broadcastPhaseSync(ServerPlayerEntity caster, String skillId,
                                           String phase, int ticksIn, int serial) {
         var packet = new SkillPackets.S2CPhaseSync(caster.getUuid(), skillId, phase, ticksIn, serial);
+        ServerPlayNetworking.send(caster, packet);
+        for (var watcher : PlayerLookup.tracking(caster)) {
+            ServerPlayNetworking.send(watcher, packet);
+        }
+    }
+
+    public static void broadcastSkillPosition(ServerPlayerEntity caster, String skillId,
+                                              int serial, double x, double y, double z) {
+        var packet = new SkillPackets.S2CSkillPosition(caster.getUuid(), serial, skillId, x, y, z);
         ServerPlayNetworking.send(caster, packet);
         for (var watcher : PlayerLookup.tracking(caster)) {
             ServerPlayNetworking.send(watcher, packet);

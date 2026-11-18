@@ -1,0 +1,7 @@
+# Avatar Elements Canonical Weapon Material: SM_Earth_Hammer
+newmtl SM_Earth_Hammer_mat
+Kd 1.0 1.0 1.0
+Ks 0.25 0.25 0.25
+Ns 30.0
+d 1.0
+map_Kd SM_Earth_Hammer.png

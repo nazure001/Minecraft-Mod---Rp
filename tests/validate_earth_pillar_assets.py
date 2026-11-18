@@ -131,9 +131,17 @@ if height_match is None:
 runtime_height = float(height_match.group(1))
 height_ok = abs(top_y - runtime_height) <= 1 / 16
 record(
-    "Asset height matches runtime PILLAR_HEIGHT",
+    "Bedrock asset height matches runtime PILLAR_HEIGHT",
     height_ok,
     f"asset={top_y:.5f} blocks; runtime={runtime_height:.5f} blocks",
+)
+
+java_top_y = max(element["to"][1] for element in elements) / 16
+java_height_ok = abs(java_top_y - runtime_height) <= 1 / 16
+record(
+    "Runtime Java model top matches PILLAR_HEIGHT at unit scale",
+    java_height_ok,
+    f"model top={java_top_y:.5f} blocks; runtime={runtime_height:.5f} blocks",
 )
 
 failed = 0

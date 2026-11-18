@@ -181,5 +181,37 @@ public final class SkillPackets {
         @Override public CustomPayload.Id<S2CPhaseSync> getId() { return ID; }
     }
 
+    // Server → Client (broadcast): authoritative world position for a positional skill
+    // (e.g. Earth Pillar ground center). Sent once on ACTIVE transition; client uses
+    // this instead of guessing the position from look direction.
+    public record S2CSkillPosition(
+            java.util.UUID casterUuid,
+            int castSerial,
+            String skillId,
+            double x, double y, double z
+    ) implements CustomPayload {
+        public static final CustomPayload.Id<S2CSkillPosition> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "s2c_skill_position"));
+        public static final PacketCodec<PacketByteBuf, S2CSkillPosition> CODEC = PacketCodec.of(
+                (value, buf) -> {
+                    buf.writeUuid(value.casterUuid());
+                    buf.writeVarInt(value.castSerial());
+                    buf.writeString(value.skillId() != null ? value.skillId() : "");
+                    buf.writeDouble(value.x());
+                    buf.writeDouble(value.y());
+                    buf.writeDouble(value.z());
+                },
+                buf -> new S2CSkillPosition(
+                        buf.readUuid(),
+                        buf.readVarInt(),
+                        buf.readString(64),
+                        buf.readDouble(),
+                        buf.readDouble(),
+                        buf.readDouble()
+                )
+        );
+        @Override public CustomPayload.Id<S2CSkillPosition> getId() { return ID; }
+    }
+
     private SkillPackets() {}
 }

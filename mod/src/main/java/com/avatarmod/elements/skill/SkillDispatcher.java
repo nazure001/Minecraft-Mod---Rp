@@ -15,6 +15,7 @@ import com.avatarmod.elements.skill.impl.FireGuardSkill;
 import com.avatarmod.elements.skill.impl.FireJabSkill;
 import com.avatarmod.elements.skill.impl.FireJetSkill;
 import com.avatarmod.elements.skill.impl.FlameSweepSkill;
+import com.avatarmod.elements.skill.impl.WaterJetSkill;
 import com.avatarmod.elements.skill.impl.WaterWhipSkill;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -78,6 +79,7 @@ public final class SkillDispatcher {
             case "avatar:air_palm"          -> AirPalmSkill.tick(player, def);
             case "avatar:air_vortex"        -> AirVortexSkill.tick(player, def);
             case "avatar:water_whip"        -> WaterWhipSkill.tick(player, def);
+            case "avatar:water_jet"         -> WaterJetSkill.tick(player, def);
             case "avatar:earth_boulder"     -> EarthBoulderSkill.tick(player, def);
             case "avatar:earth_pillar"      -> EarthPillarSkill.tick(player, def);
             case "avatar:boulder_launch"    -> BoulderLaunchSkill.tick(player, def);

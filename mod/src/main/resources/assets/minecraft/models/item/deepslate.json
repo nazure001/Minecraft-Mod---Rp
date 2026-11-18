@@ -7,6 +7,18 @@
     {
       "predicate": { "custom_model_data": 1005 },
       "model": "avatar_elements:vfx/earth_pillar"
+    },
+    {
+      "predicate": { "custom_model_data": 1006 },
+      "model": "avatar_elements:vfx/boulder_launch_megalith"
+    },
+    {
+      "predicate": { "custom_model_data": 1009 },
+      "model": "avatar_elements:vfx/captured_earth_shards"
+    },
+    {
+      "predicate": { "custom_model_data": 1010 },
+      "model": "avatar_elements:vfx/earth_armor_overlay"
     }
   ]
 }

@@ -1,6 +1,1238 @@
 {
-  "parent": "minecraft:item/handheld",
+  "credit": "Avatar Elements Mod - Canonical Weapon: Water Tribe Harpoon Spear (Fabric 1.21.1)",
+  "texture_size": [
+    64,
+    64
+  ],
   "textures": {
-    "layer0": "avatar_elements:item/weapon_water_jaw_blade"
+    "texture": "avatar_elements:textures/weapons/SM_Water_Spear",
+    "particle": "avatar_elements:textures/weapons/SM_Water_Spear"
+  },
+  "elements": [
+    {
+      "name": "shaft_lower",
+      "from": [
+        7.25,
+        -3.0,
+        7.25
+      ],
+      "to": [
+        8.75,
+        5.0,
+        8.75
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "grip_indigo_leather",
+      "from": [
+        7.0,
+        5.0,
+        7.0
+      ],
+      "to": [
+        9.0,
+        11.5,
+        9.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8.5,
+            12.0,
+            15.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            8.5,
+            12.0,
+            15.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            8.5,
+            12.0,
+            15.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            8.5,
+            12.0,
+            15.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            8.5,
+            12.0,
+            15.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            8.5,
+            12.0,
+            15.5,
+            15.5
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "shaft_upper",
+      "from": [
+        7.25,
+        11.5,
+        7.25
+      ],
+      "to": [
+        8.75,
+        22.0,
+        8.75
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.5,
+            8.5,
+            4.5,
+            15.5
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "butt_bone_collar",
+      "from": [
+        6.9,
+        -4.5,
+        6.9
+      ],
+      "to": [
+        9.1,
+        -3.0,
+        9.1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1.0,
+            1.0,
+            5.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            1.0,
+            1.0,
+            5.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            1.0,
+            1.0,
+            5.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            1.0,
+            1.0,
+            5.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            1.0,
+            1.0,
+            5.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            1.0,
+            1.0,
+            5.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "butt_fishtail_fluke",
+      "from": [
+        6.2,
+        -6.199999999999999,
+        7.5
+      ],
+      "to": [
+        9.8,
+        -4.5,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1.5,
+            1.5,
+            6.5,
+            6.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            1.5,
+            1.5,
+            6.5,
+            6.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            1.5,
+            1.5,
+            6.5,
+            6.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            1.5,
+            1.5,
+            6.5,
+            6.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            1.5,
+            1.5,
+            6.5,
+            6.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            1.5,
+            1.5,
+            6.5,
+            6.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "butt_ground_spike",
+      "from": [
+        7.6,
+        -7.0,
+        7.6
+      ],
+      "to": [
+        8.4,
+        -6.199999999999999,
+        8.4
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2.5,
+            2.5,
+            4.5,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            2.5,
+            2.5,
+            4.5,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            2.5,
+            2.5,
+            4.5,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            2.5,
+            2.5,
+            4.5,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            2.5,
+            2.5,
+            4.5,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            2.5,
+            2.5,
+            4.5,
+            4.5
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "sinew_binding_socket",
+      "from": [
+        6.9,
+        21.5,
+        6.9
+      ],
+      "to": [
+        9.1,
+        24.5,
+        9.1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8.5,
+            8.5,
+            15.5,
+            11.5
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            8.5,
+            8.5,
+            15.5,
+            11.5
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            8.5,
+            8.5,
+            15.5,
+            11.5
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            8.5,
+            8.5,
+            15.5,
+            11.5
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            8.5,
+            8.5,
+            15.5,
+            11.5
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            8.5,
+            8.5,
+            15.5,
+            11.5
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "sinew_cord_crisscross",
+      "from": [
+        6.75,
+        22.2,
+        6.75
+      ],
+      "to": [
+        9.25,
+        23.8,
+        9.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            9.0,
+            9.0,
+            15.0,
+            11.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            9.0,
+            9.0,
+            15.0,
+            11.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            9.0,
+            9.0,
+            15.0,
+            11.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            9.0,
+            9.0,
+            15.0,
+            11.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            9.0,
+            9.0,
+            15.0,
+            11.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            9.0,
+            9.0,
+            15.0,
+            11.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "spearhead_bone_base",
+      "from": [
+        7.4,
+        24.5,
+        7.4
+      ],
+      "to": [
+        8.6,
+        26.0,
+        8.6
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1.0,
+            1.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            1.0,
+            1.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            1.0,
+            1.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            1.0,
+            1.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            1.0,
+            1.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            1.0,
+            1.0,
+            4.0,
+            4.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "spearhead_ice_blade",
+      "from": [
+        6.8,
+        26.0,
+        7.55
+      ],
+      "to": [
+        9.2,
+        29.2,
+        8.45
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8.5,
+            0.5,
+            15.5,
+            6.5
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            8.5,
+            0.5,
+            15.5,
+            6.5
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            8.5,
+            0.5,
+            15.5,
+            6.5
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            8.5,
+            0.5,
+            15.5,
+            6.5
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            8.5,
+            0.5,
+            15.5,
+            6.5
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            8.5,
+            0.5,
+            15.5,
+            6.5
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "spearhead_ice_taper",
+      "from": [
+        7.25,
+        29.2,
+        7.65
+      ],
+      "to": [
+        8.75,
+        30.8,
+        8.35
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            9.5,
+            1.0,
+            14.5,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            9.5,
+            1.0,
+            14.5,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            9.5,
+            1.0,
+            14.5,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            9.5,
+            1.0,
+            14.5,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            9.5,
+            1.0,
+            14.5,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            9.5,
+            1.0,
+            14.5,
+            5.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "spearhead_ice_needle",
+      "from": [
+        7.65,
+        30.8,
+        7.75
+      ],
+      "to": [
+        8.35,
+        31.6,
+        8.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10.5,
+            0.5,
+            13.5,
+            3.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            10.5,
+            0.5,
+            13.5,
+            3.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            10.5,
+            0.5,
+            13.5,
+            3.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            10.5,
+            0.5,
+            13.5,
+            3.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            10.5,
+            0.5,
+            13.5,
+            3.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            10.5,
+            0.5,
+            13.5,
+            3.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "barb_hook_arm_left",
+      "from": [
+        5.8,
+        25.2,
+        7.65
+      ],
+      "to": [
+        7.0,
+        27.0,
+        8.35
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "barb_hook_point_left",
+      "from": [
+        5.5,
+        24.2,
+        7.75
+      ],
+      "to": [
+        6.1,
+        25.5,
+        8.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "barb_hook_arm_right",
+      "from": [
+        9.0,
+        25.2,
+        7.65
+      ],
+      "to": [
+        10.2,
+        27.0,
+        8.35
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            9.0,
+            1.5,
+            13.0,
+            5.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "barb_hook_point_right",
+      "from": [
+        9.9,
+        24.2,
+        7.75
+      ],
+      "to": [
+        10.5,
+        25.5,
+        8.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            10.0,
+            2.0,
+            12.0,
+            4.5
+          ],
+          "texture": "#texture"
+        }
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        55
+      ],
+      "translation": [
+        0,
+        4.0,
+        0.5
+      ],
+      "scale": [
+        0.85,
+        0.85,
+        0.85
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        0,
+        90,
+        -55
+      ],
+      "translation": [
+        0,
+        4.0,
+        0.5
+      ],
+      "scale": [
+        0.85,
+        0.85,
+        0.85
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        25
+      ],
+      "translation": [
+        1.13,
+        3.2,
+        1.13
+      ],
+      "scale": [
+        0.68,
+        0.68,
+        0.68
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        90,
+        -25
+      ],
+      "translation": [
+        1.13,
+        3.2,
+        1.13
+      ],
+      "scale": [
+        0.68,
+        0.68,
+        0.68
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        2.0,
+        0
+      ],
+      "scale": [
+        0.55,
+        0.55,
+        0.55
+      ]
+    },
+    "gui": {
+      "rotation": [
+        0,
+        0,
+        -45
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.65,
+        0.65,
+        0.65
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.7,
+        0.7,
+        0.7
+      ]
+    }
   }
 }

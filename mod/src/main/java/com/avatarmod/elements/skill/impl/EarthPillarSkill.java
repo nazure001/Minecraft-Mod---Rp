@@ -16,6 +16,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
+import com.avatarmod.elements.network.SkillNetworking;
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -49,6 +51,9 @@ public final class EarthPillarSkill {
         if (timeline.ticksInPhase() == 0) {
             Vec3d center = findPillarCenter(player, world, def.range());
             ACTIVE_PILLARS.put(player.getUuid(), center);
+            int serial = SkillNetworking.currentSerial(player.getUuid());
+            SkillNetworking.broadcastSkillPosition(player, "avatar:earth_pillar",
+                    serial, center.x, center.y, center.z);
             erupt(player, world, center, def);
         }
 

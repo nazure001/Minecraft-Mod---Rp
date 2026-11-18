@@ -2,7 +2,8 @@
 > **Author:** Antigravity IDE (3D Technical Art Lead)  
 > **Consumer:** Claude Code (Runtime Implementer) & User (QA Reviewer)  
 > **Target:** Minecraft Fabric 1.21.1 (Client-only VFX Earth Column)  
-> **Status:** Production-Ready, Lore-Calibrated, Fully Validated  
+> **Status:** QA 2026-11-18 - geometri sumber terukur 2.5 blok di atas tanah; tinggi Java runtime belum cocok, cleanup lifecycle packet posisi sudah dibenahi, dan uji visual dalam game masih pending.
+> **QA note:** Preview isometrik masih berlabel 42 unit/2.63 m dan tidak menunjukkan detail atlas dengan jelas; preview tersebut bukan bukti render runtime.
 
 ---
 
@@ -31,7 +32,7 @@ Model 3D Earth Pillar ini dikalibrasi secara ketat berdasarkan visual art dan ko
 | Komponen | Lokasi Berkas | Format / Spesifikasi |
 | :--- | :--- | :--- |
 | **Proyek Blockbench** | `art-source/asset_pack/models/bbmodel/earth_pillar.bbmodel` | Blockbench 4.10, hierarchy 4 grup (`foundation`, `column_lower`, `column_mid`, `launch_head`), UV terpeta, tekstur & animasi erupsi embedded. |
-| **Universal 3D Mesh** | `art-source/asset_pack/meshes/vfx/earth_pillar.obj` | Skala metrik 1.0 ($1.0 = 1	ext{ meter}$), origin kontak tanah di $(0.0, 0.0, 0.0)$, total tinggi $2.625	ext{ m}$. |
+| **Universal 3D Mesh** | `art-source/asset_pack/meshes/vfx/earth_pillar.obj` | Skala 1.0 (1.0 = 1 meter), origin di titik kontak tanah (0, 0, 0); rentang total 2.75 m, dengan 2.5 m di atas tanah. |
 | **Material Library** | `art-source/asset_pack/meshes/vfx/earth_pillar.mtl` | Menghubungkan tekstur atlas `earth_pillar.png`. |
 | **Bedrock Geometry** | `art-source/asset_pack/models/earth_pillar.geo.json` | Standar Bedrock 1.12.0 (`geometry.earth_pillar`). |
 | **Java Display Model** | `art-source/asset_pack/models/earth_pillar.json` | Format item/block display entity vanilla Fabric 1.21.1. |
@@ -44,13 +45,13 @@ Model 3D Earth Pillar ini dikalibrasi secara ketat berdasarkan visual art dan ko
 ## 3. Spesifikasi Geometri & Koordinat
 
 * **Ground Pivot Contact Point:** Origin $(0.0, 0.0, 0.0)$ berada **persis di permukaan kontak tanah**.
-* **Tinggi Kolom:** $Y = 0.0$ hingga $Y = 42.0	ext{ unit}$ ($2.625	ext{ meter}$ / blok), sangat akurat terhadap `PILLAR_HEIGHT = 2.5f` di `EarthPillarSkill.java`.
+* **Tinggi target kolom:** Y=0 sampai Y=40 unit (2.5 blok), sesuai `PILLAR_HEIGHT = 2.5f`. BBModel/Bedrock/OBJ mencapai target ini; Java display model runtime saat ini hanya mencapai Y=32 (2.0 blok) pada skala 1.0.
 * **Ukuran Launch Platform:** Platform atas selebar $11	imes 11	ext{ unit}$ ($0.69	ext{m} 	imes 0.69	ext{m}$) dengan landasan sentral $6	imes 6	ext{ unit}$ ($0.38	ext{m}$), sempurna untuk menyangga kaki pemain saat terangkat.
 * **Radius Footprint:** Radius radial maksimum serpihan dasar adalah $0.81	ext{ meter}$, berada aman di dalam radius damage skill `FOOTPRINT_RADIUS = 1.6f`.
 * **Anti-Clipping Subterranean Root:** Masuk sedalam $0.25	ext{ m}$ ($Y = -4.0$ unit) ke bawah tanah agar tidak bolong saat meletus di tanjakan/lereng.
 
 ```
-       ▲  Y = +2.63m (42-43 units) -- Center Strike Anvil & Piston Launch Cap
+       ▲  Y = +2.50m (40 units)    -- Center Strike Anvil & Piston Launch Cap
        │
        │  Y = +2.31m (37 units)    -- Cornice Bevel Transition Ring
        │
@@ -65,12 +66,14 @@ Model 3D Earth Pillar ini dikalibrasi secara ketat berdasarkan visual art dan ko
 
 ---
 
+> **Pengukuran QA 2026-11-18:** BBModel/Bedrock membentang Y=-4..40 unit dan OBJ Y=-0.25..2.5 m. Java model runtime membentang Y=-12..32 unit; puncaknya 2.0 blok pada skala 1.0, sementara posisi entity saat diam tidak memiliki offset vertikal. Selaraskan model runtime dengan target 2.5 blok sebelum penerimaan visual.
+
 ## 4. Rekomendasi Integrasi Client-Side (Untuk Claude Code)
 
 1. **Client-Only Display (Tanpa World Mutation):**
    * Spawn entity visual saat server mengumumkan skill `ACTIVE` pada koordinat `Vec3d center`.
 2. **Animasi & Fase Kinetik:**
-   * $0.00	ext{s} ightarrow 0.12	ext{s}$: Erupsi eksplosif dari $Y = -2.63$ ke $+0.15$ (overshoot pelontaran).
+   * $0.00	ext{s} ightarrow 0.12	ext{s}$: Erupsi eksplosif dari $Y = -2.75$ ke $+0.15$ (overshoot pelontaran).
    * $0.12	ext{s} ightarrow 0.18	ext{s}$: Settle kembali ke $Y = 0.0$ dengan partikel debu `minecraft:block` dan suara benturan batu.
    * $0.18	ext{s} ightarrow 0.75	ext{s}$: Diam mengunci posisi di $Y = 0.0$.
    * $0.75	ext{s} ightarrow 1.15	ext{s}$: Merekah dan amblas kembali ke dalam tanah lalu despawn.

@@ -43,16 +43,6 @@ public enum VfxType {
             18.0f,
             true
     ),
-    SWIRL_VORTEX(
-            "avatar:air_vortex",
-            1004,
-            Items.FEATHER,
-            20,
-            new Vector3f(1.0f, 1.0f, 1.0f),
-            new Vector3f(1.5f, 1.5f, 1.5f),
-            15.0f,
-            true
-    ),
     EARTH_PILLAR(
             "avatar:earth_pillar",
             1005,
@@ -62,6 +52,56 @@ public enum VfxType {
             new Vector3f(1.0f, 1.0f, 1.0f),
             0.0f,
             false  // position fixed at ground, not following caster
+    ),
+    BOULDER_LAUNCH_MEGALITH(
+            "avatar:boulder_launch",
+            1006,
+            Items.DEEPSLATE,
+            25,
+            new Vector3f(1.0f, 1.0f, 1.0f),
+            new Vector3f(1.2f, 1.2f, 1.2f),
+            0.0f,
+            false
+    ),
+    WATER_WHIP_STREAM(
+            "avatar:water_whip",
+            1007,
+            Items.PRISMARINE_SHARD,
+            12,
+            new Vector3f(2.5f, 2.5f, 2.5f),
+            new Vector3f(2.5f, 2.5f, 2.5f),
+            0.0f,
+            true
+    ),
+    AIR_VORTEX_FUNNEL(
+            "avatar:air_vortex",
+            1008,
+            Items.FEATHER,
+            40,
+            new Vector3f(1.0f, 1.0f, 1.0f),
+            new Vector3f(1.5f, 1.5f, 1.5f),
+            20.0f,
+            true
+    ),
+    CAPTURED_EARTH_SHARDS(
+            "avatar:earth_boulder",
+            1009,
+            Items.DEEPSLATE,
+            25,
+            new Vector3f(1.0f, 1.0f, 1.0f),
+            new Vector3f(1.0f, 1.0f, 1.0f),
+            12.0f,
+            true
+    ),
+    EARTH_ARMOR_OVERLAY(
+            "avatar:earth_armor",
+            1010,
+            Items.IRON_CHESTPLATE,
+            60,
+            new Vector3f(1.0f, 1.0f, 1.0f),
+            new Vector3f(1.0f, 1.0f, 1.0f),
+            0.0f,
+            true
     ),
     // Compatibility aliases
     MAGIC_RUNE_CIRCLE(
@@ -74,8 +114,18 @@ public enum VfxType {
             18.0f,
             true
     ),
+    SWIRL_VORTEX(
+            "avatar:legacy_air_vortex",
+            1004,
+            Items.FEATHER,
+            20,
+            new Vector3f(1.0f, 1.0f, 1.0f),
+            new Vector3f(1.5f, 1.5f, 1.5f),
+            15.0f,
+            true
+    ),
     SWIRLING_VORTEX(
-            "avatar:air_vortex",
+            "avatar:legacy_air_vortex",
             1004,
             Items.FEATHER,
             20,
