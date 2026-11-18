@@ -1,0 +1,1241 @@
+{
+  "meta": {
+    "format_version": "4.10",
+    "model_format": "bedrock",
+    "box_uv": false
+  },
+  "name": "earth_pillar",
+  "model_identifier": "geometry.earth_pillar",
+  "resolution": {
+    "width": 64,
+    "height": 64
+  },
+  "elements": [
+    {
+      "name": "subterranean_anchor",
+      "box_uv": false,
+      "from": [
+        -9.0,
+        -4.0,
+        -9.0
+      ],
+      "to": [
+        9.0,
+        0.0,
+        9.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            48,
+            4.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            0,
+            48,
+            4.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            0,
+            48,
+            4.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            0,
+            48,
+            4.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            0,
+            48,
+            4.0
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            0,
+            48,
+            4.0
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "bab85032-1bcd-4d42-a279-e6a81c9ac295",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "base_rupture_slab",
+      "box_uv": false,
+      "from": [
+        -11.0,
+        0.0,
+        -11.0
+      ],
+      "to": [
+        11.0,
+        3.0,
+        11.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            48,
+            3.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            0,
+            48,
+            3.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            0,
+            48,
+            3.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            0,
+            48,
+            3.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            0,
+            48,
+            3.0
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            0,
+            48,
+            3.0
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "77204e2f-bf04-4880-93eb-f793ffb48113",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "rupture_shard_ne",
+      "box_uv": false,
+      "from": [
+        7.0,
+        0.0,
+        7.0
+      ],
+      "to": [
+        14.0,
+        4.0,
+        14.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            4.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            4.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            4.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            4.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            4.0
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            4.0
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "a475cd90-557f-4901-81ff-b916907db521",
+      "rotation": [
+        0,
+        0,
+        -15.0
+      ],
+      "origin": [
+        7.0,
+        0.0,
+        7.0
+      ]
+    },
+    {
+      "name": "rupture_shard_nw",
+      "box_uv": false,
+      "from": [
+        -14.0,
+        0.0,
+        7.0
+      ],
+      "to": [
+        -7.0,
+        3.5,
+        13.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            3.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            3.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            3.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            3.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            3.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            0,
+            39.0,
+            3.5
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "9ae54ddf-4231-4576-9934-f3b16e4d0537",
+      "rotation": [
+        15.0,
+        0,
+        0
+      ],
+      "origin": [
+        -7.0,
+        0.0,
+        7.0
+      ]
+    },
+    {
+      "name": "rupture_shard_se",
+      "box_uv": false,
+      "from": [
+        7.0,
+        0.0,
+        -14.0
+      ],
+      "to": [
+        13.0,
+        4.5,
+        -7.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            4.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            4.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            4.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            4.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            4.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            4.5
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "c2dfe4da-7b51-46a5-b277-12255a7853c6",
+      "rotation": [
+        -15.0,
+        0,
+        0
+      ],
+      "origin": [
+        7.0,
+        0.0,
+        -7.0
+      ]
+    },
+    {
+      "name": "rupture_shard_sw",
+      "box_uv": false,
+      "from": [
+        -13.0,
+        0.0,
+        -13.0
+      ],
+      "to": [
+        -7.0,
+        3.0,
+        -7.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            3.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            3.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            3.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            3.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            3.0
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            0,
+            38.0,
+            3.0
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "c21180c3-7d17-4541-be0f-3ecbd70d7bf1",
+      "rotation": [
+        0,
+        0,
+        15.0
+      ],
+      "origin": [
+        -7.0,
+        0.0,
+        -7.0
+      ]
+    },
+    {
+      "name": "shaft_tier1_core",
+      "box_uv": false,
+      "from": [
+        -8.0,
+        3.0,
+        -8.0
+      ],
+      "to": [
+        8.0,
+        20.0,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "ec13e05e-13ed-4b0e-8083-4c24affd81fd",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "shaft_tier1_bevel",
+      "box_uv": false,
+      "from": [
+        -7.0,
+        3.0,
+        -7.0
+      ],
+      "to": [
+        7.0,
+        20.0,
+        7.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            14.0,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            14.0,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            14.0,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            14.0,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            14.0,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            14.0,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "ea062756-cf4b-44cb-b718-c93b6f6f1c1b",
+      "rotation": [
+        0,
+        45.0,
+        0
+      ],
+      "origin": [
+        0.0,
+        11.5,
+        0.0
+      ]
+    },
+    {
+      "name": "shaft_tier2_core",
+      "box_uv": false,
+      "from": [
+        -7.5,
+        20.0,
+        -7.5
+      ],
+      "to": [
+        7.5,
+        32.0,
+        7.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            15.0,
+            12.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            15.0,
+            12.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            15.0,
+            12.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            15.0,
+            12.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            15.0,
+            12.0
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            15.0,
+            12.0
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "b0840b6c-fcea-43dd-a2c1-cb27f345e3c6",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "shaft_tier2_bevel",
+      "box_uv": false,
+      "from": [
+        -6.5,
+        20.0,
+        -6.5
+      ],
+      "to": [
+        6.5,
+        32.0,
+        6.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            12.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            12.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            12.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            12.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            12.0
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            13.0,
+            12.0
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "ad3edffc-a0df-46df-8813-9b643de2858d",
+      "rotation": [
+        0,
+        45.0,
+        0
+      ],
+      "origin": [
+        0.0,
+        26.0,
+        0.0
+      ]
+    },
+    {
+      "name": "shaft_tier3_core",
+      "box_uv": false,
+      "from": [
+        -6.0,
+        32.0,
+        -6.0
+      ],
+      "to": [
+        6.0,
+        40.0,
+        6.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            32,
+            12.0,
+            40.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            32,
+            12.0,
+            40.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            32,
+            12.0,
+            40.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            32,
+            12.0,
+            40.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            32,
+            12.0,
+            40.0
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            32,
+            12.0,
+            40.0
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "3943b1e9-7470-4c65-a455-ca5862f45c1a",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "crown_protrusion_a",
+      "box_uv": false,
+      "from": [
+        -6.0,
+        40.0,
+        -6.0
+      ],
+      "to": [
+        -1.0,
+        46.0,
+        -1.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            38.0
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            38.0
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "587f4bee-9048-40bd-88ad-bdf5a112f5aa",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "crown_protrusion_b",
+      "box_uv": false,
+      "from": [
+        1.0,
+        40.0,
+        1.0
+      ],
+      "to": [
+        6.0,
+        44.5,
+        6.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            36.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            36.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            36.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            36.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            36.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            32,
+            5.0,
+            36.5
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "d301b674-6960-40a1-8197-ef5844bf6c33",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "crown_platform_slab",
+      "box_uv": false,
+      "from": [
+        -3.5,
+        40.0,
+        -3.5
+      ],
+      "to": [
+        3.5,
+        42.0,
+        3.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            32,
+            7.0,
+            34.0
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            32,
+            7.0,
+            34.0
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            32,
+            7.0,
+            34.0
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            32,
+            7.0,
+            34.0
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            32,
+            7.0,
+            34.0
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            32,
+            7.0,
+            34.0
+          ],
+          "texture": 0
+        }
+      },
+      "uuid": "1fbec1a5-6bf1-4937-bd69-4ad23df07cae",
+      "origin": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "outliner": [
+    {
+      "name": "foundation",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "color": 3,
+      "children": [
+        "bab85032-1bcd-4d42-a279-e6a81c9ac295",
+        "77204e2f-bf04-4880-93eb-f793ffb48113",
+        "a475cd90-557f-4901-81ff-b916907db521",
+        "9ae54ddf-4231-4576-9934-f3b16e4d0537",
+        "c2dfe4da-7b51-46a5-b277-12255a7853c6",
+        "c21180c3-7d17-4541-be0f-3ecbd70d7bf1"
+      ]
+    },
+    {
+      "name": "column_lower",
+      "origin": [
+        0,
+        11,
+        0
+      ],
+      "color": 2,
+      "children": [
+        "ec13e05e-13ed-4b0e-8083-4c24affd81fd",
+        "ea062756-cf4b-44cb-b718-c93b6f6f1c1b"
+      ]
+    },
+    {
+      "name": "column_mid",
+      "origin": [
+        0,
+        26,
+        0
+      ],
+      "color": 5,
+      "children": [
+        "b0840b6c-fcea-43dd-a2c1-cb27f345e3c6",
+        "ad3edffc-a0df-46df-8813-9b643de2858d"
+      ]
+    },
+    {
+      "name": "column_apex",
+      "origin": [
+        0,
+        43,
+        0
+      ],
+      "color": 1,
+      "children": [
+        "3943b1e9-7470-4c65-a455-ca5862f45c1a",
+        "587f4bee-9048-40bd-88ad-bdf5a112f5aa",
+        "d301b674-6960-40a1-8197-ef5844bf6c33",
+        "1fbec1a5-6bf1-4937-bd69-4ad23df07cae"
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "path": "earth_pillar.png",
+      "name": "earth_pillar.png",
+      "folder": "textures/vfx",
+      "namespace": "avatar_elements",
+      "id": "0",
+      "particle": false,
+      "render_mode": "default",
+      "visible": true,
+      "mode": "bitmap",
+      "saved": true,
+      "uuid": "e47b3091-628d-4a11-88f2-bb303f9012a9",
+      "source": "data:image/png;base64,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"
+    }
+  ],
+  "animations": [
+    {
+      "name": "eruption",
+      "loop": "once",
+      "length": 1.3,
+      "snapping": 20,
+      "animators": {
+        "root": {
+          "name": "root",
+          "type": "bone",
+          "position": {
+            "0.00": [
+              0,
+              -48.0,
+              0
+            ],
+            "0.03": [
+              0,
+              -30.0,
+              0
+            ],
+            "0.06": [
+              0,
+              1.5,
+              0
+            ],
+            "0.10": [
+              0,
+              0.0,
+              0
+            ],
+            "0.80": [
+              0,
+              0.0,
+              0
+            ],
+            "0.90": [
+              0,
+              -8.0,
+              0
+            ],
+            "1.05": [
+              0,
+              -28.0,
+              0
+            ],
+            "1.20": [
+              0,
+              -48.0,
+              0
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

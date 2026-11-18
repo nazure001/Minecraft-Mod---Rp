@@ -1,0 +1,7 @@
+# Avatar Elements Earth Pillar Material
+newmtl earth_pillar_mat
+Kd 1.0 1.0 1.0
+Ks 0.1 0.1 0.1
+Ns 10.0
+d 1.0
+map_Kd earth_pillar.png
