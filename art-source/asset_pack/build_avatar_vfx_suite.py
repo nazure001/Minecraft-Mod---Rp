@@ -61,6 +61,18 @@ def rotate_pt(pt, origin, axis, angle_deg):
         return (nx + origin[0], ny + origin[1], z + origin[2])
     return pt
 
+def quantize_mc_angle(ang):
+    if ang <= -33.75:
+        return -45.0
+    elif ang <= -11.25:
+        return -22.5
+    elif ang < 11.25:
+        return 0.0
+    elif ang < 33.75:
+        return 22.5
+    else:
+        return 45.0
+
 # Universal Exporter: Exports elements to .bbmodel, .obj, .mtl, .geo.json, .json
 def export_asset_package(asset_id, asset_name, elements, texture_img, animations=None, custom_outliner=None, pivot_desc="Center Contact"):
     print(f"\n==========================================")
@@ -266,11 +278,13 @@ def export_asset_package(asset_id, asset_name, elements, texture_img, animations
         j_elem = {"name": elem["name"], "from": j_from, "to": j_to, "faces": faces}
         if "rotation" in elem:
             rot = elem["rotation"]
-            j_elem["rotation"] = {
-                "origin": [rot["origin"][0] + 8.0, rot["origin"][1] + 8.0, rot["origin"][2] + 8.0],
-                "axis": rot["axis"],
-                "angle": rot["angle"]
-            }
+            q_angle = quantize_mc_angle(rot["angle"])
+            if q_angle != 0.0:
+                j_elem["rotation"] = {
+                    "origin": [rot["origin"][0] + 8.0, rot["origin"][1] + 8.0, rot["origin"][2] + 8.0],
+                    "axis": rot["axis"],
+                    "angle": q_angle
+                }
         java_elements.append(j_elem)
         
     java_data = {

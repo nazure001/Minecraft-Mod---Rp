@@ -613,11 +613,23 @@ for elem in ELEMENTS:
     j_elem = {"name": elem["name"], "from": j_from, "to": j_to, "faces": j_faces}
     if "rotation" in elem:
         rot = elem["rotation"]
-        j_elem["rotation"] = {
-            "origin": [rot["origin"][0] + 8.0, rot["origin"][1] - 8.0, rot["origin"][2] + 8.0],
-            "axis": rot["axis"],
-            "angle": rot["angle"]
-        }
+        raw_ang = rot["angle"]
+        if raw_ang <= -33.75:
+            q_ang = -45.0
+        elif raw_ang <= -11.25:
+            q_ang = -22.5
+        elif raw_ang < 11.25:
+            q_ang = 0.0
+        elif raw_ang < 33.75:
+            q_ang = 22.5
+        else:
+            q_ang = 45.0
+        if q_ang != 0.0:
+            j_elem["rotation"] = {
+                "origin": [rot["origin"][0] + 8.0, rot["origin"][1] - 8.0, rot["origin"][2] + 8.0],
+                "axis": rot["axis"],
+                "angle": q_ang
+            }
     java_elements.append(j_elem)
 
 java_model_data = {
