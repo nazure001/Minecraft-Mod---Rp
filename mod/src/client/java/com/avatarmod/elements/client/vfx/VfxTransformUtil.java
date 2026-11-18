@@ -86,6 +86,19 @@ public final class VfxTransformUtil {
     }
 
     /**
+     * Non-uniform scale for the Earth Pillar: the Java model is 2.0 blocks tall
+     * but PILLAR_HEIGHT is 2.5, so stretch Y by 1.25 while keeping XZ at 1.0.
+     */
+    public static AffineTransformation createPillarTransform(float xzScale, float yScale) {
+        return new AffineTransformation(
+                new Vector3f(0.0f, 0.0f, 0.0f),
+                new Quaternionf(),
+                new Vector3f(xzScale, yScale, xzScale),
+                new Quaternionf()
+        );
+    }
+
+    /**
      * Helper to create a uniform scale AffineTransformation (e.g. expanding spherical dome).
      */
     public static AffineTransformation createUniformScaleTransform(float scale) {
