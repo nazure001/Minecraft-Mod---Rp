@@ -30,9 +30,7 @@ public final class AirBlastSkill {
         Vec3d origin = player.getEyePos();
         Vec3d look = player.getRotationVec(1.0f);
         double range = def.range();
-        // Padding scales with range for improved detection
-        double paddingCalc = 1.0 + (range * 0.1); // 1.0 for range 0, 1.8 for range 8
-        final double padding = paddingCalc > 1.2 ? 1.2 : paddingCalc; // Cap at 1.2
+        final double padding = Math.min(1.0 + range * 0.1, 2.0);
         Vec3d end = origin.add(look.multiply(range));
 
         Box searchBounds = SkillTargeting.segmentBounds(origin, end, padding);

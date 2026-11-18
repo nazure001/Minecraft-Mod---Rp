@@ -72,8 +72,6 @@ public final class SkillNetworking {
                 SkillPackets.C2SSkillInput.ID,
                 (payload, context) -> {
                     ServerPlayerEntity player = context.player();
-                    long currentTick = player.getServerWorld().getTime();
-                    UUID uuid = player.getUuid();
                     String skillId = payload.skillId();
 
                     if (skillId == null || skillId.isBlank() || skillId.length() > 64) {
@@ -82,48 +80,7 @@ public final class SkillNetworking {
                         return;
                     }
 
-                    // Anti-spam (per-skill: Z→X rapid switch allowed, Z→Z spam blocked)
-                    long lastTick = getLastTick(uuid, skillId);
-                    if (currentTick - lastTick < RATE_LIMIT_TICKS) {
-                        ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
-                                skillId, false, SkillPackets.S2CSkillResult.DenyReason.RATE_LIMITED, 0));
-                        return;
-                    }
-                    setLastTick(uuid, skillId, currentTick);
-
-                    // Validate
-                    SkillValidator.ValidationResult result = SkillValidator.validate(player, skillId);
-                    PlayerBendingData data = PlayerBendingData.get(player);
-
-                    if (!result.allowed()) {
-                        ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
-                                skillId, false, result.denyReason(), result.cooldownTicks()));
-                        sendHudUpdate(player, data, skillId);
-                        return;
-                    }
-
-                    // Apply
-                    SkillDefinition def = SkillRegistry.get(skillId).orElseThrow();
-                    SkillValidator.apply(player, skillId, def);
-
-                    // Broadcast actual initial phase (windup=0 skills start at ACTIVE)
-                    int serial = nextSerial(uuid);
-                    SkillTimeline.Phase initialPhase = data.getTimeline().phase();
-                    if (initialPhase != SkillTimeline.Phase.IDLE) {
-                        broadcastPhaseSync(player, skillId, initialPhase.name(), 0, serial);
-                    }
-
-                    // Track combo chain state
-                    handleComboTracking(data, skillId, def, currentTick);
-
-                    AvatarElementsMod.LOGGER.debug(
-                            "Skill '{}' used by {} (chi: {}/{})",
-                            skillId, player.getName().getString(),
-                            data.getChi(), data.getMaxChi());
-
-                    ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
-                            skillId, true, SkillPackets.S2CSkillResult.DenyReason.NONE, 0));
-                    sendHudUpdate(player, data, skillId);
+                    executeCastPipeline(player, skillId);
                 });
 
         ServerPlayNetworking.registerGlobalReceiver(
@@ -272,39 +229,51 @@ public final class SkillNetworking {
                     PlayerBendingData data = PlayerBendingData.get(player);
                     String element = data.getActiveElement();
                     String skillId = ElementSlotMap.getSkillId(element, slot);
-                    if (skillId == null) return; // empty slot — no cast
+                    if (skillId == null) return;
 
-                    long currentTick = player.getServerWorld().getTime();
-                    UUID uuid = player.getUuid();
-                    long lastTick = getLastTick(uuid, skillId);
-                    if (currentTick - lastTick < RATE_LIMIT_TICKS) {
-                        ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
-                                skillId, false, SkillPackets.S2CSkillResult.DenyReason.RATE_LIMITED, 0));
-                        return;
-                    }
-                    setLastTick(uuid, skillId, currentTick);
-
-                    SkillValidator.ValidationResult result = SkillValidator.validate(player, skillId);
-                    if (!result.allowed()) {
-                        ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
-                                skillId, false, result.denyReason(), result.cooldownTicks()));
-                        sendHudUpdate(player, data, skillId);
-                        return;
-                    }
-
-                    SkillDefinition def = SkillRegistry.get(skillId).orElseThrow();
-                    SkillValidator.apply(player, skillId, def);
-                    int serial = nextSerial(uuid);
-                    SkillTimeline.Phase initialPhase = data.getTimeline().phase();
-                    if (initialPhase != SkillTimeline.Phase.IDLE) {
-                        broadcastPhaseSync(player, skillId, initialPhase.name(), 0, serial);
-                    }
-                    handleComboTracking(data, skillId, def, currentTick);
-
-                    ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
-                            skillId, true, SkillPackets.S2CSkillResult.DenyReason.NONE, 0));
-                    sendHudUpdate(player, data, skillId);
+                    executeCastPipeline(player, skillId);
                 });
+    }
+
+    private static void executeCastPipeline(ServerPlayerEntity player, String skillId) {
+        long currentTick = player.getServerWorld().getTime();
+        UUID uuid = player.getUuid();
+        PlayerBendingData data = PlayerBendingData.get(player);
+
+        long lastTick = getLastTick(uuid, skillId);
+        if (currentTick - lastTick < RATE_LIMIT_TICKS) {
+            ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
+                    skillId, false, SkillPackets.S2CSkillResult.DenyReason.RATE_LIMITED, 0));
+            return;
+        }
+        setLastTick(uuid, skillId, currentTick);
+
+        SkillValidator.ValidationResult result = SkillValidator.validate(player, skillId);
+        if (!result.allowed()) {
+            ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
+                    skillId, false, result.denyReason(), result.cooldownTicks()));
+            sendHudUpdate(player, data, skillId);
+            return;
+        }
+
+        SkillDefinition def = SkillRegistry.get(skillId).orElseThrow();
+        SkillValidator.apply(player, skillId, def);
+
+        int serial = nextSerial(uuid);
+        SkillTimeline.Phase initialPhase = data.getTimeline().phase();
+        if (initialPhase != SkillTimeline.Phase.IDLE) {
+            broadcastPhaseSync(player, skillId, initialPhase.name(), 0, serial);
+        }
+        handleComboTracking(data, skillId, def, currentTick);
+
+        AvatarElementsMod.LOGGER.debug(
+                "Skill '{}' used by {} (chi: {}/{})",
+                skillId, player.getName().getString(),
+                data.getChi(), data.getMaxChi());
+
+        ServerPlayNetworking.send(player, new SkillPackets.S2CSkillResult(
+                skillId, true, SkillPackets.S2CSkillResult.DenyReason.NONE, 0));
+        sendHudUpdate(player, data, skillId);
     }
 
     // C2SCycleElement: advance the server-authoritative active element with debounce.
@@ -361,11 +330,13 @@ public final class SkillNetworking {
     private static void handleComboTracking(PlayerBendingData data, String skillId, SkillDefinition def, long currentTick) {
         boolean isCombo = false;
         if ("avatar:fire_jab".equals(skillId)) {
+            int partnerWindow = SkillRegistry.get("avatar:flame_sweep").map(SkillDefinition::comboWindowTicks).orElse(8);
             isCombo = "avatar:flame_sweep".equals(data.getLastComboSkillId())
-                    && (currentTick <= data.getComboExpiryTick() || (currentTick - data.getLastComboSkillTick()) <= 8);
+                    && (currentTick <= data.getComboExpiryTick() || (currentTick - data.getLastComboSkillTick()) <= partnerWindow);
         } else if ("avatar:flame_sweep".equals(skillId)) {
+            int partnerWindow = SkillRegistry.get("avatar:fire_jab").map(SkillDefinition::comboWindowTicks).orElse(6);
             isCombo = "avatar:fire_jab".equals(data.getLastComboSkillId())
-                    && (currentTick <= data.getComboExpiryTick() || (currentTick - data.getLastComboSkillTick()) <= 6);
+                    && (currentTick <= data.getComboExpiryTick() || (currentTick - data.getLastComboSkillTick()) <= partnerWindow);
         }
         data.setActiveCastCombo(isCombo);
 
