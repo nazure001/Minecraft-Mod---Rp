@@ -111,6 +111,12 @@ desktop.ini
 .tmp*/
 *.driveupload*/
 
+# Temp verification output
+avatar-verify/
+
+# Stray binaries in root
+temp_defaults.jar
+
 # ------------------------------------------------------------------------------
 # 8. Secrets & Local Environment Overrides
 # ------------------------------------------------------------------------------
