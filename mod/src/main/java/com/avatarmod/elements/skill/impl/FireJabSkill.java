@@ -3,6 +3,7 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.particle.AvatarParticles;
+import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
 import com.avatarmod.elements.skill.SkillTargeting;
 import com.avatarmod.elements.sound.ModSounds;
@@ -80,6 +81,7 @@ public final class FireJabSkill {
 
         for (LivingEntity target : targets) {
             target.damage(source, damage);
+            ElementalInteractions.applyFire(target, finalCombo ? 70 : 40);
 
             // Knockback away from player
             Vec3d knockDir = target.getPos().subtract(player.getPos()).normalize();

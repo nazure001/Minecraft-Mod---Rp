@@ -92,7 +92,13 @@ public final class CinematicVfxController {
         if (casterUuid == null) return;
         VfxKey key = new VfxKey(casterUuid, castSerial, skillId);
         Vec3d position = new Vec3d(x, y, z);
-        // If the VFX entity is already spawned (phase sync arrived first), update its ground position
+        if (PILLAR_GROUND_POSITIONS.containsKey(key) && "avatar:earth_pillar".equals(skillId)) {
+            int subIdx = PILLAR_GROUND_POSITIONS.size() + 1;
+            VfxKey subKey = new VfxKey(casterUuid, castSerial, skillId + "#" + subIdx);
+            PILLAR_GROUND_POSITIONS.put(subKey, position);
+            spawnPillarEntityAt(subKey, position);
+            return;
+        }
         ActiveVfx existing = ACTIVE_ENTITIES.get(key);
         if (existing != null && existing.type() == VfxType.EARTH_PILLAR) {
             PILLAR_GROUND_POSITIONS.put(key, position);
@@ -100,6 +106,29 @@ public final class CinematicVfxController {
         } else {
             SERVER_POSITIONS.put(key, position);
         }
+    }
+
+    private static void spawnPillarEntityAt(VfxKey key, Vec3d groundPos) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client == null || client.world == null) return;
+        VfxType type = VfxType.EARTH_PILLAR;
+        DisplayEntity.ItemDisplayEntity entity = new DisplayEntity.ItemDisplayEntity(EntityType.ITEM_DISPLAY, client.world);
+        entity.setPosition(groundPos.x, groundPos.y - 2.75, groundPos.z);
+
+        DisplayEntityAccessor dispAcc = (DisplayEntityAccessor) entity;
+        dispAcc.invokeSetInterpolationDuration(type.durationTicks());
+        dispAcc.invokeSetStartInterpolation(0);
+        dispAcc.invokeSetBrightness(Brightness.FULL);
+        dispAcc.invokeSetBillboardMode(DisplayEntity.BillboardMode.FIXED);
+        dispAcc.invokeSetViewRange(64.0f);
+
+        ItemDisplayEntityAccessor itemAcc = (ItemDisplayEntityAccessor) entity;
+        itemAcc.invokeSetItemStack(type.createItemStack());
+        itemAcc.invokeSetTransformationMode(ModelTransformationMode.FIXED);
+
+        dispAcc.invokeSetTransformation(VfxTransformUtil.createPillarTransform(type.baseScale().x(), type.baseScale().x() * 1.25f));
+        client.world.addEntity(entity);
+        ACTIVE_ENTITIES.put(key, new ActiveVfx(key, entity, type, 0, type.durationTicks()));
     }
 
     /**
@@ -591,11 +620,12 @@ public final class CinematicVfxController {
 
         Vec3d target = origin.add(dir.multiply(range));
 
-        // Snap to ground
+        // Snap to ground through air and water up to 24 blocks
         net.minecraft.util.math.BlockPos cursor = net.minecraft.util.math.BlockPos.ofFloored(target);
-        for (int i = 0; i <= 4; i++) {
+        for (int i = 0; i <= 24; i++) {
             net.minecraft.util.math.BlockPos below = cursor.down(i);
-            if (!client.world.getBlockState(below).getCollisionShape(client.world, below).isEmpty()) {
+            var state = client.world.getBlockState(below);
+            if (!state.getCollisionShape(client.world, below).isEmpty() && state.getFluidState().isEmpty()) {
                 return new Vec3d(target.x, below.getY() + 1.0, target.z);
             }
         }

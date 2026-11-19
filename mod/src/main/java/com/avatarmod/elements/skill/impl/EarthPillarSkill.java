@@ -3,6 +3,7 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.particle.AvatarParticles;
+import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -10,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -30,29 +32,28 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Earth Pillar — interactive martial arts stone construct.
+ * Earth Pillar & Earth Wall — interactive martial arts stone construct.
  *
  * Lifecycle & Manipulation:
- * 1. Eruption: A stone column erupts under target or in front of caster, launching enemies.
- * 2. Persistent Stance: The pillar remains standing in the world for 140 ticks (7.0 seconds).
- * 3. Manipulation — Tendang Sekali (Single Power Kick):
- *    Player strikes or kicks the standing pillar. The pillar detaches and launches forward
- *    at high velocity (1.4 blocks/tick) as a flying megalith boulder projectile dealing 16.0
- *    blunt damage + massive seismic AOE shockwave upon impact.
- * 4. Manipulation — Bertubi-tubi (Rapid Barrage / Shard Gatling):
- *    Player punches or attacks the standing pillar repeatedly. Each strike shatters off a volley
- *    of 3-4 razor-sharp rock shard projectiles (4.0 dmg each) flying towards the crosshair,
- *    degrading pillar durability until it crumbles into a final stone burst.
+ * 1. Deep Ground / Seabed Snapping: Erupts from the true solid rock/seabed even when cast in deep water or rivers.
+ * 2. Stance-Based Formation:
+ *    - Normal Cast (Standing): Erupts 1 single Pillar (cost: 15 Chi).
+ *    - Sneak Cast (Shift + C): Erupts an Earth Wall (3 connected pillars forming a defensive curved barricade).
+ * 3. Manipulation — Tendang Sekali (Power Kick):
+ *    Launches the pillar(s) as high-velocity flying megalith boulder projectiles (16.0 dmg + seismic shockwave).
+ *    If an Earth Wall was raised, launches a 3-boulder Megalith Wave!
+ * 4. Manipulation — Bertubi-tubi (Rapid Barrage):
+ *    Punches the wall/pillar into a volley of razor-sharp stone shards (4.0 dmg each).
  */
 public final class EarthPillarSkill {
 
     public static final float FOOTPRINT_RADIUS = 1.6f;
     public static final float LAUNCH_VELOCITY = 1.05f;
     public static final float PILLAR_HEIGHT = 2.5f;
-    public static final int   GROUND_SEARCH_DEPTH = 4;
-    public static final int   PILLAR_DURATION_TICKS = 140; // 7.0 seconds
+    public static final int   GROUND_SEARCH_DEPTH = 24;   // Deep scan through air & water to find true seabed/ground
+    public static final int   PILLAR_DURATION_TICKS = 140; // 7.0 seconds interactive stance
     public static final int   PILLAR_MAX_HITS = 4;        // 4 rapid barrage strikes
-    public static final double INTERACTION_RADIUS = 6.0;   // blocks distance to interact
+    public static final double INTERACTION_RADIUS = 6.0;   // Blocks distance to interact
 
     public static final float MEGALITH_SPEED = 1.4f;
     public static final float MEGALITH_DAMAGE = 16.0f;
@@ -67,21 +68,22 @@ public final class EarthPillarSkill {
     public static final class ActivePillar {
         private final UUID id;
         private final UUID casterUuid;
-        private final Vec3d center;
+        private final List<Vec3d> positions;
         private int remainingTicks;
         private int hitsRemaining;
 
-        public ActivePillar(UUID id, UUID casterUuid, Vec3d center, int remainingTicks, int hitsRemaining) {
+        public ActivePillar(UUID id, UUID casterUuid, List<Vec3d> positions, int remainingTicks, int hitsRemaining) {
             this.id = id;
             this.casterUuid = casterUuid;
-            this.center = center;
+            this.positions = new ArrayList<>(positions);
             this.remainingTicks = remainingTicks;
             this.hitsRemaining = hitsRemaining;
         }
 
         public UUID id() { return id; }
         public UUID casterUuid() { return casterUuid; }
-        public Vec3d center() { return center; }
+        public List<Vec3d> positions() { return positions; }
+        public Vec3d center() { return positions.isEmpty() ? Vec3d.ZERO : positions.get(0); }
         public int remainingTicks() { return remainingTicks; }
         public int hitsRemaining() { return hitsRemaining; }
         public void decrementTicks() { this.remainingTicks--; }
@@ -121,18 +123,36 @@ public final class EarthPillarSkill {
 
         if (timeline.ticksInPhase() == 0) {
             Vec3d center = findPillarCenter(player, world, def.range());
-            ActivePillar pillar = new ActivePillar(UUID.randomUUID(), player.getUuid(), center, PILLAR_DURATION_TICKS, PILLAR_MAX_HITS);
+            List<Vec3d> positions = new ArrayList<>();
+            positions.add(center);
+
+            // Shift-Cast / Sneak Cast: Forms an Earth Wall (3 connected pillars)
+            boolean isWall = player.isSneaking();
+            if (isWall) {
+                Vec3d look = player.getRotationVec(1.0f);
+                Vec3d right = new Vec3d(-look.z, 0, look.x).normalize();
+                Vec3d leftPos = snapToGround(world, center.subtract(right.multiply(1.8)));
+                Vec3d rightPos = snapToGround(world, center.add(right.multiply(1.8)));
+                positions.add(leftPos);
+                positions.add(rightPos);
+            }
+
+            ActivePillar pillar = new ActivePillar(UUID.randomUUID(), player.getUuid(), positions, PILLAR_DURATION_TICKS, PILLAR_MAX_HITS);
             ACTIVE_PILLARS.put(player.getUuid(), pillar);
 
             int serial = SkillNetworking.currentSerial(player.getUuid());
-            SkillNetworking.broadcastSkillPosition(player, "avatar:earth_pillar",
-                    serial, center.x, center.y, center.z);
-            erupt(player, world, center, def);
+            for (Vec3d pos : positions) {
+                SkillNetworking.broadcastSkillPosition(player, "avatar:earth_pillar",
+                        serial, pos.x, pos.y, pos.z);
+                erupt(player, world, pos, def);
+            }
         }
 
         ActivePillar active = ACTIVE_PILLARS.get(player.getUuid());
         if (active != null) {
-            spawnColumnParticles(world, active.center(), timeline.ticksInPhase());
+            for (Vec3d pos : active.positions()) {
+                spawnColumnParticles(world, pos, timeline.ticksInPhase());
+            }
         }
     }
 
@@ -147,13 +167,15 @@ public final class EarthPillarSkill {
         double bestDist = maxDist * maxDist;
 
         for (ActivePillar p : ACTIVE_PILLARS.values()) {
-            Vec3d toPillar = p.center().add(0, 1.25, 0).subtract(eye);
-            double distSq = toPillar.lengthSquared();
-            if (distSq <= bestDist) {
-                // Check if roughly in front of player
-                if (distSq < 4.0 || toPillar.normalize().dotProduct(look) > 0.3) {
-                    bestDist = distSq;
-                    best = p;
+            for (Vec3d pos : p.positions()) {
+                Vec3d toPillar = pos.add(0, 1.25, 0).subtract(eye);
+                double distSq = toPillar.lengthSquared();
+                if (distSq <= bestDist) {
+                    if (distSq < 4.0 || toPillar.normalize().dotProduct(look) > 0.2) {
+                        bestDist = distSq;
+                        best = p;
+                        break;
+                    }
                 }
             }
         }
@@ -165,8 +187,8 @@ public final class EarthPillarSkill {
     }
 
     /**
-     * Tendang Sekali (Single Power Kick) — kicks the standing pillar, launching it
-     * forward as a high-speed flying megalith projectile that detonates with massive damage.
+     * Tendang Sekali (Single Power Kick / Megalith Wave) — launches all active pillars
+     * forward as high-speed megalith projectiles towards the player's crosshair.
      */
     public static boolean kickPillar(ServerPlayerEntity player) {
         ActivePillar pillar = findNearestPillar(player, INTERACTION_RADIUS);
@@ -175,15 +197,27 @@ public final class EarthPillarSkill {
         ServerWorld world = player.getServerWorld();
         Vec3d look = player.getRotationVec(1.0f);
         Vec3d dir = new Vec3d(look.x, Math.max(-0.2, look.y), look.z).normalize();
-        Vec3d spawnPos = pillar.center().add(0, 1.25, 0);
         Vec3d vel = dir.multiply(MEGALITH_SPEED);
 
-        // Convert pillar into flying megalith projectile
         ACTIVE_PILLARS.remove(pillar.casterUuid());
-        FLYING_MEGALITHS.add(new FlyingMegalith(player.getUuid(), spawnPos, vel,
-                MEGALITH_LIFETIME, MEGALITH_DAMAGE, MEGALITH_AOE, MEGALITH_KNOCKBACK));
 
-        // Multi-layered heavy kick launch SFX
+        // Launch all pillars in this construct (1 if pillar, 3 if earth wall)
+        for (Vec3d pos : pillar.positions()) {
+            Vec3d spawnPos = pos.add(0, 1.25, 0);
+            FLYING_MEGALITHS.add(new FlyingMegalith(player.getUuid(), spawnPos, vel,
+                    MEGALITH_LIFETIME, MEGALITH_DAMAGE, MEGALITH_AOE, MEGALITH_KNOCKBACK));
+
+            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState()),
+                    spawnPos.x, spawnPos.y, spawnPos.z, 35, 0.6, 0.6, 0.6, 0.15);
+            world.spawnParticles(AvatarParticles.STONE_CHIP,
+                    spawnPos.x, spawnPos.y, spawnPos.z, 25, 0.5, 0.5, 0.5, 0.2);
+            world.spawnParticles(ParticleTypes.EXPLOSION,
+                    spawnPos.x, spawnPos.y, spawnPos.z, 1, 0.1, 0.1, 0.1, 0.0);
+
+            SkillNetworking.broadcastPillarAction(world, pillar.casterUuid(), 0,
+                    pos.x, pos.y, pos.z, dir.x, dir.y, dir.z);
+        }
+
         BlockPos groundPos = BlockPos.ofFloored(pillar.center());
         world.playSound(null, groundPos,
                 SoundEvents.ENTITY_IRON_GOLEM_ATTACK, SoundCategory.PLAYERS, 2.0f, 0.55f);
@@ -192,24 +226,11 @@ public final class EarthPillarSkill {
         world.playSound(null, groundPos,
                 SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, SoundCategory.PLAYERS, 1.6f, 0.7f);
 
-        // Launch dust kick wave VFX
-        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState()),
-                spawnPos.x, spawnPos.y, spawnPos.z, 35, 0.6, 0.6, 0.6, 0.15);
-        world.spawnParticles(AvatarParticles.STONE_CHIP,
-                spawnPos.x, spawnPos.y, spawnPos.z, 25, 0.5, 0.5, 0.5, 0.2);
-        world.spawnParticles(ParticleTypes.EXPLOSION,
-                spawnPos.x, spawnPos.y, spawnPos.z, 1, 0.1, 0.1, 0.1, 0.0);
-
-        // Broadcast action to clients (actionType 0 = KICK)
-        SkillNetworking.broadcastPillarAction(world, pillar.casterUuid(), 0,
-                pillar.center().x, pillar.center().y, pillar.center().z, dir.x, dir.y, dir.z);
-
         return true;
     }
 
     /**
-     * Bertubi-tubi (Rapid Barrage) — rapid punch strike shatters off a burst of 3-4
-     * sharp flying stone shard projectiles towards crosshair, reducing pillar durability.
+     * Bertubi-tubi (Rapid Barrage) — strikes the pillar/wall into a rapid spray of sharp stone shards.
      */
     public static boolean strikePillar(ServerPlayerEntity player) {
         ActivePillar pillar = findNearestPillar(player, INTERACTION_RADIUS);
@@ -217,39 +238,34 @@ public final class EarthPillarSkill {
 
         ServerWorld world = player.getServerWorld();
         Vec3d look = player.getRotationVec(1.0f);
-        Vec3d origin = pillar.center().add(0, 1.25, 0);
 
-        // Fire 3-4 sharp rock shard projectiles with slight spread
-        int shardCount = 3 + RNG.nextInt(2);
-        for (int i = 0; i < shardCount; i++) {
-            double spreadX = (RNG.nextDouble() - 0.5) * 0.18;
-            double spreadY = (RNG.nextDouble() - 0.5) * 0.18;
-            double spreadZ = (RNG.nextDouble() - 0.5) * 0.18;
-            Vec3d shardDir = look.add(spreadX, spreadY, spreadZ).normalize();
-            FLYING_SHARDS.add(new FlyingShard(player.getUuid(), origin,
-                    shardDir.multiply(SHARD_SPEED), SHARD_LIFETIME, SHARD_DAMAGE));
+        for (Vec3d pos : pillar.positions()) {
+            Vec3d origin = pos.add(0, 1.25, 0);
+            int shardCount = 3 + RNG.nextInt(2);
+            for (int i = 0; i < shardCount; i++) {
+                double spreadX = (RNG.nextDouble() - 0.5) * 0.18;
+                double spreadY = (RNG.nextDouble() - 0.5) * 0.18;
+                double spreadZ = (RNG.nextDouble() - 0.5) * 0.18;
+                Vec3d shardDir = look.add(spreadX, spreadY, spreadZ).normalize();
+                FLYING_SHARDS.add(new FlyingShard(player.getUuid(), origin,
+                        shardDir.multiply(SHARD_SPEED), SHARD_LIFETIME, SHARD_DAMAGE));
+            }
+
+            world.spawnParticles(AvatarParticles.STONE_CHIP,
+                    origin.x, origin.y, origin.z, 15, 0.3, 0.3, 0.3, 0.15);
+
+            SkillNetworking.broadcastPillarAction(world, pillar.casterUuid(), 1,
+                    pos.x, pos.y, pos.z, look.x, look.y, look.z);
         }
 
         pillar.decrementHits();
 
-        // Shard spray SFX
-        BlockPos pos = BlockPos.ofFloored(pillar.center());
-        world.playSound(null, pos,
+        BlockPos pPos = BlockPos.ofFloored(pillar.center());
+        world.playSound(null, pPos,
                 SoundEvents.BLOCK_STONE_HIT, SoundCategory.PLAYERS, 1.8f, 1.1f + (RNG.nextFloat() * 0.2f));
-        world.playSound(null, pos,
+        world.playSound(null, pPos,
                 SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.2f, 1.4f);
 
-        // Shard spray particles
-        world.spawnParticles(AvatarParticles.STONE_CHIP,
-                origin.x, origin.y, origin.z, 20, 0.3, 0.3, 0.3, 0.15);
-        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.COBBLESTONE.getDefaultState()),
-                origin.x, origin.y, origin.z, 15, 0.3, 0.3, 0.3, 0.1);
-
-        // Broadcast action to clients (actionType 1 = STRIKE)
-        SkillNetworking.broadcastPillarAction(world, pillar.casterUuid(), 1,
-                pillar.center().x, pillar.center().y, pillar.center().z, look.x, look.y, look.z);
-
-        // Final collapse when durability depleted
         if (pillar.hitsRemaining() <= 0) {
             crumblePillar(world, pillar);
         }
@@ -259,44 +275,42 @@ public final class EarthPillarSkill {
 
     private static void crumblePillar(ServerWorld world, ActivePillar pillar) {
         ACTIVE_PILLARS.remove(pillar.casterUuid());
-        Vec3d center = pillar.center().add(0, 1.25, 0);
-        BlockPos pos = BlockPos.ofFloored(center);
 
-        world.playSound(null, pos,
-                SoundEvents.BLOCK_DEEPSLATE_BREAK, SoundCategory.PLAYERS, 2.0f, 0.5f);
-        world.playSound(null, pos,
-                SoundEvents.BLOCK_STONE_BREAK, SoundCategory.PLAYERS, 1.8f, 0.7f);
+        for (Vec3d pos : pillar.positions()) {
+            Vec3d center = pos.add(0, 1.25, 0);
+            BlockPos bp = BlockPos.ofFloored(center);
 
-        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState()),
-                center.x, center.y, center.z, 45, 0.7, 1.0, 0.7, 0.15);
-        world.spawnParticles(AvatarParticles.STONE_CHIP,
-                center.x, center.y, center.z, 30, 0.6, 0.8, 0.6, 0.15);
-        world.spawnParticles(AvatarParticles.DUST,
-                center.x, center.y, center.z, 35, 0.8, 0.5, 0.8, 0.08);
+            world.playSound(null, bp,
+                    SoundEvents.BLOCK_DEEPSLATE_BREAK, SoundCategory.PLAYERS, 2.0f, 0.5f);
+            world.playSound(null, bp,
+                    SoundEvents.BLOCK_STONE_BREAK, SoundCategory.PLAYERS, 1.8f, 0.7f);
 
-        // Broadcast action to clients (actionType 2 = CRUMBLE)
-        SkillNetworking.broadcastPillarAction(world, pillar.casterUuid(), 2,
-                pillar.center().x, pillar.center().y, pillar.center().z, 0, 0, 0);
+            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState()),
+                    center.x, center.y, center.z, 40, 0.7, 1.0, 0.7, 0.15);
+            world.spawnParticles(AvatarParticles.STONE_CHIP,
+                    center.x, center.y, center.z, 25, 0.6, 0.8, 0.6, 0.15);
+            world.spawnParticles(AvatarParticles.DUST,
+                    center.x, center.y, center.z, 30, 0.8, 0.5, 0.8, 0.08);
+
+            SkillNetworking.broadcastPillarAction(world, pillar.casterUuid(), 2,
+                    pos.x, pos.y, pos.z, 0, 0, 0);
+        }
     }
 
-    /**
-     * Ticked every server tick by ServerTickEvents.END_SERVER_TICK.
-     * Advances active pillars, flying megaliths, and flying shards.
-     */
     public static void tickAllPillars(MinecraftServer server) {
-        // 1. Tick active pillars
         List<UUID> toCrumble = new ArrayList<>();
         for (ActivePillar pillar : ACTIVE_PILLARS.values()) {
             pillar.decrementTicks();
             if (pillar.remainingTicks() <= 0) {
                 toCrumble.add(pillar.casterUuid());
             } else if (pillar.remainingTicks() % 8 == 0) {
-                // Ambient dust/pebbles around base
                 for (ServerWorld world : server.getWorlds()) {
                     if (world.isChunkLoaded(BlockPos.ofFloored(pillar.center()))) {
-                        world.spawnParticles(AvatarParticles.DUST,
-                                pillar.center().x, pillar.center().y + 0.2, pillar.center().z,
-                                3, FOOTPRINT_RADIUS * 0.4, 0.1, FOOTPRINT_RADIUS * 0.4, 0.02);
+                        for (Vec3d pos : pillar.positions()) {
+                            world.spawnParticles(AvatarParticles.DUST,
+                                    pos.x, pos.y + 0.2, pos.z,
+                                    2, FOOTPRINT_RADIUS * 0.4, 0.1, FOOTPRINT_RADIUS * 0.4, 0.02);
+                        }
                         break;
                     }
                 }
@@ -314,14 +328,13 @@ public final class EarthPillarSkill {
             }
         }
 
-        // 2. Tick flying megaliths
+        // Advance flying megaliths
         List<FlyingMegalith> megalithsRemaining = new ArrayList<>();
         for (FlyingMegalith m : FLYING_MEGALITHS) {
             ServerPlayerEntity caster = server.getPlayerManager().getPlayer(m.casterUuid());
             ServerWorld world = caster != null ? caster.getServerWorld() : server.getOverworld();
             Vec3d nextPos = m.pos().add(m.velocity());
 
-            // Projectile trail VFX
             world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState()),
                     m.pos().x, m.pos().y, m.pos().z, 8, 0.4, 0.4, 0.4, 0.05);
             world.spawnParticles(AvatarParticles.STONE_CHIP,
@@ -329,12 +342,10 @@ public final class EarthPillarSkill {
             world.spawnParticles(ParticleTypes.POOF,
                     m.pos().x, m.pos().y, m.pos().z, 2, 0.2, 0.2, 0.2, 0.01);
 
-            // Check collision with entities
             Box hitBox = Box.of(nextPos, 1.8, 1.8, 1.8);
             List<LivingEntity> hits = world.getEntitiesByClass(
                     LivingEntity.class, hitBox, e -> (caster == null || e != caster) && e.isAlive());
 
-            // Check collision with solid blocks
             BlockPos blockPos = BlockPos.ofFloored(nextPos);
             boolean hitBlock = !world.getBlockState(blockPos).getCollisionShape(world, blockPos).isEmpty();
 
@@ -350,14 +361,13 @@ public final class EarthPillarSkill {
         FLYING_MEGALITHS.clear();
         FLYING_MEGALITHS.addAll(megalithsRemaining);
 
-        // 3. Tick flying shards
+        // Advance flying shards
         List<FlyingShard> shardsRemaining = new ArrayList<>();
         for (FlyingShard s : FLYING_SHARDS) {
             ServerPlayerEntity caster = server.getPlayerManager().getPlayer(s.casterUuid());
             ServerWorld world = caster != null ? caster.getServerWorld() : server.getOverworld();
             Vec3d nextPos = s.pos().add(s.velocity());
 
-            // Shard trail VFX
             world.spawnParticles(AvatarParticles.STONE_CHIP,
                     s.pos().x, s.pos().y, s.pos().z, 2, 0.1, 0.1, 0.1, 0.02);
 
@@ -389,13 +399,16 @@ public final class EarthPillarSkill {
         DamageSource source = caster != null ? world.getDamageSources().playerAttack(caster) : world.getDamageSources().magic();
         for (LivingEntity target : targets) {
             target.damage(source, m.damage());
+            ElementalInteractions.applySeismicStagger(target, 60);
             Vec3d diff = target.getPos().subtract(pos);
             Vec3d knockDir = diff.lengthSquared() < 0.001 ? new Vec3d(0, 1, 0) : diff.normalize();
             target.addVelocity(knockDir.x * m.knockback(), 0.35 + m.knockback() * 0.2, knockDir.z * m.knockback());
             target.velocityModified = true;
         }
 
-        // Cataclysmic detonation VFX & SFX
+        // Clear vegetation at impact site
+        ElementalInteractions.clearVegetation(world, pos, m.aoeRadius());
+
         BlockPos bp = BlockPos.ofFloored(pos);
         world.playSound(null, bp, SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.PLAYERS, 2.0f, 0.7f);
         world.playSound(null, bp, SoundEvents.BLOCK_STONE_BREAK, SoundCategory.PLAYERS, 2.5f, 0.6f);
@@ -447,11 +460,29 @@ public final class EarthPillarSkill {
         return snapToGround(world, origin.add(dir.multiply(range)));
     }
 
+    /**
+     * Deep ground scanning: scans down through air AND water/fluids up to 24 blocks
+     * to find the true solid ground surface (rock/dirt/sand/gravel seabed).
+     */
     private static Vec3d snapToGround(ServerWorld world, Vec3d pos) {
         BlockPos cursor = BlockPos.ofFloored(pos);
+
+        // If cursor is buried deep inside solid block, scan upward to find top surface
+        if (!world.getBlockState(cursor).getCollisionShape(world, cursor).isEmpty()) {
+            for (int i = 0; i <= 8; i++) {
+                BlockPos above = cursor.up(i);
+                if (world.getBlockState(above).getCollisionShape(world, above).isEmpty()) {
+                    return new Vec3d(pos.x, above.getY(), pos.z);
+                }
+            }
+        }
+
+        // Scan downward through air and water up to GROUND_SEARCH_DEPTH blocks to find true solid ground
         for (int i = 0; i <= GROUND_SEARCH_DEPTH; i++) {
             BlockPos below = cursor.down(i);
-            if (!world.getBlockState(below).getCollisionShape(world, below).isEmpty()) {
+            BlockState state = world.getBlockState(below);
+            // Solid ground has collision shape and is not liquid
+            if (!state.getCollisionShape(world, below).isEmpty() && state.getFluidState().isEmpty()) {
                 return new Vec3d(pos.x, below.getY() + 1.0, pos.z);
             }
         }
@@ -468,16 +499,21 @@ public final class EarthPillarSkill {
         DamageSource source = world.getDamageSources().playerAttack(player);
         for (LivingEntity target : targets) {
             target.damage(source, def.damage());
+            ElementalInteractions.applySeismicStagger(target, 40);
             Vec3d vel = target.getVelocity();
             target.setVelocity(vel.x * 0.4, LAUNCH_VELOCITY, vel.z * 0.4);
             target.velocityModified = true;
         }
 
+        // Clear loose grass and flowers under the pillar footprint
+        ElementalInteractions.clearVegetation(world, center, FOOTPRINT_RADIUS);
+
         BlockPos groundPos = BlockPos.ofFloored(center.subtract(0, 0.5, 0));
         BlockState ground = world.getBlockState(groundPos);
-        if (ground.isAir()) {
+        if (ground.isAir() || !ground.getFluidState().isEmpty()) {
             ground = Blocks.STONE.getDefaultState();
         }
+
         world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, ground),
                 center.x, center.y + 0.3, center.z,
                 50, FOOTPRINT_RADIUS * 0.6, 0.5, FOOTPRINT_RADIUS * 0.6, 0.2);
@@ -487,9 +523,16 @@ public final class EarthPillarSkill {
         world.spawnParticles(AvatarParticles.DUST,
                 center.x, center.y + 0.2, center.z,
                 35, FOOTPRINT_RADIUS * 0.7, 0.3, FOOTPRINT_RADIUS * 0.7, 0.08);
-        world.spawnParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE,
-                center.x, center.y + 0.1, center.z,
-                8, FOOTPRINT_RADIUS * 0.6, 0.1, FOOTPRINT_RADIUS * 0.6, 0.02);
+
+        // Check if erupting underwater / through water body: spawn water geyser particles
+        BlockPos waterCheck = BlockPos.ofFloored(center.add(0, 1.0, 0));
+        if (world.getFluidState(waterCheck).isIn(FluidTags.WATER) || world.getFluidState(groundPos.up()).isIn(FluidTags.WATER)) {
+            world.spawnParticles(ParticleTypes.SPLASH, center.x, center.y + 1.0, center.z,
+                    40, 0.5, 1.0, 0.5, 0.15);
+            world.spawnParticles(ParticleTypes.BUBBLE, center.x, center.y + 0.5, center.z,
+                    30, 0.4, 0.8, 0.4, 0.1);
+            world.playSound(null, groundPos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.PLAYERS, 2.0f, 1.0f);
+        }
 
         world.playSound(null, groundPos,
                 SoundEvents.ENTITY_IRON_GOLEM_ATTACK, SoundCategory.PLAYERS, 2.0f, 0.55f);
@@ -505,7 +548,7 @@ public final class EarthPillarSkill {
         double maxHeight = Math.min(PILLAR_HEIGHT, 1.0 + tickInActive * 1.0);
         BlockPos groundPos = BlockPos.ofFloored(center.subtract(0, 0.5, 0));
         BlockState ground = world.getBlockState(groundPos);
-        if (ground.isAir()) {
+        if (ground.isAir() || !ground.getFluidState().isEmpty()) {
             ground = Blocks.STONE.getDefaultState();
         }
 

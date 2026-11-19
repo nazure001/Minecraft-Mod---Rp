@@ -3,6 +3,7 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.particle.AvatarParticles;
+import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
 import com.avatarmod.elements.skill.SkillTargeting;
 import net.minecraft.entity.LivingEntity;
@@ -12,6 +13,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
@@ -28,6 +30,13 @@ public final class WaterWhipSkill {
         SkillTimeline timeline = PlayerBendingData.get(player).getTimeline();
         if (timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
         if (timeline.ticksInPhase() != 1) return;
+
+        if (!ElementalInteractions.hasWaterSource(player)) {
+            player.sendMessage(Text.literal("§c[Avatar] Perlu sumber air terdekat atau kantong/ember air!"), true);
+            PlayerBendingData.get(player).regenChi(def.chiCost());
+            timeline.cancel();
+            return;
+        }
 
         ServerWorld world = player.getServerWorld();
         Vec3d origin = player.getPos().add(0, player.getStandingEyeHeight(), 0);
@@ -48,11 +57,14 @@ public final class WaterWhipSkill {
         DamageSource source = world.getDamageSources().playerAttack(player);
         for (LivingEntity target : targets) {
             target.damage(source, def.damage());
+            ElementalInteractions.applyWater(target, 80, 1);
             // Pull toward player
             Vec3d pull = player.getPos().subtract(target.getPos()).normalize().multiply(def.knockback());
             target.addVelocity(pull.x, 0.15 + pull.y * 0.5, pull.z);
             target.velocityModified = true;
         }
+
+        ElementalInteractions.douseFireBlocks(world, end, 2.5);
 
         // VFX: Serpentine Double-Helix Water Whip (Katara Spiraling Flow)
         double horizLen = Math.sqrt(look.x * look.x + look.z * look.z);

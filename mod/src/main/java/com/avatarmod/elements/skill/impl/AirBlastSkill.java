@@ -3,6 +3,7 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.particle.AvatarParticles;
+import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
 import com.avatarmod.elements.skill.SkillTargeting;
 import net.minecraft.entity.LivingEntity;
@@ -54,6 +55,9 @@ public final class AirBlastSkill {
             );
             target.velocityModified = true;
         }
+
+        // Clear loose grass and flowers along wind path
+        ElementalInteractions.clearVegetation(world, origin.add(look.multiply(range * 0.5)), 2.5);
 
         // Deflect incoming hostile projectiles in blast path
         Box deflectBox = Box.of(origin.add(look.multiply(range * 0.5)), range, range, range);

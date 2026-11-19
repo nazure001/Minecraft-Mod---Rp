@@ -3,6 +3,7 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.particle.AvatarParticles;
+import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -63,6 +64,9 @@ public final class AirVortexSkill {
         DamageSource source = world.getDamageSources().playerAttack(player);
         double pullForce = def.knockback(); // used as pull magnitude
 
+        // Clear vegetation in vortex funnel
+        ElementalInteractions.clearVegetation(world, center, r * 0.8);
+
         for (LivingEntity target : targets) {
             // Pull direction = toward center
             Vec3d diff = center.subtract(target.getPos());
@@ -70,10 +74,13 @@ public final class AirVortexSkill {
             Vec3d toCenter = diff.normalize();
             target.addVelocity(
                     toCenter.x * pullForce,
-                    toCenter.y * pullForce * 0.3,
+                    toCenter.y * pullForce * 0.3 + 0.1,
                     toCenter.z * pullForce
             );
             target.velocityModified = true;
+
+            // Lift mob into air vortex
+            ElementalInteractions.applyAirLevitation(target, 20);
 
             // Light damage per hit interval
             if (def.damage() > 0) {

@@ -4,6 +4,7 @@ import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.entity.FireBlastProjectileEntity;
 import com.avatarmod.elements.particle.AvatarParticles;
+import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -123,6 +124,7 @@ public final class FireBlastSkill {
         DamageSource source = (player != null) ? world.getDamageSources().playerAttack(player) : world.getDamageSources().magic();
         for (LivingEntity target : blastTargets) {
             target.damage(source, damage);
+            ElementalInteractions.applyFire(target, (int) (60 + 80 * chargeRatio));
             Vec3d knockDir = target.getPos().subtract(center).normalize();
             if (knockDir.lengthSquared() < 0.001) knockDir = new Vec3d(0, 1, 0);
             target.addVelocity(
@@ -132,6 +134,8 @@ public final class FireBlastSkill {
             );
             target.velocityModified = true;
         }
+
+        ElementalInteractions.igniteBlocks(world, center, r * 0.8);
 
         // Detonation VFX
         int flameCount = (int) (20 + 25 * chargeRatio);

@@ -3,6 +3,7 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.particle.AvatarParticles;
+import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -63,6 +64,7 @@ public final class FlameSweepSkill {
         DamageSource source = world.getDamageSources().playerAttack(player);
         for (LivingEntity target : targets) {
             target.damage(source, def.damage() * damageMultiplier);
+            ElementalInteractions.applyFire(target, 80);
             Vec3d knockDir = target.getPos().subtract(player.getPos()).normalize();
             target.addVelocity(
                     knockDir.x * def.knockback(),
@@ -71,6 +73,8 @@ public final class FlameSweepSkill {
             );
             target.velocityModified = true;
         }
+
+        ElementalInteractions.igniteBlocks(world, origin.add(look.multiply(2.0)), 2.0);
 
         // Slight forward lunge
         Vec3d lunge = look.multiply(0.25);

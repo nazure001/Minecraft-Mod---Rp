@@ -3,6 +3,7 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.particle.AvatarParticles;
+import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
 import com.avatarmod.elements.skill.SkillTargeting;
 import net.minecraft.entity.LivingEntity;
@@ -12,6 +13,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
@@ -37,6 +39,14 @@ public final class WaterJetSkill {
         if (timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
 
         int t = timeline.ticksInPhase();
+
+        // 0. Water source check on initiation
+        if (t == 0 && !ElementalInteractions.hasWaterSource(player)) {
+            player.sendMessage(Text.literal("§c[Avatar] Perlu sumber air terdekat atau kantong/ember air!"), true);
+            data.regenChi(def.chiCost());
+            timeline.cancel();
+            return;
+        }
 
         // 1. Chi sustain consumption — cancel stream if out of chi
         if (shouldConsumeChi(t)) {
@@ -65,12 +75,15 @@ public final class WaterJetSkill {
             DamageSource source = world.getDamageSources().playerAttack(player);
             for (LivingEntity target : targets) {
                 target.damage(source, def.damage());
+                ElementalInteractions.applyWater(target, 60, 1);
 
                 // Directional push knockback along water jet stream
                 Vec3d push = calculatePushVector(look, def.knockback());
                 target.addVelocity(push.x, push.y, push.z);
                 target.velocityModified = true;
             }
+
+            ElementalInteractions.douseFireBlocks(world, end, 3.0);
         }
 
         // 3. VFX: High-pressure water particles streaming forward
