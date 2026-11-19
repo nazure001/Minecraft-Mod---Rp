@@ -1,0 +1,14 @@
+{
+  "sources": [
+    {
+      "type": "directory",
+      "source": "weapons",
+      "prefix": "weapons/"
+    },
+    {
+      "type": "directory",
+      "source": "vfx",
+      "prefix": "vfx/"
+    }
+  ]
+}
