@@ -53,6 +53,9 @@ public final class ClientNetworkHandler {
                                     && CAST_ANIMATION_GATE.shouldStart(
                                             payload.casterUuid(), payload.castSerial(), payload.phase())) {
                                 AvatarAnimations.triggerSkillAnimation(acp, payload.skillId(), payload.phase());
+                                if (acp == client.player) {
+                                    client.player.swingHand(net.minecraft.util.Hand.MAIN_HAND);
+                                }
                             }
                         }
                     });

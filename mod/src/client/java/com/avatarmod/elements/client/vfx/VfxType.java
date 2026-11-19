@@ -47,7 +47,7 @@ public enum VfxType {
             "avatar:earth_pillar",
             1005,
             Items.DEEPSLATE,
-            25,  // 1.25s = 25 ticks
+            140,  // 7.0s = 140 ticks interactive standing duration
             new Vector3f(1.0f, 1.0f, 1.0f),
             new Vector3f(1.0f, 1.0f, 1.0f),
             0.0f,

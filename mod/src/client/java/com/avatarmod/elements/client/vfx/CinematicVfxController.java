@@ -129,11 +129,14 @@ public final class CinematicVfxController {
                 spawnVfxEntity(key);
             }
         } else if ("RECOVERY".equals(phase) || "IDLE".equals(phase)) {
-            ActiveVfx removed = ACTIVE_ENTITIES.remove(key);
-            PILLAR_GROUND_POSITIONS.remove(key);
-            SERVER_POSITIONS.remove(key);
-            if (removed != null && removed.entity() != null) {
-                removed.entity().discard();
+            // Earth pillar is a persistent interactive world object — do not discard on phase end
+            if (!"avatar:earth_pillar".equals(key.skillId())) {
+                ActiveVfx removed = ACTIVE_ENTITIES.remove(key);
+                PILLAR_GROUND_POSITIONS.remove(key);
+                SERVER_POSITIONS.remove(key);
+                if (removed != null && removed.entity() != null) {
+                    removed.entity().discard();
+                }
             }
 
             if ("IDLE".equals(phase) && currentActive != null && castSerial == currentActive) {
@@ -469,12 +472,11 @@ public final class CinematicVfxController {
     }
 
     /**
-     * Computes the Y offset for the earth pillar eruption animation.
-     * Timeline (from EARTH_PILLAR_SPEC):
-     *   tick 0-2  (0.00-0.12s): burst from -2.75 to +0.15 (overshoot)
-     *   tick 2-4  (0.12-0.18s): settle to 0.0
-     *   tick 4-15 (0.18-0.75s): hold at 0.0
-     *   tick 15-23 (0.75-1.15s): sink to -2.75
+     * Computes the Y offset for the earth pillar animation.
+     * Ticks 0-2: burst upward from -2.75 to +0.15 (overshoot)
+     * Ticks 2-4: settle from +0.15 to 0.0
+     * Ticks 4-132: hold stance at 0.0 (active manipulatable pillar!)
+     * Ticks 132-140: sink back to -2.75 if not interacted with.
      */
     private static double computePillarYOffset(int ageTicks) {
         if (ageTicks <= 2) {
@@ -483,13 +485,92 @@ public final class CinematicVfxController {
         } else if (ageTicks <= 4) {
             double t = (ageTicks - 2) / 2.0;
             return 0.15 - t * 0.15;  // settle from +0.15 to 0.0
-        } else if (ageTicks <= 15) {
-            return 0.0;  // held stance
-        } else if (ageTicks <= 23) {
-            double t = (ageTicks - 15) / 8.0;
+        } else if (ageTicks <= 132) {
+            return 0.0;  // held interactive stance
+        } else if (ageTicks <= 140) {
+            double t = (ageTicks - 132) / 8.0;
             return -t * 2.75;  // sink back down
         }
         return -2.75;
+    }
+
+    /**
+     * Handles S2CPillarAction broadcast on client:
+     * actionType: 0 = KICK, 1 = STRIKE, 2 = CRUMBLE
+     */
+    public static void onPillarAction(UUID casterUuid, int actionType,
+                                      double x, double y, double z,
+                                      double dirX, double dirY, double dirZ) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client == null || client.world == null) return;
+
+        // Find active pillar display entities near x,y,z or belonging to caster
+        List<VfxKey> toDiscard = new ArrayList<>();
+        for (Map.Entry<VfxKey, ActiveVfx> entry : ACTIVE_ENTITIES.entrySet()) {
+            VfxKey k = entry.getKey();
+            if (entry.getValue().type() == VfxType.EARTH_PILLAR) {
+                if (k.casterUuid().equals(casterUuid)
+                        || (entry.getValue().entity() != null && entry.getValue().entity().squaredDistanceTo(x, y, z) < 9.0)) {
+                    toDiscard.add(k);
+                }
+            }
+        }
+
+        if (actionType == 0) {
+            // KICK (Power Kick): discard pillar and trigger martial kick feedback
+            for (VfxKey k : toDiscard) {
+                ActiveVfx vfx = ACTIVE_ENTITIES.remove(k);
+                PILLAR_GROUND_POSITIONS.remove(k);
+                SERVER_POSITIONS.remove(k);
+                if (vfx != null && vfx.entity() != null) {
+                    vfx.entity().discard();
+                }
+            }
+
+            if (client.player != null && client.player.getUuid().equals(casterUuid)) {
+                client.player.swingHand(net.minecraft.util.Hand.MAIN_HAND);
+                var animId = com.avatarmod.elements.client.anim.AvatarAnimations.getAnimationForSkill("earth_boulder");
+                if (animId != null) {
+                    com.avatarmod.elements.client.anim.AvatarAnimations.triggerComboAnimation(client.player, animId);
+                }
+            }
+        } else if (actionType == 1) {
+            // STRIKE (Rapid Barrage): trigger punch feedback & hand swing
+            if (client.player != null && client.player.getUuid().equals(casterUuid)) {
+                client.player.swingHand(net.minecraft.util.Hand.MAIN_HAND);
+                var animId = com.avatarmod.elements.client.anim.AvatarAnimations.getAnimationForSkill("fire_jab");
+                if (animId != null) {
+                    com.avatarmod.elements.client.anim.AvatarAnimations.triggerComboAnimation(client.player, animId);
+                }
+            }
+        } else if (actionType == 2) {
+            // CRUMBLE: discard standing pillar
+            for (VfxKey k : toDiscard) {
+                ActiveVfx vfx = ACTIVE_ENTITIES.remove(k);
+                PILLAR_GROUND_POSITIONS.remove(k);
+                SERVER_POSITIONS.remove(k);
+                if (vfx != null && vfx.entity() != null) {
+                    vfx.entity().discard();
+                }
+            }
+        }
+    }
+
+    public static boolean hasNearbyPillarClient(Vec3d pos, double maxDist) {
+        double maxDistSq = maxDist * maxDist;
+        for (Vec3d gPos : PILLAR_GROUND_POSITIONS.values()) {
+            if (gPos.squaredDistanceTo(pos) <= maxDistSq) {
+                return true;
+            }
+        }
+        for (ActiveVfx vfx : ACTIVE_ENTITIES.values()) {
+            if (vfx.type() == VfxType.EARTH_PILLAR && vfx.entity() != null && !vfx.entity().isRemoved()) {
+                if (vfx.entity().squaredDistanceTo(pos) <= maxDistSq) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

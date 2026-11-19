@@ -225,5 +225,54 @@ public final class SkillPackets {
         @Override public CustomPayload.Id<S2CSkillPosition> getId() { return ID; }
     }
 
+    // Client → Server: player interacts with / manipulates an active earth pillar
+    // actionType: 0 = KICK (Single Power Kick / Megalith Launch), 1 = STRIKE (Rapid Barrage Punch)
+    public record C2SPillarInteract(int actionType) implements CustomPayload {
+        public static final CustomPayload.Id<C2SPillarInteract> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "c2s_pillar_interact"));
+        public static final PacketCodec<PacketByteBuf, C2SPillarInteract> CODEC = PacketCodec.of(
+                (value, buf) -> buf.writeByte(value.actionType()),
+                buf -> new C2SPillarInteract(buf.readByte())
+        );
+
+        @Override public CustomPayload.Id<C2SPillarInteract> getId() { return ID; }
+    }
+
+    // Server → Client (broadcast): pillar action event for visual & audio FX
+    // actionType: 0 = KICK (launches megalith), 1 = STRIKE (shatters stone shards), 2 = CRUMBLE (pillar collapses)
+    public record S2CPillarAction(
+            java.util.UUID casterUuid,
+            int actionType,
+            double x, double y, double z,
+            double dirX, double dirY, double dirZ
+    ) implements CustomPayload {
+        public static final CustomPayload.Id<S2CPillarAction> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "s2c_pillar_action"));
+        public static final PacketCodec<PacketByteBuf, S2CPillarAction> CODEC = PacketCodec.of(
+                (value, buf) -> {
+                    buf.writeUuid(value.casterUuid());
+                    buf.writeByte(value.actionType());
+                    buf.writeDouble(value.x());
+                    buf.writeDouble(value.y());
+                    buf.writeDouble(value.z());
+                    buf.writeDouble(value.dirX());
+                    buf.writeDouble(value.dirY());
+                    buf.writeDouble(value.dirZ());
+                },
+                buf -> new S2CPillarAction(
+                        buf.readUuid(),
+                        buf.readByte(),
+                        buf.readDouble(),
+                        buf.readDouble(),
+                        buf.readDouble(),
+                        buf.readDouble(),
+                        buf.readDouble(),
+                        buf.readDouble()
+                )
+        );
+
+        @Override public CustomPayload.Id<S2CPillarAction> getId() { return ID; }
+    }
+
     private SkillPackets() {}
 }

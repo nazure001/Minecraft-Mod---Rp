@@ -53,6 +53,23 @@ public final class SkillClientHandler {
                         com.avatarmod.elements.client.hud.ElementWheelRenderer.setElement(payload.element());
                     });
                 });
+
+        ClientPlayNetworking.registerGlobalReceiver(
+                SkillPackets.S2CPillarAction.ID,
+                (payload, context) -> {
+                    MinecraftClient client = context.client();
+                    client.execute(() -> {
+                        com.avatarmod.elements.client.vfx.CinematicVfxController.onPillarAction(
+                                payload.casterUuid(), payload.actionType(),
+                                payload.x(), payload.y(), payload.z(),
+                                payload.dirX(), payload.dirY(), payload.dirZ()
+                        );
+                    });
+                });
+    }
+
+    public static void sendPillarInteract(int actionType) {
+        ClientPlayNetworking.send(new SkillPackets.C2SPillarInteract(actionType));
     }
 
     public static void sendSkillInput(String skillId) {

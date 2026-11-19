@@ -106,6 +106,22 @@ public class AvatarElementsClient implements ClientModInitializer {
             handleSlotKey(client, 2, AvatarKeyBindings.SLOT_3);
             handleSlotKey(client, 3, AvatarKeyBindings.SLOT_4);
             handleSlotKey(client, 4, AvatarKeyBindings.SLOT_5);
+
+            // --- Attack key interaction with Earth Pillar (Left Click) ---
+            if (client.currentScreen == null && client.options.attackKey.wasPressed()) {
+                if (CinematicVfxController.hasNearbyPillarClient(client.player.getPos(), 5.5)) {
+                    int action = (client.player.isSneaking() || client.player.isSprinting()) ? 0 : 1;
+                    SkillClientHandler.sendPillarInteract(action);
+                    client.player.swingHand(net.minecraft.util.Hand.MAIN_HAND);
+                    if (action == 0) {
+                        var animId = AvatarAnimations.getAnimationForSkill("earth_boulder");
+                        if (animId != null) AvatarAnimations.triggerComboAnimation(client.player, animId);
+                    } else {
+                        var animId = AvatarAnimations.getAnimationForSkill("fire_jab");
+                        if (animId != null) AvatarAnimations.triggerComboAnimation(client.player, animId);
+                    }
+                }
+            }
         });
     }
 
@@ -162,6 +178,24 @@ public class AvatarElementsClient implements ClientModInitializer {
         boolean justPressed = (isDown && !slotWasDown[slot]) || tapped;
         boolean justReleased = (!isDown && slotWasDown[slot]);
         slotWasDown[slot] = isDown;
+
+        // Interactive Earth Pillar manipulation via Earth slots (Z=Strike, X/C=Kick)
+        if ("EARTH".equals(activeElement) && client.player != null
+                && CinematicVfxController.hasNearbyPillarClient(client.player.getPos(), 5.5)) {
+            if ((slot == 1 || slot == 2) && justPressed) {
+                SkillClientHandler.sendPillarInteract(0);
+                client.player.swingHand(net.minecraft.util.Hand.MAIN_HAND);
+                var animId = AvatarAnimations.getAnimationForSkill("earth_boulder");
+                if (animId != null) AvatarAnimations.triggerComboAnimation(client.player, animId);
+                return;
+            } else if (slot == 0 && justPressed) {
+                SkillClientHandler.sendPillarInteract(1);
+                client.player.swingHand(net.minecraft.util.Hand.MAIN_HAND);
+                var animId = AvatarAnimations.getAnimationForSkill("fire_jab");
+                if (animId != null) AvatarAnimations.triggerComboAnimation(client.player, animId);
+                return;
+            }
+        }
 
         if (isHoldSkill) {
             if (justPressed) {

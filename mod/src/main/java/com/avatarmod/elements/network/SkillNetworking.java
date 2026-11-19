@@ -7,6 +7,7 @@ import com.avatarmod.elements.skill.ElementSlotMap;
 import com.avatarmod.elements.skill.SkillDefinition;
 import com.avatarmod.elements.skill.SkillRegistry;
 import com.avatarmod.elements.skill.SkillValidator;
+import com.avatarmod.elements.skill.impl.EarthPillarSkill;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -67,6 +68,8 @@ public final class SkillNetworking {
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSyncElement.ID, SkillPackets.S2CSyncElement.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CPhaseSync.ID, SkillPackets.S2CPhaseSync.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSkillPosition.ID, SkillPackets.S2CSkillPosition.CODEC);
+        PayloadTypeRegistry.playC2S().register(SkillPackets.C2SPillarInteract.ID, SkillPackets.C2SPillarInteract.CODEC);
+        PayloadTypeRegistry.playS2C().register(SkillPackets.S2CPillarAction.ID, SkillPackets.S2CPillarAction.CODEC);
     }
 
     public static void registerServerReceivers() {
@@ -97,6 +100,17 @@ public final class SkillNetworking {
                 (payload, context) -> {
                     ServerPlayerEntity player = context.player();
                     handleHoldRelease(player, payload.slotIndex(), payload.heldTicks());
+                });
+
+        ServerPlayNetworking.registerGlobalReceiver(
+                SkillPackets.C2SPillarInteract.ID,
+                (payload, context) -> {
+                    ServerPlayerEntity player = context.player();
+                    if (payload.actionType() == 0) {
+                        EarthPillarSkill.kickPillar(player);
+                    } else if (payload.actionType() == 1) {
+                        EarthPillarSkill.strikePillar(player);
+                    }
                 });
     }
 
@@ -187,6 +201,16 @@ public final class SkillNetworking {
         var packet = new SkillPackets.S2CSkillPosition(caster.getUuid(), serial, skillId, x, y, z);
         ServerPlayNetworking.send(caster, packet);
         for (var watcher : PlayerLookup.tracking(caster)) {
+            ServerPlayNetworking.send(watcher, packet);
+        }
+    }
+
+    public static void broadcastPillarAction(net.minecraft.server.world.ServerWorld world,
+                                            UUID casterUuid, int actionType,
+                                            double x, double y, double z,
+                                            double dirX, double dirY, double dirZ) {
+        var packet = new SkillPackets.S2CPillarAction(casterUuid, actionType, x, y, z, dirX, dirY, dirZ);
+        for (ServerPlayerEntity watcher : PlayerLookup.around(world, new net.minecraft.util.math.Vec3d(x, y, z), 64.0)) {
             ServerPlayNetworking.send(watcher, packet);
         }
     }

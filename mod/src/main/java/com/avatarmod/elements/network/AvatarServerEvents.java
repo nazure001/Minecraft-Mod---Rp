@@ -2,16 +2,19 @@ package com.avatarmod.elements.network;
 
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.skill.SkillDispatcher;
+import com.avatarmod.elements.skill.impl.EarthPillarSkill;
 import com.avatarmod.elements.skill.impl.FireBlastSkill;
 import com.avatarmod.elements.skill.impl.FireGuardSkill;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.ActionResult;
 
 public final class AvatarServerEvents {
 
@@ -26,6 +29,7 @@ public final class AvatarServerEvents {
             AvatarNetworking.onPlayerDisconnect(handler.player.getUuid());
             SkillNetworking.onPlayerDisconnect(handler.player.getUuid());
             FireBlastSkill.clearFireball(handler.player.getUuid());
+            EarthPillarSkill.clear(handler.player.getUuid());
         });
 
         // Tick chi regen + cooldowns for every online player each server tick
@@ -39,12 +43,31 @@ public final class AvatarServerEvents {
                 SkillDispatcher.tick(player);
             }
             FireBlastSkill.tickAllFireballs(server);
+            EarthPillarSkill.tickAllPillars(server);
             SkillNetworking.tickElementCycleCooldowns();
         });
 
         SkillNetworking.registerSlotCastReceiver();
         SkillNetworking.registerCycleElementReceiver();
         SkillNetworking.registerSelectElementReceiver();
+
+        // Earth Pillar manipulation: attack/interact with standing pillar
+        AttackBlockCallback.EVENT.register((player, world, hand, pos, direction) -> {
+            if (player instanceof ServerPlayerEntity serverPlayer) {
+                if (EarthPillarSkill.hasNearbyPillar(serverPlayer, 5.0)) {
+                    boolean handled;
+                    if (serverPlayer.isSneaking() || serverPlayer.isSprinting()) {
+                        handled = EarthPillarSkill.kickPillar(serverPlayer);
+                    } else {
+                        handled = EarthPillarSkill.strikePillar(serverPlayer);
+                    }
+                    if (handled) {
+                        return ActionResult.SUCCESS;
+                    }
+                }
+            }
+            return ActionResult.PASS;
+        });
 
         // Reset orb on player death; cancel active skill timeline first
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
@@ -54,6 +77,7 @@ public final class AvatarServerEvents {
 
         ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
             FireBlastSkill.clearFireball(newPlayer.getUuid());
+            EarthPillarSkill.clear(newPlayer.getUuid());
             // Cancel any in-flight skill and broadcast IDLE so orbs clear on all clients
             PlayerBendingData data = PlayerBendingData.get(newPlayer);
             if (!data.getTimeline().isIdle()) {
@@ -66,6 +90,7 @@ public final class AvatarServerEvents {
         // Cancel in-flight skill timelines and broadcast orb reset on dimension/world switch
         ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> {
             FireBlastSkill.clearFireball(player.getUuid());
+            EarthPillarSkill.clear(player.getUuid());
             PlayerBendingData data = PlayerBendingData.get(player);
             if (!data.getTimeline().isIdle()) {
                 data.getTimeline().cancel();
