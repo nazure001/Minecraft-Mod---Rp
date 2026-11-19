@@ -12,11 +12,11 @@ import net.minecraft.util.Identifier;
 
 public final class AvatarItems {
 
-    public static final Item AIR_STAFF = new Item(new Item.Settings().maxCount(1));
-    public static final Item DUAL_SWORDS = new Item(new Item.Settings().maxCount(1));
-    public static final Item EARTH_HAMMER = new Item(new Item.Settings().maxCount(1));
-    public static final Item WAR_FAN = new Item(new Item.Settings().maxCount(1));
-    public static final Item WATER_SPEAR = new Item(new Item.Settings().maxCount(1));
+    public static final Item AIR_STAFF = new AirStaffItem();
+    public static final Item DUAL_SWORDS = new DualSwordsItem();
+    public static final Item EARTH_HAMMER = new EarthHammerItem();
+    public static final Item WAR_FAN = new WarFanItem();
+    public static final Item WATER_SPEAR = new WaterSpearItem();
 
     public static final ItemGroup MAIN_GROUP = FabricItemGroup.builder()
             .icon(() -> new ItemStack(AIR_STAFF))

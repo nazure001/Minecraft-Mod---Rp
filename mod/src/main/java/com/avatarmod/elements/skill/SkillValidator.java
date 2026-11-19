@@ -67,6 +67,16 @@ public final class SkillValidator {
             }
         }
 
+        // 6. Weapon requirement check
+        if ("avatar:air_staff_attack".equals(skillId)) {
+            boolean holdingStaff = player.getMainHandStack().isOf(com.avatarmod.elements.item.AvatarItems.AIR_STAFF)
+                    || player.getOffHandStack().isOf(com.avatarmod.elements.item.AvatarItems.AIR_STAFF);
+            if (!holdingStaff) {
+                player.sendMessage(net.minecraft.text.Text.literal("§c[Avatar] Perlu memegang Air Staff untuk melakukan jurus ini!"), true);
+                return ValidationResult.deny(SkillPackets.S2CSkillResult.DenyReason.NONE, 0);
+            }
+        }
+
         return ValidationResult.ok();
     }
 

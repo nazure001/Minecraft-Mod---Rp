@@ -31,6 +31,14 @@ public final class AirStaffAttackSkill {
         if (timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
         if (timeline.ticksInPhase() != 1) return;
 
+        boolean holdingStaff = player.getMainHandStack().isOf(com.avatarmod.elements.item.AvatarItems.AIR_STAFF)
+                || player.getOffHandStack().isOf(com.avatarmod.elements.item.AvatarItems.AIR_STAFF);
+        if (!holdingStaff) {
+            player.sendMessage(net.minecraft.text.Text.literal("§c[Avatar] Perlu memegang Air Staff untuk melakukan jurus ini!"), true);
+            timeline.cancel();
+            return;
+        }
+
         int step = PlayerBendingData.get(player).getAirStaffComboStep();
         executeComboStep(player, def, step);
     }
