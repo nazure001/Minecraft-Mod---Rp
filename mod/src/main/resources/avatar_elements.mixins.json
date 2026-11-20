@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "DisplayEntityAccessor",
-    "ItemDisplayEntityAccessor"
+    "ItemDisplayEntityAccessor",
+    "MixinPlayerEntity"
   ],
   "injectors": {
     "defaultRequire": 1

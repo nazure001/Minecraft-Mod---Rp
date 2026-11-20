@@ -89,7 +89,7 @@ public final class FireJetSkill {
                 pos.x, pos.y, pos.z, 3, 0.1, 0.1, 0.1, 0.01);
 
         // Ignites ground/vegetation directly under rocket thrusters
-        ElementalInteractions.igniteBlocks(world, player.getPos().subtract(0, 0.5, 0), 1.0);
+        ElementalInteractions.igniteBlocks(world, player.getPos().subtract(0, 0.5, 0), 1.0, player);
     }
 
     private FireJetSkill() {}

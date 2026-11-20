@@ -82,6 +82,73 @@ public final class CinematicVfxController {
     // Server-authoritative positions received before or alongside the ACTIVE phase sync
     private static final Map<VfxKey, Vec3d> SERVER_POSITIONS = new ConcurrentHashMap<>();
     private static final Map<VfxKey, List<Vec3d>> PENDING_WALL_POSITIONS = new ConcurrentHashMap<>();
+    private static final List<FlyingMegalithVfx> FLYING_MEGALITHS_CLIENT = new CopyOnWriteArrayList<>();
+
+    public static final class FlyingMegalithVfx {
+        private final DisplayEntity.ItemDisplayEntity entity;
+        private Vec3d pos;
+        private final Vec3d velocity;
+        private int ageTicks;
+        private final int maxAgeTicks;
+        private float pitch;
+        private float yaw;
+
+        public FlyingMegalithVfx(DisplayEntity.ItemDisplayEntity entity, Vec3d pos, Vec3d velocity, int maxAgeTicks) {
+            this.entity = entity;
+            this.pos = pos;
+            this.velocity = velocity;
+            this.maxAgeTicks = maxAgeTicks;
+            this.ageTicks = 0;
+            this.pitch = 0.0f;
+            this.yaw = 0.0f;
+        }
+
+        public boolean tick(MinecraftClient client) {
+            ageTicks++;
+            if (entity == null || entity.isRemoved() || ageTicks >= maxAgeTicks) {
+                detonate(client);
+                return false;
+            }
+
+            pos = pos.add(velocity);
+            entity.setPosition(pos.x, pos.y, pos.z);
+
+            pitch = (pitch + 16.0f) % 360.0f;
+            yaw = (yaw + 10.0f) % 360.0f;
+            DisplayEntityAccessor dispAcc = (DisplayEntityAccessor) entity;
+            dispAcc.invokeSetTransformation(new AffineTransformation(
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new org.joml.Quaternionf().rotateX((float) Math.toRadians(pitch)).rotateY((float) Math.toRadians(yaw)),
+                    new Vector3f(1.15f, 1.15f, 1.15f),
+                    new org.joml.Quaternionf()
+            ));
+
+            if (client.world != null) {
+                client.world.addParticle(com.avatarmod.elements.particle.AvatarParticles.STONE_CHIP, pos.x, pos.y, pos.z, 0.0, 0.06, 0.0);
+                client.world.addParticle(com.avatarmod.elements.particle.AvatarParticles.DUST, pos.x, pos.y + 0.1, pos.z, 0.0, 0.03, 0.0);
+                client.world.addParticle(net.minecraft.particle.ParticleTypes.POOF, pos.x, pos.y, pos.z, 0.0, 0.01, 0.0);
+
+                // Collision with solid blocks
+                net.minecraft.util.math.BlockPos bp = net.minecraft.util.math.BlockPos.ofFloored(pos);
+                if (!client.world.getBlockState(bp).getCollisionShape(client.world, bp).isEmpty()) {
+                    detonate(client);
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void detonate(MinecraftClient client) {
+            if (entity != null) entity.discard();
+            if (client.world != null) {
+                spawnTransientVfx(VfxType.MARTIAL_SHOCKWAVE, pos, 0.0f, 0.0f);
+                spawnTransientVfx(VfxType.HITSTOP_FLASH, pos.add(0, 0.8, 0), 0.0f, 0.0f);
+                if (client.player != null && client.player.squaredDistanceTo(pos) < 256.0) {
+                    com.avatarmod.elements.client.camera.AvatarCameraDirector.triggerShake(0.80f, 12);
+                }
+            }
+        }
+    }
 
     private CinematicVfxController() {}
 
@@ -380,6 +447,8 @@ public final class CinematicVfxController {
             return;
         }
 
+        FLYING_MEGALITHS_CLIENT.removeIf(m -> !m.tick(client));
+
         List<VfxKey> expired = new ArrayList<>();
 
         for (Map.Entry<VfxKey, ActiveVfx> entry : ACTIVE_ENTITIES.entrySet()) {
@@ -460,6 +529,20 @@ public final class CinematicVfxController {
                         new org.joml.Quaternionf()
                 ));
             } else if (type == VfxType.BOULDER_LAUNCH_MEGALITH) {
+                Vec3d look = Vec3d.fromPolar(entity.getPitch(), entity.getYaw());
+                entity.setPosition(entity.getX() + look.x * 1.35, entity.getY() + look.y * 1.35, entity.getZ() + look.z * 1.35);
+                if (client.world != null) {
+                    client.world.addParticle(com.avatarmod.elements.particle.AvatarParticles.STONE_CHIP, entity.getX(), entity.getY(), entity.getZ(), 0.0, 0.04, 0.0);
+                    client.world.addParticle(com.avatarmod.elements.particle.AvatarParticles.DUST, entity.getX(), entity.getY() + 0.1, entity.getZ(), 0.0, 0.02, 0.0);
+                    net.minecraft.util.math.BlockPos bp = net.minecraft.util.math.BlockPos.ofFloored(entity.getPos());
+                    if (!client.world.getBlockState(bp).getCollisionShape(client.world, bp).isEmpty()) {
+                        entity.discard();
+                        expired.add(key);
+                        spawnTransientVfx(VfxType.MARTIAL_SHOCKWAVE, entity.getPos(), 0.0f, 0.0f);
+                        spawnTransientVfx(VfxType.HITSTOP_FLASH, entity.getPos().add(0, 0.8, 0), 0.0f, 0.0f);
+                        com.avatarmod.elements.client.camera.AvatarCameraDirector.triggerShake(0.65f, 8);
+                    }
+                }
                 float progress = Math.min(1.0f, (float) vfx.ageTicks() / (float) vfx.maxAgeTicks());
                 Vector3f scale = VfxTransformUtil.scaleInterpolation(type.baseScale(), type.targetScale(), progress);
                 dispAcc.invokeSetTransformation(VfxTransformUtil.createSlashTransform(entity.getYaw(), entity.getPitch(), scale, vfx.ageTicks() * 0.4f));
@@ -549,6 +632,11 @@ public final class CinematicVfxController {
         List<VfxKey> toRemove = new ArrayList<>();
         for (VfxKey k : ACTIVE_ENTITIES.keySet()) {
             if (k.casterUuid().equals(casterUuid) && k.castSerial() < newSerial) {
+                ActiveVfx vfx = ACTIVE_ENTITIES.get(k);
+                // Do NOT discard EARTH_PILLAR when starting another skill! Earth pillars persist until kicked or crumbled!
+                if (vfx != null && vfx.type() == VfxType.EARTH_PILLAR) {
+                    continue;
+                }
                 toRemove.add(k);
             }
         }
@@ -588,6 +676,10 @@ public final class CinematicVfxController {
         PILLAR_GROUND_POSITIONS.clear();
         SERVER_POSITIONS.clear();
         PENDING_WALL_POSITIONS.clear();
+        for (FlyingMegalithVfx m : FLYING_MEGALITHS_CLIENT) {
+            if (m.entity != null) m.entity.discard();
+        }
+        FLYING_MEGALITHS_CLIENT.clear();
     }
 
     public static int getActiveCount() {
@@ -648,22 +740,32 @@ public final class CinematicVfxController {
         }
 
         if (actionType == 0) {
-            // KICK (Power Kick): discard pillar and trigger martial kick feedback
+            // KICK (Power Kick): launch standing pillars forward as flying megalith projectiles!
+            Vec3d kickDir = new Vec3d(dirX, dirY, dirZ);
+            if (kickDir.lengthSquared() < 1e-4) kickDir = new Vec3d(0, 0, 1);
+            kickDir = kickDir.normalize();
+            Vec3d kickVel = kickDir.multiply(1.4); // MEGALITH_SPEED
+
             for (VfxKey k : toDiscard) {
                 ActiveVfx vfx = ACTIVE_ENTITIES.remove(k);
                 PILLAR_GROUND_POSITIONS.remove(k);
                 SERVER_POSITIONS.remove(k);
                 if (vfx != null && vfx.entity() != null) {
-                    vfx.entity().discard();
+                    Vec3d startPos = vfx.entity().getPos().add(0, 1.25, 0);
+                    FLYING_MEGALITHS_CLIENT.add(new FlyingMegalithVfx(vfx.entity(), startPos, kickVel, 30));
                 }
             }
 
             if (client.player != null && client.player.getUuid().equals(casterUuid)) {
                 client.player.swingHand(net.minecraft.util.Hand.MAIN_HAND);
-                var animId = com.avatarmod.elements.client.anim.AvatarAnimations.getAnimationForSkill("earth_boulder");
-                if (animId != null) {
-                    com.avatarmod.elements.client.anim.AvatarAnimations.triggerComboAnimation(client.player, animId);
-                }
+                com.avatarmod.elements.client.anim.AvatarAnimations.triggerComboAnimation(
+                        client.player,
+                        net.minecraft.util.Identifier.of("avatar_elements", "martial_roundhouse"),
+                        2,
+                        com.zigythebird.playeranimcore.easing.EasingType.EASE_OUT_CUBIC
+                );
+                com.avatarmod.elements.client.camera.AvatarCameraDirector.triggerRoll(-8.0f, 12);
+                com.avatarmod.elements.client.camera.AvatarCameraDirector.triggerShake(0.6f, 10);
             }
         } else if (actionType == 1) {
             // STRIKE (Rapid Barrage): trigger punch feedback & hand swing

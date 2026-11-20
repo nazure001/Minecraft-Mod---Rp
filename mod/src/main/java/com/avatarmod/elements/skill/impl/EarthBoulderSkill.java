@@ -63,8 +63,21 @@ public final class EarthBoulderSkill {
                 player.sendMessage(Text.literal("§6[Earth] Boulder dipadatkan dari " + groundState.getBlock().getName().getString() + " §e(+" + String.format(Locale.ROOT, "%.1f", bonus) + " DMG)"), true);
             }
         }
+    }
 
-        // Advance boulder each tick during ACTIVE/RECOVERY while it exists
+    public static void tickAllBoulders(net.minecraft.server.MinecraftServer server) {
+        if (BOULDERS.isEmpty()) return;
+        for (UUID id : BOULDERS.keySet()) {
+            ServerPlayerEntity player = server.getPlayerManager().getPlayer(id);
+            if (player != null) {
+                advanceBoulder(player);
+            } else {
+                BOULDERS.remove(id);
+            }
+        }
+    }
+
+    private static void advanceBoulder(ServerPlayerEntity player) {
         UUID id = player.getUuid();
         BoulderState state = BOULDERS.get(id);
         if (state == null) return;

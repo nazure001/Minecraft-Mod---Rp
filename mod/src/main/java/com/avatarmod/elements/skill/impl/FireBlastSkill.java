@@ -135,7 +135,7 @@ public final class FireBlastSkill {
             target.velocityModified = true;
         }
 
-        ElementalInteractions.igniteBlocks(world, center, r * 0.8);
+        ElementalInteractions.igniteBlocks(world, center, r * 0.8, player);
 
         // Detonation VFX
         int flameCount = (int) (20 + 25 * chargeRatio);

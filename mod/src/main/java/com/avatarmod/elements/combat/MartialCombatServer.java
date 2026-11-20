@@ -49,6 +49,13 @@ public final class MartialCombatServer {
         if (isAerial) {
             executeAerialDiveKick(player, world, data, element, held);
         } else {
+            // If player has an active Earth Pillar nearby, martial attack kicks it!
+            if (com.avatarmod.elements.skill.impl.EarthPillarSkill.hasNearbyPillar(player, com.avatarmod.elements.skill.impl.EarthPillarSkill.INTERACTION_RADIUS)) {
+                boolean kicked = com.avatarmod.elements.skill.impl.EarthPillarSkill.kickPillar(player);
+                if (kicked) {
+                    return;
+                }
+            }
             executeGroundCombo(player, world, data, element, comboStep, held);
         }
     }

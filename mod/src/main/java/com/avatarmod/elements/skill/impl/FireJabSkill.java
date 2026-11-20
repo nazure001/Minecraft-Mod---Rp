@@ -54,24 +54,20 @@ public final class FireJabSkill {
         Vec3d pos = player.getPos().add(0, player.getStandingEyeHeight() / 2.0, 0);
         Vec3d look = player.getRotationVec(1.0f);
 
-        // Center hitbox slightly in front of player
-        Vec3d center = pos.add(look.multiply(def.range() * 0.6));
-
-        double r = def.range() * (finalCombo ? FINAL_COMBO_RANGE_BONUS : 1.0f);
-        Box box = Box.of(center, (r + 1.0) * 2, (r + 1.0) * 2, (r + 1.0) * 2);
+        // Extended reach: 4.2m base, 5.5m on combo
+        double reach = Math.max(4.2, def.range() * 1.6) * (finalCombo ? FINAL_COMBO_RANGE_BONUS : 1.0f);
+        Vec3d reachEnd = eyePos.add(look.multiply(reach));
+        Box scanBox = new Box(eyePos, reachEnd).expand(1.2);
 
         List<LivingEntity> targets = world.getEntitiesByClass(
-                LivingEntity.class, box,
+                LivingEntity.class, scanBox,
                 e -> {
                     if (e == player || !e.isAlive()) return false;
-                    var targetBounds = e.getBoundingBox();
-                    Vec3d targetCenter = targetBounds.getCenter();
-                    if (!SkillTargeting.hasLineOfSight(world, eyePos, targetBounds, player)) return false;
-                    if (!SkillTargeting.isWithinRange(eyePos, targetBounds, r + 0.5)) return false;
-
-                    Vec3d toTarget = targetCenter.subtract(eyePos);
-                    // Retain point-blank hits while checking aim from the eye position.
-                    return toTarget.lengthSquared() <= 1.44 || toTarget.normalize().dotProduct(look) > 0.0;
+                    Vec3d toCenter = e.getBoundingBox().getCenter().subtract(eyePos);
+                    double distSq = toCenter.lengthSquared();
+                    if (distSq > (reach + 0.8) * (reach + 0.8)) return false;
+                    if (distSq <= 2.25) return true; // Point-blank automatic hit
+                    return toCenter.normalize().dotProduct(look) > 0.35; // Accurate forward cone
                 }
         );
 
@@ -104,47 +100,32 @@ public final class FireJabSkill {
                 .add(right.multiply(0.28))
                 .add(look.multiply(0.40));
 
-        // 2. Strike jet midpoint: P_mid = P_fist + u_look * 0.55
-        Vec3d jetMid = fistPos.add(look.multiply(0.55));
+        // 2. Continuous flame jet streaming along punch path
+        for (double d = 0.4; d <= reach; d += 0.45) {
+            Vec3d p = fistPos.add(look.multiply(d));
+            world.spawnParticles(ParticleTypes.FLAME,
+                    p.x, p.y, p.z,
+                    finalCombo ? 4 : 2, 0.06, 0.06, 0.06, 0.04);
+            world.spawnParticles(AvatarParticles.FLAME_TONGUE,
+                    p.x, p.y, p.z,
+                    finalCombo ? 3 : 2, 0.05, 0.05, 0.05, 0.03);
+            world.spawnParticles(AvatarParticles.EMBER,
+                    p.x, p.y, p.z,
+                    1, 0.04, 0.04, 0.04, 0.02);
+        }
 
-        // 3. Apex burst: P_apex = fistPos + u_look * 1.20 (aligned with strike vector, below eye level)
-        Vec3d apexPos = fistPos.add(look.multiply(1.20));
+        // 3. Apex burst at terminal reach
+        Vec3d apexPos = fistPos.add(look.multiply(Math.min(reach, 3.0)));
 
-        // Knuckle flash: ParticleTypes.FLAME (4/6) and ParticleTypes.SMALL_FLAME (4/6)
-        world.spawnParticles(ParticleTypes.FLAME,
-                fistPos.x, fistPos.y, fistPos.z,
-                finalCombo ? 6 : 4, 0.04, 0.04, 0.04, 0.02);
-        world.spawnParticles(ParticleTypes.SMALL_FLAME,
-                fistPos.x, fistPos.y, fistPos.z,
-                finalCombo ? 6 : 4, 0.03, 0.03, 0.03, 0.01);
-        world.spawnParticles(AvatarParticles.FLAME_TONGUE,
-                fistPos.x, fistPos.y, fistPos.z,
-                finalCombo ? 6 : 4, 0.04, 0.04, 0.04, 0.02);
-        world.spawnParticles(AvatarParticles.EMBER,
-                fistPos.x, fistPos.y, fistPos.z,
-                finalCombo ? 6 : 4, 0.03, 0.03, 0.03, 0.01);
-
-        // Strike jet: ParticleTypes.FLAME (10/16)
-        world.spawnParticles(ParticleTypes.FLAME,
-                jetMid.x, jetMid.y, jetMid.z,
-                finalCombo ? 16 : 10, 0.12, 0.12, 0.12, 0.08);
-        world.spawnParticles(AvatarParticles.FLAME_TONGUE,
-                jetMid.x, jetMid.y, jetMid.z,
-                finalCombo ? 12 : 8, 0.10, 0.10, 0.10, 0.06);
-
-        // Apex burst: ParticleTypes.FLAME (8/14) and ParticleTypes.SMOKE (4/6)
-        world.spawnParticles(ParticleTypes.FLAME,
-                apexPos.x, apexPos.y, apexPos.z,
-                finalCombo ? 14 : 8, 0.25, 0.25, 0.25, 0.05);
-        world.spawnParticles(ParticleTypes.SMOKE,
-                apexPos.x, apexPos.y, apexPos.z,
-                finalCombo ? 6 : 4, 0.15, 0.15, 0.15, 0.02);
-        world.spawnParticles(AvatarParticles.FLAME_BURST,
-                apexPos.x, apexPos.y, apexPos.z,
-                finalCombo ? 3 : 1, 0.05, 0.05, 0.05, 0.0);
         world.spawnParticles(AvatarParticles.IMPACT_FLASH,
                 apexPos.x, apexPos.y, apexPos.z,
                 1, 0.0, 0.0, 0.0, 0.0);
+        world.spawnParticles(AvatarParticles.FLAME_BURST,
+                apexPos.x, apexPos.y, apexPos.z,
+                finalCombo ? 4 : 2, 0.10, 0.10, 0.10, 0.05);
+        world.spawnParticles(ParticleTypes.SMOKE,
+                apexPos.x, apexPos.y, apexPos.z,
+                finalCombo ? 6 : 4, 0.15, 0.15, 0.15, 0.02);
 
         // Combo accents: ParticleTypes.LAVA (4) and ParticleTypes.CRIT (6) at P_apex on combo
         if (finalCombo) {
@@ -156,8 +137,8 @@ public final class FireJabSkill {
                     6, 0.30, 0.30, 0.30, 0.10);
         }
 
-        // Ignite flammable ground/blocks at punch apex
-        ElementalInteractions.igniteBlocks(world, apexPos, 1.2);
+        // Ignite flammable ground/blocks safely without burning caster's feet
+        ElementalInteractions.igniteBlocks(world, apexPos, 1.2, player);
 
         // SFX: Synchronize SFX with ModSounds.FIRE_RELEASE at player position
         float volume = finalCombo ? 1.0f : 0.85f;

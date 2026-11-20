@@ -44,9 +44,10 @@ public final class AvatarCombatClient {
             return false;
         }
 
-        // If player is interacting with an Earth Pillar, let pillar interaction take precedence
+        // If player is interacting with an Earth Pillar, execute the martial kick!
         if (CinematicVfxController.hasNearbyPillarClient(client.player.getPos(), 5.5)) {
-            return false;
+            executePillarKick(client);
+            return true;
         }
 
         boolean midAir = !client.player.isOnGround() && !client.player.isTouchingWater() && !client.player.isClimbing();
@@ -476,6 +477,21 @@ public final class AvatarCombatClient {
         }
 
         ClientPlayNetworking.send(new SkillPackets.C2SMartialAttack(currentStep, false));
+    }
+
+    private static void executePillarKick(MinecraftClient client) {
+        AvatarAnimations.triggerComboAnimation(
+                client.player,
+                Identifier.of("avatar_elements", "martial_roundhouse"),
+                2,
+                EasingType.EASE_OUT_CUBIC
+        );
+        client.player.swingHand(Hand.MAIN_HAND);
+        client.player.playSound(AvatarSounds.MARTIAL_KICK, 1.3f, 1.0f);
+        client.player.playSound(SoundEvents.ENTITY_IRON_GOLEM_ATTACK, 1.2f, 0.7f);
+        AvatarCameraDirector.triggerRoll(-8.0f, 12);
+        AvatarCameraDirector.triggerShake(0.65f, 10);
+        ClientPlayNetworking.send(new SkillPackets.C2SMartialAttack(0, false));
     }
 
     private static void spawnImpactVfx(MinecraftClient client) {

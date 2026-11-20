@@ -74,7 +74,7 @@ public final class FlameSweepSkill {
             target.velocityModified = true;
         }
 
-        ElementalInteractions.igniteBlocks(world, origin.add(look.multiply(2.0)), 2.0);
+        ElementalInteractions.igniteBlocks(world, origin.add(look.multiply(2.0)), 2.0, player);
 
         // Slight forward lunge
         Vec3d lunge = look.multiply(0.25);

@@ -59,11 +59,29 @@ public final class BoulderLaunchSkill {
         if (timeline.phase() == SkillTimeline.Phase.ACTIVE && timeline.ticksInPhase() == 1) {
             launch(player, def, timeline.getChargeRatio());
         }
+    }
 
-        advanceBoulder(player);
+    public static void tickAllBoulders(net.minecraft.server.MinecraftServer server) {
+        if (BOULDERS.isEmpty()) return;
+        for (UUID id : BOULDERS.keySet()) {
+            ServerPlayerEntity player = server.getPlayerManager().getPlayer(id);
+            if (player != null) {
+                advanceBoulder(player);
+            } else {
+                BOULDERS.remove(id);
+            }
+        }
     }
 
     private static void launch(ServerPlayerEntity player, SkillDefinition def, float chargeRatio) {
+        // If player has an active Earth Pillar in front, launch that pillar as a Megalith Wave!
+        if (EarthPillarSkill.hasNearbyPillar(player, EarthPillarSkill.INTERACTION_RADIUS)) {
+            boolean kicked = EarthPillarSkill.kickPillar(player);
+            if (kicked) {
+                return;
+            }
+        }
+
         chargeRatio = Math.max(0.1f, Math.min(1.0f, chargeRatio));
 
         ServerWorld world = player.getServerWorld();

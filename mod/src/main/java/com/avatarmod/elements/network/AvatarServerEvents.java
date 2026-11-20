@@ -3,6 +3,8 @@ package com.avatarmod.elements.network;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.SkillDispatcher;
+import com.avatarmod.elements.skill.impl.BoulderLaunchSkill;
+import com.avatarmod.elements.skill.impl.EarthBoulderSkill;
 import com.avatarmod.elements.skill.impl.EarthPillarSkill;
 import com.avatarmod.elements.skill.impl.FireBlastSkill;
 import com.avatarmod.elements.skill.impl.FireGuardSkill;
@@ -64,6 +66,8 @@ public final class AvatarServerEvents {
                 SkillDispatcher.tick(player);
             }
             FireBlastSkill.tickAllFireballs(server);
+            EarthBoulderSkill.tickAllBoulders(server);
+            BoulderLaunchSkill.tickAllBoulders(server);
             EarthPillarSkill.tickAllPillars(server);
             SkillNetworking.tickElementCycleCooldowns();
         });

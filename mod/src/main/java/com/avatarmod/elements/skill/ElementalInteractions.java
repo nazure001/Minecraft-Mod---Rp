@@ -78,6 +78,12 @@ public final class ElementalInteractions {
      */
     public static void applyFire(LivingEntity target, int fireTicks) {
         if (target.isFireImmune()) return;
+        if (target instanceof net.minecraft.server.network.ServerPlayerEntity sp) {
+            var data = com.avatarmod.elements.data.PlayerBendingData.get(sp);
+            if (data != null && "FIRE".equals(data.getActiveElement())) {
+                return; // Firebenders are immune to fire ignition
+            }
+        }
         target.setOnFireForTicks(fireTicks);
     }
 
@@ -85,6 +91,14 @@ public final class ElementalInteractions {
      * Ignites flammable blocks or places fire on solid surfaces within an AOE.
      */
     public static void igniteBlocks(ServerWorld world, Vec3d center, double radius) {
+        igniteBlocks(world, center, radius, null);
+    }
+
+    /**
+     * Ignites flammable blocks or places fire on solid surfaces within an AOE,
+     * protecting the caster from having fire placed under their own feet.
+     */
+    public static void igniteBlocks(ServerWorld world, Vec3d center, double radius, LivingEntity caster) {
         BlockPos base = BlockPos.ofFloored(center);
         int r = (int) Math.ceil(radius);
         double rSq = radius * radius;
@@ -94,6 +108,10 @@ public final class ElementalInteractions {
                 for (int z = -r; z <= r; z++) {
                     if (x * x + z * z > rSq) continue;
                     BlockPos p = base.add(x, y, z);
+                    // Do not ignite the block the caster is standing on or near their feet
+                    if (caster != null && p.getSquaredDistance(caster.getPos()) < 2.5) {
+                        continue;
+                    }
                     BlockState state = world.getBlockState(p);
 
                     // If hitting leaves/grass/wool/planks, ignite directly
