@@ -7,6 +7,14 @@
     {
       "predicate": { "custom_model_data": 1003 },
       "model": "avatar_elements:vfx/rune_disc"
+    },
+    {
+      "predicate": { "custom_model_data": 1011 },
+      "model": "avatar_elements:vfx/martial_shockwave"
+    },
+    {
+      "predicate": { "custom_model_data": 1012 },
+      "model": "avatar_elements:vfx/hitstop_flash"
     }
   ]
 }

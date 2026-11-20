@@ -11,6 +11,10 @@
     {
       "predicate": { "custom_model_data": 1008 },
       "model": "avatar_elements:vfx/air_vortex_funnel"
+    },
+    {
+      "predicate": { "custom_model_data": 1013 },
+      "model": "avatar_elements:vfx/dive_kick_trail"
     }
   ]
 }

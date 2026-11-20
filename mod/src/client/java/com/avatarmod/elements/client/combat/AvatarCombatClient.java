@@ -1,7 +1,9 @@
 package com.avatarmod.elements.client.combat;
 
 import com.avatarmod.elements.client.anim.AvatarAnimations;
+import com.avatarmod.elements.client.camera.AvatarCameraDirector;
 import com.avatarmod.elements.client.vfx.CinematicVfxController;
+import com.avatarmod.elements.client.vfx.VfxType;
 import com.avatarmod.elements.item.AirStaffItem;
 import com.avatarmod.elements.item.DualSwordsItem;
 import com.avatarmod.elements.item.EarthHammerItem;
@@ -85,6 +87,15 @@ public final class AvatarCombatClient {
                 EasingType.EASE_OUT_CUBIC
         );
 
+        AvatarCameraDirector.triggerRoll(10.0f, 15);
+        AvatarCameraDirector.triggerShake(0.7f, 12);
+        CinematicVfxController.spawnTransientVfx(
+                VfxType.DIVE_KICK_TRAIL,
+                client.player.getPos(),
+                client.player.getYaw(),
+                client.player.getPitch()
+        );
+
         client.player.playSound(AvatarSounds.MARTIAL_DIVE, 1.2f, 1.0f);
         ClientPlayNetworking.send(new SkillPackets.C2SMartialAttack(0, true));
     }
@@ -118,10 +129,27 @@ public final class AvatarCombatClient {
             client.player.swingHand(Hand.OFF_HAND);
         }
 
-        // SFX
+        // SFX, VFX & Camera Impact
         if (currentStep == 3) {
             client.player.playSound(AvatarSounds.MARTIAL_KICK, 1.1f, 1.0f);
             client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.2f, 1.4f);
+            AvatarCameraDirector.triggerRoll(-8.0f, 10);
+            AvatarCameraDirector.triggerShake(0.5f, 8);
+
+            Vec3d look = client.player.getRotationVec(1.0f);
+            Vec3d impactPos = client.player.getPos().add(look.multiply(1.5));
+            CinematicVfxController.spawnTransientVfx(
+                    VfxType.MARTIAL_SHOCKWAVE,
+                    impactPos,
+                    client.player.getYaw(),
+                    client.player.getPitch()
+            );
+            CinematicVfxController.spawnTransientVfx(
+                    VfxType.HITSTOP_FLASH,
+                    impactPos.add(0, 1.0, 0),
+                    client.player.getYaw(),
+                    client.player.getPitch()
+            );
         } else if (currentStep == 2) {
             client.player.playSound(AvatarSounds.MARTIAL_KICK, 1.0f, 1.2f);
         } else {

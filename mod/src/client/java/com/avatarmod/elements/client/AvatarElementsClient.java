@@ -73,6 +73,7 @@ public class AvatarElementsClient implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             CinematicVfxController.tick(client);
+            com.avatarmod.elements.client.camera.AvatarCameraDirector.tick();
 
             if (client.player == null) return;
 

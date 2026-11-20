@@ -150,6 +150,36 @@ public final class CinematicVfxController {
     }
 
     /**
+     * Spawns a transient, non-persistent client-side VFX entity (shockwave, impact flash, trail)
+     * that automatically plays its lifetime animation and cleans up.
+     */
+    public static void spawnTransientVfx(VfxType type, Vec3d pos, float yaw, float pitch) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client == null || client.world == null || type == null) return;
+        DisplayEntity.ItemDisplayEntity entity = new DisplayEntity.ItemDisplayEntity(EntityType.ITEM_DISPLAY, client.world);
+        entity.setPosition(pos.x, pos.y, pos.z);
+        entity.setYaw(yaw);
+        entity.setPitch(pitch);
+
+        DisplayEntityAccessor dispAcc = (DisplayEntityAccessor) entity;
+        dispAcc.invokeSetInterpolationDuration(type.durationTicks());
+        dispAcc.invokeSetStartInterpolation(0);
+        dispAcc.invokeSetBrightness(Brightness.FULL);
+        dispAcc.invokeSetBillboardMode(DisplayEntity.BillboardMode.FIXED);
+        dispAcc.invokeSetViewRange(64.0f);
+
+        ItemDisplayEntityAccessor itemAcc = (ItemDisplayEntityAccessor) entity;
+        itemAcc.invokeSetItemStack(type.createItemStack());
+        itemAcc.invokeSetTransformationMode(ModelTransformationMode.FIXED);
+
+        dispAcc.invokeSetTransformation(VfxTransformUtil.createUniformScaleTransform(type.baseScale().x()));
+        client.world.addEntity(entity);
+
+        VfxKey key = new VfxKey(UUID.randomUUID(), (int) (System.nanoTime() & 0x7FFFFFFF), type.skillId());
+        ACTIVE_ENTITIES.put(key, new ActiveVfx(key, entity, type, 0, type.durationTicks()));
+    }
+
+    /**
      * Handles S2CPhaseSync packet dispatch on the client main thread.
      */
     public static void onPhaseSync(UUID casterUuid, String skillId, String phase, int ticksIn, int castSerial) {
@@ -272,6 +302,13 @@ public final class CinematicVfxController {
             } else if (type == VfxType.EARTH_ARMOR_OVERLAY) {
                 entity.setPosition(caster.getX(), caster.getY() + 0.125, caster.getZ());
                 entity.setYaw(yaw);
+            } else if (type == VfxType.MARTIAL_SHOCKWAVE) {
+                entity.setPosition(caster.getX(), caster.getY() + 0.05, caster.getZ());
+            } else if (type == VfxType.HITSTOP_FLASH) {
+                Vec3d look = caster.getRotationVec(1.0f);
+                entity.setPosition(caster.getX() + look.x * 1.2, caster.getEyeY() - 0.2 + look.y * 1.2, caster.getZ() + look.z * 1.2);
+            } else if (type == VfxType.DIVE_KICK_TRAIL) {
+                entity.setPosition(caster.getX(), caster.getY() + 0.5, caster.getZ());
             } else {
                 entity.setPosition(caster.getX(), caster.getY() + 0.5, caster.getZ());
             }
@@ -439,6 +476,29 @@ public final class CinematicVfxController {
                 float progress = Math.min(1.0f, (float) vfx.ageTicks() / (float) vfx.maxAgeTicks());
                 Vector3f scale = VfxTransformUtil.scaleInterpolation(type.baseScale(), type.targetScale(), progress);
                 dispAcc.invokeSetTransformation(VfxTransformUtil.createSlashTransform(entity.getYaw(), entity.getPitch(), scale, 0.5f + vfx.ageTicks() * 0.2f));
+            } else if (type == VfxType.MARTIAL_SHOCKWAVE) {
+                float progress = Math.min(1.0f, (float) vfx.ageTicks() / (float) vfx.maxAgeTicks());
+                Vector3f scale = VfxTransformUtil.scaleInterpolation(type.baseScale(), type.targetScale(), progress);
+                dispAcc.invokeSetTransformation(VfxTransformUtil.createUniformScaleTransform(scale.x()));
+            } else if (type == VfxType.HITSTOP_FLASH) {
+                float progress = Math.min(1.0f, (float) vfx.ageTicks() / (float) vfx.maxAgeTicks());
+                Vector3f scale = VfxTransformUtil.scaleInterpolation(type.baseScale(), type.targetScale(), progress);
+                float spin = (vfx.ageTicks() * 30.0f) % 360.0f;
+                dispAcc.invokeSetTransformation(new AffineTransformation(
+                        new Vector3f(0.0f, 0.0f, 0.0f),
+                        new org.joml.Quaternionf().rotateZ((float) Math.toRadians(spin)),
+                        scale,
+                        new org.joml.Quaternionf()
+                ));
+            } else if (type == VfxType.DIVE_KICK_TRAIL) {
+                float progress = Math.min(1.0f, (float) vfx.ageTicks() / (float) vfx.maxAgeTicks());
+                Vector3f scale = VfxTransformUtil.scaleInterpolation(type.baseScale(), type.targetScale(), progress);
+                dispAcc.invokeSetTransformation(new AffineTransformation(
+                        new Vector3f(0.0f, 0.0f, 0.0f),
+                        new org.joml.Quaternionf().rotateY((float) Math.toRadians(entity.getYaw())),
+                        scale,
+                        new org.joml.Quaternionf()
+                ));
             }
         }
 

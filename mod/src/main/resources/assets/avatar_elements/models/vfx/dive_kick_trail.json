@@ -1,0 +1,139 @@
+{
+  "credit": "Avatar Elements Mod - Dive Kick Trail (Fabric 1.21.1)",
+  "texture_size": [
+    64,
+    64
+  ],
+  "textures": {
+    "texture": "avatar_elements:vfx/dive_kick_trail",
+    "particle": "avatar_elements:vfx/dive_kick_trail"
+  },
+  "elements": [
+    {
+      "name": "trail_vertical_1",
+      "from": [
+        0.0,
+        0.0,
+        7.9
+      ],
+      "to": [
+        16.0,
+        32.0,
+        8.1
+      ],
+      "rotation": {
+        "origin": [
+          8.0,
+          16.0,
+          8.0
+        ],
+        "axis": "y",
+        "angle": 0.0
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "trail_vertical_2",
+      "from": [
+        7.9,
+        0.0,
+        0.0
+      ],
+      "to": [
+        8.1,
+        32.0,
+        16.0
+      ],
+      "rotation": {
+        "origin": [
+          8.0,
+          16.0,
+          8.0
+        ],
+        "axis": "y",
+        "angle": 0.0
+      },
+      "faces": {
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "trail_diag_1",
+      "from": [
+        0.0,
+        0.0,
+        7.9
+      ],
+      "to": [
+        16.0,
+        32.0,
+        8.1
+      ],
+      "rotation": {
+        "origin": [
+          8.0,
+          16.0,
+          8.0
+        ],
+        "axis": "y",
+        "angle": 45.0
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    }
+  ]
+}

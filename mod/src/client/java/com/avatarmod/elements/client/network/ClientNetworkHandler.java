@@ -55,6 +55,14 @@ public final class ClientNetworkHandler {
                                 AvatarAnimations.triggerSkillAnimation(acp, payload.skillId(), payload.phase());
                                 if (acp == client.player) {
                                     client.player.swingHand(net.minecraft.util.Hand.MAIN_HAND);
+                                    if ("ACTIVE".equals(payload.phase())) {
+                                        if ("avatar:avatar_state".equals(payload.skillId())) {
+                                            com.avatarmod.elements.client.camera.AvatarCameraDirector.triggerCinematicOrbit(5.0f, 40);
+                                            com.avatarmod.elements.client.camera.AvatarCameraDirector.triggerShake(1.0f, 25);
+                                        } else if (payload.skillId().contains("pillar") || payload.skillId().contains("boulder") || payload.skillId().contains("vortex")) {
+                                            com.avatarmod.elements.client.camera.AvatarCameraDirector.triggerShake(0.5f, 10);
+                                        }
+                                    }
                                 }
                             }
                         }

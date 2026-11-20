@@ -1,0 +1,97 @@
+{
+  "credit": "Avatar Elements Mod - Martial Shockwave (Fabric 1.21.1)",
+  "texture_size": [
+    64,
+    64
+  ],
+  "textures": {
+    "texture": "avatar_elements:vfx/martial_shockwave",
+    "particle": "avatar_elements:vfx/martial_shockwave"
+  },
+  "elements": [
+    {
+      "name": "shockwave_center_plane",
+      "from": [
+        0.0,
+        7.9,
+        0.0
+      ],
+      "to": [
+        16.0,
+        8.1,
+        16.0
+      ],
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "y",
+        "angle": 0.0
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    },
+    {
+      "name": "shockwave_diag_plane",
+      "from": [
+        0.0,
+        7.9,
+        0.0
+      ],
+      "to": [
+        16.0,
+        8.1,
+        16.0
+      ],
+      "rotation": {
+        "origin": [
+          8.0,
+          8.0,
+          8.0
+        ],
+        "axis": "y",
+        "angle": 45.0
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#texture"
+        }
+      }
+    }
+  ]
+}
