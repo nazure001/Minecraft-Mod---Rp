@@ -3,7 +3,8 @@
   "package": "com.avatarmod.elements.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "MixinBipedEntityModel"
+    "MixinBipedEntityModel",
+    "MixinHeldItemFeatureRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

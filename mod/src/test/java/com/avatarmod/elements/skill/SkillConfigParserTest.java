@@ -37,7 +37,7 @@ class SkillConfigParserTest {
 
         assertEquals(List.of("avatar:fire_jab", "avatar:fire_blast", "avatar:flame_sweep",
                 "avatar:fire_guard", "avatar:fire_jet"), slots.get("FIRE"));
-        assertEquals(List.of("avatar:air_staff_attack", "avatar:air_blast", "avatar:air_palm",
+        assertEquals(List.of("avatar:air_palm", "avatar:air_blast", "avatar:air_staff_attack",
                 "avatar:air_vortex", "avatar:air_scooter"), slots.get("AIR"));
         assertEquals("avatar:water_whip", slots.get("WATER").get(0));
         assertEquals("avatar:water_jet", slots.get("WATER").get(1));

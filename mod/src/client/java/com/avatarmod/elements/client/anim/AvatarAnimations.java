@@ -177,6 +177,20 @@ public final class AvatarAnimations {
             return false;
         }
 
+        // Guard: air_staff_attack requires holding physical staff
+        if ("avatar:air_staff_attack".equals(skillId)) {
+            boolean hasStaff = player.getMainHandStack().isOf(com.avatarmod.elements.item.AvatarItems.AIR_STAFF)
+                    || player.getOffHandStack().isOf(com.avatarmod.elements.item.AvatarItems.AIR_STAFF);
+            if (!hasStaff) {
+                // Fallback to unarmed air palm animation so player's hands don't grip empty air
+                Identifier fallbackId = getAnimationForSkill("air_palm");
+                if (fallbackId != null) {
+                    return triggerComboAnimation(player, fallbackId, 3, EasingType.EASE_IN_OUT_CUBIC);
+                }
+                return false;
+            }
+        }
+
         Identifier animId = getAnimationForSkill(skillId);
         if (animId == null) {
             debugLog("Animation ID null for skill: " + skillId);
