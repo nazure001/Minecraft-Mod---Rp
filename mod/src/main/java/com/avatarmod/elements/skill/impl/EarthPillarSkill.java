@@ -17,9 +17,12 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 
 import com.avatarmod.elements.network.SkillNetworking;
 
@@ -141,19 +144,32 @@ public final class EarthPillarSkill {
                 }
             }
 
+            PlayerBendingData data = PlayerBendingData.get(player);
+            int mastery = data.getMasteryLevel();
+            boolean isWall = player.isSneaking() || mastery >= 1;
+
             Vec3d center = findPillarCenter(player, world, def.range());
             List<Vec3d> positions = new ArrayList<>();
             positions.add(center);
 
-            // Shift-Cast / Sneak Cast: Forms an Earth Wall (3 connected pillars)
-            boolean isWall = player.isSneaking();
+            // Shift-Cast / Sneak Cast or Mastery >= 1: Forms an Earth Wall (3 connected pillars)
+            // Mastery >= 3: Forms an Earth Barricade Wall (5 connected pillars)
             if (isWall) {
                 Vec3d look = player.getRotationVec(1.0f);
-                Vec3d right = new Vec3d(-look.z, 0, look.x).normalize();
-                Vec3d leftPos = snapToGround(world, center.subtract(right.multiply(1.8)));
-                Vec3d rightPos = snapToGround(world, center.add(right.multiply(1.8)));
-                positions.add(leftPos);
-                positions.add(rightPos);
+                Vec3d forward = new Vec3d(look.x, 0, look.z);
+                if (forward.lengthSquared() < 1.0e-4) forward = Vec3d.fromPolar(0, player.getYaw());
+                forward = forward.normalize();
+                Vec3d right = new Vec3d(-forward.z, 0, forward.x);
+
+                // 3-pillar curve
+                positions.add(snapToGround(world, center.subtract(right.multiply(1.8)).subtract(forward.multiply(0.3))));
+                positions.add(snapToGround(world, center.add(right.multiply(1.8)).subtract(forward.multiply(0.3))));
+
+                // 5-pillar wide barricade if mastery >= 3
+                if (mastery >= 3) {
+                    positions.add(snapToGround(world, center.subtract(right.multiply(3.6)).subtract(forward.multiply(0.8))));
+                    positions.add(snapToGround(world, center.add(right.multiply(3.6)).subtract(forward.multiply(0.8))));
+                }
             }
 
             BlockPos groundPos = BlockPos.ofFloored(center);
@@ -482,14 +498,29 @@ public final class EarthPillarSkill {
     }
 
     private static Vec3d findPillarCenter(ServerPlayerEntity player, ServerWorld world, float range) {
-        Vec3d origin = player.getPos();
+        Vec3d eye = player.getEyePos();
         Vec3d look = player.getRotationVec(1.0f);
+
+        // 1. Line-of-sight raycast penetrating water to solid seabed or ground
+        Vec3d lookEnd = eye.add(look.multiply(range));
+        RaycastContext lookCtx = new RaycastContext(
+                eye, lookEnd,
+                RaycastContext.ShapeType.COLLIDER,
+                RaycastContext.FluidHandling.NONE,
+                player
+        );
+        BlockHitResult lookHit = world.raycast(lookCtx);
+        if (lookHit.getType() == HitResult.Type.BLOCK) {
+            return snapToGround(world, lookHit.getPos());
+        }
+
+        // 2. Check for nearby target entities along look direction
         Vec3d dir = new Vec3d(look.x, 0, look.z);
         if (dir.lengthSquared() < 1.0e-4) dir = Vec3d.fromPolar(0, player.getYaw());
         dir = dir.normalize();
 
         for (double d = 1.5; d <= range; d += 1.0) {
-            Vec3d probe = origin.add(dir.multiply(d));
+            Vec3d probe = player.getPos().add(dir.multiply(d));
             Box box = Box.of(probe.add(0, 1, 0), 2.2, 3.0, 2.2);
             List<LivingEntity> hits = world.getEntitiesByClass(
                     LivingEntity.class, box, e -> e != player && e.isAlive());
@@ -498,11 +529,13 @@ public final class EarthPillarSkill {
                 return snapToGround(world, target.getPos());
             }
         }
-        return snapToGround(world, origin.add(dir.multiply(range)));
+
+        // 3. Horizontal probe at range snapped to solid ground / seabed
+        return snapToGround(world, player.getPos().add(dir.multiply(range)));
     }
 
     /**
-     * Deep ground scanning: scans down through air AND water/fluids up to 24 blocks
+     * Deep ground scanning: raycasts downward through air and water/fluids up to 64 blocks
      * to find the true solid ground surface (rock/dirt/sand/gravel seabed).
      */
     private static Vec3d snapToGround(ServerWorld world, Vec3d pos) {
@@ -518,15 +551,20 @@ public final class EarthPillarSkill {
             }
         }
 
-        // Scan downward through air and water up to GROUND_SEARCH_DEPTH blocks to find true solid ground
-        for (int i = 0; i <= GROUND_SEARCH_DEPTH; i++) {
-            BlockPos below = cursor.down(i);
-            BlockState state = world.getBlockState(below);
-            // Solid ground has collision shape and is not liquid
-            if (!state.getCollisionShape(world, below).isEmpty() && state.getFluidState().isEmpty()) {
-                return new Vec3d(pos.x, below.getY() + 1.0, pos.z);
-            }
+        // Raycast downward through air and water up to 64 blocks to lock true seabed/solid ground
+        Vec3d start = new Vec3d(pos.x, cursor.getY() + 0.5, pos.z);
+        Vec3d end = new Vec3d(pos.x, Math.max((double) world.getBottomY(), cursor.getY() - 64.0), pos.z);
+        RaycastContext downCtx = new RaycastContext(
+                start, end,
+                RaycastContext.ShapeType.COLLIDER,
+                RaycastContext.FluidHandling.NONE,
+                (net.minecraft.entity.Entity) null
+        );
+        BlockHitResult downHit = world.raycast(downCtx);
+        if (downHit.getType() == HitResult.Type.BLOCK) {
+            return new Vec3d(pos.x, downHit.getBlockPos().getY() + 1.0, pos.z);
         }
+
         return pos;
     }
 

@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Client-driven Display Entity Controller for Cinematic 3D VFX.
@@ -80,6 +81,7 @@ public final class CinematicVfxController {
 
     // Server-authoritative positions received before or alongside the ACTIVE phase sync
     private static final Map<VfxKey, Vec3d> SERVER_POSITIONS = new ConcurrentHashMap<>();
+    private static final Map<VfxKey, List<Vec3d>> PENDING_WALL_POSITIONS = new ConcurrentHashMap<>();
 
     private CinematicVfxController() {}
 
@@ -92,16 +94,32 @@ public final class CinematicVfxController {
         if (casterUuid == null) return;
         VfxKey key = new VfxKey(casterUuid, castSerial, skillId);
         Vec3d position = new Vec3d(x, y, z);
-        if (PILLAR_GROUND_POSITIONS.containsKey(key) && "avatar:earth_pillar".equals(skillId)) {
-            int subIdx = PILLAR_GROUND_POSITIONS.size() + 1;
-            VfxKey subKey = new VfxKey(casterUuid, castSerial, skillId + "#" + subIdx);
-            PILLAR_GROUND_POSITIONS.put(subKey, position);
-            spawnPillarEntityAt(subKey, position);
+        if ("avatar:earth_pillar".equals(skillId)) {
+            ActiveVfx existing = ACTIVE_ENTITIES.get(key);
+            if (existing != null && existing.type() == VfxType.EARTH_PILLAR) {
+                if (!PILLAR_GROUND_POSITIONS.containsKey(key)) {
+                    PILLAR_GROUND_POSITIONS.put(key, position);
+                    SERVER_POSITIONS.remove(key);
+                } else {
+                    int subIdx = PILLAR_GROUND_POSITIONS.size() + 1;
+                    VfxKey subKey = new VfxKey(casterUuid, castSerial, skillId + "#" + subIdx);
+                    PILLAR_GROUND_POSITIONS.put(subKey, position);
+                    spawnPillarEntityAt(subKey, position);
+                }
+                return;
+            }
+
+            // Entity not spawned yet: accumulate positions for this castSerial
+            List<Vec3d> pending = PENDING_WALL_POSITIONS.computeIfAbsent(key, k -> new CopyOnWriteArrayList<>());
+            pending.add(position);
+            if (!SERVER_POSITIONS.containsKey(key)) {
+                SERVER_POSITIONS.put(key, position);
+            }
             return;
         }
+
         ActiveVfx existing = ACTIVE_ENTITIES.get(key);
-        if (existing != null && existing.type() == VfxType.EARTH_PILLAR) {
-            PILLAR_GROUND_POSITIONS.put(key, position);
+        if (existing != null) {
             SERVER_POSITIONS.remove(key);
         } else {
             SERVER_POSITIONS.put(key, position);
@@ -219,6 +237,17 @@ public final class CinematicVfxController {
                 Vec3d groundPos = serverPos != null ? serverPos : findPillarGroundClient(caster, 8.0);
                 PILLAR_GROUND_POSITIONS.put(key, groundPos);
                 entity.setPosition(groundPos.x, groundPos.y - 2.75, groundPos.z);
+
+                List<Vec3d> extras = PENDING_WALL_POSITIONS.remove(key);
+                if (extras != null) {
+                    for (Vec3d extraPos : extras) {
+                        if (extraPos.squaredDistanceTo(groundPos) < 0.01) continue;
+                        int subIdx = PILLAR_GROUND_POSITIONS.size() + 1;
+                        VfxKey subKey = new VfxKey(key.casterUuid(), key.castSerial(), key.skillId() + "#" + subIdx);
+                        PILLAR_GROUND_POSITIONS.put(subKey, extraPos);
+                        spawnPillarEntityAt(subKey, extraPos);
+                    }
+                }
             } else if (type == VfxType.CRESCENT_SLASH) {
                 Vec3d look = caster.getRotationVec(1.0f);
                 entity.setPosition(caster.getX() + look.x * 0.8, caster.getEyeY() - 0.2 + look.y * 0.8, caster.getZ() + look.z * 0.8);
@@ -435,6 +464,7 @@ public final class CinematicVfxController {
             ActiveVfx removed = ACTIVE_ENTITIES.remove(k);
             PILLAR_GROUND_POSITIONS.remove(k);
             SERVER_POSITIONS.remove(k);
+            PENDING_WALL_POSITIONS.remove(k);
             if (removed != null && removed.entity() != null) {
                 removed.entity().discard();
             }
@@ -442,6 +472,11 @@ public final class CinematicVfxController {
         for (VfxKey k : SERVER_POSITIONS.keySet()) {
             if (k.casterUuid().equals(casterUuid) && k.castSerial() == castSerial) {
                 SERVER_POSITIONS.remove(k);
+            }
+        }
+        for (VfxKey k : PENDING_WALL_POSITIONS.keySet()) {
+            if (k.casterUuid().equals(casterUuid) && k.castSerial() == castSerial) {
+                PENDING_WALL_POSITIONS.remove(k);
             }
         }
         Integer current = CASTER_ACTIVE_SERIALS.get(casterUuid);
@@ -461,6 +496,7 @@ public final class CinematicVfxController {
             ActiveVfx removed = ACTIVE_ENTITIES.remove(k);
             PILLAR_GROUND_POSITIONS.remove(k);
             SERVER_POSITIONS.remove(k);
+            PENDING_WALL_POSITIONS.remove(k);
             if (removed != null && removed.entity() != null) {
                 removed.entity().discard();
             }
@@ -468,6 +504,11 @@ public final class CinematicVfxController {
         for (VfxKey k : SERVER_POSITIONS.keySet()) {
             if (k.casterUuid().equals(casterUuid) && k.castSerial() < newSerial) {
                 SERVER_POSITIONS.remove(k);
+            }
+        }
+        for (VfxKey k : PENDING_WALL_POSITIONS.keySet()) {
+            if (k.casterUuid().equals(casterUuid) && k.castSerial() < newSerial) {
+                PENDING_WALL_POSITIONS.remove(k);
             }
         }
     }
@@ -486,6 +527,7 @@ public final class CinematicVfxController {
         CASTER_ACTIVE_SERIALS.clear();
         PILLAR_GROUND_POSITIONS.clear();
         SERVER_POSITIONS.clear();
+        PENDING_WALL_POSITIONS.clear();
     }
 
     public static int getActiveCount() {
@@ -604,7 +646,7 @@ public final class CinematicVfxController {
 
     /**
      * Client-side approximation of EarthPillarSkill.findPillarCenter.
-     * Walks the caster's horizontal look direction to find ground in front.
+     * Walks the caster's horizontal look direction and raycasts down through air & water to lock solid ground/seabed.
      */
     private static Vec3d findPillarGroundClient(PlayerEntity caster, double range) {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -612,23 +654,53 @@ public final class CinematicVfxController {
             return caster.getPos();
         }
 
-        Vec3d origin = caster.getPos();
+        Vec3d eye = caster.getEyePos();
         Vec3d look = caster.getRotationVec(1.0f);
+
+        // 1. Line-of-sight raycast penetrating water
+        Vec3d lookEnd = eye.add(look.multiply(range));
+        net.minecraft.world.RaycastContext lookCtx = new net.minecraft.world.RaycastContext(
+                eye, lookEnd,
+                net.minecraft.world.RaycastContext.ShapeType.COLLIDER,
+                net.minecraft.world.RaycastContext.FluidHandling.NONE,
+                caster
+        );
+        net.minecraft.util.hit.BlockHitResult lookHit = client.world.raycast(lookCtx);
+        if (lookHit.getType() == net.minecraft.util.hit.HitResult.Type.BLOCK) {
+            return new Vec3d(lookHit.getPos().x, lookHit.getBlockPos().getY() + 1.0, lookHit.getPos().z);
+        }
+
         Vec3d dir = new Vec3d(look.x, 0, look.z);
         if (dir.lengthSquared() < 1.0e-4) dir = Vec3d.fromPolar(0, caster.getYaw());
         dir = dir.normalize();
 
-        Vec3d target = origin.add(dir.multiply(range));
-
-        // Snap to ground through air and water up to 24 blocks
+        Vec3d target = caster.getPos().add(dir.multiply(range));
         net.minecraft.util.math.BlockPos cursor = net.minecraft.util.math.BlockPos.ofFloored(target);
-        for (int i = 0; i <= 24; i++) {
-            net.minecraft.util.math.BlockPos below = cursor.down(i);
-            var state = client.world.getBlockState(below);
-            if (!state.getCollisionShape(client.world, below).isEmpty() && state.getFluidState().isEmpty()) {
-                return new Vec3d(target.x, below.getY() + 1.0, target.z);
+
+        // Scan upward if buried in hill
+        if (!client.world.getBlockState(cursor).getCollisionShape(client.world, cursor).isEmpty()) {
+            for (int i = 0; i <= 8; i++) {
+                net.minecraft.util.math.BlockPos above = cursor.up(i);
+                if (client.world.getBlockState(above).getCollisionShape(client.world, above).isEmpty()) {
+                    return new Vec3d(target.x, above.getY(), target.z);
+                }
             }
         }
+
+        // Raycast downward through air & water up to 64 blocks to find solid seabed/ground
+        Vec3d start = new Vec3d(target.x, cursor.getY() + 0.5, target.z);
+        Vec3d end = new Vec3d(target.x, Math.max((double) client.world.getBottomY(), cursor.getY() - 64.0), target.z);
+        net.minecraft.world.RaycastContext downCtx = new net.minecraft.world.RaycastContext(
+                start, end,
+                net.minecraft.world.RaycastContext.ShapeType.COLLIDER,
+                net.minecraft.world.RaycastContext.FluidHandling.NONE,
+                caster
+        );
+        net.minecraft.util.hit.BlockHitResult downHit = client.world.raycast(downCtx);
+        if (downHit.getType() == net.minecraft.util.hit.HitResult.Type.BLOCK) {
+            return new Vec3d(target.x, downHit.getBlockPos().getY() + 1.0, target.z);
+        }
+
         return target;
     }
 }

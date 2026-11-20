@@ -70,6 +70,7 @@ public final class SkillNetworking {
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSkillPosition.ID, SkillPackets.S2CSkillPosition.CODEC);
         PayloadTypeRegistry.playC2S().register(SkillPackets.C2SPillarInteract.ID, SkillPackets.C2SPillarInteract.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CPillarAction.ID, SkillPackets.S2CPillarAction.CODEC);
+        PayloadTypeRegistry.playC2S().register(SkillPackets.C2SMartialAttack.ID, SkillPackets.C2SMartialAttack.CODEC);
     }
 
     public static void registerServerReceivers() {
@@ -111,6 +112,14 @@ public final class SkillNetworking {
                     } else if (payload.actionType() == 1) {
                         EarthPillarSkill.strikePillar(player);
                     }
+                });
+
+        ServerPlayNetworking.registerGlobalReceiver(
+                SkillPackets.C2SMartialAttack.ID,
+                (payload, context) -> {
+                    ServerPlayerEntity player = context.player();
+                    com.avatarmod.elements.combat.MartialCombatServer.handleMartialAttack(
+                            player, payload.comboStep(), payload.isAerial());
                 });
     }
 

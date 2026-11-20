@@ -274,5 +274,20 @@ public final class SkillPackets {
         @Override public CustomPayload.Id<S2CPillarAction> getId() { return ID; }
     }
 
+    // Client → Server: Unarmed Martial Attack Combo or Aerial Dive-Kick
+    public record C2SMartialAttack(int comboStep, boolean isAerial) implements CustomPayload {
+        public static final CustomPayload.Id<C2SMartialAttack> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "c2s_martial_attack"));
+        public static final PacketCodec<PacketByteBuf, C2SMartialAttack> CODEC = PacketCodec.of(
+                (value, buf) -> {
+                    buf.writeByte(value.comboStep());
+                    buf.writeBoolean(value.isAerial());
+                },
+                buf -> new C2SMartialAttack(buf.readByte(), buf.readBoolean())
+        );
+
+        @Override public CustomPayload.Id<C2SMartialAttack> getId() { return ID; }
+    }
+
     private SkillPackets() {}
 }

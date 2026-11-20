@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "MixinBipedEntityModel",
-    "MixinHeldItemFeatureRenderer"
+    "MixinHeldItemFeatureRenderer",
+    "MixinMinecraftClient"
   ],
   "injectors": {
     "defaultRequire": 1
