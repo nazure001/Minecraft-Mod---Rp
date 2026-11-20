@@ -52,7 +52,8 @@ class PalAnimationContractTest {
             "earth_boulder, 1.45",
             "earth_pillar, 0.75",
             "boulder_launch, 1.55",
-            "air_vortex, 2.50"
+            "air_vortex, 2.50",
+            "air_scooter, 1.00"
     })
     void testSkillAnimationContract(String animName, double expectedDuration) throws IOException {
         verifyAnimationFile(animName, expectedDuration);

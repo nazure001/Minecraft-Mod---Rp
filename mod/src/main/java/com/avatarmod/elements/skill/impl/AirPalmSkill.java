@@ -3,6 +3,7 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.particle.AvatarParticles;
+import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -58,6 +59,12 @@ public final class AirPalmSkill {
             );
             target.velocityModified = true;
         }
+
+        // Clear loose surface vegetation in palm shockwave path
+        ElementalInteractions.clearVegetation(world, center, 2.0);
+
+        // Deflect incoming projectiles
+        ElementalInteractions.deflectProjectiles(world, player, origin, look, range, 0.8);
 
         // VFX: Supersonic palm shockwave cone
         world.spawnParticles(AvatarParticles.GUST_CURL,

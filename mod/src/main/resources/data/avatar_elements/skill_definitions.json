@@ -241,6 +241,23 @@
       "hitboxShape": "SPHERE",
       "cancelOnHit": false,
       "comboWindowTicks": 0
+    },
+    {
+      "id": "avatar:air_scooter",
+      "element": "AIR",
+      "masteryRequired": 0,
+      "chiCost": 15,
+      "chiPerTick": 0,
+      "cooldownTicks": 30,
+      "windupTicks": 1,
+      "activeTicks": 18,
+      "recoveryTicks": 1,
+      "damage": 1.0,
+      "range": 1.5,
+      "knockback": 0.8,
+      "hitboxShape": "SPHERE",
+      "cancelOnHit": false,
+      "comboWindowTicks": 0
     }
   ]
 }

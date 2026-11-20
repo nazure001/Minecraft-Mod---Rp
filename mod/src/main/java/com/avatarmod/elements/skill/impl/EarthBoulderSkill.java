@@ -3,6 +3,7 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.particle.AvatarParticles;
+import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -119,9 +120,13 @@ public final class EarthBoulderSkill {
         world.playSound(null, blockPos,
                 SoundEvents.BLOCK_STONE_BREAK, SoundCategory.PLAYERS, 2.0f, 0.7f);
 
+        // Clear surface vegetation at impact point
+        ElementalInteractions.clearVegetation(world, pos, 2.0);
+
         DamageSource source = world.getDamageSources().playerAttack(player);
         for (LivingEntity target : targets) {
             target.damage(source, state.damage());
+            ElementalInteractions.applySeismicStagger(target, 40);
             Vec3d diff = target.getPos().subtract(pos);
             Vec3d knockDir = diff.lengthSquared() < 0.001 ? new Vec3d(0, 0, 1) : diff.normalize();
             target.addVelocity(knockDir.x * state.knockback(), 0.3, knockDir.z * state.knockback());

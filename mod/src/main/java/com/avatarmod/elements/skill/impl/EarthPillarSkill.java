@@ -122,6 +122,20 @@ public final class EarthPillarSkill {
         ServerWorld world = player.getServerWorld();
 
         if (timeline.ticksInPhase() == 0) {
+            // Check if player has an active pillar nearby to manipulate immediately
+            if (hasNearbyPillar(player, INTERACTION_RADIUS)) {
+                boolean manipulated;
+                if (player.isSneaking() || player.isSprinting()) {
+                    manipulated = kickPillar(player);
+                } else {
+                    manipulated = strikePillar(player);
+                }
+                if (manipulated) {
+                    PlayerBendingData.get(player).regenChi(def.chiCost() / 2);
+                    return;
+                }
+            }
+
             Vec3d center = findPillarCenter(player, world, def.range());
             List<Vec3d> positions = new ArrayList<>();
             positions.add(center);

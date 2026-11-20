@@ -5,6 +5,7 @@ import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.network.SkillNetworking;
 import com.avatarmod.elements.skill.impl.AirBlastSkill;
 import com.avatarmod.elements.skill.impl.AirPalmSkill;
+import com.avatarmod.elements.skill.impl.AirScooterSkill;
 import com.avatarmod.elements.skill.impl.AirStaffAttackSkill;
 import com.avatarmod.elements.skill.impl.AirVortexSkill;
 import com.avatarmod.elements.skill.impl.BoulderLaunchSkill;
@@ -78,6 +79,7 @@ public final class SkillDispatcher {
             case "avatar:air_blast"         -> AirBlastSkill.tick(player, def);
             case "avatar:air_palm"          -> AirPalmSkill.tick(player, def);
             case "avatar:air_vortex"        -> AirVortexSkill.tick(player, def);
+            case "avatar:air_scooter"       -> AirScooterSkill.tick(player, def);
             case "avatar:water_whip"        -> WaterWhipSkill.tick(player, def);
             case "avatar:water_jet"         -> WaterJetSkill.tick(player, def);
             case "avatar:earth_boulder"     -> EarthBoulderSkill.tick(player, def);

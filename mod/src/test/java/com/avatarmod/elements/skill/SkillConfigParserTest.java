@@ -31,15 +31,14 @@ class SkillConfigParserTest {
         Map<String, List<String>> slots =
                 SkillConfigParser.parseSlots("bundled slots", slotsJson);
 
-        assertEquals(14, skills.size());
+        assertEquals(15, skills.size());
         assertDoesNotThrow(() ->
                 SkillConfigParser.validateSlotReferences("bundled slots", slots, skills));
 
         assertEquals(List.of("avatar:fire_jab", "avatar:fire_blast", "avatar:flame_sweep",
                 "avatar:fire_guard", "avatar:fire_jet"), slots.get("FIRE"));
         assertEquals(List.of("avatar:air_staff_attack", "avatar:air_blast", "avatar:air_palm",
-                "avatar:air_vortex"), slots.get("AIR").subList(0, 4));
-        assertNull(slots.get("AIR").get(4));
+                "avatar:air_vortex", "avatar:air_scooter"), slots.get("AIR"));
         assertEquals("avatar:water_whip", slots.get("WATER").get(0));
         assertEquals("avatar:water_jet", slots.get("WATER").get(1));
         assertEquals(List.of("avatar:earth_boulder", "avatar:boulder_launch",

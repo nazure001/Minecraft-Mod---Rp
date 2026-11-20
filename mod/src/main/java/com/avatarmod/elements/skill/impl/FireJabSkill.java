@@ -156,6 +156,9 @@ public final class FireJabSkill {
                     6, 0.30, 0.30, 0.30, 0.10);
         }
 
+        // Ignite flammable ground/blocks at punch apex
+        ElementalInteractions.igniteBlocks(world, apexPos, 1.2);
+
         // SFX: Synchronize SFX with ModSounds.FIRE_RELEASE at player position
         float volume = finalCombo ? 1.0f : 0.85f;
         float pitch = 0.95f + (world.getRandom().nextFloat() * 0.1f);
