@@ -73,9 +73,14 @@ public final class WaterJetSkill {
             );
 
             DamageSource source = world.getDamageSources().playerAttack(player);
+            boolean isSneaking = player.isSneaking();
             for (LivingEntity target : targets) {
                 target.damage(source, def.damage());
-                ElementalInteractions.applyWater(target, 60, 1);
+                if (isSneaking) {
+                    ElementalInteractions.applyFreezing(target, 80, 50);
+                } else {
+                    ElementalInteractions.applyWater(target, 60, 1);
+                }
 
                 // Directional push knockback along water jet stream
                 Vec3d push = calculatePushVector(look, def.knockback());
@@ -84,10 +89,14 @@ public final class WaterJetSkill {
             }
 
             ElementalInteractions.douseFireBlocks(world, end, 3.0);
+            ElementalInteractions.clearVegetation(world, end, 1.5);
+            if (isSneaking) {
+                ElementalInteractions.freezeWaterArea(world, end, 1.6);
+            }
         }
 
-        // 3. VFX: High-pressure water particles streaming forward
-        spawnStreamParticles(world, origin, look, range, t);
+        // 3. VFX: High-pressure water particles streaming forward (with snowflakes if sneaking)
+        spawnStreamParticles(world, origin, look, range, t, player.isSneaking());
 
         // 4. Looping rushing water SFX
         if (t % 6 == 1) {
@@ -126,7 +135,7 @@ public final class WaterJetSkill {
         return cost;
     }
 
-    private static void spawnStreamParticles(ServerWorld world, Vec3d origin, Vec3d look, double range, int tick) {
+    private static void spawnStreamParticles(ServerWorld world, Vec3d origin, Vec3d look, double range, int tick, boolean isSneaking) {
         double horizLen = Math.sqrt(look.x * look.x + look.z * look.z);
         Vec3d right = horizLen > 1e-5
                 ? new Vec3d(-look.z / horizLen, 0.0, look.x / horizLen)
@@ -143,8 +152,13 @@ public final class WaterJetSkill {
             Vec3d spiralPt = basePt.add(right.multiply(Math.cos(spiralAngle) * rSpiral))
                     .add(upVec.multiply(Math.sin(spiralAngle) * rSpiral));
 
-            world.spawnParticles(ParticleTypes.SPLASH, spiralPt.x, spiralPt.y, spiralPt.z, 2, 0.04, 0.04, 0.04, 0.02);
-            world.spawnParticles(ParticleTypes.FALLING_WATER, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.01);
+            if (isSneaking) {
+                world.spawnParticles(ParticleTypes.SNOWFLAKE, spiralPt.x, spiralPt.y, spiralPt.z, 2, 0.04, 0.04, 0.04, 0.01);
+                world.spawnParticles(ParticleTypes.SPLASH, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.01);
+            } else {
+                world.spawnParticles(ParticleTypes.SPLASH, spiralPt.x, spiralPt.y, spiralPt.z, 2, 0.04, 0.04, 0.04, 0.02);
+                world.spawnParticles(ParticleTypes.FALLING_WATER, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.01);
+            }
             world.spawnParticles(AvatarParticles.DROPLET, spiralPt.x, spiralPt.y, spiralPt.z, 2, 0.04, 0.04, 0.04, 0.01);
 
             if (i % 3 == 0) {
@@ -155,6 +169,9 @@ public final class WaterJetSkill {
 
         // Stream terminal burst
         Vec3d end = origin.add(look.multiply(range));
+        if (isSneaking) {
+            world.spawnParticles(ParticleTypes.SNOWFLAKE, end.x, end.y, end.z, 12, 0.25, 0.25, 0.25, 0.05);
+        }
         world.spawnParticles(ParticleTypes.SPLASH, end.x, end.y, end.z, 6, 0.2, 0.2, 0.2, 0.08);
         world.spawnParticles(AvatarParticles.SMALL_SPLASH, end.x, end.y, end.z, 4, 0.15, 0.15, 0.15, 0.05);
     }

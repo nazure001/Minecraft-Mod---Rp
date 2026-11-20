@@ -5,6 +5,8 @@ import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -13,10 +15,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Earth Boulder — projectile that travels in look direction each tick.
  * Hits first entity in path; detonates on block collision or after lifetime.
- * Does NOT modify world blocks (prototype).
+ * Scales damage and particles dynamically based on extracted block hardness!
  */
 public final class EarthBoulderSkill {
 
@@ -35,7 +40,7 @@ public final class EarthBoulderSkill {
     // Active boulders keyed by player UUID
     private static final Map<UUID, BoulderState> BOULDERS = new ConcurrentHashMap<>();
 
-    private record BoulderState(Vec3d pos, Vec3d velocity, int ticksLeft, float damage, float knockback) {}
+    private record BoulderState(Vec3d pos, Vec3d velocity, int ticksLeft, float damage, float knockback, BlockState blockState) {}
 
     public static void tick(ServerPlayerEntity player, SkillDefinition def) {
         SkillTimeline timeline = PlayerBendingData.get(player).getTimeline();
@@ -44,7 +49,19 @@ public final class EarthBoulderSkill {
         if (timeline.phase() == SkillTimeline.Phase.ACTIVE && timeline.ticksInPhase() == 0) {
             Vec3d spawnPos = player.getPos().add(0, player.getStandingEyeHeight() * 0.8, 0);
             Vec3d vel = player.getRotationVec(1.0f).multiply(SPEED);
-            BOULDERS.put(player.getUuid(), new BoulderState(spawnPos, vel, LIFETIME, def.damage(), def.knockback()));
+
+            ServerWorld world = player.getServerWorld();
+            BlockPos groundPos = ElementalInteractions.findSolidGroundBelow(world, player.getBlockPos(), 6);
+            BlockState groundState = world.getBlockState(groundPos);
+            if (groundState.isAir()) groundState = Blocks.STONE.getDefaultState();
+            float damage = ElementalInteractions.calculateEarthHardnessDamage(world, groundPos, def.damage());
+
+            BOULDERS.put(player.getUuid(), new BoulderState(spawnPos, vel, LIFETIME, damage, def.knockback(), groundState));
+
+            float bonus = damage - def.damage();
+            if (bonus > 0.5f) {
+                player.sendMessage(Text.literal("§6[Earth] Boulder dipadatkan dari " + groundState.getBlock().getName().getString() + " §e(+" + String.format(Locale.ROOT, "%.1f", bonus) + " DMG)"), true);
+            }
         }
 
         // Advance boulder each tick during ACTIVE/RECOVERY while it exists
@@ -55,7 +72,7 @@ public final class EarthBoulderSkill {
         ServerWorld world = player.getServerWorld();
         Vec3d nextPos = state.pos().add(state.velocity());
 
-        // VFX at current position: tumbling stone chunks & dust trail
+        // VFX at current position: tumbling stone chunks & dust trail matching block type
         world.spawnParticles(AvatarParticles.STONE_CHIP,
                 state.pos().x, state.pos().y, state.pos().z,
                 4, HITBOX_RADIUS * 0.4, HITBOX_RADIUS * 0.4, HITBOX_RADIUS * 0.4, 0.04);
@@ -65,7 +82,7 @@ public final class EarthBoulderSkill {
         world.spawnParticles(ParticleTypes.POOF,
                 state.pos().x, state.pos().y, state.pos().z,
                 2, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, 0.01);
-        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, net.minecraft.block.Blocks.STONE.getDefaultState()),
+        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, state.blockState()),
                 state.pos().x, state.pos().y, state.pos().z,
                 3, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, 0.04);
 
@@ -93,13 +110,13 @@ public final class EarthBoulderSkill {
         if (ticksLeft <= 0) {
             BOULDERS.remove(id);
         } else {
-            BOULDERS.put(id, new BoulderState(nextPos, state.velocity(), ticksLeft, state.damage(), state.knockback()));
+            BOULDERS.put(id, new BoulderState(nextPos, state.velocity(), ticksLeft, state.damage(), state.knockback(), state.blockState()));
         }
     }
 
     private static void detonate(ServerPlayerEntity player, ServerWorld world, Vec3d pos,
                                   List<LivingEntity> targets, BoulderState state) {
-        // Impact VFX: Cataclysmic tectonic crash & stone explosion
+        // Impact VFX: Cataclysmic tectonic crash & stone explosion using block particles
         world.spawnParticles(ParticleTypes.EXPLOSION,
                 pos.x, pos.y, pos.z, 2, 0.2, 0.2, 0.2, 0.0);
         world.spawnParticles(ParticleTypes.LARGE_SMOKE,
@@ -108,17 +125,22 @@ public final class EarthBoulderSkill {
                 pos.x, pos.y, pos.z, 25, 0.7, 0.5, 0.7, 0.15);
         world.spawnParticles(AvatarParticles.DUST,
                 pos.x, pos.y, pos.z, 30, 0.9, 0.5, 0.9, 0.1);
-        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, net.minecraft.block.Blocks.COBBLESTONE.getDefaultState()),
+        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, state.blockState()),
                 pos.x, pos.y, pos.z, 35, 0.7, 0.7, 0.7, 0.12);
 
         // Multi-layered deep tectonic roar SFX
-        net.minecraft.util.math.BlockPos blockPos = net.minecraft.util.math.BlockPos.ofFloored(pos);
+        BlockPos blockPos = BlockPos.ofFloored(pos);
         world.playSound(null, blockPos,
                 SoundEvents.ENTITY_IRON_GOLEM_ATTACK, SoundCategory.PLAYERS, 2.0f, 0.5f);
         world.playSound(null, blockPos,
                 SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.PLAYERS, 1.5f, 0.6f);
         world.playSound(null, blockPos,
                 SoundEvents.BLOCK_STONE_BREAK, SoundCategory.PLAYERS, 2.0f, 0.7f);
+
+        float hardness = state.blockState().getHardness(world, blockPos);
+        if (hardness >= 10.0f) {
+            world.playSound(null, blockPos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 1.8f, 0.6f);
+        }
 
         // Clear surface vegetation at impact point
         ElementalInteractions.clearVegetation(world, pos, 2.0);

@@ -69,15 +69,17 @@ public final class EarthPillarSkill {
         private final UUID id;
         private final UUID casterUuid;
         private final List<Vec3d> positions;
+        private final BlockState blockState;
         private int remainingTicks;
         private int hitsRemaining;
 
-        public ActivePillar(UUID id, UUID casterUuid, List<Vec3d> positions, int remainingTicks, int hitsRemaining) {
+        public ActivePillar(UUID id, UUID casterUuid, List<Vec3d> positions, int remainingTicks, int hitsRemaining, BlockState blockState) {
             this.id = id;
             this.casterUuid = casterUuid;
             this.positions = new ArrayList<>(positions);
             this.remainingTicks = remainingTicks;
             this.hitsRemaining = hitsRemaining;
+            this.blockState = blockState != null ? blockState : Blocks.STONE.getDefaultState();
         }
 
         public UUID id() { return id; }
@@ -86,6 +88,7 @@ public final class EarthPillarSkill {
         public Vec3d center() { return positions.isEmpty() ? Vec3d.ZERO : positions.get(0); }
         public int remainingTicks() { return remainingTicks; }
         public int hitsRemaining() { return hitsRemaining; }
+        public BlockState blockState() { return blockState; }
         public void decrementTicks() { this.remainingTicks--; }
         public void decrementHits() { this.hitsRemaining--; }
     }
@@ -97,7 +100,8 @@ public final class EarthPillarSkill {
             int ticksLeft,
             float damage,
             float aoeRadius,
-            float knockback
+            float knockback,
+            BlockState blockState
     ) {}
 
     public record FlyingShard(
@@ -105,7 +109,8 @@ public final class EarthPillarSkill {
             Vec3d pos,
             Vec3d velocity,
             int ticksLeft,
-            float damage
+            float damage,
+            BlockState blockState
     ) {}
 
     private static final Map<UUID, ActivePillar> ACTIVE_PILLARS = new ConcurrentHashMap<>();
@@ -151,7 +156,16 @@ public final class EarthPillarSkill {
                 positions.add(rightPos);
             }
 
-            ActivePillar pillar = new ActivePillar(UUID.randomUUID(), player.getUuid(), positions, PILLAR_DURATION_TICKS, PILLAR_MAX_HITS);
+            BlockPos groundPos = BlockPos.ofFloored(center);
+            BlockState groundState = world.getBlockState(groundPos.down());
+            if (groundState.isAir() || groundState.getFluidState().isIn(FluidTags.WATER)) {
+                groundState = world.getBlockState(groundPos);
+            }
+            if (groundState.isAir() || groundState.getFluidState().isIn(FluidTags.WATER)) {
+                groundState = Blocks.STONE.getDefaultState();
+            }
+
+            ActivePillar pillar = new ActivePillar(UUID.randomUUID(), player.getUuid(), positions, PILLAR_DURATION_TICKS, PILLAR_MAX_HITS, groundState);
             ACTIVE_PILLARS.put(player.getUuid(), pillar);
 
             int serial = SkillNetworking.currentSerial(player.getUuid());
@@ -213,15 +227,18 @@ public final class EarthPillarSkill {
         Vec3d dir = new Vec3d(look.x, Math.max(-0.2, look.y), look.z).normalize();
         Vec3d vel = dir.multiply(MEGALITH_SPEED);
 
+        BlockPos groundPos = BlockPos.ofFloored(pillar.center());
+        float megalithDmg = ElementalInteractions.calculateEarthHardnessDamage(world, groundPos, MEGALITH_DAMAGE);
+
         ACTIVE_PILLARS.remove(pillar.casterUuid());
 
         // Launch all pillars in this construct (1 if pillar, 3 if earth wall)
         for (Vec3d pos : pillar.positions()) {
             Vec3d spawnPos = pos.add(0, 1.25, 0);
             FLYING_MEGALITHS.add(new FlyingMegalith(player.getUuid(), spawnPos, vel,
-                    MEGALITH_LIFETIME, MEGALITH_DAMAGE, MEGALITH_AOE, MEGALITH_KNOCKBACK));
+                    MEGALITH_LIFETIME, megalithDmg, MEGALITH_AOE, MEGALITH_KNOCKBACK, pillar.blockState()));
 
-            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState()),
+            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, pillar.blockState()),
                     spawnPos.x, spawnPos.y, spawnPos.z, 35, 0.6, 0.6, 0.6, 0.15);
             world.spawnParticles(AvatarParticles.STONE_CHIP,
                     spawnPos.x, spawnPos.y, spawnPos.z, 25, 0.5, 0.5, 0.5, 0.2);
@@ -232,7 +249,6 @@ public final class EarthPillarSkill {
                     pos.x, pos.y, pos.z, dir.x, dir.y, dir.z);
         }
 
-        BlockPos groundPos = BlockPos.ofFloored(pillar.center());
         world.playSound(null, groundPos,
                 SoundEvents.ENTITY_IRON_GOLEM_ATTACK, SoundCategory.PLAYERS, 2.0f, 0.55f);
         world.playSound(null, groundPos,
@@ -253,6 +269,9 @@ public final class EarthPillarSkill {
         ServerWorld world = player.getServerWorld();
         Vec3d look = player.getRotationVec(1.0f);
 
+        BlockPos pPos = BlockPos.ofFloored(pillar.center());
+        float shardDmg = ElementalInteractions.calculateEarthHardnessDamage(world, pPos, SHARD_DAMAGE);
+
         for (Vec3d pos : pillar.positions()) {
             Vec3d origin = pos.add(0, 1.25, 0);
             int shardCount = 3 + RNG.nextInt(2);
@@ -262,9 +281,11 @@ public final class EarthPillarSkill {
                 double spreadZ = (RNG.nextDouble() - 0.5) * 0.18;
                 Vec3d shardDir = look.add(spreadX, spreadY, spreadZ).normalize();
                 FLYING_SHARDS.add(new FlyingShard(player.getUuid(), origin,
-                        shardDir.multiply(SHARD_SPEED), SHARD_LIFETIME, SHARD_DAMAGE));
+                        shardDir.multiply(SHARD_SPEED), SHARD_LIFETIME, shardDmg, pillar.blockState()));
             }
 
+            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, pillar.blockState()),
+                    origin.x, origin.y, origin.z, 10, 0.2, 0.2, 0.2, 0.1);
             world.spawnParticles(AvatarParticles.STONE_CHIP,
                     origin.x, origin.y, origin.z, 15, 0.3, 0.3, 0.3, 0.15);
 
@@ -274,7 +295,6 @@ public final class EarthPillarSkill {
 
         pillar.decrementHits();
 
-        BlockPos pPos = BlockPos.ofFloored(pillar.center());
         world.playSound(null, pPos,
                 SoundEvents.BLOCK_STONE_HIT, SoundCategory.PLAYERS, 1.8f, 1.1f + (RNG.nextFloat() * 0.2f));
         world.playSound(null, pPos,
@@ -299,7 +319,7 @@ public final class EarthPillarSkill {
             world.playSound(null, bp,
                     SoundEvents.BLOCK_STONE_BREAK, SoundCategory.PLAYERS, 1.8f, 0.7f);
 
-            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState()),
+            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, pillar.blockState()),
                     center.x, center.y, center.z, 40, 0.7, 1.0, 0.7, 0.15);
             world.spawnParticles(AvatarParticles.STONE_CHIP,
                     center.x, center.y, center.z, 25, 0.6, 0.8, 0.6, 0.15);
@@ -349,7 +369,7 @@ public final class EarthPillarSkill {
             ServerWorld world = caster != null ? caster.getServerWorld() : server.getOverworld();
             Vec3d nextPos = m.pos().add(m.velocity());
 
-            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState()),
+            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, m.blockState()),
                     m.pos().x, m.pos().y, m.pos().z, 8, 0.4, 0.4, 0.4, 0.05);
             world.spawnParticles(AvatarParticles.STONE_CHIP,
                     m.pos().x, m.pos().y, m.pos().z, 5, 0.3, 0.3, 0.3, 0.05);
@@ -367,7 +387,7 @@ public final class EarthPillarSkill {
                 detonateMegalith(world, caster, nextPos, m);
             } else if (m.ticksLeft() > 1) {
                 megalithsRemaining.add(new FlyingMegalith(m.casterUuid(), nextPos, m.velocity(),
-                        m.ticksLeft() - 1, m.damage(), m.aoeRadius(), m.knockback()));
+                        m.ticksLeft() - 1, m.damage(), m.aoeRadius(), m.knockback(), m.blockState()));
             } else {
                 detonateMegalith(world, caster, nextPos, m);
             }
@@ -382,6 +402,8 @@ public final class EarthPillarSkill {
             ServerWorld world = caster != null ? caster.getServerWorld() : server.getOverworld();
             Vec3d nextPos = s.pos().add(s.velocity());
 
+            world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, s.blockState()),
+                    s.pos().x, s.pos().y, s.pos().z, 2, 0.05, 0.05, 0.05, 0.01);
             world.spawnParticles(AvatarParticles.STONE_CHIP,
                     s.pos().x, s.pos().y, s.pos().z, 2, 0.1, 0.1, 0.1, 0.02);
 
@@ -396,7 +418,7 @@ public final class EarthPillarSkill {
                 detonateShard(world, caster, nextPos, hits, s.damage());
             } else if (s.ticksLeft() > 1) {
                 shardsRemaining.add(new FlyingShard(s.casterUuid(), nextPos, s.velocity(),
-                        s.ticksLeft() - 1, s.damage()));
+                        s.ticksLeft() - 1, s.damage(), s.blockState()));
             } else {
                 world.spawnParticles(AvatarParticles.STONE_CHIP, nextPos.x, nextPos.y, nextPos.z, 3, 0.1, 0.1, 0.1, 0.05);
             }
@@ -428,9 +450,14 @@ public final class EarthPillarSkill {
         world.playSound(null, bp, SoundEvents.BLOCK_STONE_BREAK, SoundCategory.PLAYERS, 2.5f, 0.6f);
         world.playSound(null, bp, SoundEvents.ENTITY_IRON_GOLEM_ATTACK, SoundCategory.PLAYERS, 2.0f, 0.5f);
 
+        float hardness = m.blockState().getHardness(world, bp);
+        if (hardness >= 10.0f) {
+            world.playSound(null, bp, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, 2.0f, 0.5f);
+        }
+
         world.spawnParticles(ParticleTypes.EXPLOSION, pos.x, pos.y, pos.z, 2, 0.3, 0.3, 0.3, 0.0);
         world.spawnParticles(ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, 20, 0.6, 0.6, 0.6, 0.1);
-        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState()),
+        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, m.blockState()),
                 pos.x, pos.y, pos.z, 50, 0.8, 0.8, 0.8, 0.2);
         world.spawnParticles(AvatarParticles.STONE_CHIP,
                 pos.x, pos.y, pos.z, 35, 0.8, 0.8, 0.8, 0.2);

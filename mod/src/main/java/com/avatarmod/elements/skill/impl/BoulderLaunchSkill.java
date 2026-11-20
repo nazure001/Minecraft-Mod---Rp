@@ -3,8 +3,10 @@ package com.avatarmod.elements.skill.impl;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.particle.AvatarParticles;
+import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.skill.SkillDefinition;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -13,11 +15,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,9 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Boulder Launch — hold-and-release rock projectile.
  * Charge grows the boulder: bigger hitbox, more damage, wider impact AOE.
- * Uses the generic hold-release framework (Phase.HOLD via C2SHoldStart/C2SHoldRelease).
- * The boulder advances during the caster's ACTIVE/RECOVERY ticks and does NOT
- * modify world blocks (prototype rule).
+ * Dynamically scales damage and particle visuals from extracted block hardness!
  */
 public final class BoulderLaunchSkill {
 
@@ -43,7 +45,8 @@ public final class BoulderLaunchSkill {
 
     private record BoulderState(
             Vec3d pos, Vec3d velocity, int ticksLeft,
-            float damage, float knockback, float hitboxRadius, float aoeRadius, float chargeRatio
+            float damage, float knockback, float hitboxRadius, float aoeRadius, float chargeRatio,
+            BlockState blockState
     ) {}
 
     private static final Map<UUID, BoulderState> BOULDERS = new ConcurrentHashMap<>();
@@ -63,7 +66,13 @@ public final class BoulderLaunchSkill {
     private static void launch(ServerPlayerEntity player, SkillDefinition def, float chargeRatio) {
         chargeRatio = Math.max(0.1f, Math.min(1.0f, chargeRatio));
 
-        float damage = def.damage() * (MIN_DAMAGE_RATIO + (MAX_DAMAGE_RATIO - MIN_DAMAGE_RATIO) * chargeRatio);
+        ServerWorld world = player.getServerWorld();
+        BlockPos groundPos = ElementalInteractions.findSolidGroundBelow(world, player.getBlockPos(), 6);
+        BlockState groundState = world.getBlockState(groundPos);
+        if (groundState.isAir()) groundState = Blocks.STONE.getDefaultState();
+
+        float baseDamage = def.damage() * (MIN_DAMAGE_RATIO + (MAX_DAMAGE_RATIO - MIN_DAMAGE_RATIO) * chargeRatio);
+        float damage = ElementalInteractions.calculateEarthHardnessDamage(world, groundPos, baseDamage);
         float knockback = def.knockback() * (0.5f + 0.5f * chargeRatio);
         float hitbox = MIN_HITBOX + (MAX_HITBOX - MIN_HITBOX) * chargeRatio;
         float aoe = MIN_AOE + (MAX_AOE - MIN_AOE) * chargeRatio;
@@ -75,9 +84,13 @@ public final class BoulderLaunchSkill {
         Vec3d vel = look.multiply(speed);
 
         BOULDERS.put(player.getUuid(),
-                new BoulderState(spawnPos, vel, LIFETIME, damage, knockback, hitbox, aoe, chargeRatio));
+                new BoulderState(spawnPos, vel, LIFETIME, damage, knockback, hitbox, aoe, chargeRatio, groundState));
 
-        ServerWorld world = player.getServerWorld();
+        float bonus = damage - baseDamage;
+        if (bonus > 0.5f) {
+            player.sendMessage(Text.literal("§6[Earth] Megalith dipadatkan dari " + groundState.getBlock().getName().getString() + " §e(+" + String.format(Locale.ROOT, "%.1f", bonus) + " DMG)"), true);
+        }
+
         float pitch = 0.9f - 0.3f * chargeRatio;
         world.playSound(null, player.getBlockPos(),
                 SoundEvents.BLOCK_STONE_BREAK, SoundCategory.PLAYERS, 1.2f, pitch);
@@ -94,9 +107,9 @@ public final class BoulderLaunchSkill {
         Vec3d nextPos = state.pos().add(state.velocity());
         float r = state.hitboxRadius();
 
-        // Trail VFX: stone debris sized by boulder radius
+        // Trail VFX: debris sized by boulder radius and colored by block type
         BlockStateParticleEffect debris = new BlockStateParticleEffect(
-                ParticleTypes.BLOCK, net.minecraft.block.Blocks.STONE.getDefaultState());
+                ParticleTypes.BLOCK, state.blockState());
         world.spawnParticles(debris,
                 state.pos().x, state.pos().y, state.pos().z,
                 (int) (6 + 8 * state.chargeRatio()), r * 0.5, r * 0.5, r * 0.5, 0.05);
@@ -129,7 +142,7 @@ public final class BoulderLaunchSkill {
             BOULDERS.remove(id);
         } else {
             BOULDERS.put(id, new BoulderState(nextPos, state.velocity(), ticksLeft,
-                    state.damage(), state.knockback(), r, state.aoeRadius(), state.chargeRatio()));
+                    state.damage(), state.knockback(), r, state.aoeRadius(), state.chargeRatio(), state.blockState()));
         }
     }
 
@@ -152,9 +165,9 @@ public final class BoulderLaunchSkill {
             target.velocityModified = true;
         }
 
-        // Impact VFX: stone shrapnel burst scaled by charge
+        // Impact VFX: stone shrapnel burst scaled by charge and block type
         BlockStateParticleEffect debris = new BlockStateParticleEffect(
-                ParticleTypes.BLOCK, net.minecraft.block.Blocks.STONE.getDefaultState());
+                ParticleTypes.BLOCK, state.blockState());
         world.spawnParticles(debris, center.x, center.y, center.z,
                 (int) (30 + 30 * state.chargeRatio()), aoe * 0.4, aoe * 0.4, aoe * 0.4, 0.25);
         world.spawnParticles(AvatarParticles.STONE_CHIP, center.x, center.y, center.z,

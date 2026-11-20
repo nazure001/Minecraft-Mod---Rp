@@ -81,18 +81,13 @@ processResources {
 tasks.withType(JavaCompile).configureEach {
     it.options.release = 21
     it.options.encoding = 'UTF-8'
-    it.options.fork = true
-    it.options.forkOptions.jvmArgs = ['-Xmx384m', '-XX:MaxMetaspaceSize=128m', '-XX:TieredStopAtLevel=1', '-Xss256k']
+    it.options.fork = false
 }
 
 java {
     withSourcesJar()
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
-
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
 }
 
 sourcesJar {

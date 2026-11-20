@@ -201,9 +201,82 @@ public final class ElementalInteractions {
     // --- EARTH INTERACTIONS ---
 
     /**
+     * Calculates bonus damage based on the hardness of the earth block extracted.
+     * Formula: min(15.0f, Hardness * 1.5f)
+     * Dirt (0.5) -> +0.75 dmg
+     * Stone (1.5) -> +2.25 dmg
+     * Cobble (2.0) -> +3.0 dmg
+     * Deepslate (3.0-4.5) -> +4.5 - +6.75 dmg
+     * Obsidian (50.0) -> capped at +15.0 dmg
+     */
+    public static float computeHardnessDamageBonus(float hardness) {
+        if (hardness < 0) hardness = 5.0f; // Unbreakable fallback (e.g. Bedrock)
+        return Math.min(15.0f, hardness * 1.5f);
+    }
+
+    public static float calculateEarthHardnessDamage(ServerWorld world, BlockPos groundPos, float baseDamage) {
+        BlockState state = world.getBlockState(groundPos);
+        float hardness = state.getHardness(world, groundPos);
+        return baseDamage + computeHardnessDamageBonus(hardness);
+    }
+
+    /**
+     * Scans downwards from startPos to locate the nearest solid opaque block.
+     */
+    public static BlockPos findSolidGroundBelow(ServerWorld world, BlockPos startPos, int maxDepth) {
+        BlockPos current = startPos;
+        for (int i = 0; i < maxDepth; i++) {
+            BlockState state = world.getBlockState(current);
+            if (!state.isAir() && state.getFluidState().isEmpty() && !state.getCollisionShape(world, current).isEmpty()) {
+                return current;
+            }
+            current = current.down();
+        }
+        return startPos.down();
+    }
+
+    /**
      * Applies seismic stagger slowness to target caught in earth eruption/shockwave.
      */
     public static void applySeismicStagger(LivingEntity target, int ticks) {
         target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, ticks, 1, false, false, true));
+    }
+
+    // --- ICE & FREEZING INTERACTIONS ---
+
+    /**
+     * Transforms water into frosted ice (which naturally melts over time) and dusts surfaces with snow.
+     */
+    public static void freezeWaterArea(ServerWorld world, Vec3d center, double radius) {
+        BlockPos base = BlockPos.ofFloored(center);
+        int r = (int) Math.ceil(radius);
+        double rSq = radius * radius;
+
+        for (int x = -r; x <= r; x++) {
+            for (int y = -1; y <= 1; y++) {
+                for (int z = -r; z <= r; z++) {
+                    if (x * x + z * z > rSq) continue;
+                    BlockPos p = base.add(x, y, z);
+                    BlockState state = world.getBlockState(p);
+                    if (state.isOf(Blocks.WATER)) {
+                        world.setBlockState(p, Blocks.FROSTED_ICE.getDefaultState());
+                        world.playSound(null, p, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 0.6f, 1.4f);
+                        world.spawnParticles(ParticleTypes.SNOWFLAKE, p.getX() + 0.5, p.getY() + 0.5, p.getZ() + 0.5, 4, 0.2, 0.2, 0.2, 0.02);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Applies freeze ticks (Powder snow freezing visual) and slowness to target.
+     */
+    public static void applyFreezing(LivingEntity target, int freezeTicks, int slownessTicks) {
+        target.setFrozenTicks(Math.max(target.getFrozenTicks(), freezeTicks));
+        target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, slownessTicks, 1, false, true, true));
+        if (target.getWorld() instanceof ServerWorld sw) {
+            sw.spawnParticles(ParticleTypes.SNOWFLAKE, target.getX(), target.getY() + 1.0, target.getZ(), 8, 0.3, 0.4, 0.3, 0.03);
+            sw.playSound(null, target.getBlockPos(), SoundEvents.ENTITY_PLAYER_HURT_FREEZE, SoundCategory.PLAYERS, 0.8f, 1.2f);
+        }
     }
 }
