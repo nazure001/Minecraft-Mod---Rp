@@ -6,6 +6,7 @@
     "MixinBipedEntityModel",
     "MixinCamera",
     "MixinHeldItemFeatureRenderer",
+    "MixinHeldItemRenderer",
     "MixinMinecraftClient"
   ],
   "injectors": {

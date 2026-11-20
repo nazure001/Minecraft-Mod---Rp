@@ -1,6 +1,11 @@
 package com.avatarmod.elements.combat;
 
 import com.avatarmod.elements.data.PlayerBendingData;
+import com.avatarmod.elements.item.AirStaffItem;
+import com.avatarmod.elements.item.DualSwordsItem;
+import com.avatarmod.elements.item.EarthHammerItem;
+import com.avatarmod.elements.item.WarFanItem;
+import com.avatarmod.elements.item.WaterSpearItem;
 import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.skill.ElementalInteractions;
 import com.avatarmod.elements.sound.AvatarSounds;
@@ -10,6 +15,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -23,7 +30,7 @@ import net.minecraft.util.math.Vec3d;
 import java.util.List;
 
 /**
- * Authoritative Server-Side Logic for 4-Hit Elemental Martial Combos and Aerial Dive-Kicks.
+ * Authoritative Server-Side Logic for Elemental Martial Combos, Weapon Strikes, and Aerial Plunges.
  */
 public final class MartialCombatServer {
 
@@ -38,41 +45,69 @@ public final class MartialCombatServer {
             element = "FIRE";
         }
 
+        ItemStack held = player.getMainHandStack();
         if (isAerial) {
-            executeAerialDiveKick(player, world, data, element);
+            executeAerialDiveKick(player, world, data, element, held);
         } else {
-            executeGroundCombo(player, world, data, element, comboStep);
+            executeGroundCombo(player, world, data, element, comboStep, held);
         }
     }
 
-    private static void executeAerialDiveKick(ServerPlayerEntity player, ServerWorld world, PlayerBendingData data, String element) {
+    private static void executeAerialDiveKick(ServerPlayerEntity player, ServerWorld world,
+                                              PlayerBendingData data, String element, ItemStack held) {
         Vec3d pos = player.getPos();
         Vec3d look = player.getRotationVec(1.0f);
-        double aoe = 3.5;
-        Box hitBox = Box.of(pos, aoe * 2, 2.5, aoe * 2);
+        Item item = held.getItem();
 
+        double aoe = 3.5;
+        float baseDmg = 6.5f;
+
+        if (item instanceof EarthHammerItem) {
+            baseDmg = 13.0f;
+            aoe = 4.2;
+        } else if (item instanceof DualSwordsItem) {
+            baseDmg = 9.5f;
+            aoe = 3.6;
+        } else if (item instanceof WaterSpearItem) {
+            baseDmg = 10.0f;
+            aoe = 3.4;
+        } else if (item instanceof WarFanItem) {
+            baseDmg = 8.0f;
+            aoe = 3.8;
+        } else if (item instanceof AirStaffItem) {
+            baseDmg = 8.5f;
+            aoe = 3.8;
+        }
+
+        final double effectiveAoe = aoe;
+        final double effectiveAoeSq = effectiveAoe * effectiveAoe;
+
+        Box hitBox = Box.of(pos, effectiveAoe * 2, 2.5, effectiveAoe * 2);
         List<LivingEntity> targets = world.getEntitiesByClass(
                 LivingEntity.class, hitBox,
-                e -> e != player && e.isAlive() && e.squaredDistanceTo(pos) <= (aoe * aoe)
+                e -> e != player && e.isAlive() && e.squaredDistanceTo(pos) <= effectiveAoeSq
         );
 
-        float baseDmg = 6.5f;
         DamageSource src = world.getDamageSources().playerAttack(player);
 
         for (LivingEntity target : targets) {
             float dmg = baseDmg;
-            if ("EARTH".equals(element)) {
+            if (item instanceof EarthHammerItem || "EARTH".equals(element)) {
                 BlockPos groundPos = BlockPos.ofFloored(target.getPos().subtract(0, 0.5, 0));
                 dmg = ElementalInteractions.calculateEarthHardnessDamage(world, groundPos, baseDmg);
-                ElementalInteractions.applySeismicStagger(target, 40);
-            } else if ("FIRE".equals(element)) {
-                target.setOnFireForTicks(60); // 3s burn
-            } else if ("WATER".equals(element)) {
-                target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 1));
-            } else if ("AIR".equals(element)) {
+                ElementalInteractions.applySeismicStagger(target, 45);
+            }
+            if (item instanceof DualSwordsItem || "FIRE".equals(element)) {
+                target.setOnFireForTicks(70); // 3.5s burn
+            }
+            if (item instanceof WaterSpearItem || "WATER".equals(element)) {
+                target.extinguish();
+                target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 50, 1));
+            }
+            if (item instanceof AirStaffItem || "AIR".equals(element)) {
                 Vec3d diff = target.getPos().subtract(pos).normalize();
-                target.takeKnockback(1.5, -diff.x, -diff.z);
-                target.addVelocity(0, 0.45, 0);
+                target.takeKnockback(1.6, -diff.x, -diff.z);
+                target.addVelocity(0, 0.55, 0);
                 target.velocityModified = true;
             }
 
@@ -83,43 +118,94 @@ public final class MartialCombatServer {
         ElementalInteractions.clearVegetation(world, pos, (float) aoe);
 
         // Sound & Particle bursts
-        world.playSound(null, player.getX(), player.getY(), player.getZ(),
-                AvatarSounds.MARTIAL_DIVE, SoundCategory.PLAYERS, 1.4f, 1.0f);
+        if (item instanceof EarthHammerItem) {
+            world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    AvatarSounds.EARTH_IMPACT_HEAVY, SoundCategory.PLAYERS, 1.4f, 0.9f);
+        } else {
+            world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    AvatarSounds.MARTIAL_DIVE, SoundCategory.PLAYERS, 1.4f, 1.0f);
+        }
 
         spawnDiveImpactParticles(world, pos, element);
     }
 
-    private static void executeGroundCombo(ServerPlayerEntity player, ServerWorld world, PlayerBendingData data, String element, int step) {
+    private static void executeGroundCombo(ServerPlayerEntity player, ServerWorld world,
+                                           PlayerBendingData data, String element, int step, ItemStack held) {
         Vec3d origin = player.getEyePos();
         Vec3d look = player.getRotationVec(1.0f);
+        Item item = held.getItem();
 
         float damage;
         double range;
         int chiCost;
 
-        switch (step) {
-            case 1 -> { // Cross
-                damage = 4.0f;
-                range = 3.2;
-                chiCost = 1;
-                // Forward momentum
-                player.addVelocity(look.x * 0.15, 0.05, look.z * 0.15);
-                player.velocityModified = true;
+        if (item instanceof DualSwordsItem) {
+            range = 3.2;
+            switch (step) {
+                case 1 -> { damage = 6.5f; chiCost = 0; }
+                case 2 -> { damage = 7.5f; chiCost = 1; }
+                case 3 -> { damage = 10.5f; chiCost = 2; }
+                default -> { damage = 5.5f; chiCost = 0; }
             }
-            case 2 -> { // Low Kick
-                damage = 4.5f;
-                range = 2.8;
-                chiCost = 1;
+        } else if (item instanceof EarthHammerItem) {
+            range = 3.2;
+            switch (step) {
+                case 1 -> { damage = 9.0f; chiCost = 1; }
+                case 2 -> { damage = 10.5f; chiCost = 1; }
+                case 3 -> { damage = 14.5f; chiCost = 2; }
+                default -> { damage = 7.5f; chiCost = 0; }
             }
-            case 3 -> { // Roundhouse Finisher
-                damage = 7.0f;
-                range = 3.5;
-                chiCost = 2;
+        } else if (item instanceof WarFanItem) {
+            range = 3.0;
+            switch (step) {
+                case 1 -> { damage = 5.2f; chiCost = 0; }
+                case 2 -> { damage = 6.0f; chiCost = 1; }
+                case 3 -> { damage = 9.0f; chiCost = 2; }
+                default -> { damage = 4.5f; chiCost = 0; }
             }
-            default -> { // Jab
-                damage = 3.0f;
-                range = 2.8;
-                chiCost = 0;
+            // War fan deflects incoming projectiles
+            ElementalInteractions.deflectProjectiles(world, player, origin, look, 3.5, 1.2);
+        } else if (item instanceof WaterSpearItem) {
+            range = 4.2; // Extended piercing reach
+            switch (step) {
+                case 1 -> { damage = 7.0f; chiCost = 0; }
+                case 2 -> { damage = 8.0f; chiCost = 1; }
+                case 3 -> { damage = 11.5f; chiCost = 2; }
+                default -> { damage = 6.0f; chiCost = 0; }
+            }
+        } else if (item instanceof AirStaffItem) {
+            range = 3.6;
+            switch (step) {
+                case 1 -> { damage = 6.0f; chiCost = 0; }
+                case 2 -> { damage = 7.0f; chiCost = 1; }
+                case 3 -> { damage = 9.5f; chiCost = 2; }
+                default -> { damage = 5.0f; chiCost = 0; }
+            }
+        } else {
+            // Unarmed martial arts
+            switch (step) {
+                case 1 -> {
+                    damage = 4.0f;
+                    range = 3.2;
+                    chiCost = 1;
+                    player.addVelocity(look.x * 0.15, 0.05, look.z * 0.15);
+                    player.velocityModified = true;
+                }
+                case 2 -> {
+                    damage = 4.5f;
+                    range = 2.8;
+                    chiCost = 1;
+                }
+                case 3 -> {
+                    damage = 7.0f;
+                    range = 3.5;
+                    chiCost = 2;
+                }
+                default -> {
+                    damage = 3.0f;
+                    range = 2.8;
+                    chiCost = 0;
+                }
             }
         }
 
@@ -139,27 +225,38 @@ public final class MartialCombatServer {
 
         for (LivingEntity target : targets) {
             float finalDmg = damage;
-            if ("EARTH".equals(element)) {
+            if (item instanceof EarthHammerItem || "EARTH".equals(element)) {
                 BlockPos gPos = BlockPos.ofFloored(target.getPos().subtract(0, 0.5, 0));
                 finalDmg = ElementalInteractions.calculateEarthHardnessDamage(world, gPos, damage);
                 if (step == 3) {
-                    ElementalInteractions.applySeismicStagger(target, 35);
+                    ElementalInteractions.applySeismicStagger(target, 40);
                 }
-            } else if ("FIRE".equals(element)) {
-                if (step == 3) target.setOnFireForTicks(50);
-                else target.setOnFireForTicks(20);
-            } else if ("WATER".equals(element)) {
-                if (step == 2 || step == 3) {
-                    target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 30, 0));
+            }
+            if (item instanceof DualSwordsItem || "FIRE".equals(element)) {
+                if (step == 3) target.setOnFireForTicks(60);
+                else target.setOnFireForTicks(25);
+            }
+            if (item instanceof WaterSpearItem || "WATER".equals(element)) {
+                target.extinguish();
+                if (step >= 2) {
+                    target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 0));
                 }
-            } else if ("AIR".equals(element)) {
+                if (item instanceof WaterSpearItem && step == 3) {
+                    // Pull target closer
+                    Vec3d pull = player.getPos().subtract(target.getPos()).normalize().multiply(0.4);
+                    target.addVelocity(pull.x, 0.15, pull.z);
+                    target.velocityModified = true;
+                }
+            }
+            if (item instanceof AirStaffItem || "AIR".equals(element)) {
                 if (step == 3) {
-                    target.addVelocity(0, 0.4, 0);
+                    target.addVelocity(0, 0.45, 0);
+                    target.velocityModified = true;
                 }
             }
 
             if (step == 3) {
-                target.takeKnockback(1.0, -look.x, -look.z);
+                target.takeKnockback(item instanceof EarthHammerItem ? 1.5 : 1.0, -look.x, -look.z);
             } else {
                 target.takeKnockback(0.2, -look.x, -look.z);
             }
@@ -168,18 +265,53 @@ public final class MartialCombatServer {
             spawnTargetHitParticles(world, target.getPos().add(0, target.getHeight() * 0.5, 0), element, step);
         }
 
-        // Sounds
-        if (step == 3) {
-            world.playSound(null, player.getX(), player.getY(), player.getZ(),
-                    AvatarSounds.MARTIAL_KICK, SoundCategory.PLAYERS, 1.1f, 1.0f);
-            world.playSound(null, player.getX(), player.getY(), player.getZ(),
-                    AvatarSounds.HITSTOP_IMPACT, SoundCategory.PLAYERS, 1.2f, 1.4f);
-        } else if (step == 2) {
-            world.playSound(null, player.getX(), player.getY(), player.getZ(),
-                    AvatarSounds.MARTIAL_KICK, SoundCategory.PLAYERS, 1.0f, 1.2f);
+        // Play authoritative server sounds for nearby players
+        if (item instanceof EarthHammerItem) {
+            if (step == 3) {
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        AvatarSounds.EARTH_IMPACT_HEAVY, SoundCategory.PLAYERS, 1.3f, 1.0f);
+            } else {
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        SoundEvents.BLOCK_DEEPSLATE_HIT, SoundCategory.PLAYERS, 1.0f, 0.9f);
+            }
+        } else if (item instanceof DualSwordsItem) {
+            if (step == 3) {
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        AvatarSounds.FLAME_SWEEP_SLASH, SoundCategory.PLAYERS, 1.2f, 1.0f);
+            } else {
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0f, 1.2f);
+            }
+        } else if (item instanceof WaterSpearItem) {
+            if (step == 3) {
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        AvatarSounds.WATER_SPLASH_IMPACT, SoundCategory.PLAYERS, 1.2f, 0.9f);
+            } else {
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        AvatarSounds.WATER_WHIP_LASH, SoundCategory.PLAYERS, 1.0f, 1.2f);
+            }
+        } else if (item instanceof WarFanItem || item instanceof AirStaffItem) {
+            if (step == 3) {
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        AvatarSounds.AIR_STAFF_SWING, SoundCategory.PLAYERS, 1.2f, 1.5f);
+            } else {
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        AvatarSounds.AIR_STAFF_SWING, SoundCategory.PLAYERS, 0.9f, 1.2f);
+            }
         } else {
-            world.playSound(null, player.getX(), player.getY(), player.getZ(),
-                    AvatarSounds.MARTIAL_PUNCH, SoundCategory.PLAYERS, 0.9f, 1.2f + (step * 0.1f));
+            // Unarmed
+            if (step == 3) {
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        AvatarSounds.MARTIAL_KICK, SoundCategory.PLAYERS, 1.1f, 1.0f);
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        AvatarSounds.HITSTOP_IMPACT, SoundCategory.PLAYERS, 1.2f, 1.4f);
+            } else if (step == 2) {
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        AvatarSounds.MARTIAL_KICK, SoundCategory.PLAYERS, 1.0f, 1.2f);
+            } else {
+                world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        AvatarSounds.MARTIAL_PUNCH, SoundCategory.PLAYERS, 0.9f, 1.2f + (step * 0.1f));
+            }
         }
     }
 
