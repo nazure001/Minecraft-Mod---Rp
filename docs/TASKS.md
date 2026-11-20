@@ -181,6 +181,10 @@ Lihat `docs/CONTENT_SPEC.md` → "Skill List Lengkap" untuk katalog semua teknik
 - [x] **B-7** Emergency Avatar State Survival Reflex: auto-trigger saat health <= 2.0 (lethal/fatal), 100 Chi refill, full heal, Resistance IV, cataclysmic 4-element shockwave 8-block, 5-min cooldown (2026-11-20)
 - [x] **B-8** World & Entity Elemental Interactions: Fire Jab/Flame Sweep ground ignition, Air Palm/Air Blast vegetation clearing & deflection, Earth Boulder seismic stagger & vegetation clearing, Water Whip/Jet fire dousing & grass clearing (2026-11-20)
 - [x] **B-9** Earth Pillar martial arts manipulation: re-cast C atau left-click/punch saat pillar berdiri langsung kick/strike pillar (15 chi refund 50%), sneak+C raise 3-pillar curved Earth Wall (2026-11-20)
+- [x] **B-10** Earth Block Hardness Damage Scaling & Visual Sampling: formula Base + min(15.0, Hardness*1.5), proyektil EarthBoulder, BoulderLaunch, EarthPillar mengadopsi partikel dan damage dari blok tanah asal (Dirt, Stone, Deepslate, Obsidian) + actionbar HUD feedback (2026-11-20)
+- [x] **B-11** Water Stance: Katara "PickUp & Freeze" Sub-Branch: Water Whip Shift+C trigger Ice Spear Sniper (10.0 piercing dmg, 14-block reach, Powder Snow freezing ticks, Frosted Ice freezing), Water Jet Shift+Cast freezing ice bridges (2026-11-20)
+- [x] **B-12** In-Process Java Compilation & Memory Optimization: fork=false pada compileJava dan JVM memory flags hemat commit (-XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xss256k) menyelesaikan isu commit memory Windows paging file (2026-11-20)
+- [x] **B-13** Automated Test Suite Expansion: penambahan EarthHardnessScalingTest (11 parameterized test cases) untuk kurva skalasi matematis kekerasan batuan (2026-11-20)
 
 ---
 
