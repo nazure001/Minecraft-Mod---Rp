@@ -85,10 +85,16 @@ public final class FireBlastSkill {
         float radius = MIN_RADIUS + (MAX_RADIUS - MIN_RADIUS) * chargeRatio;
         float knockback = def.knockback() * (0.5f + 0.5f * chargeRatio);
 
+        boolean hasDualSwords = ElementalInteractions.isWeaponAffinity(player.getMainHandStack(), "FIRE");
+        if (hasDualSwords) {
+            damage *= 1.25f;
+            radius += 0.8f;
+        }
+
         Vec3d eyePos = player.getEyePos();
         Vec3d look = player.getRotationVec(1.0f);
         Vec3d spawnPos = eyePos.add(look.multiply(0.6));
-        Vec3d vel = look.multiply(BASE_SPEED);
+        Vec3d vel = look.multiply(hasDualSwords ? BASE_SPEED * 1.2f : BASE_SPEED);
 
         ServerWorld world = player.getServerWorld();
         FireBlastProjectileEntity entity =

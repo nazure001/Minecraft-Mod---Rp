@@ -55,9 +55,45 @@ public final class BoulderLaunchSkill {
         PlayerBendingData data = PlayerBendingData.get(player);
         SkillTimeline timeline = data.getTimeline();
 
-        // Launch on the first dispatched tick of ACTIVE (right after HOLD release)
-        if (timeline.phase() == SkillTimeline.Phase.ACTIVE && timeline.ticksInPhase() == 1) {
+        if (timeline.phase() == SkillTimeline.Phase.HOLD) {
+            tickHoldCharging(player, def, timeline);
+        } else if (timeline.phase() == SkillTimeline.Phase.ACTIVE && timeline.ticksInPhase() == 1) {
             launch(player, def, timeline.getChargeRatio());
+        }
+    }
+
+    private static void tickHoldCharging(ServerPlayerEntity player, SkillDefinition def, SkillTimeline timeline) {
+        float chargeRatio = timeline.getChargeRatio();
+        ServerWorld world = player.getServerWorld();
+        Vec3d eyePos = player.getEyePos();
+        Vec3d look = player.getRotationVec(1.0f);
+        Vec3d chargePos = eyePos.add(look.multiply(1.8));
+
+        boolean hasHammer = ElementalInteractions.isWeaponAffinity(player.getMainHandStack(), "EARTH");
+
+        // Swirling dust and stone chips around growing megalith
+        double spread = 0.3 + 0.8 * chargeRatio;
+        world.spawnParticles(AvatarParticles.STONE_CHIP,
+                chargePos.x, chargePos.y, chargePos.z,
+                (int) (3 + 6 * chargeRatio), spread, spread, spread, 0.04);
+        world.spawnParticles(AvatarParticles.DUST,
+                chargePos.x, chargePos.y, chargePos.z,
+                (int) (4 + 8 * chargeRatio), spread, spread, spread, 0.02);
+
+        // Periodic deep stone grinding rumble
+        if (timeline.ticksInPhase() % 8 == 0) {
+            float pitch = 1.3f - 0.7f * chargeRatio;
+            world.playSound(null, player.getBlockPos(),
+                    SoundEvents.BLOCK_STONE_HIT, SoundCategory.PLAYERS, 0.8f, pitch);
+        }
+
+        // Actionbar charge indicator
+        if (timeline.ticksInPhase() % 4 == 0) {
+            int pct = (int) (chargeRatio * 100);
+            int bars = (int) (chargeRatio * 10);
+            String barStr = "█".repeat(bars) + "░".repeat(Math.max(0, 10 - bars));
+            String title = hasHammer ? "§6[Earth Hammer Megalith] " : "§6[Boulder Launch] ";
+            player.sendMessage(Text.literal(title + "§e[" + barStr + "] " + pct + "%"), true);
         }
     }
 
@@ -96,6 +132,13 @@ public final class BoulderLaunchSkill {
         float aoe = MIN_AOE + (MAX_AOE - MIN_AOE) * chargeRatio;
         float speed = MIN_SPEED + (MAX_SPEED - MIN_SPEED) * chargeRatio;
 
+        boolean hasHammer = ElementalInteractions.isWeaponAffinity(player.getMainHandStack(), "EARTH");
+        if (hasHammer) {
+            damage *= 1.30f;
+            speed *= 1.15f;
+            aoe += 1.0f;
+        }
+
         Vec3d eyePos = player.getEyePos();
         Vec3d look = player.getRotationVec(1.0f);
         Vec3d spawnPos = eyePos.add(look.multiply(1.0));
@@ -106,7 +149,8 @@ public final class BoulderLaunchSkill {
 
         float bonus = damage - baseDamage;
         if (bonus > 0.5f) {
-            player.sendMessage(Text.literal("§6[Earth] Megalith dipadatkan dari " + groundState.getBlock().getName().getString() + " §e(+" + String.format(Locale.ROOT, "%.1f", bonus) + " DMG)"), true);
+            String hammerNote = hasHammer ? " §e[Hammer +30%]" : "";
+            player.sendMessage(Text.literal("§6[Earth] Megalith dipadatkan dari " + groundState.getBlock().getName().getString() + " §e(+" + String.format(Locale.ROOT, "%.1f", bonus) + " DMG)" + hammerNote), true);
         }
 
         float pitch = 0.9f - 0.3f * chargeRatio;
@@ -122,7 +166,49 @@ public final class BoulderLaunchSkill {
         if (state == null) return;
 
         ServerWorld world = player.getServerWorld();
-        Vec3d nextPos = state.pos().add(state.velocity());
+
+        // Auto-targeting guidance (soft homing): gently steer trajectory toward hostile targets in front
+        Vec3d curVel = state.velocity();
+        double curSpeed = curVel.length();
+        if (curSpeed > 0.05) {
+            Vec3d forwardDir = curVel.normalize();
+            Box searchBox = Box.of(state.pos().add(forwardDir.multiply(8.0)), 24.0, 16.0, 24.0);
+            List<LivingEntity> potentialTargets = world.getEntitiesByClass(
+                    LivingEntity.class, searchBox,
+                    e -> e != player && e.isAlive() && !e.isTeammate(player) && !e.isSpectator()
+            );
+
+            LivingEntity bestTarget = null;
+            double bestScore = -1.0;
+
+            for (LivingEntity entity : potentialTargets) {
+                Vec3d toTarget = entity.getBoundingBox().getCenter().subtract(state.pos());
+                double dist = toTarget.length();
+                if (dist > 0.5 && dist <= 24.0) {
+                    Vec3d dirToTarget = toTarget.normalize();
+                    double dot = forwardDir.dotProduct(dirToTarget);
+                    // Within a 50-degree forward cone (dot > 0.64)
+                    if (dot > 0.64) {
+                        double score = dot / Math.sqrt(dist);
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestTarget = entity;
+                        }
+                    }
+                }
+            }
+
+            if (bestTarget != null) {
+                Vec3d targetCenter = bestTarget.getBoundingBox().getCenter();
+                Vec3d desiredDir = targetCenter.subtract(state.pos()).normalize();
+                boolean hasHammer = ElementalInteractions.isWeaponAffinity(player.getMainHandStack(), "EARTH");
+                float steerStrength = hasHammer ? 0.22f : 0.16f;
+                Vec3d steeredDir = forwardDir.multiply(1.0 - steerStrength).add(desiredDir.multiply(steerStrength)).normalize();
+                curVel = steeredDir.multiply(curSpeed);
+            }
+        }
+
+        Vec3d nextPos = state.pos().add(curVel);
         float r = state.hitboxRadius();
 
         // Trail VFX: debris sized by boulder radius and colored by block type
@@ -159,7 +245,7 @@ public final class BoulderLaunchSkill {
             world.spawnParticles(debris, nextPos.x, nextPos.y, nextPos.z, 12, r * 0.5, r * 0.5, r * 0.5, 0.1);
             BOULDERS.remove(id);
         } else {
-            BOULDERS.put(id, new BoulderState(nextPos, state.velocity(), ticksLeft,
+            BOULDERS.put(id, new BoulderState(nextPos, curVel, ticksLeft,
                     state.damage(), state.knockback(), r, state.aoeRadius(), state.chargeRatio(), state.blockState()));
         }
     }

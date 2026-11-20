@@ -82,6 +82,7 @@ public final class CinematicVfxController {
     // Server-authoritative positions received before or alongside the ACTIVE phase sync
     private static final Map<VfxKey, Vec3d> SERVER_POSITIONS = new ConcurrentHashMap<>();
     private static final Map<VfxKey, List<Vec3d>> PENDING_WALL_POSITIONS = new ConcurrentHashMap<>();
+    private static final Map<VfxKey, String> VFX_PHASES = new ConcurrentHashMap<>();
     private static final List<FlyingMegalithVfx> FLYING_MEGALITHS_CLIENT = new CopyOnWriteArrayList<>();
 
     public static final class FlyingMegalithVfx {
@@ -261,6 +262,7 @@ public final class CinematicVfxController {
         }
 
         VfxKey key = new VfxKey(casterUuid, castSerial, skillId);
+        VFX_PHASES.put(key, phase);
 
         if ("ACTIVE".equals(phase) || "HOLD".equals(phase)) {
             // If caster started a new serial, clean up any previous entities for this caster
@@ -529,23 +531,53 @@ public final class CinematicVfxController {
                         new org.joml.Quaternionf()
                 ));
             } else if (type == VfxType.BOULDER_LAUNCH_MEGALITH) {
-                Vec3d look = Vec3d.fromPolar(entity.getPitch(), entity.getYaw());
-                entity.setPosition(entity.getX() + look.x * 1.35, entity.getY() + look.y * 1.35, entity.getZ() + look.z * 1.35);
-                if (client.world != null) {
-                    client.world.addParticle(com.avatarmod.elements.particle.AvatarParticles.STONE_CHIP, entity.getX(), entity.getY(), entity.getZ(), 0.0, 0.04, 0.0);
-                    client.world.addParticle(com.avatarmod.elements.particle.AvatarParticles.DUST, entity.getX(), entity.getY() + 0.1, entity.getZ(), 0.0, 0.02, 0.0);
-                    net.minecraft.util.math.BlockPos bp = net.minecraft.util.math.BlockPos.ofFloored(entity.getPos());
-                    if (!client.world.getBlockState(bp).getCollisionShape(client.world, bp).isEmpty()) {
-                        entity.discard();
-                        expired.add(key);
-                        spawnTransientVfx(VfxType.MARTIAL_SHOCKWAVE, entity.getPos(), 0.0f, 0.0f);
-                        spawnTransientVfx(VfxType.HITSTOP_FLASH, entity.getPos().add(0, 0.8, 0), 0.0f, 0.0f);
-                        com.avatarmod.elements.client.camera.AvatarCameraDirector.triggerShake(0.65f, 8);
+                String phase = VFX_PHASES.getOrDefault(key, "ACTIVE");
+
+                if ("HOLD".equals(phase) && caster != null) {
+                    // Hover and expand in front of the caster during charge
+                    Vec3d look = caster.getRotationVec(1.0f);
+                    Vec3d hoverPos = caster.getEyePos().add(look.multiply(1.8));
+                    double jitter = Math.sin(vfx.ageTicks() * 0.9) * 0.03;
+                    entity.setPosition(hoverPos.x, hoverPos.y - 0.2 + jitter, hoverPos.z);
+                    entity.setYaw(caster.getYaw());
+                    entity.setPitch(caster.getPitch());
+
+                    // Progressive swelling scale: from 0.8 up to 2.8 (or 3.5 if holding hammer)
+                    float holdProgress = Math.min(1.0f, (float) vfx.ageTicks() / 40.0f);
+                    boolean hasHammer = caster.getMainHandStack().getItem() instanceof com.avatarmod.elements.item.EarthHammerItem;
+                    float maxScale = hasHammer ? 3.5f : 2.8f;
+                    float currentScale = 0.8f + (maxScale - 0.8f) * holdProgress;
+
+                    Vector3f scaleVec = new Vector3f(currentScale, currentScale, currentScale);
+                    dispAcc.invokeSetTransformation(VfxTransformUtil.createSlashTransform(entity.getYaw(), entity.getPitch(), scaleVec, vfx.ageTicks() * 0.15f));
+
+                    if (client.world != null) {
+                        client.world.addParticle(com.avatarmod.elements.particle.AvatarParticles.STONE_CHIP,
+                                hoverPos.x + (Math.random() - 0.5) * currentScale * 0.6,
+                                hoverPos.y + (Math.random() - 0.5) * currentScale * 0.6,
+                                hoverPos.z + (Math.random() - 0.5) * currentScale * 0.6,
+                                0.0, 0.02, 0.0);
                     }
+                } else {
+                    // ACTIVE phase: flying projectile
+                    Vec3d look = Vec3d.fromPolar(entity.getPitch(), entity.getYaw());
+                    entity.setPosition(entity.getX() + look.x * 1.35, entity.getY() + look.y * 1.35, entity.getZ() + look.z * 1.35);
+                    if (client.world != null) {
+                        client.world.addParticle(com.avatarmod.elements.particle.AvatarParticles.STONE_CHIP, entity.getX(), entity.getY(), entity.getZ(), 0.0, 0.04, 0.0);
+                        client.world.addParticle(com.avatarmod.elements.particle.AvatarParticles.DUST, entity.getX(), entity.getY() + 0.1, entity.getZ(), 0.0, 0.02, 0.0);
+                        net.minecraft.util.math.BlockPos bp = net.minecraft.util.math.BlockPos.ofFloored(entity.getPos());
+                        if (!client.world.getBlockState(bp).getCollisionShape(client.world, bp).isEmpty()) {
+                            entity.discard();
+                            expired.add(key);
+                            spawnTransientVfx(VfxType.MARTIAL_SHOCKWAVE, entity.getPos(), 0.0f, 0.0f);
+                            spawnTransientVfx(VfxType.HITSTOP_FLASH, entity.getPos().add(0, 0.8, 0), 0.0f, 0.0f);
+                            com.avatarmod.elements.client.camera.AvatarCameraDirector.triggerShake(0.65f, 8);
+                        }
+                    }
+                    float progress = Math.min(1.0f, (float) vfx.ageTicks() / (float) vfx.maxAgeTicks());
+                    Vector3f scale = VfxTransformUtil.scaleInterpolation(type.baseScale(), type.targetScale(), progress);
+                    dispAcc.invokeSetTransformation(VfxTransformUtil.createSlashTransform(entity.getYaw(), entity.getPitch(), scale, vfx.ageTicks() * 0.4f));
                 }
-                float progress = Math.min(1.0f, (float) vfx.ageTicks() / (float) vfx.maxAgeTicks());
-                Vector3f scale = VfxTransformUtil.scaleInterpolation(type.baseScale(), type.targetScale(), progress);
-                dispAcc.invokeSetTransformation(VfxTransformUtil.createSlashTransform(entity.getYaw(), entity.getPitch(), scale, vfx.ageTicks() * 0.4f));
             } else if (type == VfxType.WATER_WHIP_STREAM) {
                 float progress = Math.min(1.0f, (float) vfx.ageTicks() / (float) vfx.maxAgeTicks());
                 float stretchZ = progress < 0.4f ? progress / 0.4f : 1.0f - (progress - 0.4f) / 0.6f;

@@ -17,6 +17,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -123,6 +124,12 @@ public final class EarthPillarSkill {
 
     public static void tick(ServerPlayerEntity player, SkillDefinition def) {
         SkillTimeline timeline = PlayerBendingData.get(player).getTimeline();
+
+        if (timeline.phase() == SkillTimeline.Phase.HOLD) {
+            tickChannelingWall(player, def, timeline);
+            return;
+        }
+
         if (timeline.phase() != SkillTimeline.Phase.ACTIVE) {
             return;
         }
@@ -142,6 +149,14 @@ public final class EarthPillarSkill {
                     PlayerBendingData.get(player).regenChi(def.chiCost() / 2);
                     return;
                 }
+            }
+
+            // Check if fortress walls were already channeled during HOLD phase
+            ActivePillar existing = ACTIVE_PILLARS.get(player.getUuid());
+            if (existing != null && !existing.positions().isEmpty()) {
+                world.playSound(null, player.getBlockPos(),
+                        SoundEvents.BLOCK_DEEPSLATE_PLACE, SoundCategory.PLAYERS, 1.2f, 0.7f);
+                return;
             }
 
             PlayerBendingData data = PlayerBendingData.get(player);
@@ -200,6 +215,79 @@ public final class EarthPillarSkill {
         }
     }
 
+    private static void tickChannelingWall(ServerPlayerEntity player, SkillDefinition def, SkillTimeline timeline) {
+        ServerWorld world = player.getServerWorld();
+        int ticks = timeline.ticksInPhase();
+        boolean hasHammer = ElementalInteractions.isWeaponAffinity(player.getMainHandStack(), "EARTH");
+        int interval = hasHammer ? 2 : 3;
+
+        if (ticks % interval != 0) return;
+
+        // Find ground position ~4.2m in front along look vector
+        Vec3d cursorCenter = findPillarCenter(player, world, 4.2f);
+        cursorCenter = snapToGround(world, cursorCenter);
+
+        ActivePillar active = ACTIVE_PILLARS.get(player.getUuid());
+        int serial = SkillNetworking.currentSerial(player.getUuid());
+
+        if (active == null) {
+            // First segment of channeled wall
+            PlayerBendingData data = PlayerBendingData.get(player);
+            int cost = hasHammer ? 2 : 4;
+            if (!data.trySpendChi(cost)) {
+                player.sendMessage(Text.literal("§c[Chi Habis] Benteng tidak dapat dibentuk lebih jauh!"), true);
+                return;
+            }
+
+            BlockPos groundPos = BlockPos.ofFloored(cursorCenter);
+            BlockState groundState = world.getBlockState(groundPos.down());
+            if (groundState.isAir() || groundState.getFluidState().isIn(FluidTags.WATER)) {
+                groundState = world.getBlockState(groundPos);
+            }
+            if (groundState.isAir() || groundState.getFluidState().isIn(FluidTags.WATER)) {
+                groundState = Blocks.STONE.getDefaultState();
+            }
+
+            List<Vec3d> positions = new ArrayList<>();
+            positions.add(cursorCenter);
+
+            active = new ActivePillar(UUID.randomUUID(), player.getUuid(), positions, PILLAR_DURATION_TICKS, PILLAR_MAX_HITS, groundState);
+            ACTIVE_PILLARS.put(player.getUuid(), active);
+
+            SkillNetworking.broadcastSkillPosition(player, "avatar:earth_pillar", serial, cursorCenter.x, cursorCenter.y, cursorCenter.z);
+            erupt(player, world, cursorCenter, def);
+            world.playSound(null, BlockPos.ofFloored(cursorCenter), SoundEvents.BLOCK_STONE_PLACE, SoundCategory.PLAYERS, 1.0f, 0.8f);
+        } else {
+            // Check distance to all existing segments
+            double minDistSq = Double.MAX_VALUE;
+            for (Vec3d pos : active.positions()) {
+                double dSq = pos.squaredDistanceTo(cursorCenter);
+                if (dSq < minDistSq) minDistSq = dSq;
+            }
+
+            // If cursor moved to a new adjacent spot (1.6m <= dist <= 8.0m)
+            if (minDistSq >= 2.5 && minDistSq <= 64.0) {
+                PlayerBendingData data = PlayerBendingData.get(player);
+                int cost = hasHammer ? 2 : 3;
+                if (!data.trySpendChi(cost)) {
+                    player.sendMessage(Text.literal("§c[Chi Habis] Benteng terkunci!"), true);
+                    return;
+                }
+
+                active.positions().add(cursorCenter);
+                SkillNetworking.broadcastSkillPosition(player, "avatar:earth_pillar", serial, cursorCenter.x, cursorCenter.y, cursorCenter.z);
+                erupt(player, world, cursorCenter, def);
+
+                world.playSound(null, BlockPos.ofFloored(cursorCenter), SoundEvents.BLOCK_STONE_PLACE, SoundCategory.PLAYERS, 1.0f, 0.8f);
+
+                int count = active.positions().size();
+                String label = count >= 8 ? "§6[Earth Fortress] Benteng Lingkaran Lengkap! (" + count + " pilar)"
+                                          : "§e[Earth Wall] Segmen benteng bertambah (" + count + " pilar)";
+                player.sendMessage(Text.literal(label), true);
+            }
+        }
+    }
+
     public static ActivePillar getActivePillar(UUID casterUuid) {
         return ACTIVE_PILLARS.get(casterUuid);
     }
@@ -245,6 +333,10 @@ public final class EarthPillarSkill {
 
         BlockPos groundPos = BlockPos.ofFloored(pillar.center());
         float megalithDmg = ElementalInteractions.calculateEarthHardnessDamage(world, groundPos, MEGALITH_DAMAGE);
+        boolean hasHammer = ElementalInteractions.isWeaponAffinity(player.getMainHandStack(), "EARTH");
+        if (hasHammer) {
+            megalithDmg *= 1.30f;
+        }
 
         ACTIVE_PILLARS.remove(pillar.casterUuid());
 
@@ -569,18 +661,20 @@ public final class EarthPillarSkill {
     }
 
     private static void erupt(ServerPlayerEntity player, ServerWorld world, Vec3d center, SkillDefinition def) {
+        boolean hasHammer = ElementalInteractions.isWeaponAffinity(player.getMainHandStack(), "EARTH");
+        float dmg = hasHammer ? def.damage() * 1.30f : def.damage();
         Box footprint = new Box(
                 center.x - FOOTPRINT_RADIUS, center.y - 0.5, center.z - FOOTPRINT_RADIUS,
-                center.x + FOOTPRINT_RADIUS, center.y + PILLAR_HEIGHT + 0.5, center.z + FOOTPRINT_RADIUS);
+                center.x + FOOTPRINT_RADIUS, center.y + (hasHammer ? PILLAR_HEIGHT * 1.3f : PILLAR_HEIGHT) + 0.5, center.z + FOOTPRINT_RADIUS);
         List<LivingEntity> targets = world.getEntitiesByClass(
                 LivingEntity.class, footprint, e -> e != player && e.isAlive());
 
         DamageSource source = world.getDamageSources().playerAttack(player);
         for (LivingEntity target : targets) {
-            target.damage(source, def.damage());
-            ElementalInteractions.applySeismicStagger(target, 40);
+            target.damage(source, dmg);
+            ElementalInteractions.applySeismicStagger(target, hasHammer ? 60 : 40);
             Vec3d vel = target.getVelocity();
-            target.setVelocity(vel.x * 0.4, LAUNCH_VELOCITY, vel.z * 0.4);
+            target.setVelocity(vel.x * 0.4, hasHammer ? LAUNCH_VELOCITY * 1.25f : LAUNCH_VELOCITY, vel.z * 0.4);
             target.velocityModified = true;
         }
 

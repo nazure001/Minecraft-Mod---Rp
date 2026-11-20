@@ -52,7 +52,9 @@ public final class WaterWhipSkill {
             return;
         }
 
-        double range = def.range();
+        boolean hasSpear = ElementalInteractions.isWeaponAffinity(player.getMainHandStack(), "WATER");
+        double range = hasSpear ? def.range() + 2.5 : def.range();
+        float damage = hasSpear ? def.damage() * 1.30f : def.damage();
 
         double padding = 1.4;
         Vec3d end = origin.add(look.multiply(range + 0.5));
@@ -67,10 +69,14 @@ public final class WaterWhipSkill {
 
         DamageSource source = world.getDamageSources().playerAttack(player);
         for (LivingEntity target : targets) {
-            target.damage(source, def.damage());
-            ElementalInteractions.applyWater(target, 80, 1);
+            target.damage(source, damage);
+            ElementalInteractions.applyWater(target, hasSpear ? 120 : 80, hasSpear ? 2 : 1);
+            if (hasSpear) {
+                ElementalInteractions.applyFreezing(target, 100, 60);
+            }
             // Pull toward player
-            Vec3d pull = player.getPos().subtract(target.getPos()).normalize().multiply(def.knockback());
+            double pullMult = hasSpear ? def.knockback() * 1.4 : def.knockback();
+            Vec3d pull = player.getPos().subtract(target.getPos()).normalize().multiply(pullMult);
             target.addVelocity(pull.x, 0.15 + pull.y * 0.5, pull.z);
             target.velocityModified = true;
         }

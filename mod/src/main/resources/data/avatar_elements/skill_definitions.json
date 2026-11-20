@@ -204,7 +204,9 @@
       "knockback": 0.0,
       "hitboxShape": "SPHERE",
       "cancelOnHit": false,
-      "comboWindowTicks": 0
+      "comboWindowTicks": 0,
+      "castType": "HOLD_RELEASE",
+      "maxChargeTicks": 80
     },
     {
       "id": "avatar:boulder_launch",

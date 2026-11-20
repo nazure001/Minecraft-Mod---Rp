@@ -297,4 +297,33 @@ public final class ElementalInteractions {
             sw.playSound(null, target.getBlockPos(), SoundEvents.ENTITY_PLAYER_HURT_FREEZE, SoundCategory.PLAYERS, 0.8f, 1.2f);
         }
     }
+
+    // --- WEAPON AFFINITY & BENDING SYNERGY ---
+
+    /**
+     * Checks if the held weapon matches and amplifies the active bending element:
+     * - Fire: Zuko Dual Broadswords (DualSwordsItem)
+     * - Earth: Earth Kingdom Warhammer (EarthHammerItem)
+     * - Air: Kyoshi War Fan (WarFanItem) or Air Nomad Staff (AirStaffItem)
+     * - Water: Water Tribe Harpoon Spear (WaterSpearItem)
+     */
+    public static boolean isWeaponAffinity(net.minecraft.item.ItemStack stack, String element) {
+        if (stack == null || stack.isEmpty() || element == null) return false;
+        var item = stack.getItem();
+        return switch (element.toUpperCase()) {
+            case "FIRE"  -> item instanceof com.avatarmod.elements.item.DualSwordsItem;
+            case "EARTH" -> item instanceof com.avatarmod.elements.item.EarthHammerItem;
+            case "AIR"   -> item instanceof com.avatarmod.elements.item.WarFanItem || item instanceof com.avatarmod.elements.item.AirStaffItem;
+            case "WATER" -> item instanceof com.avatarmod.elements.item.WaterSpearItem;
+            default      -> false;
+        };
+    }
+
+    public static float getWeaponDamageMultiplier(net.minecraft.item.ItemStack stack, String element) {
+        return isWeaponAffinity(stack, element) ? 1.25f : 1.0f;
+    }
+
+    public static float getWeaponSpeedMultiplier(net.minecraft.item.ItemStack stack, String element) {
+        return isWeaponAffinity(stack, element) ? 1.20f : 1.0f;
+    }
 }

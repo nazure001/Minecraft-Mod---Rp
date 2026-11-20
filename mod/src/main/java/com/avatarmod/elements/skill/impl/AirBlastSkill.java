@@ -31,7 +31,12 @@ public final class AirBlastSkill {
         ServerWorld world = player.getServerWorld();
         Vec3d origin = player.getEyePos();
         Vec3d look = player.getRotationVec(1.0f);
-        double range = def.range();
+
+        boolean hasAirWeapon = ElementalInteractions.isWeaponAffinity(player.getMainHandStack(), "AIR");
+        double range = hasAirWeapon ? def.range() + 2.5 : def.range();
+        float knockback = hasAirWeapon ? def.knockback() * 1.35f : def.knockback();
+        float damage = hasAirWeapon ? def.damage() * 1.25f : def.damage();
+
         final double padding = Math.min(1.0 + range * 0.1, 2.0);
         Vec3d end = origin.add(look.multiply(range));
 
@@ -46,12 +51,12 @@ public final class AirBlastSkill {
 
         DamageSource source = world.getDamageSources().playerAttack(player);
         for (LivingEntity target : targets) {
-            target.damage(source, def.damage());
+            target.damage(source, damage);
             Vec3d knockDir = target.getPos().subtract(player.getPos()).normalize();
             target.addVelocity(
-                    knockDir.x * def.knockback(),
-                    0.25 + def.knockback() * 0.15,
-                    knockDir.z * def.knockback()
+                    knockDir.x * knockback,
+                    0.25 + knockback * 0.15,
+                    knockDir.z * knockback
             );
             target.velocityModified = true;
         }
