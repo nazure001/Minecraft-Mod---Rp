@@ -205,5 +205,49 @@
         "attenuation_distance": 0
       }
     ]
+  },
+  "combat.martial_punch": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.martial_punch",
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.attack.sweep",
+        "stream": false,
+        "pitch": 1.2
+      }
+    ]
+  },
+  "combat.martial_kick": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.martial_kick",
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.attack.knockback",
+        "stream": false,
+        "pitch": 1.1
+      }
+    ]
+  },
+  "combat.martial_dive": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.martial_dive",
+    "sounds": [
+      {
+        "name": "minecraft:entity.generic.explode",
+        "stream": false,
+        "pitch": 1.4
+      }
+    ]
+  },
+  "combat.hitstop_impact": {
+    "category": "players",
+    "subtitle": "subtitles.avatar_elements.hitstop_impact",
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.attack.crit",
+        "stream": false,
+        "pitch": 1.5
+      }
+    ]
   }
 }

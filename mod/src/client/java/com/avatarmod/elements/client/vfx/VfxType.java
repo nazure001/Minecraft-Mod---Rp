@@ -133,6 +133,36 @@ public enum VfxType {
             new Vector3f(1.5f, 1.5f, 1.5f),
             15.0f,
             true
+    ),
+    MARTIAL_SHOCKWAVE(
+            "avatar:martial_shockwave",
+            1011,
+            Items.NETHER_STAR,
+            12,
+            new Vector3f(0.5f, 0.05f, 0.5f),
+            new Vector3f(3.5f, 0.05f, 3.5f),
+            0.0f,
+            false
+    ),
+    HITSTOP_FLASH(
+            "avatar:hitstop_flash",
+            1012,
+            Items.GLOWSTONE_DUST,
+            6,
+            new Vector3f(0.8f, 0.8f, 0.8f),
+            new Vector3f(1.8f, 1.8f, 1.8f),
+            45.0f,
+            false
+    ),
+    DIVE_KICK_TRAIL(
+            "avatar:dive_kick_trail",
+            1013,
+            Items.FEATHER,
+            15,
+            new Vector3f(0.8f, 2.0f, 0.8f),
+            new Vector3f(1.4f, 2.5f, 1.4f),
+            25.0f,
+            true
     );
 
     private final String skillId;

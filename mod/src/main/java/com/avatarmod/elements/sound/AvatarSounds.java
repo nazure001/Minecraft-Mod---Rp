@@ -29,6 +29,10 @@ public final class AvatarSounds {
     public static final SoundEvent EARTH_IMPACT_HEAVY = register("earth.earth_impact_heavy");
     public static final SoundEvent UI_SCROLL_OPEN = register("ui.ui_scroll_open");
     public static final SoundEvent UI_BUTTON_CLICK = register("ui.ui_button_click");
+    public static final SoundEvent MARTIAL_PUNCH = register("combat.martial_punch");
+    public static final SoundEvent MARTIAL_KICK = register("combat.martial_kick");
+    public static final SoundEvent MARTIAL_DIVE = register("combat.martial_dive");
+    public static final SoundEvent HITSTOP_IMPACT = register("combat.hitstop_impact");
 
     private static SoundEvent register(String path) {
         Identifier id = Identifier.of(MOD_ID, path);

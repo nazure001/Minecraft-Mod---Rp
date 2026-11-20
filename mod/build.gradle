@@ -50,6 +50,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    maxParallelForks = 1
     maxHeapSize = '384m'
     jvmArgs '-XX:TieredStopAtLevel=1', '-Xss256k'
 }

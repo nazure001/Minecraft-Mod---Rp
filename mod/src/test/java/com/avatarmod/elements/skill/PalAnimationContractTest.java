@@ -70,6 +70,18 @@ class PalAnimationContractTest {
         verifyAnimationFile(weaponName, expectedDuration);
     }
 
+    @ParameterizedTest(name = "Martial arts combo animation {0} matches duration {1}s and rig contract")
+    @CsvSource({
+            "martial_jab, 0.35",
+            "martial_cross, 0.40",
+            "martial_lowkick, 0.45",
+            "martial_roundhouse, 0.55",
+            "martial_dive_kick, 0.60"
+    })
+    void testMartialArtsAnimationContract(String animName, double expectedDuration) throws IOException {
+        verifyAnimationFile(animName, expectedDuration);
+    }
+
     @Test
     @DisplayName("Verify all 14 skills in skill_definitions.json align with their PAL animation durations")
     void testAllSkillsInDefinitionsAlignWithAnimationDurations() throws IOException {
