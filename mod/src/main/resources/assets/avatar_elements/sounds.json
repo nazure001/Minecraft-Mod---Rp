@@ -1,0 +1,56 @@
+{
+  "fire.jab": {
+    "subtitle": "subtitles.avatar_elements.fire.jab",
+    "sounds": [
+      {
+        "name": "avatar_elements:fire_jab",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "air.blast": {
+    "subtitle": "subtitles.avatar_elements.air.blast",
+    "sounds": [
+      {
+        "name": "avatar_elements:air_blast",
+        "attenuation_distance": 18
+      }
+    ]
+  },
+  "water.whip": {
+    "subtitle": "subtitles.avatar_elements.water.whip",
+    "sounds": [
+      {
+        "name": "avatar_elements:water_whip",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "earth.impact": {
+    "subtitle": "subtitles.avatar_elements.earth.impact",
+    "sounds": [
+      {
+        "name": "avatar_elements:earth_impact",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "lightning.cast": {
+    "subtitle": "subtitles.avatar_elements.lightning.cast",
+    "sounds": [
+      {
+        "name": "avatar_elements:lightning_cast",
+        "attenuation_distance": 28
+      }
+    ]
+  },
+  "healing.chime": {
+    "subtitle": "subtitles.avatar_elements.healing.chime",
+    "sounds": [
+      {
+        "name": "avatar_elements:healing_chime",
+        "attenuation_distance": 14
+      }
+    ]
+  }
+}
