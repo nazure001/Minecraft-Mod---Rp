@@ -8,33 +8,34 @@ import org.lwjgl.glfw.GLFW;
 public final class AvatarKeyBindings {
 
     // Skill slot defaults; players can rebind these in Controls.
+    // Ergonomic WASD action layout: R (Slot 1), F (Slot 2), V (Slot 3), G (Slot 4), X (Slot 5 Ultimate)
     public static final KeyBinding SLOT_1 = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.avatar_elements.slot_1", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Z,
+            "key.avatar_elements.slot_1", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R,
             "category.avatar_elements.general"));
 
     public static final KeyBinding SLOT_2 = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.avatar_elements.slot_2", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_X,
+            "key.avatar_elements.slot_2", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F,
             "category.avatar_elements.general"));
 
     public static final KeyBinding SLOT_3 = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.avatar_elements.slot_3", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_C,
+            "key.avatar_elements.slot_3", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V,
             "category.avatar_elements.general"));
 
     public static final KeyBinding SLOT_4 = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.avatar_elements.slot_4", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V,
+            "key.avatar_elements.slot_4", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G,
             "category.avatar_elements.general"));
 
     public static final KeyBinding SLOT_5 = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.avatar_elements.slot_5", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B,
+            "key.avatar_elements.slot_5", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_X,
             "category.avatar_elements.general"));
 
-    // Element wheel default; players can rebind this in Controls.
+    // Element wheel default (Thumb access next to Space)
     public static final KeyBinding ELEMENT_WHEEL = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.avatar_elements.element_wheel", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R,
+            "key.avatar_elements.element_wheel", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_C,
             "category.avatar_elements.general"));
 
     public static final KeyBinding ELEMENT_SELECTOR = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.avatar_elements.element_selector", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G,
+            "key.avatar_elements.element_selector", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B,
             "category.avatar_elements.general"));
 
     public static final KeyBinding SKILL_TREE = KeyBindingHelper.registerKeyBinding(new KeyBinding(

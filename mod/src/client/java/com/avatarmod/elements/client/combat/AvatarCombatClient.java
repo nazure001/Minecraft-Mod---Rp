@@ -44,6 +44,11 @@ public final class AvatarCombatClient {
             return false;
         }
 
+        // If holding empty hand and looking at a block, allow vanilla mining/interaction without martial intercept
+        if (held.isEmpty() && client.crosshairTarget != null && client.crosshairTarget.getType() == net.minecraft.util.hit.HitResult.Type.BLOCK) {
+            return false;
+        }
+
         // If player is interacting with an Earth Pillar, execute the martial kick!
         if (CinematicVfxController.hasNearbyPillarClient(client.player.getPos(), 5.5)) {
             executePillarKick(client);
@@ -462,24 +467,25 @@ public final class AvatarCombatClient {
             client.player.swingHand(Hand.OFF_HAND);
         }
 
+        boolean hitEntity = client.crosshairTarget != null && client.crosshairTarget.getType() == net.minecraft.util.hit.HitResult.Type.ENTITY;
+
         if (currentStep == 3) {
             client.player.playSound(AvatarSounds.MARTIAL_KICK, 1.1f, 1.0f);
-            client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.2f, 1.4f);
-            AvatarCameraDirector.triggerRoll(-8.0f, 10);
-            AvatarCameraDirector.triggerShake(0.50f, 8);
-            spawnImpactVfx(client);
+            if (hitEntity) {
+                client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.2f, 1.4f);
+                AvatarCameraDirector.triggerRoll(-4.0f, 6);
+                AvatarCameraDirector.triggerShake(0.25f, 5);
+                spawnImpactVfx(client);
+            }
         } else if (currentStep == 2) {
             client.player.playSound(AvatarSounds.MARTIAL_KICK, 1.0f, 1.2f);
-            AvatarCameraDirector.triggerRoll(-5.0f, 8);
-            AvatarCameraDirector.triggerShake(0.25f, 5);
+            if (hitEntity) {
+                AvatarCameraDirector.triggerShake(0.15f, 3);
+            }
         } else if (currentStep == 1) {
             client.player.playSound(AvatarSounds.MARTIAL_PUNCH, 0.9f, 1.3f);
-            AvatarCameraDirector.triggerRoll(4.0f, 7);
-            AvatarCameraDirector.triggerShake(0.20f, 5);
         } else {
             client.player.playSound(AvatarSounds.MARTIAL_PUNCH, 0.9f, 1.2f);
-            AvatarCameraDirector.triggerRoll(2.5f, 6);
-            AvatarCameraDirector.triggerShake(0.15f, 4);
         }
 
         ClientPlayNetworking.send(new SkillPackets.C2SMartialAttack(currentStep, false));

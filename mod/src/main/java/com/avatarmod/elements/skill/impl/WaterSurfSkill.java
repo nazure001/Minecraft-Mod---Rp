@@ -69,13 +69,24 @@ public final class WaterSurfSkill {
 
         // 3. Direction & Speed calculation with Water Spear synergy
         Vec3d look = player.getRotationVec(1.0f);
+        double speedMultiplier = ElementalInteractions.getWeaponSpeedMultiplier(player.getMainHandStack(), "WATER");
+        double speed = BASE_SPEED * speedMultiplier;
+
+        // Dynamic 3D Trajectory: allow curving upward into the sky if player pitches upward (surfing water ramp)
+        double verticalPitch = look.y;
+        double targetVy;
+        if (verticalPitch > 0.15) {
+            targetVy = verticalPitch * speed * 0.85; // Elevate / soar into air
+        } else if (verticalPitch < -0.25) {
+            targetVy = verticalPitch * speed * 0.70; // Dive downward
+        } else {
+            targetVy = 0.02; // Flat glide
+        }
+
         double horizLen = Math.sqrt(look.x * look.x + look.z * look.z);
         Vec3d forward = horizLen > 1e-4
                 ? new Vec3d(look.x / horizLen, 0, look.z / horizLen)
                 : new Vec3d(0, 0, 1);
-
-        double speedMultiplier = ElementalInteractions.getWeaponSpeedMultiplier(player.getMainHandStack(), "WATER");
-        double speed = BASE_SPEED * speedMultiplier;
 
         // Check if riding on water vs skating over solid land
         boolean onWater = isWaterSurface(world, playerPos);
@@ -83,24 +94,24 @@ public final class WaterSurfSkill {
         if (onWater) {
             // === MODE A: WATER SURF ===
             double surfaceY = findWaterSurfaceY(world, playerPos);
-            double vy = 0.08;
-            if (!Double.isNaN(surfaceY)) {
+            double vy = targetVy;
+            if (!Double.isNaN(surfaceY) && verticalPitch <= 0.15) {
                 double diff = (surfaceY + 0.35) - player.getY();
                 vy = Math.min(Math.max(diff * 0.45, -0.30), 0.40);
             }
             player.setVelocity(forward.x * speed * 1.15, vy, forward.z * speed * 1.15);
             player.velocityModified = true;
 
-            // Water wake & splash particle spray
+            // Water wake & splash particle spray (layered fluid visuals)
             world.spawnParticles(ParticleTypes.SPLASH,
                     player.getX(), player.getY() + 0.1, player.getZ(),
-                    6, 0.35, 0.1, 0.35, 0.08);
+                    10, 0.45, 0.15, 0.45, 0.12);
             world.spawnParticles(ParticleTypes.BUBBLE,
                     player.getX(), player.getY() + 0.05, player.getZ(),
-                    4, 0.25, 0.05, 0.25, 0.04);
+                    6, 0.35, 0.08, 0.35, 0.05);
             world.spawnParticles(AvatarParticles.DROPLET,
                     player.getX(), player.getY() + 0.2, player.getZ(),
-                    3, 0.25, 0.1, 0.25, 0.03);
+                    6, 0.35, 0.15, 0.35, 0.06);
 
             if (t % 5 == 0) {
                 world.playSound(null, playerPos,
@@ -109,13 +120,12 @@ public final class WaterSurfSkill {
                         SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.PLAYERS, 0.85f, 1.15f);
             }
         } else {
-            // === MODE B: ICE SCOOTER / FROST SKATING ===
+            // === MODE B: ICE WAVE / FROST SURFING ===
             // Lay down a temporary Frosted Ice path beneath player feet for true ice sliding physics
             placeFrostedIceTrail(world, playerPos);
 
-            // Ground glide velocity with gentle slope handling
-            double vy = player.getVelocity().y;
-            if (player.isOnGround()) {
+            double vy = targetVy;
+            if (player.isOnGround() && verticalPitch <= 0.15) {
                 vy = 0.02;
             }
             player.setVelocity(forward.x * speed, vy, forward.z * speed);
@@ -124,10 +134,10 @@ public final class WaterSurfSkill {
             // Ice crystals & frost particles
             world.spawnParticles(ParticleTypes.SNOWFLAKE,
                     player.getX(), player.getY() + 0.1, player.getZ(),
-                    5, 0.2, 0.1, 0.2, 0.02);
+                    8, 0.3, 0.15, 0.3, 0.04);
             world.spawnParticles(AvatarParticles.FROST,
                     player.getX(), player.getY() + 0.15, player.getZ(),
-                    3, 0.15, 0.1, 0.15, 0.02);
+                    5, 0.25, 0.12, 0.25, 0.03);
 
             if (t % 6 == 0) {
                 world.playSound(null, playerPos,

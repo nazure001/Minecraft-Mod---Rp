@@ -643,18 +643,13 @@ public final class EarthPillarSkill {
             }
         }
 
-        // Raycast downward through air and water up to 64 blocks to lock true seabed/solid ground
-        Vec3d start = new Vec3d(pos.x, cursor.getY() + 0.5, pos.z);
-        Vec3d end = new Vec3d(pos.x, Math.max((double) world.getBottomY(), cursor.getY() - 64.0), pos.z);
-        RaycastContext downCtx = new RaycastContext(
-                start, end,
-                RaycastContext.ShapeType.COLLIDER,
-                RaycastContext.FluidHandling.NONE,
-                (net.minecraft.entity.Entity) null
-        );
-        BlockHitResult downHit = world.raycast(downCtx);
-        if (downHit.getType() == HitResult.Type.BLOCK) {
-            return new Vec3d(pos.x, downHit.getBlockPos().getY() + 1.0, pos.z);
+        // Scan downward through air and water up to 64 blocks to lock true seabed/solid ground
+        int minY = Math.max(world.getBottomY(), cursor.getY() - 64);
+        for (int y = cursor.getY(); y >= minY; y--) {
+            BlockPos check = new BlockPos(cursor.getX(), y, cursor.getZ());
+            if (!world.getBlockState(check).getCollisionShape(world, check).isEmpty()) {
+                return new Vec3d(pos.x, y + 1.0, pos.z);
+            }
         }
 
         return pos;
