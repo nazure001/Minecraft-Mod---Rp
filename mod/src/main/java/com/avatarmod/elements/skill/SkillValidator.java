@@ -36,8 +36,11 @@ public final class SkillValidator {
         SkillDefinition def = optDef.get();
         PlayerBendingData data = PlayerBendingData.get(player);
 
+        // Creative mode or sandbox bypass allows testing everything immediately
+        boolean creativeTesting = player.isCreative() || data.isSandboxBypass();
+
         // 1.5. Chi Blocked check (Ty Lee / Equalist pressure point strikes)
-        if (data.isChiBlocked()) {
+        if (!creativeTesting && data.isChiBlocked()) {
             player.sendMessage(net.minecraft.text.Text.literal("§c[Avatar] Aliran Chi Anda tersumbat! Jurus tidak dapat dikeluarkan!"), true);
             player.getServerWorld().playSound(null, player.getBlockPos(),
                     net.minecraft.sound.SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE.value(),
@@ -51,21 +54,21 @@ public final class SkillValidator {
             return ValidationResult.deny(SkillPackets.S2CSkillResult.DenyReason.NONE, 0);
         }
 
-        // 2. Mastery check
-        if (data.getMasteryLevel() < def.masteryRequired()) {
+        // 2. Mastery check (bypassed in creative testing)
+        if (!creativeTesting && data.getMasteryLevel() < def.masteryRequired()) {
             return ValidationResult.deny(
                     SkillPackets.S2CSkillResult.DenyReason.WRONG_MASTERY, 0);
         }
 
-        // 3. Cooldown check
+        // 3. Cooldown check (bypassed in creative testing)
         int cd = data.getCooldown(skillId);
-        if (cd > 0) {
+        if (!creativeTesting && cd > 0) {
             return ValidationResult.deny(
                     SkillPackets.S2CSkillResult.DenyReason.COOLDOWN, cd);
         }
 
-        // 4. Chi check
-        if (data.getChi() < def.chiCost()) {
+        // 4. Chi check (bypassed in creative testing)
+        if (!creativeTesting && data.getChi() < def.chiCost()) {
             return ValidationResult.deny(
                     SkillPackets.S2CSkillResult.DenyReason.NOT_ENOUGH_CHI, 0);
         }
@@ -100,8 +103,11 @@ public final class SkillValidator {
      */
     public static void apply(ServerPlayerEntity player, String skillId, SkillDefinition def) {
         PlayerBendingData data = PlayerBendingData.get(player);
-        data.trySpendChi(def.chiCost());
-        data.setCooldown(skillId, def.cooldownTicks());
+        boolean creativeTesting = player.isCreative() || data.isSandboxBypass();
+        if (!creativeTesting) {
+            data.trySpendChi(def.chiCost());
+            data.setCooldown(skillId, def.cooldownTicks());
+        }
         data.startTimeline(skillId, def.windupTicks(), def.activeTicks(), def.recoveryTicks(),
                 def.isHoldRelease(), def.maxChargeTicks());
     }

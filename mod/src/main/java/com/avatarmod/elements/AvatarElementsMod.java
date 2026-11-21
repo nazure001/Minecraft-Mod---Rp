@@ -49,5 +49,6 @@ public class AvatarElementsMod implements ModInitializer {
         SkillNetworking.registerPayloads();
         SkillNetworking.registerServerReceivers();
         AvatarServerEvents.register();
+        com.avatarmod.elements.command.AvatarCommands.register();
     }
 }

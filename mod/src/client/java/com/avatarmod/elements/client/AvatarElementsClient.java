@@ -83,6 +83,12 @@ public class AvatarElementsClient implements ClientModInitializer {
                 }
             }
 
+            while (AvatarKeyBindings.SKILL_TREE.wasPressed()) {
+                if (client.currentScreen == null) {
+                    client.setScreen(new com.avatarmod.elements.client.screen.SkillTreeScreen());
+                }
+            }
+
             // --- Element wheel: cycle to next element with debounce ---
             // Continuously drain buffered presses so queued keys (from typing in chat or opening menus) never fire later
             while (AvatarKeyBindings.ELEMENT_WHEEL.wasPressed()) {}

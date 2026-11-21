@@ -50,6 +50,9 @@ public final class PlayerBendingData {
     // Avatar State transcendence status (extended god-tier empowerment)
     private int avatarStateTicks = 0;
 
+    // Creative / Sandbox testing bypass mode (unlimited chi, zero cooldowns, instant mastery)
+    private boolean sandboxBypass = false;
+
     public PlayerBendingData() {
         this.chi = MAX_CHI_DEFAULT;
         this.maxChi = MAX_CHI_DEFAULT;
@@ -215,6 +218,11 @@ public final class PlayerBendingData {
     public int getAvatarStateTicks() { return avatarStateTicks; }
     public void enterAvatarState(int durationTicks) { this.avatarStateTicks = Math.max(this.avatarStateTicks, durationTicks); }
     public void exitAvatarState() { this.avatarStateTicks = 0; }
+
+    // --- sandbox / creative testing bypass ---
+    public boolean isSandboxBypass() { return sandboxBypass; }
+    public void setSandboxBypass(boolean bypass) { this.sandboxBypass = bypass; }
+    public void toggleSandboxBypass() { this.sandboxBypass = !this.sandboxBypass; }
 
     // --- static helpers ---
 

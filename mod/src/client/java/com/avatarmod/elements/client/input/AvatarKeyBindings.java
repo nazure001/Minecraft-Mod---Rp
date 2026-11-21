@@ -37,6 +37,10 @@ public final class AvatarKeyBindings {
             "key.avatar_elements.element_selector", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G,
             "category.avatar_elements.general"));
 
+    public static final KeyBinding SKILL_TREE = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.avatar_elements.skill_tree", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_K,
+            "category.avatar_elements.general"));
+
     public static void register() {
         // Registration happens via KeyBindingHelper above.
     }

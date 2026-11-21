@@ -158,7 +158,10 @@ public final class SkillNetworking {
         if (def == null) return;
 
         // Spend chi upfront and start charging timeline without setting cooldown until release
-        data.trySpendChi(def.chiCost());
+        boolean creativeTesting = player.isCreative() || data.isSandboxBypass();
+        if (!creativeTesting) {
+            data.trySpendChi(def.chiCost());
+        }
         data.startTimeline(skillId, def.windupTicks(), def.activeTicks(), def.recoveryTicks(),
                 def.isHoldRelease(), def.maxChargeTicks());
 
@@ -183,7 +186,8 @@ public final class SkillNetworking {
             String activeSkill = timeline.skillId();
             timeline.releaseHold();
             SkillDefinition def = SkillRegistry.get(activeSkill).orElse(null);
-            if (def != null) {
+            boolean creativeTesting = player.isCreative() || data.isSandboxBypass();
+            if (def != null && !creativeTesting) {
                 data.setCooldown(activeSkill, def.cooldownTicks());
             }
             int serial = currentSerial(player.getUuid());
