@@ -33,9 +33,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class EarthBoulderSkill {
 
-    private static final float SPEED = 0.8f;       // blocks per tick
-    private static final int   LIFETIME = 20;      // ticks
-    private static final float HITBOX_RADIUS = 0.7f;
+    private static final float SPEED = 1.35f;       // blocks per tick (snappy & responsive)
+    private static final int   LIFETIME = 24;      // ticks
+    private static final float HITBOX_RADIUS = 1.1f;
 
     // Active boulders keyed by player UUID
     private static final Map<UUID, BoulderState> BOULDERS = new ConcurrentHashMap<>();
@@ -118,12 +118,18 @@ public final class EarthBoulderSkill {
             return;
         }
 
-        // Advance or expire
+        // Advance or expire with soft trajectory guidance
         int ticksLeft = state.ticksLeft() - 1;
         if (ticksLeft <= 0) {
             BOULDERS.remove(id);
         } else {
-            BOULDERS.put(id, new BoulderState(nextPos, state.velocity(), ticksLeft, state.damage(), state.knockback(), state.blockState()));
+            Vec3d look = player.getRotationVec(1.0f);
+            Vec3d vel = state.velocity();
+            double curSpeed = vel.length();
+            if (curSpeed > 1e-4) {
+                vel = vel.multiply(0.85).add(look.multiply(curSpeed * 0.15)).normalize().multiply(curSpeed);
+            }
+            BOULDERS.put(id, new BoulderState(nextPos, vel, ticksLeft, state.damage(), state.knockback(), state.blockState()));
         }
     }
 

@@ -54,6 +54,14 @@ class PalAnimationContractTest {
             "earth_pillar, 0.75",
             "boulder_launch, 1.55",
             "earth_tunnel, 1.00",
+            "earth_wall, 0.65",
+            "lightning_strike, 3.75",
+            "octopus_form, 1.60",
+            "chi_strike, 0.35",
+            "acrobatic_dodge, 0.60",
+            "grapple_wire, 0.40",
+            "smoke_bomb, 0.55",
+            "nerve_strike, 0.45",
             "air_vortex, 2.50",
             "air_scooter, 1.00"
     })

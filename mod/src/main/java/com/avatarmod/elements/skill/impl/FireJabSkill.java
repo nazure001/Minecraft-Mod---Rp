@@ -54,10 +54,10 @@ public final class FireJabSkill {
         Vec3d pos = player.getPos().add(0, player.getStandingEyeHeight() / 2.0, 0);
         Vec3d look = player.getRotationVec(1.0f);
 
-        // Extended reach: 4.2m base, 5.5m on combo
-        double reach = Math.max(4.2, def.range() * 1.6) * (finalCombo ? FINAL_COMBO_RANGE_BONUS : 1.0f);
+        // Extended reach: 4.5m base, 5.8m on combo
+        double reach = Math.max(4.5, def.range()) * (finalCombo ? FINAL_COMBO_RANGE_BONUS : 1.0f);
         Vec3d reachEnd = eyePos.add(look.multiply(reach));
-        Box scanBox = new Box(eyePos, reachEnd).expand(1.2);
+        Box scanBox = new Box(eyePos, reachEnd).expand(1.4);
 
         List<LivingEntity> targets = world.getEntitiesByClass(
                 LivingEntity.class, scanBox,
@@ -66,8 +66,8 @@ public final class FireJabSkill {
                     Vec3d toCenter = e.getBoundingBox().getCenter().subtract(eyePos);
                     double distSq = toCenter.lengthSquared();
                     if (distSq > (reach + 0.8) * (reach + 0.8)) return false;
-                    if (distSq <= 2.25) return true; // Point-blank automatic hit
-                    return toCenter.normalize().dotProduct(look) > 0.35; // Accurate forward cone
+                    if (distSq <= 2.8) return true; // Point-blank automatic hit
+                    return toCenter.normalize().dotProduct(look) > 0.15; // Generous forward strike cone
                 }
         );
 

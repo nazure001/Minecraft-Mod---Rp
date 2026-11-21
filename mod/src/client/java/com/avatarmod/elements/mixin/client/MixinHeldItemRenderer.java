@@ -40,10 +40,12 @@ public abstract class MixinHeldItemRenderer {
             ClientPlayerEntity player, int light, CallbackInfo ci
     ) {
         if (player.getMainHandStack().isOf(AvatarItems.DUAL_SWORDS) && player.getOffHandStack().isEmpty()) {
-            float offhandSwing = (player.preferredHand == Hand.OFF_HAND) ? player.getHandSwingProgress(tickDelta) : 0.0f;
+            float swing = player.getHandSwingProgress(tickDelta);
+            float offhandSwing = (player.preferredHand == Hand.OFF_HAND) ? swing : (swing * 0.85f);
+            float equip = Math.max(this.equipProgressMainHand, 0.90f);
             this.renderFirstPersonItem(
                     player, tickDelta, player.getPitch(tickDelta), Hand.OFF_HAND,
-                    offhandSwing, player.getMainHandStack(), this.equipProgressMainHand,
+                    offhandSwing, player.getMainHandStack(), equip,
                     matrices, vertexConsumers, light
             );
         }

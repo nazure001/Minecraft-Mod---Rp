@@ -22,7 +22,7 @@ import java.util.Map;
 public final class ElementSlotMap {
 
     public static final int SLOT_COUNT = 5;
-    public static final String[] ELEMENTS = {"FIRE", "AIR", "WATER", "EARTH"};
+    public static final String[] ELEMENTS = {"FIRE", "AIR", "WATER", "EARTH", "NON_BENDER"};
 
     private static final String RESOURCE_PATH = "/data/avatar_elements/element_slots.json";
     private static final Map<String, String[]> MAP = new HashMap<>();

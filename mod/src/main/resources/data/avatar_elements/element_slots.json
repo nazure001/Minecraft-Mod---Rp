@@ -1,6 +1,7 @@
 {
-  "FIRE":  ["avatar:fire_jab", "avatar:fire_blast", "avatar:flame_sweep", "avatar:fire_guard", "avatar:fire_jet"],
+  "FIRE":  ["avatar:fire_jab", "avatar:fire_blast", "avatar:flame_sweep", "avatar:lightning_strike", "avatar:fire_jet"],
   "AIR":   ["avatar:air_palm", "avatar:air_blast", "avatar:air_staff_attack", "avatar:air_vortex", "avatar:air_scooter"],
-  "WATER": ["avatar:water_whip", "avatar:water_jet", null, null, "avatar:water_surf"],
-  "EARTH": ["avatar:earth_boulder", "avatar:boulder_launch", "avatar:earth_pillar", null, "avatar:earth_tunnel"]
+  "WATER": ["avatar:water_whip", "avatar:water_jet", "avatar:octopus_form", null, "avatar:water_surf"],
+  "EARTH": ["avatar:earth_boulder", "avatar:boulder_launch", "avatar:earth_pillar", "avatar:earth_wall", "avatar:earth_tunnel"],
+  "NON_BENDER": ["avatar:chi_strike", "avatar:acrobatic_dodge", "avatar:grapple_wire", "avatar:smoke_bomb", "avatar:nerve_strike"]
 }

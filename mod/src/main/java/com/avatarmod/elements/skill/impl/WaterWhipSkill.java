@@ -35,11 +35,14 @@ public final class WaterWhipSkill {
         if (timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
         if (timeline.ticksInPhase() != 1) return;
 
-        if (!ElementalInteractions.hasWaterSource(player)) {
-            player.sendMessage(Text.literal("§c[Avatar] Perlu sumber air terdekat atau kantong/ember air!"), true);
-            PlayerBendingData.get(player).regenChi(def.chiCost());
-            timeline.cancel();
-            return;
+        boolean hasSource = ElementalInteractions.hasWaterSource(player);
+        if (!hasSource) {
+            // Atmospheric moisture condensation: costs 3 extra Chi if no physical water is nearby
+            if (!PlayerBendingData.get(player).trySpendChi(3)) {
+                player.sendMessage(Text.literal("§c[Avatar] Perlu sumber air terdekat atau Chi ekstra untuk kondensasi uap air!"), true);
+                timeline.cancel();
+                return;
+            }
         }
 
         ServerWorld world = player.getServerWorld();

@@ -261,28 +261,31 @@ public final class AvatarCombatClient {
                 EasingType.EASE_IN_OUT_CUBIC
         );
 
-        client.player.swingHand(Hand.MAIN_HAND);
-
         switch (currentStep) {
             case 0 -> {
+                client.player.swingHand(Hand.MAIN_HAND);
                 client.player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 0.8f);
                 client.player.playSound(SoundEvents.BLOCK_DEEPSLATE_HIT, 1.1f, 0.9f);
                 AvatarCameraDirector.triggerRoll(-3.5f, 8);
                 AvatarCameraDirector.triggerShake(0.35f, 6);
             }
             case 1 -> {
+                client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(SoundEvents.BLOCK_STONE_BREAK, 1.0f, 1.1f);
                 client.player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.0f, 0.9f);
                 AvatarCameraDirector.triggerRoll(4.5f, 9);
                 AvatarCameraDirector.triggerShake(0.45f, 7);
             }
             case 2 -> {
+                client.player.swingHand(Hand.MAIN_HAND);
                 client.player.playSound(AvatarSounds.EARTH_BOULDER_LAUNCH, 1.1f, 1.15f);
-                AvatarCameraDirector.triggerRoll(-2.0f, 8);
+                AvatarCameraDirector.triggerRoll(-5.0f, 8);
                 AvatarCameraDirector.triggerShake(0.50f, 8);
             }
             case 3 -> {
-                // Seismic ground slam finisher (massive screen crunch)
+                // Seismic ground slam finisher (massive two-handed screen crunch)
+                client.player.swingHand(Hand.MAIN_HAND);
+                client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(AvatarSounds.EARTH_IMPACT_HEAVY, 1.3f, 1.0f);
                 client.player.playSound(SoundEvents.BLOCK_ANVIL_LAND, 1.0f, 0.75f);
                 client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.3f, 0.75f);
@@ -327,8 +330,9 @@ public final class AvatarCombatClient {
                 AvatarCameraDirector.triggerShake(0.35f, 6);
             }
             case 3 -> {
-                // Cyclone gale spin finisher
+                // Cyclone gale spin finisher (dual fan flourish)
                 client.player.swingHand(Hand.MAIN_HAND);
+                client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(AvatarSounds.AIR_STAFF_SWING, 1.2f, 1.6f);
                 client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.1f, 1.5f);
                 AvatarCameraDirector.triggerRoll(-9.0f, 10);
@@ -373,8 +377,9 @@ public final class AvatarCombatClient {
                 AvatarCameraDirector.triggerShake(0.35f, 7);
             }
             case 3 -> {
-                // Surging tidal burst finisher
+                // Surging tidal burst finisher (two-handed spear thrust surge)
                 client.player.swingHand(Hand.MAIN_HAND);
+                client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(AvatarSounds.WATER_SPLASH_IMPACT, 1.2f, 0.9f);
                 client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.2f, 1.2f);
                 AvatarCameraDirector.triggerRoll(-7.5f, 11);
@@ -418,8 +423,9 @@ public final class AvatarCombatClient {
                 AvatarCameraDirector.triggerShake(0.35f, 7);
             }
             case 3 -> {
-                // Kinetic air burst finisher
+                // Kinetic air burst finisher (two-handed staff vault sweep)
                 client.player.swingHand(Hand.MAIN_HAND);
+                client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(AvatarSounds.AIR_STAFF_SWING, 1.3f, 0.8f);
                 client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.2f, 1.4f);
                 AvatarCameraDirector.triggerRoll(8.5f, 10);

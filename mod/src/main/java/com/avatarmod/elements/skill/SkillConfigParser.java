@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 final class SkillConfigParser {
 
     private static final int SLOT_COUNT = 5;
-    private static final List<String> ELEMENTS = List.of("FIRE", "AIR", "WATER", "EARTH");
+    private static final List<String> ELEMENTS = List.of("FIRE", "AIR", "WATER", "EARTH", "NON_BENDER");
     private static final Pattern SKILL_ID_PATTERN =
             Pattern.compile("[a-z0-9_.-]+:[a-z0-9/._-]+");
     private static final Set<String> ROOT_KEYS = Set.of("skills");

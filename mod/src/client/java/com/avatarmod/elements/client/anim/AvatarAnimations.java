@@ -262,6 +262,18 @@ public final class AvatarAnimations {
         triggerComboAnimation(player, animId, 0, EasingType.LINEAR);
     }
 
+    /**
+     * Immediately stops any currently triggered animation on the player, returning them to neutral stance.
+     */
+    public static boolean stopAnimation(AbstractClientPlayerEntity player) {
+        if (player == null) return false;
+        var layer = PlayerAnimationAccess.getPlayerAnimationLayer(player, COMBAT_LAYER_ID);
+        if (layer instanceof PlayerAnimationController controller) {
+            return controller.stopTriggeredAnimation();
+        }
+        return false;
+    }
+
     /** Checks whether any combat animation is currently playing on the given player. */
     public static boolean isPlayingAnimation(AbstractClientPlayerEntity player) {
         if (player == null) return false;

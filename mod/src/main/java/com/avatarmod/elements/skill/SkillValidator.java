@@ -36,6 +36,21 @@ public final class SkillValidator {
         SkillDefinition def = optDef.get();
         PlayerBendingData data = PlayerBendingData.get(player);
 
+        // 1.5. Chi Blocked check (Ty Lee / Equalist pressure point strikes)
+        if (data.isChiBlocked()) {
+            player.sendMessage(net.minecraft.text.Text.literal("§c[Avatar] Aliran Chi Anda tersumbat! Jurus tidak dapat dikeluarkan!"), true);
+            player.getServerWorld().playSound(null, player.getBlockPos(),
+                    net.minecraft.sound.SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE.value(),
+                    net.minecraft.sound.SoundCategory.PLAYERS, 1.2f, 0.6f);
+            return ValidationResult.deny(SkillPackets.S2CSkillResult.DenyReason.NOT_ENOUGH_CHI, 0);
+        }
+
+        // 1.6. Element selection check
+        if ("NONE".equals(data.getActiveElement())) {
+            player.sendMessage(net.minecraft.text.Text.literal("§e[Avatar] Tekan [G] untuk memilih elemen atau jalur Anda terlebih dahulu!"), true);
+            return ValidationResult.deny(SkillPackets.S2CSkillResult.DenyReason.NONE, 0);
+        }
+
         // 2. Mastery check
         if (data.getMasteryLevel() < def.masteryRequired()) {
             return ValidationResult.deny(

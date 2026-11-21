@@ -3,23 +3,7 @@ package com.avatarmod.elements.skill;
 import com.avatarmod.elements.data.PlayerBendingData;
 import com.avatarmod.elements.data.SkillTimeline;
 import com.avatarmod.elements.network.SkillNetworking;
-import com.avatarmod.elements.skill.impl.AirBlastSkill;
-import com.avatarmod.elements.skill.impl.AirPalmSkill;
-import com.avatarmod.elements.skill.impl.AirScooterSkill;
-import com.avatarmod.elements.skill.impl.AirStaffAttackSkill;
-import com.avatarmod.elements.skill.impl.AirVortexSkill;
-import com.avatarmod.elements.skill.impl.BoulderLaunchSkill;
-import com.avatarmod.elements.skill.impl.EarthBoulderSkill;
-import com.avatarmod.elements.skill.impl.EarthPillarSkill;
-import com.avatarmod.elements.skill.impl.EarthTunnelSkill;
-import com.avatarmod.elements.skill.impl.FireBlastSkill;
-import com.avatarmod.elements.skill.impl.FireGuardSkill;
-import com.avatarmod.elements.skill.impl.FireJabSkill;
-import com.avatarmod.elements.skill.impl.FireJetSkill;
-import com.avatarmod.elements.skill.impl.FlameSweepSkill;
-import com.avatarmod.elements.skill.impl.WaterJetSkill;
-import com.avatarmod.elements.skill.impl.WaterSurfSkill;
-import com.avatarmod.elements.skill.impl.WaterWhipSkill;
+import com.avatarmod.elements.skill.impl.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 /**
@@ -77,6 +61,7 @@ public final class SkillDispatcher {
             case "avatar:flame_sweep"       -> FlameSweepSkill.tick(player, def);
             case "avatar:fire_jet"          -> FireJetSkill.tick(player, def);
             case "avatar:fire_guard"        -> FireGuardSkill.tick(player, def);
+            case "avatar:lightning_strike"  -> LightningStrikeSkill.tick(player, def);
             case "avatar:air_staff_attack"  -> AirStaffAttackSkill.tick(player, def);
             case "avatar:air_blast"         -> AirBlastSkill.tick(player, def);
             case "avatar:air_palm"          -> AirPalmSkill.tick(player, def);
@@ -85,10 +70,17 @@ public final class SkillDispatcher {
             case "avatar:water_whip"        -> WaterWhipSkill.tick(player, def);
             case "avatar:water_jet"         -> WaterJetSkill.tick(player, def);
             case "avatar:water_surf"        -> WaterSurfSkill.tick(player, def);
+            case "avatar:octopus_form"      -> OctopusFormSkill.tick(player, def);
             case "avatar:earth_boulder"     -> EarthBoulderSkill.tick(player, def);
             case "avatar:earth_pillar"      -> EarthPillarSkill.tick(player, def);
             case "avatar:boulder_launch"    -> BoulderLaunchSkill.tick(player, def);
             case "avatar:earth_tunnel"      -> EarthTunnelSkill.tick(player, def);
+            case "avatar:earth_wall"        -> EarthWallSkill.tick(player, def);
+            case "avatar:chi_strike"        -> ChiStrikeSkill.tick(player, def);
+            case "avatar:acrobatic_dodge"   -> AcrobaticDodgeSkill.tick(player, def);
+            case "avatar:grapple_wire"      -> GrappleWireSkill.tick(player, def);
+            case "avatar:smoke_bomb"        -> SmokeBombSkill.tick(player, def);
+            case "avatar:nerve_strike"      -> NerveStrikeSkill.tick(player, def);
         }
     }
 

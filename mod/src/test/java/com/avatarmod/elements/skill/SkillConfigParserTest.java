@@ -31,23 +31,23 @@ class SkillConfigParserTest {
         Map<String, List<String>> slots =
                 SkillConfigParser.parseSlots("bundled slots", slotsJson);
 
-        assertEquals(17, skills.size());
+        assertEquals(25, skills.size());
         assertDoesNotThrow(() ->
                 SkillConfigParser.validateSlotReferences("bundled slots", slots, skills));
 
         assertEquals(List.of("avatar:fire_jab", "avatar:fire_blast", "avatar:flame_sweep",
-                "avatar:fire_guard", "avatar:fire_jet"), slots.get("FIRE"));
+                "avatar:lightning_strike", "avatar:fire_jet"), slots.get("FIRE"));
         assertEquals(List.of("avatar:air_palm", "avatar:air_blast", "avatar:air_staff_attack",
                 "avatar:air_vortex", "avatar:air_scooter"), slots.get("AIR"));
         assertEquals("avatar:water_whip", slots.get("WATER").get(0));
         assertEquals("avatar:water_jet", slots.get("WATER").get(1));
-        assertNull(slots.get("WATER").get(2));
+        assertEquals("avatar:octopus_form", slots.get("WATER").get(2));
         assertNull(slots.get("WATER").get(3));
         assertEquals("avatar:water_surf", slots.get("WATER").get(4));
         assertEquals(List.of("avatar:earth_boulder", "avatar:boulder_launch",
-                "avatar:earth_pillar"), slots.get("EARTH").subList(0, 3));
-        assertNull(slots.get("EARTH").get(3));
-        assertEquals("avatar:earth_tunnel", slots.get("EARTH").get(4));
+                "avatar:earth_pillar", "avatar:earth_wall", "avatar:earth_tunnel"), slots.get("EARTH"));
+        assertEquals(List.of("avatar:chi_strike", "avatar:acrobatic_dodge", "avatar:grapple_wire",
+                "avatar:smoke_bomb", "avatar:nerve_strike"), slots.get("NON_BENDER"));
     }
 
     @Test

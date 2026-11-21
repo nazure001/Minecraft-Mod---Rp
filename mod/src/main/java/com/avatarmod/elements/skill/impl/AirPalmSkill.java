@@ -51,11 +51,13 @@ public final class AirPalmSkill {
         DamageSource source = world.getDamageSources().playerAttack(player);
         for (LivingEntity target : targets) {
             target.damage(source, def.damage());
+            target.addStatusEffect(new net.minecraft.entity.effect.StatusEffectInstance(
+                    net.minecraft.entity.effect.StatusEffects.SLOWNESS, 50, 1));
             Vec3d knockDir = target.getPos().subtract(player.getPos()).normalize();
             target.addVelocity(
-                    knockDir.x * def.knockback(),
-                    0.15 + def.knockback() * 0.1,
-                    knockDir.z * def.knockback()
+                    knockDir.x * (def.knockback() * 1.3),
+                    0.25 + def.knockback() * 0.15,
+                    knockDir.z * (def.knockback() * 1.3)
             );
             target.velocityModified = true;
         }

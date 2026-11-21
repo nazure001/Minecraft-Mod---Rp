@@ -19,6 +19,8 @@ class ElementSelectionTest {
         element = ElementSlotMap.nextElement(element);
         assertEquals("EARTH", element);
         element = ElementSlotMap.nextElement(element);
+        assertEquals("NON_BENDER", element);
+        element = ElementSlotMap.nextElement(element);
         assertEquals("FIRE", element);
     }
 

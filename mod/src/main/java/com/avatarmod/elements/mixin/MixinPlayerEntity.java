@@ -35,7 +35,7 @@ public abstract class MixinPlayerEntity {
         PlayerEntity self = (PlayerEntity) (Object) this;
         if (self.isOnFire() && self instanceof ServerPlayerEntity sp) {
             PlayerBendingData data = PlayerBendingData.get(sp);
-            if (data != null && "FIRE".equals(data.getActiveElement())) {
+            if (data != null && !data.isChiBlocked() && "FIRE".equals(data.getActiveElement())) {
                 self.extinguish();
             }
         }
@@ -47,9 +47,9 @@ public abstract class MixinPlayerEntity {
         if (!(self instanceof ServerPlayerEntity sp)) return;
 
         PlayerBendingData data = PlayerBendingData.get(sp);
-        if (data == null) return;
+        if (data == null || data.isChiBlocked()) return;
         String element = data.getActiveElement();
-        if (element == null) return;
+        if (element == null || "NONE".equals(element) || "NON_BENDER".equals(element)) return;
 
         Entity attacker = source.getAttacker();
         boolean isOpponentAttack = (attacker != null && attacker != self);

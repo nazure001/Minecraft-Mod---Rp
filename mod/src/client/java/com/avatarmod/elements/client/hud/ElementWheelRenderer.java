@@ -11,18 +11,23 @@ import net.minecraft.client.render.RenderTickCounter;
  */
 public final class ElementWheelRenderer {
 
-    private static final String[] ELEMENTS = {"FIRE", "AIR", "WATER", "EARTH"};
+    private static final String[] ELEMENTS = {"FIRE", "AIR", "WATER", "EARTH", "NON_BENDER"};
     private static final int[] COLORS = {
             0xFFBD4B36, // FIRE
             0xFFBE8B35, // AIR
             0xFF3D82A8, // WATER
             0xFF687E3C, // EARTH
+            0xFF708090, // NON_BENDER (Slate Grey / Iron)
     };
 
-    private static int currentIndex = 0; // FIRE is default
+    private static int currentIndex = 0; // FIRE is default cycle index
 
     /** Set active element directly (e.g. on server sync). */
     public static void setElement(String element) {
+        if ("NONE".equals(element)) {
+            currentIndex = 0;
+            return;
+        }
         for (int i = 0; i < ELEMENTS.length; i++) {
             if (ELEMENTS[i].equals(element)) {
                 currentIndex = i;

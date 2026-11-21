@@ -23,14 +23,15 @@ import net.minecraft.util.math.Vec3d;
 import java.util.List;
 
 /**
- * Air Scooter — Traversal technique developed by Avatar Aang.
+ * Air Scooter — Signature traversal technique invented by Avatar Aang.
  * Player rides a spinning sphere of compressed air, gliding rapidly over land and water
  * with complete fall damage immunity, vegetation clearing, and directional momentum.
+ * Rides continuously while held without arbitrary time cutoffs until dismissed or interrupted.
  */
 public final class AirScooterSkill {
 
     public static final String ID = "avatar:air_scooter";
-    private static final double GLIDE_SPEED = 0.85;
+    private static final double GLIDE_SPEED = 0.90;
     private static final double DESIRED_HOVER_HEIGHT = 0.75;
 
     public static void tick(ServerPlayerEntity player, SkillDefinition def) {
@@ -41,8 +42,8 @@ public final class AirScooterSkill {
         int t = timeline.ticksInPhase();
         ServerWorld world = player.getServerWorld();
 
-        // Sustain Chi consumption during hold phase (1 Chi every 3 ticks)
-        if (timeline.phase() == SkillTimeline.Phase.HOLD && t > 0 && t % 3 == 0) {
+        // Sustain Chi consumption during hold phase (1 Chi every 10 ticks — basic accessible mobility)
+        if (timeline.phase() == SkillTimeline.Phase.HOLD && t > 0 && t % 10 == 0) {
             if (!data.trySpendChi(1)) {
                 timeline.releaseHold();
                 return;
@@ -80,7 +81,7 @@ public final class AirScooterSkill {
             double diff = DESIRED_HOVER_HEIGHT - currentAbove;
             vy = Math.min(Math.max(diff * 0.45, -0.35), 0.35);
         } else {
-            vy = -0.08; // slow gliding descent over chasms
+            vy = -0.06; // very slow, safe gliding descent over ravines & chasms
         }
 
         player.setVelocity(forward.x * speed, vy, forward.z * speed);
@@ -91,7 +92,7 @@ public final class AirScooterSkill {
         }
 
         // 3. Clear loose surface vegetation along traversal path
-        ElementalInteractions.clearVegetation(world, player.getPos(), 1.6);
+        ElementalInteractions.clearVegetation(world, player.getPos(), 1.8);
 
         // 4. Mobs collision: bump away entities in path
         Box bumpBox = Box.of(player.getPos().add(0, 0.5, 0), 1.8, 1.8, 1.8);
@@ -113,8 +114,8 @@ public final class AirScooterSkill {
         double rotAngle = (t * 0.5) % (Math.PI * 2);
         for (int i = 0; i < 4; i++) {
             double a = rotAngle + (i * Math.PI / 2.0);
-            double rx = Math.cos(a) * 0.65;
-            double rz = Math.sin(a) * 0.65;
+            double rx = Math.cos(a) * 0.70;
+            double rz = Math.sin(a) * 0.70;
             world.spawnParticles(AvatarParticles.GUST_CURL,
                     player.getX() + rx, player.getY() + 0.25, player.getZ() + rz,
                     1, 0.0, 0.0, 0.0, 0.02);

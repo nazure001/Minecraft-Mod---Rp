@@ -22,7 +22,7 @@ public record SkillDefinition(
         CastType castType,
         int maxChargeTicks
 ) {
-    public enum Element { FIRE, WATER, EARTH, AIR }
+    public enum Element { FIRE, WATER, EARTH, AIR, NON_BENDER }
     public enum HitboxShape { SPHERE, ARC, LINE, CONE }
     public enum CastType { INSTANT, HOLD_RELEASE, CHANNEL, TOGGLE }
 

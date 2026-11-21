@@ -13,7 +13,7 @@ public final class ElementSelectorScreen extends Screen {
     private static final String[] ELEMENTS = ElementSlotMap.ELEMENTS.clone();
     private static final int OPTION_WIDTH = 76;
     private static final int OPTION_HEIGHT = 24;
-    private static final int[] POSITION_BY_ELEMENT = {1, 0, 2, 3};
+    private static final int[] POSITION_BY_ELEMENT = {1, 0, 2, 3, 4};
 
     private int selectedIndex;
     private boolean keyboardNavigation;

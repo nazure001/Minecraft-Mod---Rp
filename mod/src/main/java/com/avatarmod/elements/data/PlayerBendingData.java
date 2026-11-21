@@ -41,8 +41,11 @@ public final class PlayerBendingData {
     private int airStaffComboStep = 0;
     private long airStaffLastCastTick = -9999L;
 
-    // Active element selected by player (server-side mirror of client wheel choice)
-    private String activeElement = "FIRE";
+    // Active element selected by player ("NONE" by default until chosen, or "FIRE", "AIR", "WATER", "EARTH", "NON_BENDER")
+    private String activeElement = "NONE";
+
+    // Chi Blocking status (inflicted by Non-Bender pressure point strikes)
+    private int chiBlockedTicks = 0;
 
     public PlayerBendingData() {
         this.chi = MAX_CHI_DEFAULT;
@@ -60,7 +63,39 @@ public final class PlayerBendingData {
     public int getChi() { return chi; }
     public int getMaxChi() { return maxChi; }
 
+    public boolean isChiBlocked() {
+        return chiBlockedTicks > 0;
+    }
+
+    public int getChiBlockedTicks() {
+        return chiBlockedTicks;
+    }
+
+    public void applyChiBlock(int ticks) {
+        this.chiBlockedTicks = Math.max(this.chiBlockedTicks, ticks);
+        // Instant Chi disruption: lose 30% current chi
+        this.chi = Math.max(0, this.chi - (int)(this.chi * 0.30f));
+        // Cancel active bending cast immediately
+        if (activeTimeline != null) {
+            activeTimeline.cancel();
+            activeTimeline = null;
+        }
+    }
+
+    public void clearChiBlock() {
+        this.chiBlockedTicks = 0;
+    }
+
+    public void drainChi(int amount) {
+        this.chi = Math.max(0, this.chi - amount);
+    }
+
+    public void setChi(int chi) {
+        this.chi = chiManager.clamp(chi, maxChi);
+    }
+
     public boolean trySpendChi(int baseCost) {
+        if (isChiBlocked()) return false;
         int actual = chiManager.computeCost(baseCost, chi);
         if (actual < 0) return false;
         chi = chiManager.clamp(chi - actual, maxChi);
@@ -68,6 +103,7 @@ public final class PlayerBendingData {
     }
 
     public void regenChi(int amount) {
+        if (isChiBlocked()) return; // Severed Chi cannot regenerate
         chi = chiManager.clamp(chi + amount, maxChi);
     }
 
@@ -182,10 +218,13 @@ public final class PlayerBendingData {
         PlayerBendingData data = get(player);
         data.tickCooldowns();
         data.tickTimeline();
+        if (data.chiBlockedTicks > 0) {
+            data.chiBlockedTicks--;
+        }
         long worldTime = player.getServerWorld().getTime();
         if (worldTime % ChiManager.REGEN_INTERVAL == 0) {
             int pulse = data.chiManager.computeRegenPulse(data.chi, data.maxChi);
-            data.chi += pulse;
+            data.regenChi(pulse);
         }
     }
 }
