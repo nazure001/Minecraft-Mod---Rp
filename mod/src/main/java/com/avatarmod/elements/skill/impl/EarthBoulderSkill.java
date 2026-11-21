@@ -118,16 +118,46 @@ public final class EarthBoulderSkill {
             return;
         }
 
-        // Advance or expire with soft trajectory guidance
+        // Advance or expire with auto-targeting guidance toward crosshair / hostile targets
         int ticksLeft = state.ticksLeft() - 1;
         if (ticksLeft <= 0) {
             BOULDERS.remove(id);
         } else {
-            Vec3d look = player.getRotationVec(1.0f);
             Vec3d vel = state.velocity();
             double curSpeed = vel.length();
             if (curSpeed > 1e-4) {
-                vel = vel.multiply(0.85).add(look.multiply(curSpeed * 0.15)).normalize().multiply(curSpeed);
+                Vec3d targetDir = player.getRotationVec(1.0f);
+
+                // Auto-targeting: search for enemies in 45-degree cone
+                Box searchBox = Box.of(nextPos.add(vel.normalize().multiply(6.0)), 16.0, 10.0, 16.0);
+                List<LivingEntity> potentialTargets = world.getEntitiesByClass(
+                        LivingEntity.class, searchBox,
+                        e -> e != player && e.isAlive() && !e.isTeammate(player) && !e.isSpectator()
+                );
+                LivingEntity bestTarget = null;
+                double bestScore = -1.0;
+                for (LivingEntity e : potentialTargets) {
+                    Vec3d toTarget = e.getBoundingBox().getCenter().subtract(nextPos);
+                    double dist = toTarget.length();
+                    if (dist > 0.4 && dist <= 18.0) {
+                        Vec3d dirToTarget = toTarget.normalize();
+                        double dot = vel.normalize().dotProduct(dirToTarget);
+                        if (dot > 0.65) {
+                            double score = dot / Math.sqrt(dist);
+                            if (score > bestScore) {
+                                bestScore = score;
+                                bestTarget = e;
+                            }
+                        }
+                    }
+                }
+
+                if (bestTarget != null) {
+                    targetDir = bestTarget.getBoundingBox().getCenter().subtract(nextPos).normalize();
+                    vel = vel.multiply(0.78).add(targetDir.multiply(curSpeed * 0.22)).normalize().multiply(curSpeed);
+                } else {
+                    vel = vel.multiply(0.85).add(targetDir.multiply(curSpeed * 0.15)).normalize().multiply(curSpeed);
+                }
             }
             BOULDERS.put(id, new BoulderState(nextPos, vel, ticksLeft, state.damage(), state.knockback(), state.blockState()));
         }

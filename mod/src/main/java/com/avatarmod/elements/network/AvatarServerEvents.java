@@ -179,7 +179,10 @@ public final class AvatarServerEvents {
     public static void triggerEmergencyAvatarState(ServerPlayerEntity player) {
         long currentTick = player.getServerWorld().getTime();
         LAST_AVATAR_STATE_REFLEX.put(player.getUuid(), currentTick);
+        triggerAvatarState(player, 700, true);
+    }
 
+    public static void triggerAvatarState(ServerPlayerEntity player, int durationTicks, boolean emergency) {
         ServerWorld world = player.getServerWorld();
         Vec3d pos = player.getPos().add(0, 1.0, 0);
 
@@ -187,15 +190,20 @@ public final class AvatarServerEvents {
         player.setHealth(player.getMaxHealth());
         PlayerBendingData data = PlayerBendingData.get(player);
         data.regenChi(data.getMaxChi());
+        data.enterAvatarState(durationTicks);
 
-        // 2. Grant Avatar State empowerment status effects
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 200, 3, false, false, true)); // 10s Resistance IV
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200, 2, false, false, true)); // 10s Regen III
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 200, 1, false, false, true)); // 10s Speed II
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 200, 0, false, false, true)); // 10s Glowing aura
+        // 2. Grant Avatar State god-tier empowerment status effects for full duration (35s)
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, durationTicks, 3, false, false, true)); // Resistance IV
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, durationTicks, 2, false, false, true)); // Regen III
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, durationTicks, 2, false, false, true)); // Speed III
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, durationTicks, 2, false, false, true)); // Strength III
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, durationTicks, 0, false, false, true));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, durationTicks, 1, false, false, true));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, durationTicks, 0, false, false, true));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, durationTicks, 0, false, false, true));
 
-        // 3. Cataclysmic 4-Element Shockwave: knockback all hostile & living entities in 8-block radius
-        double shockRadius = 8.0;
+        // 3. Cataclysmic 4-Element Shockwave: knockback all hostile & living entities in 10-block radius
+        double shockRadius = 10.0;
         Box shockBox = Box.of(pos, shockRadius * 2, shockRadius * 2, shockRadius * 2);
         List<LivingEntity> enemies = world.getEntitiesByClass(
                 LivingEntity.class, shockBox,
@@ -204,42 +212,50 @@ public final class AvatarServerEvents {
 
         DamageSource shockSource = world.getDamageSources().playerAttack(player);
         for (LivingEntity e : enemies) {
-            e.damage(shockSource, 8.0f);
+            e.damage(shockSource, 12.0f);
             Vec3d diff = e.getPos().subtract(player.getPos());
             Vec3d knockDir = diff.lengthSquared() < 0.001 ? new Vec3d(0, 0, 1) : diff.normalize();
-            e.addVelocity(knockDir.x * 2.2, 0.75, knockDir.z * 2.2);
+            e.addVelocity(knockDir.x * 2.8, 0.95, knockDir.z * 2.8);
             e.velocityModified = true;
         }
 
-        // 4. Four Elements Sphere & Ring Particles
-        // Fire
-        world.spawnParticles(ParticleTypes.EXPLOSION_EMITTER, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
-        world.spawnParticles(ParticleTypes.FLAME, pos.x, pos.y, pos.z, 60, 2.5, 1.0, 2.5, 0.15);
-        world.spawnParticles(AvatarParticles.FLAME_BURST, pos.x, pos.y, pos.z, 20, 2.0, 0.8, 2.0, 0.08);
-        // Water
-        world.spawnParticles(ParticleTypes.SPLASH, pos.x, pos.y, pos.z, 60, 2.5, 1.0, 2.5, 0.2);
-        world.spawnParticles(AvatarParticles.DROPLET, pos.x, pos.y, pos.z, 40, 2.0, 0.8, 2.0, 0.1);
-        // Air
-        world.spawnParticles(AvatarParticles.GUST_CURL, pos.x, pos.y, pos.z, 40, 2.0, 1.2, 2.0, 0.2);
-        world.spawnParticles(ParticleTypes.CLOUD, pos.x, pos.y, pos.z, 40, 2.0, 1.0, 2.0, 0.15);
-        world.spawnParticles(ParticleTypes.CLOUD, pos.x, pos.y, pos.z, 30, 1.5, 0.8, 1.5, 0.08);
-        // Earth
-        world.spawnParticles(AvatarParticles.STONE_CHIP, pos.x, pos.y, pos.z, 40, 2.0, 0.8, 2.0, 0.15);
+        // 4. Epic Visual Spectacle: Celestial Beacon Light Column shooting into the heavens
+        for (int y = 0; y < 48; y += 2) {
+            world.spawnParticles(ParticleTypes.END_ROD, pos.x, pos.y + y, pos.z, 6, 0.45, 0.7, 0.45, 0.06);
+            world.spawnParticles(ParticleTypes.FLASH, pos.x, pos.y + y, pos.z, 1, 0.2, 0.2, 0.2, 0.0);
+        }
+
+        // Concentric 4-Element Orbital Tempest
+        // Fire Sphere & Outward Shockwave
+        world.spawnParticles(ParticleTypes.EXPLOSION_EMITTER, pos.x, pos.y, pos.z, 2, 0, 0, 0, 0);
+        world.spawnParticles(ParticleTypes.FLAME, pos.x, pos.y + 0.5, pos.z, 120, 3.5, 1.2, 3.5, 0.25);
+        world.spawnParticles(AvatarParticles.FLAME_BURST, pos.x, pos.y + 0.5, pos.z, 40, 2.8, 1.0, 2.8, 0.12);
+        // Water Ring
+        world.spawnParticles(ParticleTypes.SPLASH, pos.x, pos.y + 1.2, pos.z, 120, 3.5, 0.8, 3.5, 0.35);
+        world.spawnParticles(AvatarParticles.DROPLET, pos.x, pos.y + 1.2, pos.z, 60, 3.0, 0.6, 3.0, 0.15);
+        // Air Ascending Vortex
+        world.spawnParticles(AvatarParticles.GUST_CURL, pos.x, pos.y, pos.z, 80, 2.5, 2.5, 2.5, 0.35);
+        world.spawnParticles(ParticleTypes.CLOUD, pos.x, pos.y, pos.z, 70, 3.0, 1.8, 3.0, 0.2);
+        // Earth Megalith Ring
+        world.spawnParticles(AvatarParticles.STONE_CHIP, pos.x, pos.y - 0.2, pos.z, 80, 3.2, 0.6, 3.2, 0.22);
         world.spawnParticles(new BlockStateParticleEffect(
-                ParticleTypes.BLOCK, net.minecraft.block.Blocks.STONE.getDefaultState()),
-                pos.x, pos.y, pos.z, 50, 2.0, 0.8, 2.0, 0.2);
+                ParticleTypes.BLOCK, net.minecraft.block.Blocks.DEEPSLATE.getDefaultState()),
+                pos.x, pos.y - 0.2, pos.z, 90, 3.5, 0.6, 3.5, 0.3);
 
-        // 5. Epic sound layering
+        // 5. Cataclysmic Sound Layering
         BlockPos bp = player.getBlockPos();
-        world.playSound(null, bp, SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 2.5f, 1.2f);
-        world.playSound(null, bp, SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.PLAYERS, 2.0f, 0.9f);
-        world.playSound(null, bp, SoundEvents.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.PLAYERS, 1.5f, 1.3f);
-        world.playSound(null, bp, SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.PLAYERS, 2.0f, 0.7f);
+        world.playSound(null, bp, SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 3.0f, 1.1f);
+        world.playSound(null, bp, SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.PLAYERS, 2.5f, 0.85f);
+        world.playSound(null, bp, SoundEvents.ENTITY_WARDEN_SONIC_BOOM, SoundCategory.PLAYERS, 2.0f, 1.05f);
+        world.playSound(null, bp, SoundEvents.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.PLAYERS, 1.8f, 1.25f);
+        world.playSound(null, bp, SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.PLAYERS, 2.2f, 0.6f);
 
-        // 6. Broadcast cinematic text
-        player.sendMessage(Text.literal("§b§l[AVATAR STATE] §6Emergency Survival Reflex Activated!"), false);
+        // 6. Broadcast cinematic announcement
+        String title = emergency ? "§b§l[AVATAR STATE] §6Emergency Survival Reflex Awakened!"
+                                 : "§b§l[AVATAR STATE] §6Transcendence Awakened via Ancient Scroll!";
+        player.sendMessage(Text.literal(title), false);
         world.getServer().getPlayerManager().broadcast(
-                Text.literal("§e" + player.getName().getString() + " §bentered the §6§lAVATAR STATE§r!"), false);
+                Text.literal("§6§l" + player.getName().getString() + " §bentered the transcendent §6§lAVATAR STATE§r!"), false);
 
         SkillNetworking.sendHudUpdate(player, data, data.getActiveSkillId());
     }

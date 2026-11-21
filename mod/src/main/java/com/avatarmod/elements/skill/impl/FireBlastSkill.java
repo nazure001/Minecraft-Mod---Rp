@@ -55,9 +55,48 @@ public final class FireBlastSkill {
         PlayerBendingData data = PlayerBendingData.get(player);
         SkillTimeline timeline = data.getTimeline();
 
-        // Spawn fireball on the first tick of ACTIVE phase (right after HOLD is released)
-        if (timeline.phase() == SkillTimeline.Phase.ACTIVE && timeline.ticksInPhase() == 1) {
+        if (timeline.phase() == SkillTimeline.Phase.HOLD || (timeline.isHoldSkill() && timeline.phase() == SkillTimeline.Phase.WINDUP)) {
+            tickHoldCharging(player, def, timeline);
+        } else if (timeline.phase() == SkillTimeline.Phase.ACTIVE && timeline.ticksInPhase() == 1) {
             spawnFireball(player, def, timeline.getChargeRatio());
+        }
+    }
+
+    private static void tickHoldCharging(ServerPlayerEntity player, SkillDefinition def, SkillTimeline timeline) {
+        float chargeRatio = timeline.getChargeRatio();
+        ServerWorld world = player.getServerWorld();
+        Vec3d eyePos = player.getEyePos();
+        Vec3d look = player.getRotationVec(1.0f);
+        Vec3d chargePos = eyePos.add(look.multiply(1.2)).add(0, -0.2, 0);
+
+        // Blazing swirling flames licking around player's hands
+        double spread = 0.25 + 0.65 * chargeRatio;
+        world.spawnParticles(ParticleTypes.FLAME,
+                chargePos.x, chargePos.y, chargePos.z,
+                (int) (5 + 10 * chargeRatio), spread, spread, spread, 0.05);
+        world.spawnParticles(AvatarParticles.FLAME_BURST,
+                chargePos.x, chargePos.y, chargePos.z,
+                (int) (2 + 4 * chargeRatio), spread * 0.7, spread * 0.7, spread * 0.7, 0.03);
+        world.spawnParticles(ParticleTypes.SMALL_FLAME,
+                chargePos.x, chargePos.y + 0.1, chargePos.z,
+                (int) (3 + 6 * chargeRatio), spread * 0.5, spread * 0.5, spread * 0.5, 0.04);
+        world.spawnParticles(ParticleTypes.SMOKE,
+                chargePos.x, chargePos.y + 0.25, chargePos.z,
+                (int) (2 + 3 * chargeRatio), spread * 0.4, 0.15, spread * 0.4, 0.02);
+
+        // Periodic flame ignition sound
+        if (timeline.ticksInPhase() % 6 == 0) {
+            float pitch = 0.8f + 0.6f * chargeRatio;
+            world.playSound(null, player.getBlockPos(),
+                    SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 0.75f, pitch);
+        }
+
+        // Actionbar charge indicator
+        if (timeline.ticksInPhase() % 4 == 0) {
+            int pct = (int) (chargeRatio * 100);
+            int bars = (int) (chargeRatio * 10);
+            String barStr = "█".repeat(bars) + "░".repeat(Math.max(0, 10 - bars));
+            player.sendMessage(net.minecraft.text.Text.literal("§c[Fire Blast Charge] §e[" + barStr + "] " + pct + "%"), true);
         }
     }
 

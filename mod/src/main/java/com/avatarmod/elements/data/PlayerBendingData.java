@@ -47,6 +47,9 @@ public final class PlayerBendingData {
     // Chi Blocking status (inflicted by Non-Bender pressure point strikes)
     private int chiBlockedTicks = 0;
 
+    // Avatar State transcendence status (extended god-tier empowerment)
+    private int avatarStateTicks = 0;
+
     public PlayerBendingData() {
         this.chi = MAX_CHI_DEFAULT;
         this.maxChi = MAX_CHI_DEFAULT;
@@ -208,6 +211,11 @@ public final class PlayerBendingData {
     public String getActiveElement() { return activeElement; }
     public void setActiveElement(String element) { this.activeElement = element; }
 
+    public boolean isAvatarStateActive() { return avatarStateTicks > 0; }
+    public int getAvatarStateTicks() { return avatarStateTicks; }
+    public void enterAvatarState(int durationTicks) { this.avatarStateTicks = Math.max(this.avatarStateTicks, durationTicks); }
+    public void exitAvatarState() { this.avatarStateTicks = 0; }
+
     // --- static helpers ---
 
     public static PlayerBendingData get(ServerPlayerEntity player) {
@@ -221,6 +229,39 @@ public final class PlayerBendingData {
         if (data.chiBlockedTicks > 0) {
             data.chiBlockedTicks--;
         }
+
+        // Active Avatar State: continuous energy surge, swift cooldown recovery & orbital elemental motes
+        if (data.avatarStateTicks > 0) {
+            data.avatarStateTicks--;
+            data.regenChi(5);
+            data.tickCooldowns(); // 2x faster cooldown recharge in Avatar State
+
+            long worldTime = player.getServerWorld().getTime();
+            if (worldTime % 3 == 0) {
+                net.minecraft.server.world.ServerWorld world = player.getServerWorld();
+                net.minecraft.util.math.Vec3d pos = player.getPos().add(0, 1.0, 0);
+                double theta = (worldTime % 30) * (2 * Math.PI / 30.0);
+                double r = 1.35;
+
+                // Fire mote
+                world.spawnParticles(net.minecraft.particle.ParticleTypes.FLAME,
+                        pos.x + r * Math.cos(theta), pos.y + 0.3 * Math.sin(theta * 2), pos.z + r * Math.sin(theta),
+                        1, 0, 0.02, 0, 0.01);
+                // Water mote
+                world.spawnParticles(net.minecraft.particle.ParticleTypes.SPLASH,
+                        pos.x + r * Math.cos(theta + Math.PI * 0.5), pos.y - 0.2, pos.z + r * Math.sin(theta + Math.PI * 0.5),
+                        2, 0, 0.02, 0, 0.01);
+                // Earth mote
+                world.spawnParticles(com.avatarmod.elements.particle.AvatarParticles.STONE_CHIP,
+                        pos.x + r * Math.cos(theta + Math.PI), pos.y + 0.2, pos.z + r * Math.sin(theta + Math.PI),
+                        1, 0, 0.01, 0, 0.01);
+                // Air gust
+                world.spawnParticles(com.avatarmod.elements.particle.AvatarParticles.GUST_CURL,
+                        pos.x + r * Math.cos(theta + Math.PI * 1.5), pos.y - 0.1, pos.z + r * Math.sin(theta + Math.PI * 1.5),
+                        1, 0, 0.02, 0, 0.02);
+            }
+        }
+
         long worldTime = player.getServerWorld().getTime();
         if (worldTime % ChiManager.REGEN_INTERVAL == 0) {
             int pulse = data.chiManager.computeRegenPulse(data.chi, data.maxChi);

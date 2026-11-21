@@ -21,9 +21,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class SkillNetworking {
 
-    // Per-skill rate limit: UUID → (skillId → lastTick). Prevents single-skill spam
-    // without blocking rapid Z→X cross-skill switching.
-    private static final int RATE_LIMIT_TICKS = 3;
+    // Per-skill rate limit: UUID → (skillId → lastTick). Prevents packet flooding
+    // without blocking responsive combat key combinations.
+    private static final int RATE_LIMIT_TICKS = 1;
     private static final Map<UUID, Map<String, Long>> lastSkillTick = new HashMap<>();
 
     // castSerial: increments each time a new cast starts for a given player.

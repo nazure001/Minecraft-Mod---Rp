@@ -17,6 +17,7 @@ public final class AvatarItems {
     public static final Item EARTH_HAMMER = new EarthHammerItem();
     public static final Item WAR_FAN = new WarFanItem();
     public static final Item WATER_SPEAR = new WaterSpearItem();
+    public static final Item AVATAR_SCROLL = new AvatarScrollItem();
 
     public static final ItemGroup MAIN_GROUP = FabricItemGroup.builder()
             .icon(() -> new ItemStack(AIR_STAFF))
@@ -27,6 +28,7 @@ public final class AvatarItems {
                 entries.add(EARTH_HAMMER);
                 entries.add(WAR_FAN);
                 entries.add(WATER_SPEAR);
+                entries.add(AVATAR_SCROLL);
             })
             .build();
 
@@ -41,6 +43,8 @@ public final class AvatarItems {
                 Identifier.of(AvatarElementsMod.MOD_ID, "war_fan"), WAR_FAN);
         Registry.register(Registries.ITEM,
                 Identifier.of(AvatarElementsMod.MOD_ID, "water_spear"), WATER_SPEAR);
+        Registry.register(Registries.ITEM,
+                Identifier.of(AvatarElementsMod.MOD_ID, "avatar_scroll"), AVATAR_SCROLL);
         Registry.register(Registries.ITEM_GROUP,
                 Identifier.of(AvatarElementsMod.MOD_ID, "main"), MAIN_GROUP);
     }

@@ -16,18 +16,30 @@ public final class SkillClientHandler {
                     client.execute(() -> {
                         if (client.player == null) return;
                         if (payload.allowed()) {
-                            client.player.sendMessage(
-                                    Text.literal("§a[Avatar] " + payload.skillId() + " — OK"), true);
+                            // Suppress spammy actionbar notifications on every cast; only log in debug mode
+                            if (Boolean.getBoolean("avatar.debug.network")) {
+                                client.player.sendMessage(
+                                        Text.literal("§a[Avatar] " + payload.skillId() + " — OK"), true);
+                            }
                         } else {
+                            // Rate limited is an internal throttle; never display "Terlalu cepat" error spam
+                            if (payload.denyReason() == SkillPackets.S2CSkillResult.DenyReason.RATE_LIMITED) {
+                                return;
+                            }
                             String reason = switch (payload.denyReason()) {
-                                case COOLDOWN -> "Cooldown: " + payload.cooldownTicks() + " tik";
+                                case COOLDOWN -> {
+                                    float sec = payload.cooldownTicks() / 20.0f;
+                                    yield sec >= 1.0f ? String.format(java.util.Locale.ROOT, "Cooldown: %.1fs", sec)
+                                                      : "Cooldown: " + payload.cooldownTicks() + " tik";
+                                }
                                 case NOT_ENOUGH_CHI -> "Chi tidak cukup";
                                 case WRONG_MASTERY -> "Mastery tidak cukup";
-                                case RATE_LIMITED -> "Terlalu cepat";
-                                default -> "Ditolak";
+                                default -> null;
                             };
-                            client.player.sendMessage(
-                                    Text.literal("§c[Avatar] " + payload.skillId() + " — " + reason), true);
+                            if (reason != null) {
+                                client.player.sendMessage(
+                                        Text.literal("§c[Avatar] " + reason), true);
+                            }
                         }
                     });
                 });

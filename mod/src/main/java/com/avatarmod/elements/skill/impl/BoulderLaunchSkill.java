@@ -71,20 +71,47 @@ public final class BoulderLaunchSkill {
 
         boolean hasHammer = ElementalInteractions.isWeaponAffinity(player.getMainHandStack(), "EARTH");
 
-        // Swirling dust and stone chips around growing megalith
+        // 1. Excavation & Suction: find ground block in front and pull earth debris upwards
+        BlockPos groundPos = ElementalInteractions.findSolidGroundBelow(
+                world, player.getBlockPos().add((int)(look.x * 2.0), 0, (int)(look.z * 2.0)), 6);
+        BlockState groundState = world.getBlockState(groundPos);
+        if (groundState.isAir()) groundState = Blocks.STONE.getDefaultState();
+
+        Vec3d groundCenter = Vec3d.ofCenter(groundPos).add(0, 0.4, 0);
+        Vec3d suctionVec = chargePos.subtract(groundCenter).normalize();
+
+        // Particles of rock and soil wrenched upwards from the ground into the hovering boulder
+        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, groundState),
+                groundCenter.x + (world.random.nextDouble() - 0.5) * 1.2,
+                groundCenter.y + 0.2,
+                groundCenter.z + (world.random.nextDouble() - 0.5) * 1.2,
+                (int)(4 + 6 * chargeRatio),
+                suctionVec.x * 0.4, 0.60 + 0.25 * chargeRatio, suctionVec.z * 0.4, 0.12);
+
+        // Ground fracture dust at the source
+        world.spawnParticles(AvatarParticles.DUST,
+                groundCenter.x, groundCenter.y, groundCenter.z,
+                (int)(3 + 4 * chargeRatio), 0.5, 0.2, 0.5, 0.03);
+
+        // 2. Swirling dust and stone chips condensing into the growing megalith
         double spread = 0.3 + 0.8 * chargeRatio;
         world.spawnParticles(AvatarParticles.STONE_CHIP,
                 chargePos.x, chargePos.y, chargePos.z,
-                (int) (3 + 6 * chargeRatio), spread, spread, spread, 0.04);
+                (int) (5 + 8 * chargeRatio), spread, spread, spread, 0.05);
+        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, groundState),
+                chargePos.x, chargePos.y, chargePos.z,
+                (int) (4 + 6 * chargeRatio), spread * 0.7, spread * 0.7, spread * 0.7, 0.07);
         world.spawnParticles(AvatarParticles.DUST,
                 chargePos.x, chargePos.y, chargePos.z,
                 (int) (4 + 8 * chargeRatio), spread, spread, spread, 0.02);
 
-        // Periodic deep stone grinding rumble
-        if (timeline.ticksInPhase() % 8 == 0) {
+        // 3. Periodic deep stone grinding rumble
+        if (timeline.ticksInPhase() % 6 == 0) {
             float pitch = 1.3f - 0.7f * chargeRatio;
+            world.playSound(null, groundPos,
+                    SoundEvents.BLOCK_STONE_HIT, SoundCategory.PLAYERS, 0.85f, pitch);
             world.playSound(null, player.getBlockPos(),
-                    SoundEvents.BLOCK_STONE_HIT, SoundCategory.PLAYERS, 0.8f, pitch);
+                    SoundEvents.BLOCK_STONE_BREAK, SoundCategory.PLAYERS, 0.6f, pitch + 0.2f);
         }
 
         // Actionbar charge indicator
