@@ -66,6 +66,7 @@ public final class SkillNetworking {
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSkillResult.ID, SkillPackets.S2CSkillResult.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CHudUpdate.ID, SkillPackets.S2CHudUpdate.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSyncElement.ID, SkillPackets.S2CSyncElement.CODEC);
+        PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSyncBosses.ID, SkillPackets.S2CSyncBosses.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CPhaseSync.ID, SkillPackets.S2CPhaseSync.CODEC);
         PayloadTypeRegistry.playS2C().register(SkillPackets.S2CSkillPosition.ID, SkillPackets.S2CSkillPosition.CODEC);
         PayloadTypeRegistry.playC2S().register(SkillPackets.C2SPillarInteract.ID, SkillPackets.C2SPillarInteract.CODEC);
@@ -263,6 +264,10 @@ public final class SkillNetworking {
         ServerPlayNetworking.send(player, new SkillPackets.S2CHudUpdate(
                 data.getChi(), data.getMaxChi(), safeSkillId, cd));
         ServerPlayNetworking.send(player, new SkillPackets.S2CSyncElement(element));
+
+        // Sync defeated bosses for Skill Tree progression
+        String bosses = String.join(",", data.getDefeatedBosses());
+        ServerPlayNetworking.send(player, new SkillPackets.S2CSyncBosses(bosses));
     }
 
     // C2SSlotCast: resolve skillId from server-side element, then run normal pipeline

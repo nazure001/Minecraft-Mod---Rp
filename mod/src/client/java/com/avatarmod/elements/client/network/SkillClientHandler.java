@@ -67,6 +67,15 @@ public final class SkillClientHandler {
                 });
 
         ClientPlayNetworking.registerGlobalReceiver(
+                SkillPackets.S2CSyncBosses.ID,
+                (payload, context) -> {
+                    MinecraftClient client = context.client();
+                    client.execute(() -> {
+                        com.avatarmod.elements.client.hud.HudState.updateDefeatedBosses(payload.bossesCommaSeparated());
+                    });
+                });
+
+        ClientPlayNetworking.registerGlobalReceiver(
                 SkillPackets.S2CPillarAction.ID,
                 (payload, context) -> {
                     MinecraftClient client = context.client();

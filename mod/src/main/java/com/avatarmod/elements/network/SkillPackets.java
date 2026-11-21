@@ -289,5 +289,17 @@ public final class SkillPackets {
         @Override public CustomPayload.Id<C2SMartialAttack> getId() { return ID; }
     }
 
+    // Server → Client: Synchronize defeated bosses for Skill Tree unlocking
+    public record S2CSyncBosses(String bossesCommaSeparated) implements CustomPayload {
+        public static final CustomPayload.Id<S2CSyncBosses> ID =
+                new CustomPayload.Id<>(Identifier.of("avatar_elements", "s2c_sync_bosses"));
+        public static final PacketCodec<PacketByteBuf, S2CSyncBosses> CODEC = PacketCodec.of(
+                (value, buf) -> buf.writeString(value.bossesCommaSeparated() != null ? value.bossesCommaSeparated() : ""),
+                buf -> new S2CSyncBosses(buf.readString(256))
+        );
+
+        @Override public CustomPayload.Id<S2CSyncBosses> getId() { return ID; }
+    }
+
     private SkillPackets() {}
 }

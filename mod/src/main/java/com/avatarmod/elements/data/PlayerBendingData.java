@@ -53,6 +53,9 @@ public final class PlayerBendingData {
     // Creative / Sandbox testing bypass mode (unlimited chi, zero cooldowns, instant mastery)
     private boolean sandboxBypass = false;
 
+    // Defeated elemental mini-bosses tracking (unlocks sub-bending trees in Option A + B)
+    private final java.util.Set<String> defeatedBosses = new java.util.HashSet<>();
+
     public PlayerBendingData() {
         this.chi = MAX_CHI_DEFAULT;
         this.maxChi = MAX_CHI_DEFAULT;
@@ -223,6 +226,20 @@ public final class PlayerBendingData {
     public boolean isSandboxBypass() { return sandboxBypass; }
     public void setSandboxBypass(boolean bypass) { this.sandboxBypass = bypass; }
     public void toggleSandboxBypass() { this.sandboxBypass = !this.sandboxBypass; }
+
+    // --- defeated bosses & progression ---
+    public boolean hasDefeatedBoss(String bossType) {
+        if (sandboxBypass) return true;
+        return defeatedBosses.contains(bossType.toUpperCase(java.util.Locale.ROOT));
+    }
+
+    public boolean addDefeatedBoss(String bossType) {
+        return defeatedBosses.add(bossType.toUpperCase(java.util.Locale.ROOT));
+    }
+
+    public java.util.Set<String> getDefeatedBosses() {
+        return java.util.Collections.unmodifiableSet(defeatedBosses);
+    }
 
     // --- static helpers ---
 

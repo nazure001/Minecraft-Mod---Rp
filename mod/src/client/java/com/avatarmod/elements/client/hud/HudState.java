@@ -10,6 +10,7 @@ public final class HudState {
     private static int maxChi     = 100;
     private static String activeCooldownSkillId = "";
     private static int cooldownTicksRemaining   = 0;
+    private static final java.util.Set<String> defeatedBosses = new java.util.HashSet<>();
 
     // Smooth chi interpolation: lerp toward server value each frame
     private static float displayChi = 0f;
@@ -37,6 +38,24 @@ public final class HudState {
     public static String getActiveCooldownSkillId() { return activeCooldownSkillId; }
     public static boolean hasCooldown() {
         return cooldownTicksRemaining > 0 && !activeCooldownSkillId.isEmpty();
+    }
+
+    public static void updateDefeatedBosses(String bossesCommaSeparated) {
+        defeatedBosses.clear();
+        if (bossesCommaSeparated != null && !bossesCommaSeparated.isBlank()) {
+            for (String b : bossesCommaSeparated.split(",")) {
+                if (!b.isBlank()) defeatedBosses.add(b.trim().toUpperCase(java.util.Locale.ROOT));
+            }
+        }
+    }
+
+    public static boolean hasDefeatedBoss(String bossType) {
+        if (bossType == null) return false;
+        return defeatedBosses.contains(bossType.toUpperCase(java.util.Locale.ROOT));
+    }
+
+    public static java.util.Set<String> getDefeatedBosses() {
+        return java.util.Collections.unmodifiableSet(defeatedBosses);
     }
 
     private HudState() {}

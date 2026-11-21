@@ -122,6 +122,49 @@ public final class AvatarServerEvents {
             return true;
         });
 
+        // Boss defeat listener: awards progression and unlocks sub-bending in Skill Tree
+        ServerLivingEntityEvents.AFTER_DEATH.register((entity, damageSource) -> {
+            if (entity.getCustomName() == null) return;
+            String name = entity.getCustomName().getString();
+            if (!name.contains("[Boss]")) return;
+
+            ServerPlayerEntity killer = null;
+            if (damageSource.getAttacker() instanceof ServerPlayerEntity p) {
+                killer = p;
+            }
+
+            String bossElement = null;
+            if (name.contains("Ozai") || name.contains("Fire")) {
+                bossElement = "FIRE";
+            } else if (name.contains("Pakku") || name.contains("Water")) {
+                bossElement = "WATER";
+            } else if (name.contains("Bumi") || name.contains("Earth")) {
+                bossElement = "EARTH";
+            } else if (name.contains("Gyatso") || name.contains("Air")) {
+                bossElement = "AIR";
+            } else {
+                bossElement = "NON_BENDER";
+            }
+
+            // Award to killer or nearby players within 32 blocks of boss defeat
+            Box rewardBox = Box.of(entity.getPos(), 64, 64, 64);
+            List<ServerPlayerEntity> nearby = entity.getServer().getPlayerManager().getPlayerList().stream()
+                    .filter(p -> p.getWorld() == entity.getWorld() && rewardBox.contains(p.getPos()))
+                    .toList();
+
+            for (ServerPlayerEntity p : nearby) {
+                PlayerBendingData data = PlayerBendingData.get(p);
+                boolean isNew = data.addDefeatedBoss(bossElement);
+                if (isNew) {
+                    p.sendMessage(Text.literal("§6§l[AVATAR PROGRESSION] §aAnda telah mengalahkan " + name + "!"), false);
+                    p.sendMessage(Text.literal("§b§l[SKILL TREE UNLOCKED] §eCabang Sub-Bending " + bossElement + " kini terbuka di Pohon Keterampilan [K]!"), false);
+                    p.getServerWorld().playSound(null, p.getBlockPos(),
+                            SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.PLAYERS, 1.5f, 1.0f);
+                    SkillNetworking.sendHudUpdate(p, data, data.getActiveSkillId());
+                }
+            }
+        });
+
         ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
             FireBlastSkill.clearFireball(newPlayer.getUuid());
             EarthPillarSkill.clear(newPlayer.getUuid());

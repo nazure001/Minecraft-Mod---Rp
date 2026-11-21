@@ -129,51 +129,78 @@ public final class SkillTreeScreen extends Screen {
 
         // Creative / Testing Mode notice
         boolean creative = client != null && client.player != null && client.player.isCreative();
-        String modeNotice = creative
-                ? "§a[Mode Kreatif / Sandbox] Semua skill dan sub-bending terbuka langsung untuk uji coba!"
-                : "§e[Hardcore Progression] Kalahkan Mini-Boss untuk membuka Sub-Bending (Opsi A & B Aktif)";
+        boolean bossDefeated = com.avatarmod.elements.client.hud.HudState.hasDefeatedBoss(activeElement);
+        boolean subBendingUnlocked = creative || bossDefeated;
+
+        String modeNotice;
+        if (creative) {
+            modeNotice = "§a[Mode Kreatif / Sandbox] Semua skill dan sub-bending terbuka langsung untuk uji coba!";
+        } else if (bossDefeated) {
+            modeNotice = "§6[Boss Defeated!] §aMini-Boss " + activeElement + " telah dikalahkan! Seluruh cabang Sub-Bending telah TERBUKA!";
+        } else {
+            modeNotice = "§c[Segel Terkunci] Kalahkan Mini-Boss " + activeElement + " untuk memunculkan dan membuka cabang Sub-Bending!";
+        }
         context.drawCenteredTextWithShadow(textRenderer, Text.literal(modeNotice), centerX, 50, 0xFFFFFFFF);
 
         // Render Branch Labels
         context.drawTextWithShadow(textRenderer, Text.literal("§6► Jurus Dasar & Seni Bela Diri"), centerX - 180, 56, 0xFFFFAA00);
-        context.drawTextWithShadow(textRenderer, Text.literal("§d► Cabang Sub-Bending Khusus"), centerX + 20, 56, 0xFFFF55FF);
+        context.drawTextWithShadow(textRenderer,
+                Text.literal(subBendingUnlocked ? "§d► Cabang Sub-Bending (Terbuka)" : "§8► Cabang Sub-Bending (Terkunci Segel Boss)"),
+                centerX + 20, 56, subBendingUnlocked ? 0xFFFF55FF : 0xFF777777);
 
         SkillNode hoveredNode = null;
 
         // Render Nodes
         for (SkillNode node : nodes) {
+            boolean isLockedSub = node.isSubBending && !subBendingUnlocked;
             boolean hovered = mouseX >= node.x && mouseX < node.x + 130 && mouseY >= node.y && mouseY < node.y + 36;
             if (hovered) hoveredNode = node;
 
-            int borderCol = hovered ? 0xFFFFFFFF : (node.isSubBending ? 0xFFFFD700 : 0xFF888888);
-            int bgCol = hovered ? (node.color | 0x88000000) : 0xBB201A15;
+            int borderCol = isLockedSub ? 0xFF444444 : (hovered ? 0xFFFFFFFF : (node.isSubBending ? 0xFFFFD700 : 0xFF888888));
+            int bgCol = isLockedSub ? 0xDD12100E : (hovered ? (node.color | 0x88000000) : 0xBB201A15);
+            int indicatorCol = isLockedSub ? 0xFF333333 : node.color;
 
             // Box
             context.fill(node.x - 2, node.y - 2, node.x + 132, node.y + 38, borderCol);
             context.fill(node.x, node.y, node.x + 130, node.y + 36, bgCol);
 
             // Icon / Indicator
-            context.fill(node.x + 4, node.y + 4, node.x + 10, node.y + 32, node.color);
+            context.fill(node.x + 4, node.y + 4, node.x + 10, node.y + 32, indicatorCol);
 
             // Texts
-            context.drawTextWithShadow(textRenderer, Text.literal("§f" + node.name), node.x + 16, node.y + 6, 0xFFFFFFFF);
-            context.drawTextWithShadow(textRenderer, Text.literal("§7" + node.subType + " §8[Tier " + node.tier + "]"),
-                    node.x + 16, node.y + 20, 0xFFAAAAAA);
+            if (isLockedSub) {
+                context.drawTextWithShadow(textRenderer, Text.literal("§8🔒 ??? (Terkunci)"), node.x + 16, node.y + 6, 0xFF666666);
+                context.drawTextWithShadow(textRenderer, Text.literal("§4[Kalahkan Boss " + activeElement + "]"),
+                        node.x + 16, node.y + 20, 0xFFAA2222);
+            } else {
+                context.drawTextWithShadow(textRenderer, Text.literal("§f" + node.name), node.x + 16, node.y + 6, 0xFFFFFFFF);
+                context.drawTextWithShadow(textRenderer, Text.literal("§7" + node.subType + " §8[Tier " + node.tier + "]"),
+                        node.x + 16, node.y + 20, 0xFFAAAAAA);
+            }
         }
 
         // Draw Tooltip if hovering a node
         if (hoveredNode != null) {
             List<Text> tooltip = new ArrayList<>();
-            tooltip.add(Text.literal("§e§l" + hoveredNode.name));
-            tooltip.add(Text.literal("§bKategori: §f" + hoveredNode.subType));
-            tooltip.add(Text.literal("§6Tingkat Mastery Diperlukan: §fTier " + hoveredNode.tier));
-            tooltip.add(Text.literal("§7" + hoveredNode.desc));
-            if (creative) {
-                tooltip.add(Text.literal("§a✔ Bebas diuji coba kapan saja di Sandbox Mode."));
+            boolean isLockedSub = hoveredNode.isSubBending && !subBendingUnlocked;
+            if (isLockedSub) {
+                tooltip.add(Text.literal("§c§l🔒 JURUS SUB-BENDING TERKUNCI"));
+                tooltip.add(Text.literal("§7Jurus ini hanya akan terungkap dan dapat dipelajari"));
+                tooltip.add(Text.literal("§7setelah Anda berhasil mengalahkan §6Mini-Boss " + activeElement + "§7!"));
+                tooltip.add(Text.literal("§8(Gunakan §e/avatar spawn_boss " + activeElement.toLowerCase(java.util.Locale.ROOT)
+                        + "§8 untuk memanggil bos atau beralih ke Mode Creative)"));
             } else {
-                tooltip.add(Text.literal(hoveredNode.isSubBending
-                        ? "§c✖ Kalahkan Mini-Boss elemen ini untuk membuka segel gulungan."
-                        : "§e✔ Naikkan Mastery elemen untuk menggunakan jurus ini."));
+                tooltip.add(Text.literal("§e§l" + hoveredNode.name));
+                tooltip.add(Text.literal("§bKategori: §f" + hoveredNode.subType));
+                tooltip.add(Text.literal("§6Tingkat Mastery Diperlukan: §fTier " + hoveredNode.tier));
+                tooltip.add(Text.literal("§7" + hoveredNode.desc));
+                if (creative) {
+                    tooltip.add(Text.literal("§a✔ Bebas diuji coba kapan saja di Sandbox Mode."));
+                } else if (hoveredNode.isSubBending) {
+                    tooltip.add(Text.literal("§a✔ Segel Boss Terbuka! Naikkan Mastery untuk menguasai jurus ini."));
+                } else {
+                    tooltip.add(Text.literal("§e✔ Jurus Dasar: Naikkan Mastery elemen untuk menguasai jurus ini."));
+                }
             }
             context.drawTooltip(textRenderer, tooltip, mouseX, mouseY);
         }

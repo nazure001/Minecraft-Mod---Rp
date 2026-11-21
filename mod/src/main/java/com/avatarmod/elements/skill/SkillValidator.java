@@ -60,6 +60,23 @@ public final class SkillValidator {
                     SkillPackets.S2CSkillResult.DenyReason.WRONG_MASTERY, 0);
         }
 
+        // 2.5 Sub-bending boss progression check:
+        // Skills with mastery >= 4 or specific sub-bending require defeating the elemental boss
+        if (!creativeTesting && def.masteryRequired() >= 4) {
+            String requiredBoss = switch (def.element()) {
+                case FIRE -> "FIRE";
+                case WATER -> "WATER";
+                case EARTH -> "EARTH";
+                case AIR -> "AIR";
+                case NON_BENDER -> "NON_BENDER";
+            };
+            if (!data.hasDefeatedBoss(requiredBoss)) {
+                player.sendMessage(net.minecraft.text.Text.literal(
+                        "§c[Avatar] Jurus sub-bending ini tersegel! Kalahkan Mini-Boss " + requiredBoss + " terlebih dahulu!"), true);
+                return ValidationResult.deny(SkillPackets.S2CSkillResult.DenyReason.WRONG_MASTERY, 0);
+            }
+        }
+
         // 3. Cooldown check (bypassed in creative testing)
         int cd = data.getCooldown(skillId);
         if (!creativeTesting && cd > 0) {
