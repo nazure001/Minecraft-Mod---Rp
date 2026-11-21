@@ -22,10 +22,19 @@ public final class FireJetSkill {
     private static final float THRUST_SPEED = 0.95f;
 
     public static void tick(ServerPlayerEntity player, SkillDefinition def) {
-        SkillTimeline timeline = PlayerBendingData.get(player).getTimeline();
-        if (timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
+        PlayerBendingData data = PlayerBendingData.get(player);
+        SkillTimeline timeline = data.getTimeline();
+        if (timeline.phase() != SkillTimeline.Phase.HOLD && timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
 
         int t = timeline.ticksInPhase();
+
+        // Spend Chi during sustained hold flight (1 Chi every 3 ticks)
+        if (timeline.phase() == SkillTimeline.Phase.HOLD && t > 0 && t % 3 == 0) {
+            if (!data.trySpendChi(1)) {
+                timeline.releaseHold();
+                return;
+            }
+        }
 
         // 1. Initial explosive launch burst on tick 0
         if (t == 0) {
@@ -65,13 +74,25 @@ public final class FireJetSkill {
 
     private static void sustainThrust(ServerPlayerEntity player, int t) {
         Vec3d look = player.getRotationVec(1.0f);
-        double vy = Math.max(look.y * 0.85 + 0.12, 0.08);
-        player.setVelocity(look.x * THRUST_SPEED, vy, look.z * THRUST_SPEED);
+        double speedMultiplier = ElementalInteractions.getWeaponSpeedMultiplier(player.getMainHandStack(), "FIRE");
+        double thrust = THRUST_SPEED * speedMultiplier;
+        double vy = Math.max(look.y * 0.95 + 0.16, -0.85);
+        player.setVelocity(look.x * thrust, vy, look.z * thrust);
         player.velocityModified = true;
         player.fallDistance = 0.0f;
 
         if (t % 2 == 0) {
             player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player.getId(), player.getVelocity()));
+        }
+
+        // Ignite and push any mobs collided with in flight
+        ServerWorld world = player.getServerWorld();
+        net.minecraft.util.math.Box box = net.minecraft.util.math.Box.of(player.getPos().add(0, 0.5, 0), 1.8, 1.8, 1.8);
+        for (net.minecraft.entity.LivingEntity e : world.getEntitiesByClass(net.minecraft.entity.LivingEntity.class, box, e -> e != player && e.isAlive())) {
+            ElementalInteractions.applyFire(e, 80);
+            Vec3d push = look.multiply(0.8);
+            e.addVelocity(push.x, 0.2, push.z);
+            e.velocityModified = true;
         }
     }
 

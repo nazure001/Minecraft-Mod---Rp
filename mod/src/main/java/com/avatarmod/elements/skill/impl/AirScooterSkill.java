@@ -34,11 +34,20 @@ public final class AirScooterSkill {
     private static final double DESIRED_HOVER_HEIGHT = 0.75;
 
     public static void tick(ServerPlayerEntity player, SkillDefinition def) {
-        SkillTimeline timeline = PlayerBendingData.get(player).getTimeline();
-        if (timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
+        PlayerBendingData data = PlayerBendingData.get(player);
+        SkillTimeline timeline = data.getTimeline();
+        if (timeline.phase() != SkillTimeline.Phase.HOLD && timeline.phase() != SkillTimeline.Phase.ACTIVE) return;
 
         int t = timeline.ticksInPhase();
         ServerWorld world = player.getServerWorld();
+
+        // Sustain Chi consumption during hold phase (1 Chi every 3 ticks)
+        if (timeline.phase() == SkillTimeline.Phase.HOLD && t > 0 && t % 3 == 0) {
+            if (!data.trySpendChi(1)) {
+                timeline.releaseHold();
+                return;
+            }
+        }
 
         // 1. Fall damage immunity while riding
         player.fallDistance = 0.0f;
@@ -49,6 +58,9 @@ public final class AirScooterSkill {
         Vec3d forward = horizLen > 1e-4
                 ? new Vec3d(look.x / horizLen, 0, look.z / horizLen)
                 : new Vec3d(0, 0, 1);
+
+        double speedMultiplier = ElementalInteractions.getWeaponSpeedMultiplier(player.getMainHandStack(), "AIR");
+        double speed = GLIDE_SPEED * speedMultiplier;
 
         BlockPos playerPos = player.getBlockPos();
         double surfaceY = Double.NaN;
@@ -71,7 +83,7 @@ public final class AirScooterSkill {
             vy = -0.08; // slow gliding descent over chasms
         }
 
-        player.setVelocity(forward.x * GLIDE_SPEED, vy, forward.z * GLIDE_SPEED);
+        player.setVelocity(forward.x * speed, vy, forward.z * speed);
         player.velocityModified = true;
 
         if (t % 2 == 0) {

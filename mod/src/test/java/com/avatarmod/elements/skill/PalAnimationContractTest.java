@@ -49,9 +49,11 @@ class PalAnimationContractTest {
             "air_staff_attack, 0.30",
             "water_whip, 0.40",
             "water_jet, 1.90",
+            "water_surf, 1.00",
             "earth_boulder, 1.45",
             "earth_pillar, 0.75",
             "boulder_launch, 1.55",
+            "earth_tunnel, 1.00",
             "air_vortex, 2.50",
             "air_scooter, 1.00"
     })

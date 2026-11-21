@@ -326,4 +326,47 @@ public final class ElementalInteractions {
     public static float getWeaponSpeedMultiplier(net.minecraft.item.ItemStack stack, String element) {
         return isWeaponAffinity(stack, element) ? 1.20f : 1.0f;
     }
+
+    /**
+     * Identifies bendable earth materials that earthbenders can shape, burrow through, or fling:
+     * - Overworld rock, dirt, sand, terracotta, mud, clay, gravel, sandstone, and standard ores.
+     * Explicitly protects unbreakable or complex blocks (Bedrock, Obsidian, Barriers, Tile Entities).
+     */
+    public static boolean isBendableEarth(BlockState state) {
+        if (state == null || state.isAir() || state.hasBlockEntity()) return false;
+        if (state.isOf(Blocks.BEDROCK) || state.isOf(Blocks.OBSIDIAN) || state.isOf(Blocks.BARRIER)) return false;
+        return state.isIn(BlockTags.BASE_STONE_OVERWORLD)
+                || state.isIn(BlockTags.DIRT)
+                || state.isIn(BlockTags.SAND)
+                || state.isIn(BlockTags.TERRACOTTA)
+                || isOreBlock(state)
+                || state.isOf(Blocks.GRAVEL)
+                || state.isOf(Blocks.COBBLESTONE)
+                || state.isOf(Blocks.COBBLED_DEEPSLATE)
+                || state.isOf(Blocks.CLAY)
+                || state.isOf(Blocks.MUD)
+                || state.isOf(Blocks.SANDSTONE)
+                || state.isOf(Blocks.RED_SANDSTONE)
+                || state.isOf(Blocks.MUD_BRICKS)
+                || state.isOf(Blocks.NETHERRACK)
+                || state.isOf(Blocks.SOUL_SAND)
+                || state.isOf(Blocks.SOUL_SOIL)
+                || state.isOf(Blocks.BLACKSTONE);
+    }
+
+    /**
+     * Detects mineral and metal ores to ensure valuable resources drop rather than being pulverized.
+     */
+    public static boolean isOreBlock(BlockState state) {
+        if (state == null) return false;
+        return state.isIn(BlockTags.COAL_ORES)
+                || state.isIn(BlockTags.IRON_ORES)
+                || state.isIn(BlockTags.COPPER_ORES)
+                || state.isIn(BlockTags.GOLD_ORES)
+                || state.isIn(BlockTags.REDSTONE_ORES)
+                || state.isIn(BlockTags.LAPIS_ORES)
+                || state.isIn(BlockTags.DIAMOND_ORES)
+                || state.isIn(BlockTags.EMERALD_ORES)
+                || state.isOf(Blocks.ANCIENT_DEBRIS);
+    }
 }

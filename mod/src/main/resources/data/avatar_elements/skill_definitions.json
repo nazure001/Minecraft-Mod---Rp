@@ -68,7 +68,9 @@
       "knockback": 0.0,
       "hitboxShape": "SPHERE",
       "cancelOnHit": false,
-      "comboWindowTicks": 0
+      "comboWindowTicks": 0,
+      "castType": "HOLD_RELEASE",
+      "maxChargeTicks": 80
     },
     {
       "id": "avatar:fire_guard",
@@ -259,7 +261,47 @@
       "knockback": 0.8,
       "hitboxShape": "SPHERE",
       "cancelOnHit": false,
-      "comboWindowTicks": 0
+      "comboWindowTicks": 0,
+      "castType": "HOLD_RELEASE",
+      "maxChargeTicks": 80
+    },
+    {
+      "id": "avatar:water_surf",
+      "element": "WATER",
+      "masteryRequired": 0,
+      "chiCost": 15,
+      "chiPerTick": 0,
+      "cooldownTicks": 25,
+      "windupTicks": 1,
+      "activeTicks": 18,
+      "recoveryTicks": 1,
+      "damage": 2.0,
+      "range": 2.0,
+      "knockback": 0.8,
+      "hitboxShape": "SPHERE",
+      "cancelOnHit": false,
+      "comboWindowTicks": 0,
+      "castType": "HOLD_RELEASE",
+      "maxChargeTicks": 80
+    },
+    {
+      "id": "avatar:earth_tunnel",
+      "element": "EARTH",
+      "masteryRequired": 0,
+      "chiCost": 15,
+      "chiPerTick": 0,
+      "cooldownTicks": 25,
+      "windupTicks": 1,
+      "activeTicks": 18,
+      "recoveryTicks": 1,
+      "damage": 3.0,
+      "range": 3.0,
+      "knockback": 0.6,
+      "hitboxShape": "SPHERE",
+      "cancelOnHit": false,
+      "comboWindowTicks": 0,
+      "castType": "HOLD_RELEASE",
+      "maxChargeTicks": 80
     }
   ]
 }
