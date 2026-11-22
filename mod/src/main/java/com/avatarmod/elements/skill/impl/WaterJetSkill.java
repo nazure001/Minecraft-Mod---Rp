@@ -153,11 +153,11 @@ public final class WaterJetSkill {
                     .add(upVec.multiply(Math.sin(spiralAngle) * rSpiral));
 
             if (isSneaking) {
-                world.spawnParticles(ParticleTypes.SNOWFLAKE, spiralPt.x, spiralPt.y, spiralPt.z, 2, 0.04, 0.04, 0.04, 0.01);
-                world.spawnParticles(ParticleTypes.SPLASH, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.01);
+                world.spawnParticles(AvatarParticles.ICE_SHARD, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.02);
+                world.spawnParticles(AvatarParticles.WATER_DROPLET, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.01);
             } else {
-                world.spawnParticles(ParticleTypes.SPLASH, spiralPt.x, spiralPt.y, spiralPt.z, 2, 0.04, 0.04, 0.04, 0.02);
-                world.spawnParticles(ParticleTypes.FALLING_WATER, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.01);
+                world.spawnParticles(AvatarParticles.WATER_WHIP_SPLASH, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.02);
+                world.spawnParticles(AvatarParticles.WATER_DROPLET, spiralPt.x, spiralPt.y, spiralPt.z, 1, 0.03, 0.03, 0.03, 0.01);
             }
             world.spawnParticles(AvatarParticles.DROPLET, spiralPt.x, spiralPt.y, spiralPt.z, 2, 0.04, 0.04, 0.04, 0.01);
 
@@ -170,9 +170,11 @@ public final class WaterJetSkill {
         // Stream terminal burst
         Vec3d end = origin.add(look.multiply(range));
         if (isSneaking) {
-            world.spawnParticles(ParticleTypes.SNOWFLAKE, end.x, end.y, end.z, 12, 0.25, 0.25, 0.25, 0.05);
+            world.spawnParticles(AvatarParticles.ICE_BURST, end.x, end.y, end.z, 2, 0.1, 0.1, 0.1, 0.03);
+            world.spawnParticles(AvatarParticles.ICE_SHARD, end.x, end.y, end.z, 4, 0.2, 0.2, 0.2, 0.05);
+        } else {
+            world.spawnParticles(AvatarParticles.WATER_WHIP_SPLASH, end.x, end.y, end.z, 3, 0.15, 0.15, 0.15, 0.05);
         }
-        world.spawnParticles(ParticleTypes.SPLASH, end.x, end.y, end.z, 6, 0.2, 0.2, 0.2, 0.08);
         world.spawnParticles(AvatarParticles.SMALL_SPLASH, end.x, end.y, end.z, 4, 0.15, 0.15, 0.15, 0.05);
     }
 

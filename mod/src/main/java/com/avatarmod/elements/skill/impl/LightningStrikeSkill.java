@@ -42,10 +42,13 @@ public final class LightningStrikeSkill {
             int t = timeline.ticksInPhase();
             Vec3d handPos = player.getEyePos().add(player.getRotationVec(1.0f).multiply(0.6));
 
-            // Gathering electric sparks
+            // Gathering electric arcs and branches
+            world.spawnParticles(AvatarParticles.LIGHTNING_ARC,
+                    handPos.x, handPos.y, handPos.z,
+                    1, 0.15, 0.15, 0.15, 0.04);
             world.spawnParticles(ParticleTypes.ELECTRIC_SPARK,
                     handPos.x, handPos.y, handPos.z,
-                    t / 5 + 2, 0.25, 0.25, 0.25, 0.08);
+                    t / 6 + 2, 0.20, 0.20, 0.20, 0.06);
 
             if (t % 8 == 0) {
                 world.playSound(null, player.getBlockPos(),
@@ -87,20 +90,22 @@ public final class LightningStrikeSkill {
             target.velocityModified = true;
         }
 
-        // Raycast beam particles: dense electric sparks & critical energy
-        for (double d = 0.5; d <= range; d += 0.5) {
+        // Raycast beam particles: dense electric arcs, branching lightning & impact energy
+        for (double d = 0.5; d <= range; d += 0.6) {
             Vec3d pt = origin.add(look.multiply(d));
+            world.spawnParticles(AvatarParticles.LIGHTNING_ARC,
+                    pt.x, pt.y, pt.z, 1, 0.06, 0.06, 0.06, 0.02);
+            if (world.getRandom().nextFloat() < 0.35f) {
+                world.spawnParticles(AvatarParticles.LIGHTNING_BRANCH,
+                        pt.x, pt.y, pt.z, 1, 0.12, 0.12, 0.12, 0.03);
+            }
             world.spawnParticles(ParticleTypes.ELECTRIC_SPARK,
-                    pt.x, pt.y, pt.z, 5, 0.1, 0.1, 0.1, 0.05);
-            world.spawnParticles(ParticleTypes.CRIT,
-                    pt.x, pt.y, pt.z, 2, 0.05, 0.05, 0.05, 0.02);
-            world.spawnParticles(AvatarParticles.FLAME_TONGUE,
-                    pt.x, pt.y, pt.z, 1, 0.05, 0.05, 0.05, 0.02);
+                    pt.x, pt.y, pt.z, 2, 0.08, 0.08, 0.08, 0.04);
         }
 
         // Terminal lightning impact detonation
-        world.spawnParticles(ParticleTypes.EXPLOSION,
-                end.x, end.y, end.z, 2, 0.3, 0.3, 0.3, 0.0);
+        world.spawnParticles(AvatarParticles.LIGHTNING_BRANCH,
+                end.x, end.y, end.z, 3, 0.25, 0.25, 0.25, 0.05);
         world.spawnParticles(AvatarParticles.IMPACT_FLASH,
                 end.x, end.y, end.z, 2, 0.0, 0.0, 0.0, 0.0);
 

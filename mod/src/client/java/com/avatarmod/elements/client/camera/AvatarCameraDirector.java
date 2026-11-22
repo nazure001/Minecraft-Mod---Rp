@@ -8,22 +8,26 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import org.joml.Quaternionf;
-
-import java.util.Random;
+import org.joml.Vector3f;
 
 /**
  * Dynamic Cinematic Camera Director for Avatar: Elements (inspired by Ultimate Battle).
  *
- * Provides:
- * 1. Dutch Angle Camera Roll: Rotates the camera matrix during heavy impacts, dive-kicks, and Avatar State.
- * 2. Directional Screenshake: Damped harmonic trauma decay on explosive impacts.
- * 3. Raycast Anti-Clipping Orbit: Clamps camera distance against solid blocks so third-person camera never clips into walls.
- * 4. Cinematic Ultimate Orbit: Smoothly pulls camera into dynamic third-person framing during Tier 3 ultimates.
+ * Implements:
+ * 1. Trauma-based Rotational & Translational Screenshake:
+ *    Uses polynomial trauma decay (Trauma^2) coupled with smooth, irrational harmonic
+ *    oscillations for Pitch, Yaw, and Roll. Eliminates world-coordinate eye jittering and
+ *    provides silky-smooth, visceral impact feedback.
+ * 2. Dutch Angle Camera Roll:
+ *    Hermite smoothstep ease-out tilting on heavy martial slashes, dives, and Avatar State.
+ * 3. Raycast Anti-Clipping Orbit:
+ *    Ensures third-person camera dynamically pulls in front of walls/obstacles.
+ * 4. Sub-tick frame interpolation:
+ *    Uses render tickDelta for continuous 60+ FPS motion without tick jitter.
  */
 public final class AvatarCameraDirector {
 
     private static boolean enabled = true;
-    private static final Random RNG = new Random();
 
     // Roll (Dutch Angle)
     private static float currentRoll = 0.0f;
@@ -31,16 +35,24 @@ public final class AvatarCameraDirector {
     private static int rollDuration = 0;
     private static int rollAge = 0;
 
-    // Screenshake
+    // Trauma-based Screenshake (0.0 to 1.0)
+    private static float trauma = 0.0f;
     private static float shakeIntensity = 0.0f;
     private static int shakeTicks = 0;
     private static int shakeMaxTicks = 0;
+    private static long clientTickCounter = 0;
 
     // Cinematic Orbit
     private static boolean cinematicOrbit = false;
     private static int orbitTicksRemaining = 0;
     private static int orbitMaxTicks = 0;
     private static float orbitDistance = 4.5f;
+
+    // Constants for screen shake tuning
+    private static final float MAX_PITCH_SHAKE = 4.5f;  // degrees
+    private static final float MAX_YAW_SHAKE   = 4.0f;  // degrees
+    private static final float MAX_ROLL_SHAKE  = 5.0f;  // degrees
+    private static final float MAX_EYE_OFFSET  = 0.06f; // max local translation (blocks)
 
     private AvatarCameraDirector() {}
 
@@ -62,6 +74,7 @@ public final class AvatarCameraDirector {
     public static void triggerShake(float intensity, int durationTicks) {
         if (!enabled) return;
         shakeIntensity = Math.max(shakeIntensity, intensity);
+        trauma = Math.min(1.0f, trauma + Math.min(1.0f, intensity));
         shakeTicks = Math.max(shakeTicks, durationTicks);
         shakeMaxTicks = Math.max(shakeMaxTicks, durationTicks);
     }
@@ -76,25 +89,36 @@ public final class AvatarCameraDirector {
     }
 
     public static void tick() {
-        // Tick roll
+        clientTickCounter++;
+
+        // Tick roll with smoothstep ease-out
         if (rollDuration > 0 && rollAge < rollDuration) {
             rollAge++;
-            float progress = (float) rollAge / (float) rollDuration;
-            // Ease out back to 0
-            currentRoll = targetRoll * (1.0f - progress);
+            float p = (float) rollAge / (float) rollDuration;
+            // Smooth hermite decay: f(p) = 1 - (3*p^2 - 2*p^3)
+            float factor = Math.max(0.0f, 1.0f - (3.0f * p * p - 2.0f * p * p * p));
+            currentRoll = targetRoll * factor;
         } else {
             currentRoll = 0.0f;
             targetRoll = 0.0f;
             rollDuration = 0;
+            rollAge = 0;
         }
 
-        // Tick shake
+        // Tick shake & trauma decay
         if (shakeTicks > 0) {
             shakeTicks--;
-            if (shakeTicks == 0) {
+            float decayStep = 1.0f / Math.max(1, shakeMaxTicks);
+            trauma = Math.max(0.0f, trauma - decayStep);
+            if (shakeTicks == 0 || trauma <= 0.001f) {
                 shakeIntensity = 0.0f;
                 shakeMaxTicks = 0;
+                trauma = 0.0f;
             }
+        } else {
+            trauma = 0.0f;
+            shakeIntensity = 0.0f;
+            shakeMaxTicks = 0;
         }
 
         // Tick cinematic orbit
@@ -121,11 +145,45 @@ public final class AvatarCameraDirector {
             rotation.rotateZ((float) Math.toRadians(roll));
         }
 
+        // 2. Cinematic Trauma Screenshake (Rotational + subtle local translation)
         Vec3d currentPos = camera.getPos();
         Vec3d resultPos = currentPos;
         boolean posModified = false;
 
-        // 2. Cinematic Orbit & Raycast Anti-Clipping
+        if (trauma > 0.001f || shakeTicks > 0) {
+            // Shake amplitude is quadratic trauma (Trauma^2) for snappy impact + soft silky falloff
+            float effectiveTrauma = Math.max(trauma, (float) shakeTicks / Math.max(1, shakeMaxTicks));
+            float shakeAmp = effectiveTrauma * effectiveTrauma * Math.max(0.2f, shakeIntensity);
+
+            // Time with sub-tick interpolation for continuous 60+ FPS motion
+            float renderTime = (float) (clientTickCounter) + tickDelta;
+
+            // Incommensurate harmonic frequencies for organic, non-repeating feel
+            float rotPitch = MAX_PITCH_SHAKE * shakeAmp * (float) (Math.sin(renderTime * 1.45) * 0.7 + Math.sin(renderTime * 2.89) * 0.3);
+            float rotYaw   = MAX_YAW_SHAKE   * shakeAmp * (float) (Math.cos(renderTime * 1.83) * 0.7 + Math.cos(renderTime * 3.21) * 0.3);
+            float rotRoll  = MAX_ROLL_SHAKE  * shakeAmp * (float) (Math.sin(renderTime * 2.11) * 0.7 + Math.cos(renderTime * 3.77) * 0.3);
+
+            // Apply angular trauma to camera rotation matrix
+            rotation.rotateX((float) Math.toRadians(rotPitch));
+            rotation.rotateY((float) Math.toRadians(rotYaw));
+            rotation.rotateZ((float) Math.toRadians(rotRoll));
+
+            // Subtle camera-local translation (along local Up and Right axes, never raw world XYZ)
+            Vector3f localRight = new Vector3f(1.0f, 0.0f, 0.0f).rotate(rotation);
+            Vector3f localUp    = new Vector3f(0.0f, 1.0f, 0.0f).rotate(rotation);
+
+            float localOffsetX = MAX_EYE_OFFSET * shakeAmp * (float) Math.sin(renderTime * 1.62);
+            float localOffsetY = MAX_EYE_OFFSET * shakeAmp * (float) Math.cos(renderTime * 2.14);
+
+            resultPos = resultPos.add(
+                    localRight.x * localOffsetX + localUp.x * localOffsetY,
+                    localRight.y * localOffsetX + localUp.y * localOffsetY,
+                    localRight.z * localOffsetX + localUp.z * localOffsetY
+            );
+            posModified = true;
+        }
+
+        // 3. Cinematic Orbit & Raycast Anti-Clipping
         if (cinematicOrbit && focusedEntity == client.player) {
             Vec3d eye = focusedEntity.getCameraPosVec(tickDelta);
             Vec3d look = focusedEntity.getRotationVec(tickDelta);
@@ -152,18 +210,6 @@ public final class AvatarCameraDirector {
             posModified = true;
         }
 
-        // 3. Screenshake Jitter
-        if (shakeTicks > 0 && shakeIntensity > 0.001f) {
-            float progress = (float) shakeTicks / (float) Math.max(1, shakeMaxTicks);
-            float currentAmp = shakeIntensity * progress * progress; // Quadratic decay
-            float shakeX = (float) (Math.sin(System.currentTimeMillis() * 0.05) * currentAmp * 0.35);
-            float shakeY = (float) (Math.cos(System.currentTimeMillis() * 0.07) * currentAmp * 0.25);
-            float shakeZ = (float) (Math.sin(System.currentTimeMillis() * 0.09) * currentAmp * 0.25);
-
-            resultPos = resultPos.add(shakeX, shakeY, shakeZ);
-            posModified = true;
-        }
-
         return posModified ? resultPos : null;
     }
 
@@ -172,7 +218,7 @@ public final class AvatarCameraDirector {
     }
 
     public static boolean isShaking() {
-        return shakeTicks > 0;
+        return shakeTicks > 0 || trauma > 0.001f;
     }
 
     public static boolean isCinematicActive() {

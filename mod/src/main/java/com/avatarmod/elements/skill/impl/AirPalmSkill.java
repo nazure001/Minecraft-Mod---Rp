@@ -69,14 +69,14 @@ public final class AirPalmSkill {
         ElementalInteractions.deflectProjectiles(world, player, origin, look, range, 0.8);
 
         // VFX: Supersonic palm shockwave cone
-        world.spawnParticles(AvatarParticles.GUST_CURL,
-                center.x, center.y, center.z, 14, 0.3, 0.3, 0.3, 0.08);
-        world.spawnParticles(ParticleTypes.POOF,
+        world.spawnParticles(AvatarParticles.AIR_PRESSURE_BURST,
+                center.x, center.y, center.z, 2, 0.1, 0.1, 0.1, 0.04);
+        world.spawnParticles(AvatarParticles.AIR_GUST_SWIRL,
                 center.x, center.y, center.z, 4, 0.2, 0.2, 0.2, 0.05);
-        world.spawnParticles(ParticleTypes.CLOUD,
-                center.x, center.y, center.z, 8, 0.25, 0.25, 0.25, 0.04);
-        world.spawnParticles(AvatarParticles.SMOKE_PUFF,
-                center.x, center.y, center.z, 6, 0.2, 0.2, 0.2, 0.02);
+        world.spawnParticles(AvatarParticles.AIR_RING,
+                center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0.0);
+        world.spawnParticles(AvatarParticles.GUST_CURL,
+                center.x, center.y, center.z, 8, 0.25, 0.25, 0.25, 0.06);
         world.spawnParticles(AvatarParticles.IMPACT_FLASH,
                 center.x, center.y, center.z, 2, 0.0, 0.0, 0.0, 0.0);
 

@@ -125,14 +125,14 @@ public final class FireJetSkill {
 
     private static void spawnBootFlame(ServerWorld world, Vec3d pos, Vec3d look) {
         Vec3d exhaust = look.multiply(-0.3);
+        world.spawnParticles(AvatarParticles.FIRE_ARC_SLASH,
+                pos.x, pos.y, pos.z, 1, 0.08, 0.08, 0.08, 0.03);
+        world.spawnParticles(AvatarParticles.FIRE_EMBER,
+                pos.x, pos.y, pos.z, 4, 0.12, 0.12, 0.12, 0.03);
         world.spawnParticles(AvatarParticles.FLAME_TONGUE,
-                pos.x, pos.y, pos.z, 5, 0.12, 0.12, 0.12, 0.04);
-        world.spawnParticles(ParticleTypes.FLAME,
-                pos.x, pos.y, pos.z, 6, 0.15, 0.15, 0.15, 0.05);
-        world.spawnParticles(AvatarParticles.EMBER,
-                pos.x, pos.y, pos.z, 3, 0.1, 0.1, 0.1, 0.02);
+                pos.x, pos.y, pos.z, 2, 0.1, 0.1, 0.1, 0.02);
         world.spawnParticles(ParticleTypes.SMOKE,
-                pos.x + exhaust.x, pos.y + exhaust.y, pos.z + exhaust.z, 3, 0.1, 0.1, 0.1, 0.02);
+                pos.x + exhaust.x, pos.y + exhaust.y, pos.z + exhaust.z, 2, 0.08, 0.08, 0.08, 0.02);
     }
 
     private FireJetSkill() {}

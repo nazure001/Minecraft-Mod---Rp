@@ -85,16 +85,16 @@ public final class EarthBoulderSkill {
         ServerWorld world = player.getServerWorld();
         Vec3d nextPos = state.pos().add(state.velocity());
 
-        // VFX at current position: tumbling stone chunks & dust trail matching block type
+        // VFX at current position: tumbling stone chunks, custom seismic dust trail matching block type
+        world.spawnParticles(AvatarParticles.EARTH_CHUNK,
+                state.pos().x, state.pos().y, state.pos().z,
+                2, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, 0.03);
+        world.spawnParticles(AvatarParticles.EARTH_STOMP_DUST,
+                state.pos().x, state.pos().y, state.pos().z,
+                3, HITBOX_RADIUS * 0.4, HITBOX_RADIUS * 0.4, HITBOX_RADIUS * 0.4, 0.02);
         world.spawnParticles(AvatarParticles.STONE_CHIP,
                 state.pos().x, state.pos().y, state.pos().z,
-                4, HITBOX_RADIUS * 0.4, HITBOX_RADIUS * 0.4, HITBOX_RADIUS * 0.4, 0.04);
-        world.spawnParticles(AvatarParticles.DUST,
-                state.pos().x, state.pos().y, state.pos().z,
-                6, HITBOX_RADIUS * 0.5, HITBOX_RADIUS * 0.5, HITBOX_RADIUS * 0.5, 0.02);
-        world.spawnParticles(ParticleTypes.POOF,
-                state.pos().x, state.pos().y, state.pos().z,
-                2, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, 0.01);
+                2, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, 0.04);
         world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, state.blockState()),
                 state.pos().x, state.pos().y, state.pos().z,
                 3, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, HITBOX_RADIUS * 0.3, 0.04);
@@ -165,17 +165,17 @@ public final class EarthBoulderSkill {
 
     private static void detonate(ServerPlayerEntity player, ServerWorld world, Vec3d pos,
                                   List<LivingEntity> targets, BoulderState state) {
-        // Impact VFX: Cataclysmic tectonic crash & stone explosion using block particles
-        world.spawnParticles(ParticleTypes.EXPLOSION,
-                pos.x, pos.y, pos.z, 2, 0.2, 0.2, 0.2, 0.0);
-        world.spawnParticles(ParticleTypes.LARGE_SMOKE,
-                pos.x, pos.y, pos.z, 16, 0.5, 0.5, 0.5, 0.1);
+        // Impact VFX: Cataclysmic tectonic crash & stone explosion using block particles & seismic wave
+        world.spawnParticles(AvatarParticles.EARTH_SEISMIC_WAVE,
+                pos.x, pos.y, pos.z, 2, 0.2, 0.1, 0.2, 0.0);
+        world.spawnParticles(AvatarParticles.EARTH_STOMP_DUST,
+                pos.x, pos.y, pos.z, 12, 0.6, 0.3, 0.6, 0.08);
+        world.spawnParticles(AvatarParticles.EARTH_CHUNK,
+                pos.x, pos.y, pos.z, 10, 0.5, 0.4, 0.5, 0.12);
         world.spawnParticles(AvatarParticles.STONE_CHIP,
-                pos.x, pos.y, pos.z, 25, 0.7, 0.5, 0.7, 0.15);
-        world.spawnParticles(AvatarParticles.DUST,
-                pos.x, pos.y, pos.z, 30, 0.9, 0.5, 0.9, 0.1);
+                pos.x, pos.y, pos.z, 15, 0.6, 0.4, 0.6, 0.12);
         world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, state.blockState()),
-                pos.x, pos.y, pos.z, 35, 0.7, 0.7, 0.7, 0.12);
+                pos.x, pos.y, pos.z, 25, 0.7, 0.7, 0.7, 0.12);
 
         // Multi-layered deep tectonic roar SFX
         BlockPos blockPos = BlockPos.ofFloored(pos);

@@ -107,15 +107,15 @@ public final class FlameSweepSkill {
                     .add(upVec.multiply(pt[1]))
                     .add(look.multiply(pt[2] * (r / 5.2)));
 
-            world.spawnParticles(ParticleTypes.FLAME, worldPt.x, worldPt.y, worldPt.z, 8, 0.15, 0.15, 0.15, 0.04);
-            world.spawnParticles(ParticleTypes.SMALL_FLAME, worldPt.x, worldPt.y, worldPt.z, 5, 0.10, 0.10, 0.10, 0.02);
-            world.spawnParticles(AvatarParticles.FLAME_TONGUE, worldPt.x, worldPt.y, worldPt.z, 3, 0.10, 0.10, 0.10, 0.03);
-            world.spawnParticles(AvatarParticles.EMBER, worldPt.x, worldPt.y, worldPt.z, 2, 0.08, 0.08, 0.08, 0.02);
-            world.spawnParticles(ParticleTypes.LAVA, worldPt.x, worldPt.y, worldPt.z, 1, 0.05, 0.05, 0.05, 0.0);
+            world.spawnParticles(AvatarParticles.FIRE_ARC_SLASH, worldPt.x, worldPt.y, worldPt.z, 1, 0.05, 0.05, 0.05, 0.02);
+            world.spawnParticles(AvatarParticles.FIRE_EMBER, worldPt.x, worldPt.y, worldPt.z, 2, 0.08, 0.08, 0.08, 0.03);
+            world.spawnParticles(AvatarParticles.FLAME_BURST, worldPt.x, worldPt.y, worldPt.z, 1, 0.05, 0.05, 0.05, 0.02);
         }
 
-        // Apex explosion & flash
+        // Apex shockwave & explosion
         Vec3d apex = origin.add(look.multiply(r * 0.9)).add(upVec.multiply(0.25));
+        world.spawnParticles(AvatarParticles.FIRE_SHOCKWAVE, apex.x, apex.y, apex.z, 1, 0.0, 0.0, 0.0, 0.0);
+        world.spawnParticles(AvatarParticles.LAVA_SPLASH, apex.x, apex.y, apex.z, 3, 0.15, 0.15, 0.15, 0.05);
         world.spawnParticles(AvatarParticles.FLAME_BURST, apex.x, apex.y, apex.z, 4, 0.2, 0.2, 0.2, 0.02);
         world.spawnParticles(AvatarParticles.IMPACT_FLASH, apex.x, apex.y, apex.z, 2, 0.0, 0.0, 0.0, 0.0);
 

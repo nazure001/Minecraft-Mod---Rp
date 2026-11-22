@@ -106,19 +106,18 @@ public final class WaterWhipSkill {
             Vec3d ptB = basePt.add(right.multiply(-Math.cos(angle) * rHelix))
                     .add(upVec.multiply(-Math.sin(angle) * rHelix));
 
-            world.spawnParticles(ParticleTypes.SPLASH, ptA.x, ptA.y, ptA.z, 3, 0.04, 0.04, 0.04, 0.02);
-            world.spawnParticles(ParticleTypes.FALLING_WATER, ptA.x, ptA.y, ptA.z, 2, 0.04, 0.04, 0.04, 0.01);
-            world.spawnParticles(ParticleTypes.BUBBLE, ptA.x, ptA.y, ptA.z, 2, 0.04, 0.04, 0.04, 0.02);
+            world.spawnParticles(AvatarParticles.WATER_WHIP_SPLASH, ptA.x, ptA.y, ptA.z, 1, 0.03, 0.03, 0.03, 0.02);
+            world.spawnParticles(AvatarParticles.WATER_DROPLET, ptA.x, ptA.y, ptA.z, 2, 0.04, 0.04, 0.04, 0.01);
             world.spawnParticles(AvatarParticles.DROPLET, ptA.x, ptA.y, ptA.z, 2, 0.04, 0.04, 0.04, 0.01);
 
-            world.spawnParticles(ParticleTypes.SPLASH, ptB.x, ptB.y, ptB.z, 3, 0.04, 0.04, 0.04, 0.02);
-            world.spawnParticles(ParticleTypes.FALLING_WATER, ptB.x, ptB.y, ptB.z, 2, 0.04, 0.04, 0.04, 0.01);
+            world.spawnParticles(AvatarParticles.WATER_WHIP_SPLASH, ptB.x, ptB.y, ptB.z, 1, 0.03, 0.03, 0.03, 0.02);
+            world.spawnParticles(AvatarParticles.WATER_DROPLET, ptB.x, ptB.y, ptB.z, 2, 0.04, 0.04, 0.04, 0.01);
             world.spawnParticles(AvatarParticles.FOAM, ptB.x, ptB.y, ptB.z, 1, 0.03, 0.03, 0.03, 0.01);
         }
 
         // Whip tip impact burst
-        world.spawnParticles(ParticleTypes.SPLASH,
-                end.x, end.y, end.z, 24, 0.35, 0.35, 0.35, 0.12);
+        world.spawnParticles(AvatarParticles.WATER_WHIP_SPLASH,
+                end.x, end.y, end.z, 6, 0.25, 0.25, 0.25, 0.08);
         world.spawnParticles(AvatarParticles.SMALL_SPLASH,
                 end.x, end.y, end.z, 12, 0.25, 0.25, 0.25, 0.08);
         world.spawnParticles(AvatarParticles.IMPACT_FLASH,

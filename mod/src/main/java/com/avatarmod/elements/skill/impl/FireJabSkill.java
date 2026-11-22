@@ -100,41 +100,41 @@ public final class FireJabSkill {
                 .add(right.multiply(0.28))
                 .add(look.multiply(0.40));
 
-        // 2. Continuous flame jet streaming along punch path
+        // 2. High-speed stylized flame arc streaming along punch path
         for (double d = 0.4; d <= reach; d += 0.45) {
             Vec3d p = fistPos.add(look.multiply(d));
-            world.spawnParticles(ParticleTypes.FLAME,
+            world.spawnParticles(finalCombo ? AvatarParticles.BLUE_FLAME : AvatarParticles.FIRE_ARC_SLASH,
                     p.x, p.y, p.z,
-                    finalCombo ? 4 : 2, 0.06, 0.06, 0.06, 0.04);
-            world.spawnParticles(AvatarParticles.FLAME_TONGUE,
+                    finalCombo ? 2 : 1, 0.04, 0.04, 0.04, 0.02);
+            world.spawnParticles(AvatarParticles.FIRE_EMBER,
                     p.x, p.y, p.z,
-                    finalCombo ? 3 : 2, 0.05, 0.05, 0.05, 0.03);
-            world.spawnParticles(AvatarParticles.EMBER,
-                    p.x, p.y, p.z,
-                    1, 0.04, 0.04, 0.04, 0.02);
+                    2, 0.05, 0.05, 0.05, 0.02);
         }
 
-        // 3. Apex burst at terminal reach
-        Vec3d apexPos = fistPos.add(look.multiply(Math.min(reach, 3.0)));
+        // 3. Apex shockwave burst at terminal reach
+        Vec3d apexPos = fistPos.add(look.multiply(Math.min(reach, 3.2)));
 
         world.spawnParticles(AvatarParticles.IMPACT_FLASH,
                 apexPos.x, apexPos.y, apexPos.z,
                 1, 0.0, 0.0, 0.0, 0.0);
+        world.spawnParticles(AvatarParticles.FIRE_SHOCKWAVE,
+                apexPos.x, apexPos.y, apexPos.z,
+                1, 0.0, 0.0, 0.0, 0.0);
         world.spawnParticles(AvatarParticles.FLAME_BURST,
                 apexPos.x, apexPos.y, apexPos.z,
-                finalCombo ? 4 : 2, 0.10, 0.10, 0.10, 0.05);
-        world.spawnParticles(ParticleTypes.SMOKE,
+                finalCombo ? 3 : 2, 0.08, 0.08, 0.08, 0.04);
+        world.spawnParticles(AvatarParticles.FIRE_EMBER,
                 apexPos.x, apexPos.y, apexPos.z,
-                finalCombo ? 6 : 4, 0.15, 0.15, 0.15, 0.02);
+                finalCombo ? 8 : 4, 0.12, 0.12, 0.12, 0.04);
 
-        // Combo accents: ParticleTypes.LAVA (4) and ParticleTypes.CRIT (6) at P_apex on combo
+        // Combo accents: Lava spark burst and Blue Flame ignition
         if (finalCombo) {
-            world.spawnParticles(ParticleTypes.LAVA,
+            world.spawnParticles(AvatarParticles.LAVA_SPARK,
                     apexPos.x, apexPos.y, apexPos.z,
-                    4, 0.20, 0.20, 0.20, 0.0);
-            world.spawnParticles(ParticleTypes.CRIT,
+                    4, 0.15, 0.15, 0.15, 0.05);
+            world.spawnParticles(AvatarParticles.BLUE_FLAME,
                     apexPos.x, apexPos.y, apexPos.z,
-                    6, 0.30, 0.30, 0.30, 0.10);
+                    4, 0.20, 0.20, 0.20, 0.05);
         }
 
         // Ignite flammable ground/blocks safely without burning caster's feet

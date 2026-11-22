@@ -102,9 +102,8 @@ public final class AirBlastSkill {
                 Vec3d ringPt = ringCenter.add(right.multiply(Math.cos(theta) * ringRadius))
                         .add(upVec.multiply(Math.sin(theta) * ringRadius));
 
+                world.spawnParticles(AvatarParticles.AIR_RING, ringPt.x, ringPt.y, ringPt.z, 1, 0.04, 0.04, 0.04, 0.02);
                 world.spawnParticles(AvatarParticles.GUST_CURL, ringPt.x, ringPt.y, ringPt.z, 2, 0.06, 0.06, 0.06, 0.03);
-                world.spawnParticles(ParticleTypes.CLOUD, ringPt.x, ringPt.y, ringPt.z, 2, 0.08, 0.08, 0.08, 0.02);
-                world.spawnParticles(ParticleTypes.POOF, ringPt.x, ringPt.y, ringPt.z, 1, 0.05, 0.05, 0.05, 0.02);
                 world.spawnParticles(AvatarParticles.SMOKE_PUFF, ringPt.x, ringPt.y, ringPt.z, 1, 0.05, 0.05, 0.05, 0.02);
             }
         }
@@ -112,9 +111,11 @@ public final class AirBlastSkill {
         // Center blast core particles along beam
         for (double d = 1.0; d <= range; d += 0.8) {
             Vec3d pt = origin.add(look.multiply(d));
-            world.spawnParticles(AvatarParticles.GUST_CURL, pt.x, pt.y, pt.z, 3, 0.15, 0.15, 0.15, 0.05);
-            world.spawnParticles(AvatarParticles.SMOKE_PUFF, pt.x, pt.y, pt.z, 1, 0.1, 0.1, 0.1, 0.02);
+            world.spawnParticles(AvatarParticles.AIR_GUST_SWIRL, pt.x, pt.y, pt.z, 1, 0.08, 0.08, 0.08, 0.03);
+            world.spawnParticles(AvatarParticles.AIR_PRESSURE_BURST, pt.x, pt.y, pt.z, 1, 0.05, 0.05, 0.05, 0.02);
+            world.spawnParticles(AvatarParticles.GUST_CURL, pt.x, pt.y, pt.z, 2, 0.10, 0.10, 0.10, 0.04);
         }
+        world.spawnParticles(AvatarParticles.AIR_PRESSURE_BURST, end.x, end.y, end.z, 2, 0.1, 0.1, 0.1, 0.05);
         world.spawnParticles(AvatarParticles.IMPACT_FLASH, end.x, end.y, end.z, 1, 0.0, 0.0, 0.0, 0.0);
 
         // Multi-layered punchy air burst SFX

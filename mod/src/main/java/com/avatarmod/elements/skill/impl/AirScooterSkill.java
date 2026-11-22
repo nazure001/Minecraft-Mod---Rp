@@ -116,19 +116,16 @@ public final class AirScooterSkill {
             double a = rotAngle + (i * Math.PI / 2.0);
             double rx = Math.cos(a) * 0.70;
             double rz = Math.sin(a) * 0.70;
-            world.spawnParticles(AvatarParticles.GUST_CURL,
+            world.spawnParticles(AvatarParticles.AIR_TORNADO_WISP,
                     player.getX() + rx, player.getY() + 0.25, player.getZ() + rz,
                     1, 0.0, 0.0, 0.0, 0.02);
-            world.spawnParticles(ParticleTypes.CLOUD,
+            world.spawnParticles(AvatarParticles.AIR_GUST_SWIRL,
                     player.getX() + rx, player.getY() + 0.1, player.getZ() + rz,
                     1, 0.0, 0.0, 0.0, 0.02);
         }
-        world.spawnParticles(ParticleTypes.CLOUD,
+        world.spawnParticles(AvatarParticles.AIR_RING,
                 player.getX(), player.getY() + 0.1, player.getZ(),
-                2, 0.2, 0.08, 0.2, 0.01);
-        world.spawnParticles(ParticleTypes.POOF,
-                player.getX(), player.getY() + 0.05, player.getZ(),
-                1, 0.15, 0.05, 0.15, 0.01);
+                1, 0.0, 0.0, 0.0, 0.0);
 
         // Water wake if skimming water
         if (world.getFluidState(playerPos).isIn(FluidTags.WATER) || world.getFluidState(playerPos.down()).isIn(FluidTags.WATER)) {

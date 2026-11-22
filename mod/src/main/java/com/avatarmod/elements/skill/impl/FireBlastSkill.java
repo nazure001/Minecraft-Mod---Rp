@@ -71,18 +71,18 @@ public final class FireBlastSkill {
 
         // Blazing swirling flames licking around player's hands
         double spread = 0.25 + 0.65 * chargeRatio;
-        world.spawnParticles(ParticleTypes.FLAME,
+        world.spawnParticles(AvatarParticles.COMBUSTION_CHARGE,
                 chargePos.x, chargePos.y, chargePos.z,
-                (int) (5 + 10 * chargeRatio), spread, spread, spread, 0.05);
+                (int) (1 + 2 * chargeRatio), spread * 0.4, spread * 0.4, spread * 0.4, 0.02);
+        world.spawnParticles(AvatarParticles.BLUE_FLAME,
+                chargePos.x, chargePos.y, chargePos.z,
+                (int) (2 + 3 * chargeRatio), spread * 0.5, spread * 0.5, spread * 0.5, 0.03);
+        world.spawnParticles(AvatarParticles.FIRE_EMBER,
+                chargePos.x, chargePos.y, chargePos.z,
+                (int) (4 + 6 * chargeRatio), spread, spread, spread, 0.04);
         world.spawnParticles(AvatarParticles.FLAME_BURST,
                 chargePos.x, chargePos.y, chargePos.z,
                 (int) (2 + 4 * chargeRatio), spread * 0.7, spread * 0.7, spread * 0.7, 0.03);
-        world.spawnParticles(ParticleTypes.SMALL_FLAME,
-                chargePos.x, chargePos.y + 0.1, chargePos.z,
-                (int) (3 + 6 * chargeRatio), spread * 0.5, spread * 0.5, spread * 0.5, 0.04);
-        world.spawnParticles(ParticleTypes.SMOKE,
-                chargePos.x, chargePos.y + 0.25, chargePos.z,
-                (int) (2 + 3 * chargeRatio), spread * 0.4, 0.15, spread * 0.4, 0.02);
 
         // Periodic flame ignition sound
         if (timeline.ticksInPhase() % 6 == 0) {
@@ -182,13 +182,14 @@ public final class FireBlastSkill {
 
         ElementalInteractions.igniteBlocks(world, center, r * 0.8, player);
 
-        // Detonation VFX
-        int flameCount = (int) (20 + 25 * chargeRatio);
-        world.spawnParticles(ParticleTypes.EXPLOSION,
+        // Detonation VFX: Shockwave + comet burst + embers
+        world.spawnParticles(AvatarParticles.FIRE_SHOCKWAVE,
                 center.x, center.y, center.z, 1, 0.0, 0.0, 0.0, 0.0);
-        world.spawnParticles(ParticleTypes.FLAME,
+        world.spawnParticles(AvatarParticles.FIRE_COMET,
+                center.x, center.y, center.z, (int) (2 + 3 * chargeRatio), r * 0.3, r * 0.3, r * 0.3, 0.06);
+        world.spawnParticles(AvatarParticles.FIRE_EMBER,
                 center.x, center.y, center.z,
-                flameCount, r * 0.4, r * 0.4, r * 0.4, 0.08);
+                (int) (12 + 16 * chargeRatio), r * 0.4, r * 0.4, r * 0.4, 0.06);
         world.spawnParticles(AvatarParticles.FLAME_BURST,
                 center.x, center.y, center.z, (int) (4 + 6 * chargeRatio), r * 0.3, r * 0.3, r * 0.3, 0.05);
         world.spawnParticles(AvatarParticles.IMPACT_FLASH,

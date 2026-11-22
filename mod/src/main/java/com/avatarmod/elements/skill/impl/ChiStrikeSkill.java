@@ -71,11 +71,11 @@ public final class ChiStrikeSkill {
             target.addVelocity(knock.x, 0.15, knock.z);
             target.velocityModified = true;
 
-            // Pressure point impact VFX
+            // Pressure point impact VFX: Chi filament + Avatar Chi burst
             Vec3d hitPos = target.getBoundingBox().getCenter();
             world.spawnParticles(AvatarParticles.IMPACT_FLASH, hitPos.x, hitPos.y, hitPos.z, 2, 0.1, 0.1, 0.1, 0.0);
-            world.spawnParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 8, 0.2, 0.2, 0.2, 0.08);
-            world.spawnParticles(ParticleTypes.ENCHANTED_HIT, hitPos.x, hitPos.y, hitPos.z, 10, 0.2, 0.2, 0.2, 0.05);
+            world.spawnParticles(AvatarParticles.BLOOD_CHI_FILAMENT, hitPos.x, hitPos.y, hitPos.z, 4, 0.15, 0.15, 0.15, 0.04);
+            world.spawnParticles(AvatarParticles.AVATAR_CHI, hitPos.x, hitPos.y, hitPos.z, 3, 0.15, 0.15, 0.15, 0.03);
         }
 
         // Kinetic fist whoosh and punch impact audio
