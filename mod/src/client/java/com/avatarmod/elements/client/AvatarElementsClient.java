@@ -37,6 +37,25 @@ public class AvatarElementsClient implements ClientModInitializer {
         FirstPersonOrbRenderer.register();
         AvatarClientParticles.registerClientFactories();
 
+        // Register custom mob and boss model layers & entity renderers
+        net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer(
+                com.avatarmod.elements.client.render.entity.model.ShirshuEntityModel.LAYER_LOCATION,
+                com.avatarmod.elements.client.render.entity.model.ShirshuEntityModel::getTexturedModelData
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer(
+                com.avatarmod.elements.client.render.entity.model.VaatuEntityModel.LAYER_LOCATION,
+                com.avatarmod.elements.client.render.entity.model.VaatuEntityModel::getTexturedModelData
+        );
+
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                com.avatarmod.elements.entity.AvatarEntities.SHIRSHU,
+                com.avatarmod.elements.client.render.entity.ShirshuEntityRenderer::new
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                com.avatarmod.elements.entity.AvatarEntities.VAATU_SPIRIT_TITAN,
+                com.avatarmod.elements.client.render.entity.VaatuEntityRenderer::new
+        );
+
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 AvatarElementsMod.FIRE_BLAST_PROJECTILE,
                 context -> new net.minecraft.client.render.entity.EntityRenderer<com.avatarmod.elements.entity.FireBlastProjectileEntity>(context) {

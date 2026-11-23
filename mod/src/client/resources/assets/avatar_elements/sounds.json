@@ -213,7 +213,8 @@
       {
         "name": "minecraft:entity.player.attack.sweep",
         "stream": false,
-        "pitch": 1.2
+        "pitch": 1.2,
+        "type": "event"
       }
     ]
   },
@@ -224,7 +225,8 @@
       {
         "name": "minecraft:entity.player.attack.knockback",
         "stream": false,
-        "pitch": 1.1
+        "pitch": 1.1,
+        "type": "event"
       }
     ]
   },
@@ -235,7 +237,8 @@
       {
         "name": "minecraft:entity.generic.explode",
         "stream": false,
-        "pitch": 1.4
+        "pitch": 1.4,
+        "type": "event"
       }
     ]
   },
@@ -246,7 +249,8 @@
       {
         "name": "minecraft:entity.player.attack.crit",
         "stream": false,
-        "pitch": 1.5
+        "pitch": 1.5,
+        "type": "event"
       }
     ]
   }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "avatar_elements:individual/construct_material_stone"
+    "layer0": "avatar_elements:vfx/construct_material_stone"
   }
 }

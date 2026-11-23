@@ -1,6 +1,7 @@
 package com.avatarmod.elements;
 
 import com.avatarmod.elements.data.PlayerBendingData;
+import com.avatarmod.elements.entity.AvatarEntities;
 import com.avatarmod.elements.entity.FireBlastProjectileEntity;
 import com.avatarmod.elements.item.AvatarItems;
 import com.avatarmod.elements.particle.AvatarParticles;
@@ -41,6 +42,7 @@ public class AvatarElementsMod implements ModInitializer {
         LOGGER.info("Avatar: Elements initializing (common)");
         LOGGER.debug("Bending attachment: {}", PlayerBendingData.ATTACHMENT);
         SkillRegistry.populate();
+        AvatarEntities.init();
         AvatarItems.register();
         AvatarParticles.init();
         ModSounds.init();
