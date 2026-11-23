@@ -48,11 +48,11 @@ public final class AvatarCameraDirector {
     private static int orbitMaxTicks = 0;
     private static float orbitDistance = 4.5f;
 
-    // Constants for screen shake tuning
-    private static final float MAX_PITCH_SHAKE = 4.5f;  // degrees
-    private static final float MAX_YAW_SHAKE   = 4.0f;  // degrees
-    private static final float MAX_ROLL_SHAKE  = 5.0f;  // degrees
-    private static final float MAX_EYE_OFFSET  = 0.06f; // max local translation (blocks)
+    // Constants for screen shake tuning (calibrated for silky-smooth action game feel, non-disruptive crosshair)
+    private static final float MAX_PITCH_SHAKE = 1.25f; // degrees (subtle punchy jolt)
+    private static final float MAX_YAW_SHAKE   = 0.65f; // degrees
+    private static final float MAX_ROLL_SHAKE  = 1.80f; // degrees (dynamic tilt along attack vector)
+    private static final float MAX_EYE_OFFSET  = 0.015f; // subtle micro-recoil (1.5 cm)
 
     private AvatarCameraDirector() {}
 
@@ -151,17 +151,17 @@ public final class AvatarCameraDirector {
         boolean posModified = false;
 
         if (trauma > 0.001f || shakeTicks > 0) {
-            // Shake amplitude is quadratic trauma (Trauma^2) for snappy impact + soft silky falloff
-            float effectiveTrauma = Math.max(trauma, (float) shakeTicks / Math.max(1, shakeMaxTicks));
-            float shakeAmp = effectiveTrauma * effectiveTrauma * Math.max(0.2f, shakeIntensity);
+            float progress = (float) shakeTicks / (float) Math.max(1, shakeMaxTicks);
+            // Critically-damped spring curve f(p) = e^(-3.5 * (1-p)) * sin(p * PI)
+            float t = 1.0f - progress;
+            float envelope = (float) Math.exp(-3.5 * t) * (float) Math.sin(progress * Math.PI);
+            float shakeAmp = Math.max(trauma * trauma, envelope) * Math.min(1.0f, shakeIntensity);
 
-            // Time with sub-tick interpolation for continuous 60+ FPS motion
-            float renderTime = (float) (clientTickCounter) + tickDelta;
-
-            // Incommensurate harmonic frequencies for organic, non-repeating feel
-            float rotPitch = MAX_PITCH_SHAKE * shakeAmp * (float) (Math.sin(renderTime * 1.45) * 0.7 + Math.sin(renderTime * 2.89) * 0.3);
-            float rotYaw   = MAX_YAW_SHAKE   * shakeAmp * (float) (Math.cos(renderTime * 1.83) * 0.7 + Math.cos(renderTime * 3.21) * 0.3);
-            float rotRoll  = MAX_ROLL_SHAKE  * shakeAmp * (float) (Math.sin(renderTime * 2.11) * 0.7 + Math.cos(renderTime * 3.77) * 0.3);
+            // Sub-tick continuous harmonic oscillation (low harmonic frequencies, no jitter)
+            float renderTime = (float) clientTickCounter + tickDelta;
+            float rotPitch = MAX_PITCH_SHAKE * shakeAmp * (float) (Math.sin(renderTime * 0.85) * 0.7 + Math.sin(renderTime * 1.45) * 0.3);
+            float rotYaw   = MAX_YAW_SHAKE   * shakeAmp * (float) (Math.cos(renderTime * 0.75) * 0.8 + Math.cos(renderTime * 1.35) * 0.2);
+            float rotRoll  = MAX_ROLL_SHAKE  * shakeAmp * (float) (Math.sin(renderTime * 0.95) * 0.7 + Math.cos(renderTime * 1.65) * 0.3);
 
             // Apply angular trauma to camera rotation matrix
             rotation.rotateX((float) Math.toRadians(rotPitch));
@@ -172,8 +172,8 @@ public final class AvatarCameraDirector {
             Vector3f localRight = new Vector3f(1.0f, 0.0f, 0.0f).rotate(rotation);
             Vector3f localUp    = new Vector3f(0.0f, 1.0f, 0.0f).rotate(rotation);
 
-            float localOffsetX = MAX_EYE_OFFSET * shakeAmp * (float) Math.sin(renderTime * 1.62);
-            float localOffsetY = MAX_EYE_OFFSET * shakeAmp * (float) Math.cos(renderTime * 2.14);
+            float localOffsetX = MAX_EYE_OFFSET * shakeAmp * (float) Math.sin(renderTime * 0.9);
+            float localOffsetY = MAX_EYE_OFFSET * shakeAmp * (float) Math.cos(renderTime * 1.1);
 
             resultPos = resultPos.add(
                     localRight.x * localOffsetX + localUp.x * localOffsetY,

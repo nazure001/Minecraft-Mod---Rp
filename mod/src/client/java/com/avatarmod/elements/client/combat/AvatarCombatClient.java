@@ -10,12 +10,14 @@ import com.avatarmod.elements.item.EarthHammerItem;
 import com.avatarmod.elements.item.WarFanItem;
 import com.avatarmod.elements.item.WaterSpearItem;
 import com.avatarmod.elements.network.SkillPackets;
+import com.avatarmod.elements.particle.AvatarParticles;
 import com.avatarmod.elements.sound.AvatarSounds;
 import com.zigythebird.playeranimcore.easing.EasingType;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -209,9 +211,16 @@ public final class AvatarCombatClient {
         currentStep = (now - lastGroundAttackTime < resetWindow) ? (currentStep + 1) % 4 : 0;
         lastGroundAttackTime = now;
 
+        String animName = switch (currentStep) {
+            case 1 -> "martial_cross";
+            case 2 -> "flame_sweep";
+            case 3 -> "combo_twin_dragon_fire_vortex";
+            default -> "dual_swords";
+        };
+
         AvatarAnimations.triggerComboAnimation(
                 client.player,
-                Identifier.of("avatar_elements", "dual_swords"),
+                Identifier.of("avatar_elements", animName),
                 2,
                 EasingType.EASE_IN_OUT_CUBIC
         );
@@ -221,32 +230,36 @@ public final class AvatarCombatClient {
                 // Right hand downward slash
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.15f);
-                AvatarCameraDirector.triggerRoll(3.5f, 8);
-                AvatarCameraDirector.triggerShake(0.20f, 5);
+                AvatarCameraDirector.triggerRoll(2.5f, 6);
+                AvatarCameraDirector.triggerShake(0.12f, 4);
+                spawnImpactVfx(client);
             }
             case 1 -> {
                 // Left hand rising slash (activates 1st & 3rd person offhand swing)
                 client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.35f);
-                AvatarCameraDirector.triggerRoll(-4.0f, 8);
-                AvatarCameraDirector.triggerShake(0.25f, 6);
+                AvatarCameraDirector.triggerRoll(-3.0f, 6);
+                AvatarCameraDirector.triggerShake(0.15f, 5);
+                spawnImpactVfx(client);
             }
             case 2 -> {
                 // Dual cross slash
                 client.player.swingHand(Hand.MAIN_HAND);
+                client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, 1.1f, 1.25f);
                 client.player.playSound(SoundEvents.ITEM_ARMOR_EQUIP_IRON.value(), 0.9f, 1.4f);
-                AvatarCameraDirector.triggerRoll(6.0f, 9);
-                AvatarCameraDirector.triggerShake(0.40f, 7);
+                AvatarCameraDirector.triggerRoll(4.0f, 7);
+                AvatarCameraDirector.triggerShake(0.22f, 6);
+                spawnImpactVfx(client);
             }
             case 3 -> {
-                // 360 Whirlwind finisher
+                // 360 Twin Dragon Whirlwind finisher
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(AvatarSounds.FLAME_SWEEP_SLASH, 1.2f, 1.0f);
                 client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.2f, 1.35f);
-                AvatarCameraDirector.triggerRoll(-10.0f, 12);
-                AvatarCameraDirector.triggerShake(0.70f, 12);
+                AvatarCameraDirector.triggerRoll(-5.5f, 9);
+                AvatarCameraDirector.triggerShake(0.38f, 8);
                 spawnImpactVfx(client);
             }
         }
@@ -259,9 +272,16 @@ public final class AvatarCombatClient {
         currentStep = (now - lastGroundAttackTime < resetWindow) ? (currentStep + 1) % 4 : 0;
         lastGroundAttackTime = now;
 
+        String animName = switch (currentStep) {
+            case 1 -> "martial_cross";
+            case 2 -> "earth_boulder";
+            case 3 -> "combo_tectonic_hammer_shatter";
+            default -> "earth_hammer";
+        };
+
         AvatarAnimations.triggerComboAnimation(
                 client.player,
-                Identifier.of("avatar_elements", "earth_hammer"),
+                Identifier.of("avatar_elements", animName),
                 2,
                 EasingType.EASE_IN_OUT_CUBIC
         );
@@ -271,31 +291,34 @@ public final class AvatarCombatClient {
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 0.8f);
                 client.player.playSound(SoundEvents.BLOCK_DEEPSLATE_HIT, 1.1f, 0.9f);
-                AvatarCameraDirector.triggerRoll(-3.5f, 8);
-                AvatarCameraDirector.triggerShake(0.35f, 6);
+                AvatarCameraDirector.triggerRoll(-2.5f, 7);
+                AvatarCameraDirector.triggerShake(0.18f, 5);
+                spawnImpactVfx(client);
             }
             case 1 -> {
                 client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(SoundEvents.BLOCK_STONE_BREAK, 1.0f, 1.1f);
                 client.player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.0f, 0.9f);
-                AvatarCameraDirector.triggerRoll(4.5f, 9);
-                AvatarCameraDirector.triggerShake(0.45f, 7);
+                AvatarCameraDirector.triggerRoll(3.0f, 7);
+                AvatarCameraDirector.triggerShake(0.24f, 6);
+                spawnImpactVfx(client);
             }
             case 2 -> {
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.playSound(AvatarSounds.EARTH_BOULDER_LAUNCH, 1.1f, 1.15f);
-                AvatarCameraDirector.triggerRoll(-5.0f, 8);
-                AvatarCameraDirector.triggerShake(0.50f, 8);
+                AvatarCameraDirector.triggerRoll(-3.5f, 7);
+                AvatarCameraDirector.triggerShake(0.28f, 6);
+                spawnImpactVfx(client);
             }
             case 3 -> {
-                // Seismic ground slam finisher (massive two-handed screen crunch)
+                // Tectonic ground shatter finisher
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(AvatarSounds.EARTH_IMPACT_HEAVY, 1.3f, 1.0f);
                 client.player.playSound(SoundEvents.BLOCK_ANVIL_LAND, 1.0f, 0.75f);
                 client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.3f, 0.75f);
-                AvatarCameraDirector.triggerRoll(0.0f, 14);
-                AvatarCameraDirector.triggerShake(0.95f, 14);
+                AvatarCameraDirector.triggerRoll(0.0f, 10);
+                AvatarCameraDirector.triggerShake(0.48f, 9);
                 spawnImpactVfx(client);
             }
         }
@@ -308,9 +331,16 @@ public final class AvatarCombatClient {
         currentStep = (now - lastGroundAttackTime < resetWindow) ? (currentStep + 1) % 4 : 0;
         lastGroundAttackTime = now;
 
+        String animName = switch (currentStep) {
+            case 1 -> "martial_jab";
+            case 2 -> "martial_cross";
+            case 3 -> "combo_kyoshi_tempest_fan_dance";
+            default -> "war_fan";
+        };
+
         AvatarAnimations.triggerComboAnimation(
                 client.player,
-                Identifier.of("avatar_elements", "war_fan"),
+                Identifier.of("avatar_elements", animName),
                 2,
                 EasingType.EASE_IN_OUT_CUBIC
         );
@@ -319,29 +349,32 @@ public final class AvatarCombatClient {
             case 0 -> {
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 0.9f, 1.5f);
-                AvatarCameraDirector.triggerRoll(4.0f, 7);
-                AvatarCameraDirector.triggerShake(0.15f, 4);
+                AvatarCameraDirector.triggerRoll(2.0f, 5);
+                AvatarCameraDirector.triggerShake(0.10f, 3);
+                spawnImpactVfx(client);
             }
             case 1 -> {
                 client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 0.9f, 1.7f);
-                AvatarCameraDirector.triggerRoll(-5.0f, 8);
-                AvatarCameraDirector.triggerShake(0.20f, 5);
+                AvatarCameraDirector.triggerRoll(-2.5f, 6);
+                AvatarCameraDirector.triggerShake(0.14f, 4);
+                spawnImpactVfx(client);
             }
             case 2 -> {
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 1.5f);
-                AvatarCameraDirector.triggerRoll(6.0f, 8);
-                AvatarCameraDirector.triggerShake(0.35f, 6);
+                AvatarCameraDirector.triggerRoll(3.5f, 6);
+                AvatarCameraDirector.triggerShake(0.18f, 5);
+                spawnImpactVfx(client);
             }
             case 3 -> {
-                // Cyclone gale spin finisher (dual fan flourish)
+                // Tempest fan dance whirlwind finisher
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(AvatarSounds.AIR_STAFF_SWING, 1.2f, 1.6f);
                 client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.1f, 1.5f);
-                AvatarCameraDirector.triggerRoll(-9.0f, 10);
-                AvatarCameraDirector.triggerShake(0.55f, 10);
+                AvatarCameraDirector.triggerRoll(-4.5f, 8);
+                AvatarCameraDirector.triggerShake(0.32f, 7);
                 spawnImpactVfx(client);
             }
         }
@@ -354,9 +387,16 @@ public final class AvatarCombatClient {
         currentStep = (now - lastGroundAttackTime < resetWindow) ? (currentStep + 1) % 4 : 0;
         lastGroundAttackTime = now;
 
+        String animName = switch (currentStep) {
+            case 1 -> "water_whip";
+            case 2 -> "water_jet";
+            case 3 -> "water_surf";
+            default -> "water_spear";
+        };
+
         AvatarAnimations.triggerComboAnimation(
                 client.player,
-                Identifier.of("avatar_elements", "water_spear"),
+                Identifier.of("avatar_elements", animName),
                 2,
                 EasingType.EASE_IN_OUT_CUBIC
         );
@@ -365,30 +405,33 @@ public final class AvatarCombatClient {
             case 0 -> {
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.playSound(AvatarSounds.WATER_WHIP_LASH, 1.0f, 1.35f);
-                AvatarCameraDirector.triggerRoll(2.5f, 7);
-                AvatarCameraDirector.triggerShake(0.20f, 5);
+                AvatarCameraDirector.triggerRoll(1.5f, 5);
+                AvatarCameraDirector.triggerShake(0.12f, 4);
+                spawnImpactVfx(client);
             }
             case 1 -> {
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 0.9f, 1.1f);
                 client.player.playSound(AvatarSounds.WATER_SPLASH_IMPACT, 0.9f, 1.4f);
-                AvatarCameraDirector.triggerRoll(-4.0f, 8);
-                AvatarCameraDirector.triggerShake(0.25f, 6);
+                AvatarCameraDirector.triggerRoll(-2.0f, 6);
+                AvatarCameraDirector.triggerShake(0.16f, 5);
+                spawnImpactVfx(client);
             }
             case 2 -> {
                 client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(AvatarSounds.WATER_WHIP_LASH, 1.1f, 1.15f);
-                AvatarCameraDirector.triggerRoll(5.0f, 8);
-                AvatarCameraDirector.triggerShake(0.35f, 7);
+                AvatarCameraDirector.triggerRoll(3.0f, 6);
+                AvatarCameraDirector.triggerShake(0.20f, 5);
+                spawnImpactVfx(client);
             }
             case 3 -> {
-                // Surging tidal burst finisher (two-handed spear thrust surge)
+                // Torrential wave surge finisher
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(AvatarSounds.WATER_SPLASH_IMPACT, 1.2f, 0.9f);
                 client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.2f, 1.2f);
-                AvatarCameraDirector.triggerRoll(-7.5f, 11);
-                AvatarCameraDirector.triggerShake(0.65f, 11);
+                AvatarCameraDirector.triggerRoll(-4.0f, 8);
+                AvatarCameraDirector.triggerShake(0.34f, 8);
                 spawnImpactVfx(client);
             }
         }
@@ -401,9 +444,16 @@ public final class AvatarCombatClient {
         currentStep = (now - lastGroundAttackTime < resetWindow) ? (currentStep + 1) % 4 : 0;
         lastGroundAttackTime = now;
 
+        String animName = switch (currentStep) {
+            case 1 -> "air_blast";
+            case 2 -> "air_vortex";
+            case 3 -> "combo_glider_gale_vault";
+            default -> "air_staff_attack";
+        };
+
         AvatarAnimations.triggerComboAnimation(
                 client.player,
-                Identifier.of("avatar_elements", "air_staff_attack"),
+                Identifier.of("avatar_elements", animName),
                 2,
                 EasingType.EASE_IN_OUT_CUBIC
         );
@@ -412,29 +462,32 @@ public final class AvatarCombatClient {
             case 0 -> {
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.playSound(AvatarSounds.AIR_STAFF_SWING, 1.0f, 1.0f);
-                AvatarCameraDirector.triggerRoll(-3.5f, 7);
-                AvatarCameraDirector.triggerShake(0.20f, 5);
+                AvatarCameraDirector.triggerRoll(-2.0f, 5);
+                AvatarCameraDirector.triggerShake(0.12f, 4);
+                spawnImpactVfx(client);
             }
             case 1 -> {
                 client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(AvatarSounds.AIR_STAFF_SWING, 1.0f, 1.25f);
-                AvatarCameraDirector.triggerRoll(4.0f, 8);
-                AvatarCameraDirector.triggerShake(0.25f, 6);
+                AvatarCameraDirector.triggerRoll(2.5f, 6);
+                AvatarCameraDirector.triggerShake(0.16f, 5);
+                spawnImpactVfx(client);
             }
             case 2 -> {
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.playSound(AvatarSounds.AIR_STAFF_SWING, 1.1f, 1.45f);
-                AvatarCameraDirector.triggerRoll(-5.5f, 8);
-                AvatarCameraDirector.triggerShake(0.35f, 7);
+                AvatarCameraDirector.triggerRoll(-3.5f, 6);
+                AvatarCameraDirector.triggerShake(0.22f, 6);
+                spawnImpactVfx(client);
             }
             case 3 -> {
-                // Kinetic air burst finisher (two-handed staff vault sweep)
+                // Gale vault whirlwind finisher
                 client.player.swingHand(Hand.MAIN_HAND);
                 client.player.swingHand(Hand.OFF_HAND);
                 client.player.playSound(AvatarSounds.AIR_STAFF_SWING, 1.3f, 0.8f);
                 client.player.playSound(AvatarSounds.HITSTOP_IMPACT, 1.2f, 1.4f);
-                AvatarCameraDirector.triggerRoll(8.5f, 10);
-                AvatarCameraDirector.triggerShake(0.60f, 10);
+                AvatarCameraDirector.triggerRoll(4.5f, 8);
+                AvatarCameraDirector.triggerShake(0.35f, 7);
                 spawnImpactVfx(client);
             }
         }
@@ -507,19 +560,55 @@ public final class AvatarCombatClient {
     }
 
     private static void spawnImpactVfx(MinecraftClient client) {
+        if (client.player == null || client.world == null) return;
         Vec3d look = client.player.getRotationVec(1.0f);
-        Vec3d impactPos = client.player.getPos().add(look.multiply(1.5));
-        CinematicVfxController.spawnTransientVfx(
-                VfxType.MARTIAL_SHOCKWAVE,
-                impactPos,
-                client.player.getYaw(),
-                client.player.getPitch()
-        );
-        CinematicVfxController.spawnTransientVfx(
-                VfxType.HITSTOP_FLASH,
-                impactPos.add(0, 1.0, 0),
-                client.player.getYaw(),
-                client.player.getPitch()
-        );
+        Vec3d eyePos = client.player.getPos().add(0, client.player.getStandingEyeHeight() * 0.7, 0);
+        Vec3d impactPos = eyePos.add(look.multiply(1.5));
+        ItemStack held = client.player.getMainHandStack();
+
+        // 1. Spawning Display Entity VFX Ribbon / Shockwave with Photon-style elemental particles
+        if (held.getItem() instanceof DualSwordsItem) {
+            CinematicVfxController.spawnTransientVfx(VfxType.CRESCENT_SLASH, impactPos, client.player.getYaw(), client.player.getPitch());
+            spawnElementalParticles(client, impactPos, look,
+                    AvatarParticles.FIRE_ARC_SLASH, AvatarParticles.FIRE_EMBER, AvatarParticles.BLUE_FLAME);
+        } else if (held.getItem() instanceof EarthHammerItem) {
+            CinematicVfxController.spawnTransientVfx(VfxType.MARTIAL_SHOCKWAVE, impactPos, client.player.getYaw(), 0.0f);
+            spawnElementalParticles(client, impactPos, look,
+                    AvatarParticles.EARTH_SEISMIC_WAVE, AvatarParticles.EARTH_CHUNK, AvatarParticles.EARTH_STOMP_DUST);
+        } else if (held.getItem() instanceof WaterSpearItem) {
+            CinematicVfxController.spawnTransientVfx(VfxType.WATER_WHIP_STREAM, impactPos, client.player.getYaw(), client.player.getPitch());
+            spawnElementalParticles(client, impactPos, look,
+                    AvatarParticles.WATER_WHIP_SPLASH, AvatarParticles.WATER_DROPLET, AvatarParticles.ICE_BURST);
+        } else if (held.getItem() instanceof WarFanItem || held.getItem() instanceof AirStaffItem) {
+            CinematicVfxController.spawnTransientVfx(VfxType.AIR_VORTEX_FUNNEL, impactPos, client.player.getYaw(), client.player.getPitch());
+            spawnElementalParticles(client, impactPos, look,
+                    AvatarParticles.AIR_PRESSURE_BURST, AvatarParticles.AIR_RING, AvatarParticles.AIR_TORNADO_WISP);
+        } else {
+            CinematicVfxController.spawnTransientVfx(VfxType.MARTIAL_SHOCKWAVE, impactPos, client.player.getYaw(), client.player.getPitch());
+            CinematicVfxController.spawnTransientVfx(VfxType.HITSTOP_FLASH, impactPos.add(0, 0.4, 0), client.player.getYaw(), client.player.getPitch());
+            spawnElementalParticles(client, impactPos, look,
+                    AvatarParticles.AVATAR_CHI, AvatarParticles.SPARK, AvatarParticles.AVATAR_CHI);
+        }
+    }
+
+    private static void spawnElementalParticles(MinecraftClient client, Vec3d center, Vec3d look,
+                                                SimpleParticleType primary,
+                                                SimpleParticleType secondary,
+                                                SimpleParticleType accent) {
+        if (client.world == null) return;
+        java.util.Random rnd = new java.util.Random();
+        for (int i = 0; i < 7; i++) {
+            double spreadX = look.x * 0.7 + (rnd.nextDouble() - 0.5) * 0.5;
+            double spreadY = look.y * 0.7 + (rnd.nextDouble() - 0.3) * 0.4;
+            double spreadZ = look.z * 0.7 + (rnd.nextDouble() - 0.5) * 0.5;
+            client.world.addParticle(primary, center.x, center.y, center.z, spreadX, spreadY, spreadZ);
+        }
+        for (int i = 0; i < 10; i++) {
+            double rx = (rnd.nextDouble() - 0.5) * 1.0;
+            double ry = (rnd.nextDouble() - 0.5) * 0.8;
+            double rz = (rnd.nextDouble() - 0.5) * 1.0;
+            client.world.addParticle(secondary, center.x + rx, center.y + ry, center.z + rz, rx * 0.1, ry * 0.1, rz * 0.1);
+        }
+        client.world.addParticle(accent, center.x, center.y, center.z, look.x * 0.3, look.y * 0.3, look.z * 0.3);
     }
 }
