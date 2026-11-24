@@ -1692,7 +1692,8 @@
           },
           "texture": 0
         }
-      }
+      },
+      "uuid": "bb774236-5872-47b3-bfce-ccbde603fcc9"
     }
   ],
   "locators": {},
@@ -1702,5 +1703,8 @@
       "path": "../../individual/ribbon_flame_edge.png",
       "id": "0"
     }
+  ],
+  "outliner": [
+    "bb774236-5872-47b3-bfce-ccbde603fcc9"
   ]
 }

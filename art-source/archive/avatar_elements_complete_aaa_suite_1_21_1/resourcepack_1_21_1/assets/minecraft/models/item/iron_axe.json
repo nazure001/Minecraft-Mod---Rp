@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "minecraft:item/iron_axe"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 2011
+      },
+      "model": "avatar_elements:item/weapon_daili_rock_glove"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2012
+      },
+      "model": "avatar_elements:item/weapon_equalist_electrified_glove"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2013
+      },
+      "model": "avatar_elements:item/weapon_water_wolf_club"
+    }
+  ]
+}

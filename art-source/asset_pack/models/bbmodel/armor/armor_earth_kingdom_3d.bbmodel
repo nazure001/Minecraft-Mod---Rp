@@ -10,52 +10,11 @@
     "height": 32
   },
   "outliner": [
-    {
-      "name": "bipedHead",
-      "origin": [
-        0,
-        24,
-        0
-      ],
-      "children": [
-        "helm_base",
-        "helm_crest"
-      ]
-    },
-    {
-      "name": "bipedBody",
-      "origin": [
-        0,
-        24,
-        0
-      ],
-      "children": [
-        "chest_plate",
-        "back_attachment"
-      ]
-    },
-    {
-      "name": "bipedRightArm",
-      "origin": [
-        -5,
-        22,
-        0
-      ],
-      "children": [
-        "right_pauldron"
-      ]
-    },
-    {
-      "name": "bipedLeftArm",
-      "origin": [
-        5,
-        22,
-        0
-      ],
-      "children": [
-        "left_pauldron"
-      ]
-    }
+    "f8fb829c-d2e8-473f-bfb2-79f170b4a24c",
+    "599b5ee3-4e9a-4b82-a204-f4cc747bbfd9",
+    "70bc86a1-d07d-4259-a678-a170ec30f05a",
+    "a3be78e9-a43d-44cf-987f-a28ed757ce4a",
+    "549866c3-92f2-42a0-abde-760246dd0c0d"
   ],
   "elements": [
     {
@@ -69,7 +28,8 @@
         4.5,
         32.5,
         4.5
-      ]
+      ],
+      "uuid": "f8fb829c-d2e8-473f-bfb2-79f170b4a24c"
     },
     {
       "name": "chest_plate",
@@ -82,7 +42,8 @@
         4.5,
         24,
         2.5
-      ]
+      ],
+      "uuid": "599b5ee3-4e9a-4b82-a204-f4cc747bbfd9"
     },
     {
       "name": "back_attachment",
@@ -96,7 +57,8 @@
         23,
         5.5
       ],
-      "comment": "Cable spools for Police / Wingsuit pack for Air / Cape mount"
+      "comment": "Cable spools for Police / Wingsuit pack for Air / Cape mount",
+      "uuid": "70bc86a1-d07d-4259-a678-a170ec30f05a"
     },
     {
       "name": "right_pauldron",
@@ -109,7 +71,8 @@
         -4.0,
         25.5,
         3.0
-      ]
+      ],
+      "uuid": "a3be78e9-a43d-44cf-987f-a28ed757ce4a"
     },
     {
       "name": "left_pauldron",
@@ -122,7 +85,8 @@
         8.5,
         25.5,
         3.0
-      ]
+      ],
+      "uuid": "549866c3-92f2-42a0-abde-760246dd0c0d"
     }
   ],
   "locators": {

@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "minecraft:item/shield"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 2003
+      },
+      "model": "avatar_elements:item/SM_War_Fan"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2017
+      },
+      "model": "avatar_elements:item/weapon_kyoshi_wrist_shield"
+    }
+  ]
+}

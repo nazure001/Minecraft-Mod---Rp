@@ -5,20 +5,20 @@
     64
   ],
   "textures": {
-    "texture": "avatar_elements:textures/vfx/earth_armor_overlay",
-    "particle": "avatar_elements:textures/vfx/earth_armor_overlay"
+    "texture": "avatar_elements:vfx/earth_armor_overlay",
+    "particle": "avatar_elements:vfx/earth_armor_overlay"
   },
   "elements": [
     {
       "name": "chest_slab_main",
       "from": [
         2.5,
-        20.0,
+        18.0,
         4.2
       ],
       "to": [
         13.5,
-        31.0,
+        29.0,
         6.0
       ],
       "faces": {
@@ -82,12 +82,12 @@
       "name": "chest_ridge_v",
       "from": [
         6.8,
-        21.0,
+        19.0,
         3.5
       ],
       "to": [
         9.2,
-        30.0,
+        28.0,
         4.5
       ],
       "faces": {
@@ -151,12 +151,12 @@
       "name": "pauldron_right",
       "from": [
         12.5,
-        28.0,
+        26.0,
         5.0
       ],
       "to": [
         17.5,
-        33.5,
+        31.5,
         11.0
       ],
       "faces": {
@@ -218,23 +218,23 @@
       "rotation": {
         "origin": [
           12.5,
-          28.0,
+          26.0,
           8.0
         ],
         "axis": "z",
-        "angle": -18.0
+        "angle": -22.5
       }
     },
     {
       "name": "pauldron_left",
       "from": [
         -1.5,
-        28.0,
+        26.0,
         5.0
       ],
       "to": [
         3.5,
-        33.5,
+        31.5,
         11.0
       ],
       "faces": {
@@ -296,23 +296,23 @@
       "rotation": {
         "origin": [
           3.5,
-          28.0,
+          26.0,
           8.0
         ],
         "axis": "z",
-        "angle": 18.0
+        "angle": 22.5
       }
     },
     {
       "name": "gauntlet_right",
       "from": [
         12.2,
-        19.0,
+        17.0,
         5.2
       ],
       "to": [
         16.8,
-        25.5,
+        23.5,
         10.8
       ],
       "faces": {
@@ -376,12 +376,12 @@
       "name": "gauntlet_left",
       "from": [
         -0.8000000000000007,
-        19.0,
+        17.0,
         5.2
       ],
       "to": [
         3.8,
-        25.5,
+        23.5,
         10.8
       ],
       "faces": {
@@ -445,12 +445,12 @@
       "name": "back_slab",
       "from": [
         3.0,
-        20.0,
+        18.0,
         10.0
       ],
       "to": [
         13.0,
-        30.5,
+        28.5,
         11.8
       ],
       "faces": {

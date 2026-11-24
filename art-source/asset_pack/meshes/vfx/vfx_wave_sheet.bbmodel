@@ -5276,7 +5276,8 @@
           },
           "texture": 0
         }
-      }
+      },
+      "uuid": "ccb370dd-5146-4f6c-a3e7-231c8a50eb6e"
     }
   ],
   "locators": {},
@@ -5286,5 +5287,8 @@
       "path": "../../individual/material_water_flow.png",
       "id": "0"
     }
+  ],
+  "outliner": [
+    "ccb370dd-5146-4f6c-a3e7-231c8a50eb6e"
   ]
 }

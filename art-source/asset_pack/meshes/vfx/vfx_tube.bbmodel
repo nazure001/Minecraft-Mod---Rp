@@ -8378,7 +8378,8 @@
           },
           "texture": 0
         }
-      }
+      },
+      "uuid": "4ee1a2df-c2d5-4561-b955-8cbd0c42e3f0"
     }
   ],
   "locators": {},
@@ -8388,5 +8389,8 @@
       "path": "../../individual/ribbon_water_flow.png",
       "id": "0"
     }
+  ],
+  "outliner": [
+    "4ee1a2df-c2d5-4561-b955-8cbd0c42e3f0"
   ]
 }

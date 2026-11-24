@@ -5,8 +5,8 @@
     64
   ],
   "textures": {
-    "texture": "avatar_elements:textures/weapons/SM_Earth_Hammer",
-    "particle": "avatar_elements:textures/weapons/SM_Earth_Hammer"
+    "texture": "avatar_elements:weapons/SM_Earth_Hammer",
+    "particle": "avatar_elements:weapons/SM_Earth_Hammer"
   },
   "elements": [
     {

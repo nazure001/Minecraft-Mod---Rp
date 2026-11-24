@@ -3996,7 +3996,8 @@
           },
           "texture": 0
         }
-      }
+      },
+      "uuid": "68e7aa08-b400-4956-8e58-cea8f9b2aa1a"
     }
   ],
   "locators": {},
@@ -4006,5 +4007,8 @@
       "path": "../../individual/material_fire_turbulence.png",
       "id": "0"
     }
+  ],
+  "outliner": [
+    "68e7aa08-b400-4956-8e58-cea8f9b2aa1a"
   ]
 }

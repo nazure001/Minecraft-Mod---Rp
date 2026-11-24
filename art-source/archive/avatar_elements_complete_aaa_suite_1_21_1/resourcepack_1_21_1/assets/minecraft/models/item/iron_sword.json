@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "minecraft:item/iron_sword"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 2001
+      },
+      "model": "avatar_elements:item/SM_Dual_Swords"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2008
+      },
+      "model": "avatar_elements:item/weapon_piandao_steel_jian"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2009
+      },
+      "model": "avatar_elements:item/weapon_sokka_boomerang"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2010
+      },
+      "model": "avatar_elements:item/weapon_jet_hook_swords"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2015
+      },
+      "model": "avatar_elements:item/weapon_lieutenant_kali_sticks"
+    }
+  ]
+}

@@ -2061,7 +2061,8 @@
           },
           "texture": 0
         }
-      }
+      },
+      "uuid": "9b705af5-3112-458d-aa1a-cda53d035b5b"
     }
   ],
   "locators": {},
@@ -2071,5 +2072,8 @@
       "path": "../../individual/ribbon_hard_crescent.png",
       "id": "0"
     }
+  ],
+  "outliner": [
+    "9b705af5-3112-458d-aa1a-cda53d035b5b"
   ]
 }

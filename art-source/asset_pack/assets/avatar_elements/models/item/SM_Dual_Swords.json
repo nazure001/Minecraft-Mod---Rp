@@ -5,8 +5,8 @@
     64
   ],
   "textures": {
-    "texture": "avatar_elements:textures/weapons/SM_Dual_Swords",
-    "particle": "avatar_elements:textures/weapons/SM_Dual_Swords"
+    "texture": "avatar_elements:weapons/SM_Dual_Swords",
+    "particle": "avatar_elements:weapons/SM_Dual_Swords"
   },
   "elements": [
     {

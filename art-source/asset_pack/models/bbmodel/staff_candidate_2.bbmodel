@@ -77,7 +77,8 @@
           ],
           "texture": 0
         }
-      }
+      },
+      "uuid": "9118f4ce-50ad-4b75-aa9b-fa738361f0dc"
     },
     {
       "name": "head_cap",
@@ -146,7 +147,8 @@
           ],
           "texture": 0
         }
-      }
+      },
+      "uuid": "be1c90ae-8185-4046-83e0-3f7cf1912615"
     },
     {
       "name": "glider_fin_left",
@@ -215,7 +217,8 @@
           ],
           "texture": 0
         }
-      }
+      },
+      "uuid": "39dd07a3-ec5e-465b-8c76-579e2a321acd"
     },
     {
       "name": "glider_fin_right",
@@ -284,7 +287,8 @@
           ],
           "texture": 0
         }
-      }
+      },
+      "uuid": "02b6722f-31b9-4b1f-89e2-8c09013851ae"
     }
   ],
   "locators": {
@@ -339,5 +343,11 @@
         0.85
       ]
     }
-  }
+  },
+  "outliner": [
+    "9118f4ce-50ad-4b75-aa9b-fa738361f0dc",
+    "be1c90ae-8185-4046-83e0-3f7cf1912615",
+    "39dd07a3-ec5e-465b-8c76-579e2a321acd",
+    "02b6722f-31b9-4b1f-89e2-8c09013851ae"
+  ]
 }

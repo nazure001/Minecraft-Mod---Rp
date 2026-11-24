@@ -91,7 +91,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "0bd4d126-1830-44cd-9482-3fc8fcb153f3"
     },
     {
       "name": "head",
@@ -167,7 +168,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "2157c58c-59ed-4acb-8d65-eb8ab4294827"
     },
     {
       "name": "left_arm",
@@ -243,7 +245,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "ba645d34-c893-4c87-816b-2613ebfa23ba"
     },
     {
       "name": "right_arm",
@@ -319,7 +322,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "43d2a0ba-091f-4223-802c-df5ab631cb2a"
     },
     {
       "name": "left_leg",
@@ -395,7 +399,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "87563bb4-fee1-41a8-8b01-82c0d6f5242a"
     },
     {
       "name": "right_leg",
@@ -471,7 +476,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "bb2133ec-91e9-49ea-bb9d-90a3274982eb"
     },
     {
       "name": "staff_lower_cap",
@@ -502,7 +508,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "69d60122-7458-4028-a4d5-2cf989474588"
     },
     {
       "name": "staff_lower_shaft",
@@ -533,7 +540,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "704d7e88-ce35-48dc-b4e3-fb9143e78a36"
     },
     {
       "name": "staff_grip_wrap",
@@ -564,7 +572,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "ea824e16-e130-463b-b2a2-349e3479a2e0"
     },
     {
       "name": "staff_upper_shaft",
@@ -595,7 +604,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "7b984504-f789-4393-a058-79ca1d12e62a"
     },
     {
       "name": "staff_upper_cap",
@@ -626,91 +636,22 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "b68c249f-f5a3-4c57-ba6f-7cf634d7ff10"
     }
   ],
   "outliner": [
-    {
-      "name": "body",
-      "origin": [
-        0,
-        12,
-        0
-      ],
-      "children": [
-        0,
-        {
-          "name": "head",
-          "origin": [
-            0,
-            24,
-            0
-          ],
-          "children": [
-            1
-          ]
-        },
-        {
-          "name": "left_arm",
-          "origin": [
-            5,
-            22,
-            0
-          ],
-          "children": [
-            2
-          ]
-        },
-        {
-          "name": "right_arm",
-          "origin": [
-            -5,
-            22,
-            0
-          ],
-          "children": [
-            3
-          ]
-        }
-      ]
-    },
-    {
-      "name": "left_leg",
-      "origin": [
-        2,
-        12,
-        0
-      ],
-      "children": [
-        4
-      ]
-    },
-    {
-      "name": "right_leg",
-      "origin": [
-        -2,
-        12,
-        0
-      ],
-      "children": [
-        5
-      ]
-    },
-    {
-      "name": "staff_assembly",
-      "origin": [
-        0,
-        8,
-        0
-      ],
-      "children": [
-        6,
-        7,
-        8,
-        9,
-        10
-      ]
-    }
+    "0bd4d126-1830-44cd-9482-3fc8fcb153f3",
+    "2157c58c-59ed-4acb-8d65-eb8ab4294827",
+    "ba645d34-c893-4c87-816b-2613ebfa23ba",
+    "43d2a0ba-091f-4223-802c-df5ab631cb2a",
+    "87563bb4-fee1-41a8-8b01-82c0d6f5242a",
+    "bb2133ec-91e9-49ea-bb9d-90a3274982eb",
+    "69d60122-7458-4028-a4d5-2cf989474588",
+    "704d7e88-ce35-48dc-b4e3-fb9143e78a36",
+    "ea824e16-e130-463b-b2a2-349e3479a2e0",
+    "7b984504-f789-4393-a058-79ca1d12e62a",
+    "b68c249f-f5a3-4c57-ba6f-7cf634d7ff10"
   ],
   "animations": [
     {

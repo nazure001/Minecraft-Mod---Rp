@@ -5,21 +5,21 @@
     64
   ],
   "textures": {
-    "texture": "avatar_elements:textures/vfx/water_whip_stream",
-    "particle": "avatar_elements:textures/vfx/water_whip_stream"
+    "texture": "avatar_elements:vfx/water_whip_stream",
+    "particle": "avatar_elements:vfx/water_whip_stream"
   },
   "elements": [
     {
       "name": "segment_0_handle",
       "from": [
-        6.8,
-        6.8,
+        7.52,
+        7.52,
         8.0
       ],
       "to": [
-        9.2,
-        9.2,
-        14.0
+        8.48,
+        8.48,
+        10.4
       ],
       "faces": {
         "north": {
@@ -81,14 +81,14 @@
     {
       "name": "segment_1_shaft",
       "from": [
-        6.5,
-        6.5,
-        13.0
+        7.4,
+        7.4,
+        10.0
       ],
       "to": [
-        9.5,
-        9.5,
-        21.0
+        8.6,
+        8.6,
+        13.2
       ],
       "faces": {
         "north": {
@@ -145,28 +145,19 @@
           ],
           "texture": "#texture"
         }
-      },
-      "rotation": {
-        "origin": [
-          8.0,
-          8.0,
-          13.0
-        ],
-        "axis": "y",
-        "angle": 10.0
       }
     },
     {
       "name": "segment_2_bend",
       "from": [
-        6.6,
-        6.6,
-        20.0
+        7.44,
+        7.44,
+        12.8
       ],
       "to": [
-        9.4,
-        9.4,
-        29.0
+        8.56,
+        8.56,
+        16.4
       ],
       "faces": {
         "north": {
@@ -228,23 +219,23 @@
         "origin": [
           8.0,
           8.0,
-          20.0
+          12.8
         ],
         "axis": "y",
-        "angle": -15.0
+        "angle": -22.5
       }
     },
     {
       "name": "segment_3_loop",
       "from": [
-        6.8,
-        6.8,
-        28.0
+        7.52,
+        7.52,
+        16.0
       ],
       "to": [
-        9.2,
-        9.2,
-        38.0
+        8.48,
+        8.48,
+        20.0
       ],
       "faces": {
         "north": {
@@ -306,23 +297,23 @@
         "origin": [
           8.0,
           8.0,
-          28.0
+          16.0
         ],
         "axis": "x",
-        "angle": 12.0
+        "angle": 22.5
       }
     },
     {
       "name": "segment_4_arc",
       "from": [
-        7.0,
-        7.0,
-        37.0
+        7.6,
+        7.6,
+        19.6
       ],
       "to": [
-        9.0,
-        9.0,
-        48.0
+        8.4,
+        8.4,
+        24.0
       ],
       "faces": {
         "north": {
@@ -384,23 +375,23 @@
         "origin": [
           8.0,
           8.0,
-          37.0
+          19.6
         ],
         "axis": "y",
-        "angle": 20.0
+        "angle": 22.5
       }
     },
     {
       "name": "segment_5_lash",
       "from": [
-        7.2,
-        7.2,
-        47.0
+        7.68,
+        7.68,
+        23.6
       ],
       "to": [
-        8.8,
-        8.8,
-        58.0
+        8.32,
+        8.32,
+        28.0
       ],
       "faces": {
         "north": {
@@ -462,23 +453,23 @@
         "origin": [
           8.0,
           8.0,
-          47.0
+          23.6
         ],
         "axis": "x",
-        "angle": -18.0
+        "angle": -22.5
       }
     },
     {
       "name": "segment_6_tip",
       "from": [
-        7.5,
-        7.5,
-        57.0
+        7.8,
+        7.8,
+        27.6
       ],
       "to": [
-        8.5,
-        8.5,
-        68.0
+        8.2,
+        8.2,
+        32.0
       ],
       "faces": {
         "north": {
@@ -540,10 +531,10 @@
         "origin": [
           8.0,
           8.0,
-          57.0
+          27.6
         ],
         "axis": "y",
-        "angle": -25.0
+        "angle": -22.5
       }
     }
   ],

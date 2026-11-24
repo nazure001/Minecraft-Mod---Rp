@@ -9422,7 +9422,8 @@
           },
           "texture": 0
         }
-      }
+      },
+      "uuid": "6cd4ae81-9b21-4f24-aa1d-44ea291eb723"
     }
   ],
   "locators": {},
@@ -9432,5 +9433,8 @@
       "path": "../../individual/material_air_streak.png",
       "id": "0"
     }
+  ],
+  "outliner": [
+    "6cd4ae81-9b21-4f24-aa1d-44ea291eb723"
   ]
 }

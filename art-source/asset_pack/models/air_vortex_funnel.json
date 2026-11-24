@@ -5,20 +5,20 @@
     64
   ],
   "textures": {
-    "texture": "avatar_elements:textures/vfx/air_vortex_funnel",
-    "particle": "avatar_elements:textures/vfx/air_vortex_funnel"
+    "texture": "avatar_elements:vfx/air_vortex_funnel",
+    "particle": "avatar_elements:vfx/air_vortex_funnel"
   },
   "elements": [
     {
       "name": "vortex_eye_base",
       "from": [
         5.0,
-        8.0,
+        -2.0,
         5.0
       ],
       "to": [
         11.0,
-        11.0,
+        1.0,
         11.0
       ],
       "faces": {
@@ -82,12 +82,12 @@
       "name": "funnel_tier_1",
       "from": [
         3.0,
-        11.0,
+        1.0,
         3.0
       ],
       "to": [
         13.0,
-        16.0,
+        6.0,
         13.0
       ],
       "faces": {
@@ -149,23 +149,23 @@
       "rotation": {
         "origin": [
           8.0,
-          13.5,
+          3.5,
           8.0
         ],
         "axis": "y",
-        "angle": 30.0
+        "angle": 22.5
       }
     },
     {
       "name": "funnel_tier_2",
       "from": [
         0.5,
-        16.0,
+        6.0,
         0.5
       ],
       "to": [
         15.5,
-        23.0,
+        13.0,
         15.5
       ],
       "faces": {
@@ -227,23 +227,23 @@
       "rotation": {
         "origin": [
           8.0,
-          19.5,
+          9.5,
           8.0
         ],
         "axis": "y",
-        "angle": 60.0
+        "angle": 45.0
       }
     },
     {
       "name": "funnel_tier_3",
       "from": [
         -2.5,
-        23.0,
+        13.0,
         -2.5
       ],
       "to": [
         18.5,
-        32.0,
+        22.0,
         18.5
       ],
       "faces": {
@@ -301,27 +301,18 @@
           ],
           "texture": "#texture"
         }
-      },
-      "rotation": {
-        "origin": [
-          8.0,
-          27.5,
-          8.0
-        ],
-        "axis": "y",
-        "angle": 90.0
       }
     },
     {
       "name": "funnel_canopy",
       "from": [
         -6.0,
-        32.0,
+        22.0,
         -6.0
       ],
       "to": [
         22.0,
-        42.0,
+        32.0,
         22.0
       ],
       "faces": {
@@ -383,23 +374,23 @@
       "rotation": {
         "origin": [
           8.0,
-          37.0,
+          27.0,
           8.0
         ],
         "axis": "y",
-        "angle": 120.0
+        "angle": 22.5
       }
     },
     {
       "name": "ribbon_swirl_a",
       "from": [
         -4.0,
-        14.0,
+        4.0,
         6.0
       ],
       "to": [
         -1.0,
-        34.0,
+        24.0,
         10.0
       ],
       "faces": {
@@ -461,7 +452,7 @@
       "rotation": {
         "origin": [
           8.0,
-          24.0,
+          14.0,
           8.0
         ],
         "axis": "y",
@@ -472,12 +463,12 @@
       "name": "ribbon_swirl_b",
       "from": [
         17.0,
-        18.0,
+        8.0,
         6.0
       ],
       "to": [
         20.0,
-        38.0,
+        28.0,
         10.0
       ],
       "faces": {
@@ -539,7 +530,7 @@
       "rotation": {
         "origin": [
           8.0,
-          28.0,
+          18.0,
           8.0
         ],
         "axis": "y",

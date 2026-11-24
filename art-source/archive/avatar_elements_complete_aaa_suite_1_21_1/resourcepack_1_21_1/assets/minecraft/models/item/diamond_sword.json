@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "minecraft:item/diamond_sword"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 2014
+      },
+      "model": "avatar_elements:item/weapon_water_jaw_blade"
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.weapon_equalist_electrified_glove",
+        "texture_width": 64,
+        "texture_height": 64
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.9,
+                -4.0,
+                -0.9
+              ],
+              "size": [
+                1.8,
+                6.5,
+                1.8
+              ],
+              "uv": [
+                0,
+                32
+              ]
+            },
+            {
+              "origin": [
+                -3.08,
+                2.5,
+                -1.2
+              ],
+              "size": [
+                6.16,
+                1.3,
+                2.4
+              ],
+              "uv": [
+                32,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -2.2,
+                3.8,
+                -0.6
+              ],
+              "size": [
+                4.4,
+                4.2,
+                1.2
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -1.32,
+                4.5,
+                -0.75
+              ],
+              "size": [
+                2.64,
+                3.0,
+                1.5
+              ],
+              "uv": [
+                32,
+                0
+              ]
+            }
+          ],
+          "locators": {
+            "trail_begin": [
+              0.0,
+              4.0,
+              0.0
+            ],
+            "trail_end": [
+              0.0,
+              8.0,
+              0.0
+            ],
+            "imbue_emitter": [
+              0.0,
+              4.8,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

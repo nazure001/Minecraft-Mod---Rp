@@ -77,7 +77,8 @@
           ],
           "texture": 0
         }
-      }
+      },
+      "uuid": "52667aea-b332-4eb7-9425-2ee318245aba"
     },
     {
       "name": "vessel_neck",
@@ -146,7 +147,8 @@
           ],
           "texture": 0
         }
-      }
+      },
+      "uuid": "9e8d4045-06f7-415e-a7ea-9c0a0bd312bb"
     }
   ],
   "locators": {
@@ -155,5 +157,9 @@
       15.0,
       8.0
     ]
-  }
+  },
+  "outliner": [
+    "52667aea-b332-4eb7-9425-2ee318245aba",
+    "9e8d4045-06f7-415e-a7ea-9c0a0bd312bb"
+  ]
 }

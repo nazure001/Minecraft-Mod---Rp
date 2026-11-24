@@ -1,0 +1,47 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.avatar_elements.buzzard_wasp",
+        "texture_width": 128,
+        "texture_height": 128,
+        "visible_bounds_width": 2.4,
+        "visible_bounds_height": 3.0,
+        "visible_bounds_offset": [
+          0.0,
+          1.32,
+          0.0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6.0,
+                0.0,
+                -6.0
+              ],
+              "size": [
+                12.0,
+                19.2,
+                12.0
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

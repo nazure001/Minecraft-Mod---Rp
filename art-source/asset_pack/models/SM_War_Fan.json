@@ -5,8 +5,8 @@
     64
   ],
   "textures": {
-    "texture": "avatar_elements:textures/weapons/SM_War_Fan",
-    "particle": "avatar_elements:textures/weapons/SM_War_Fan"
+    "texture": "avatar_elements:weapons/SM_War_Fan",
+    "particle": "avatar_elements:weapons/SM_War_Fan"
   },
   "elements": [
     {

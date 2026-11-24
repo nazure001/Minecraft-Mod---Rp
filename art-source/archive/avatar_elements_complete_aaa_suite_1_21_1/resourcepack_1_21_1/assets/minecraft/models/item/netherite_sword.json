@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "minecraft:item/netherite_sword"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 2007
+      },
+      "model": "avatar_elements:item/weapon_meteorite_space_sword"
+    }
+  ]
+}

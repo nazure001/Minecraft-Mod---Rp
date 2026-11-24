@@ -1,0 +1,73 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "idle_cosmic_hover": {
+      "loop": true,
+      "bones": {
+        "spirit_core": {
+          "position": [
+            0,
+            "math.sin(query.anim_time * 120) * 3.5",
+            0
+          ]
+        },
+        "tentacle_1_a": {
+          "rotation": [
+            "math.sin(query.anim_time * 180 + 0) * 22",
+            0,
+            0
+          ]
+        },
+        "tentacle_2_a": {
+          "rotation": [
+            "math.sin(query.anim_time * 180 + 45) * 22",
+            0,
+            0
+          ]
+        },
+        "tentacle_3_a": {
+          "rotation": [
+            "math.sin(query.anim_time * 180 + 90) * 22",
+            0,
+            0
+          ]
+        },
+        "tentacle_4_a": {
+          "rotation": [
+            "math.sin(query.anim_time * 180 + 135) * 22",
+            0,
+            0
+          ]
+        },
+        "tentacle_5_a": {
+          "rotation": [
+            "math.sin(query.anim_time * 180 + 180) * 22",
+            0,
+            0
+          ]
+        },
+        "tentacle_6_a": {
+          "rotation": [
+            "math.sin(query.anim_time * 180 + 225) * 22",
+            0,
+            0
+          ]
+        },
+        "tentacle_7_a": {
+          "rotation": [
+            "math.sin(query.anim_time * 180 + 270) * 22",
+            0,
+            0
+          ]
+        },
+        "tentacle_8_a": {
+          "rotation": [
+            "math.sin(query.anim_time * 180 + 315) * 22",
+            0,
+            0
+          ]
+        }
+      }
+    }
+  }
+}

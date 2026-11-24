@@ -1,0 +1,782 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.boss_vaatu_chaos",
+        "texture_width": 128,
+        "texture_height": 128,
+        "visible_bounds_width": 4.5,
+        "visible_bounds_height": 5.0,
+        "visible_bounds_offset": [
+          0,
+          2.5,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": []
+        },
+        {
+          "name": "spirit_core",
+          "pivot": [
+            0,
+            24,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7,
+                14,
+                -4
+              ],
+              "size": [
+                14,
+                22,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -4,
+                36,
+                -3
+              ],
+              "size": [
+                8,
+                12,
+                6
+              ],
+              "uv": [
+                64,
+                0
+              ]
+            }
+          ],
+          "parent": "root",
+          "locators": {
+            "locator_eye_cannon": [
+              0,
+              26,
+              -4.5
+            ]
+          }
+        },
+        {
+          "name": "wing_fin_l",
+          "pivot": [
+            7,
+            28,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                7,
+                18,
+                -1.5
+              ],
+              "size": [
+                14,
+                18,
+                3
+              ],
+              "uv": [
+                0,
+                64
+              ]
+            }
+          ],
+          "parent": "spirit_core"
+        },
+        {
+          "name": "wing_fin_r",
+          "pivot": [
+            -7,
+            28,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -21,
+                18,
+                -1.5
+              ],
+              "size": [
+                14,
+                18,
+                3
+              ],
+              "uv": [
+                0,
+                64
+              ]
+            }
+          ],
+          "parent": "spirit_core"
+        },
+        {
+          "name": "tentacle_1_a",
+          "pivot": [
+            6.5,
+            14,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.1,
+                6,
+                -1.4
+              ],
+              "size": [
+                2.8,
+                8,
+                2.8
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "spirit_core"
+        },
+        {
+          "name": "tentacle_1_b",
+          "pivot": [
+            6.5,
+            6,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.4,
+                -2,
+                -1.1
+              ],
+              "size": [
+                2.2,
+                8,
+                2.2
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_1_a"
+        },
+        {
+          "name": "tentacle_1_c",
+          "pivot": [
+            6.5,
+            -2,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                5.7,
+                -9,
+                -0.8
+              ],
+              "size": [
+                1.6,
+                7,
+                1.6
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_1_b"
+        },
+        {
+          "name": "tentacle_2_a",
+          "pivot": [
+            4.6,
+            18,
+            3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                3.1999999999999997,
+                10,
+                1.7800000000000002
+              ],
+              "size": [
+                2.8,
+                8,
+                2.8
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "spirit_core"
+        },
+        {
+          "name": "tentacle_2_b",
+          "pivot": [
+            4.6,
+            10,
+            3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                3.4999999999999996,
+                2,
+                2.08
+              ],
+              "size": [
+                2.2,
+                8,
+                2.2
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_2_a"
+        },
+        {
+          "name": "tentacle_2_c",
+          "pivot": [
+            4.6,
+            2,
+            3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                3.8,
+                -5,
+                2.38
+              ],
+              "size": [
+                1.6,
+                7,
+                1.6
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_2_b"
+        },
+        {
+          "name": "tentacle_3_a",
+          "pivot": [
+            0.0,
+            14,
+            4.5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.4,
+                6,
+                3.1
+              ],
+              "size": [
+                2.8,
+                8,
+                2.8
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "spirit_core"
+        },
+        {
+          "name": "tentacle_3_b",
+          "pivot": [
+            0.0,
+            6,
+            4.5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.1,
+                -2,
+                3.4
+              ],
+              "size": [
+                2.2,
+                8,
+                2.2
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_3_a"
+        },
+        {
+          "name": "tentacle_3_c",
+          "pivot": [
+            0.0,
+            -2,
+            4.5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.8,
+                -9,
+                3.7
+              ],
+              "size": [
+                1.6,
+                7,
+                1.6
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_3_b"
+        },
+        {
+          "name": "tentacle_4_a",
+          "pivot": [
+            -4.6,
+            18,
+            3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6.0,
+                10,
+                1.7800000000000002
+              ],
+              "size": [
+                2.8,
+                8,
+                2.8
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "spirit_core"
+        },
+        {
+          "name": "tentacle_4_b",
+          "pivot": [
+            -4.6,
+            10,
+            3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -5.699999999999999,
+                2,
+                2.08
+              ],
+              "size": [
+                2.2,
+                8,
+                2.2
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_4_a"
+        },
+        {
+          "name": "tentacle_4_c",
+          "pivot": [
+            -4.6,
+            2,
+            3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -5.3999999999999995,
+                -5,
+                2.38
+              ],
+              "size": [
+                1.6,
+                7,
+                1.6
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_4_b"
+        },
+        {
+          "name": "tentacle_5_a",
+          "pivot": [
+            -6.5,
+            14,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7.9,
+                6,
+                -1.4
+              ],
+              "size": [
+                2.8,
+                8,
+                2.8
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "spirit_core"
+        },
+        {
+          "name": "tentacle_5_b",
+          "pivot": [
+            -6.5,
+            6,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7.6,
+                -2,
+                -1.1
+              ],
+              "size": [
+                2.2,
+                8,
+                2.2
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_5_a"
+        },
+        {
+          "name": "tentacle_5_c",
+          "pivot": [
+            -6.5,
+            -2,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7.3,
+                -9,
+                -0.8
+              ],
+              "size": [
+                1.6,
+                7,
+                1.6
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_5_b"
+        },
+        {
+          "name": "tentacle_6_a",
+          "pivot": [
+            -4.6,
+            18,
+            -3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6.0,
+                10,
+                -4.58
+              ],
+              "size": [
+                2.8,
+                8,
+                2.8
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "spirit_core"
+        },
+        {
+          "name": "tentacle_6_b",
+          "pivot": [
+            -4.6,
+            10,
+            -3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -5.699999999999999,
+                2,
+                -4.28
+              ],
+              "size": [
+                2.2,
+                8,
+                2.2
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_6_a"
+        },
+        {
+          "name": "tentacle_6_c",
+          "pivot": [
+            -4.6,
+            2,
+            -3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -5.3999999999999995,
+                -5,
+                -3.9800000000000004
+              ],
+              "size": [
+                1.6,
+                7,
+                1.6
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_6_b"
+        },
+        {
+          "name": "tentacle_7_a",
+          "pivot": [
+            -0.0,
+            14,
+            -4.5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.4,
+                6,
+                -5.9
+              ],
+              "size": [
+                2.8,
+                8,
+                2.8
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "spirit_core"
+        },
+        {
+          "name": "tentacle_7_b",
+          "pivot": [
+            -0.0,
+            6,
+            -4.5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.1,
+                -2,
+                -5.6
+              ],
+              "size": [
+                2.2,
+                8,
+                2.2
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_7_a"
+        },
+        {
+          "name": "tentacle_7_c",
+          "pivot": [
+            -0.0,
+            -2,
+            -4.5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.8,
+                -9,
+                -5.3
+              ],
+              "size": [
+                1.6,
+                7,
+                1.6
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_7_b"
+        },
+        {
+          "name": "tentacle_8_a",
+          "pivot": [
+            4.6,
+            18,
+            -3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                3.1999999999999997,
+                10,
+                -4.58
+              ],
+              "size": [
+                2.8,
+                8,
+                2.8
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "spirit_core"
+        },
+        {
+          "name": "tentacle_8_b",
+          "pivot": [
+            4.6,
+            10,
+            -3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                3.4999999999999996,
+                2,
+                -4.28
+              ],
+              "size": [
+                2.2,
+                8,
+                2.2
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_8_a"
+        },
+        {
+          "name": "tentacle_8_c",
+          "pivot": [
+            4.6,
+            2,
+            -3.18
+          ],
+          "cubes": [
+            {
+              "origin": [
+                3.8,
+                -5,
+                -3.9800000000000004
+              ],
+              "size": [
+                1.6,
+                7,
+                1.6
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "tentacle_8_b"
+        }
+      ]
+    }
+  ]
+}

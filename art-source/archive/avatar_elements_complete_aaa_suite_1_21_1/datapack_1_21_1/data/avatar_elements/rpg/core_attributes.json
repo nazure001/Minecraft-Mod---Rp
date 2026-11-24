@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.21.1-native",
+  "attributes": [
+    {
+      "id": "avatar:agility",
+      "base": 0,
+      "max": 50
+    },
+    {
+      "id": "avatar:chi_focus",
+      "base": 100,
+      "max": 300
+    },
+    {
+      "id": "avatar:vigor",
+      "base": 20,
+      "max": 60
+    },
+    {
+      "id": "avatar:mastery",
+      "base": 0,
+      "max": 50
+    },
+    {
+      "id": "avatar:precision",
+      "base": 0,
+      "max": 40
+    }
+  ]
+}

@@ -5,8 +5,8 @@
     64
   ],
   "textures": {
-    "texture": "avatar_elements:textures/vfx/boulder_launch_megalith",
-    "particle": "avatar_elements:textures/vfx/boulder_launch_megalith"
+    "texture": "avatar_elements:vfx/boulder_launch_megalith",
+    "particle": "avatar_elements:vfx/boulder_launch_megalith"
   },
   "elements": [
     {

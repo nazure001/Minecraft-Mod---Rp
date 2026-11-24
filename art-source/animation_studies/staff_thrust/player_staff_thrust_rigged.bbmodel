@@ -91,7 +91,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "206125dc-cec1-463e-8098-6b666fb2c0df"
     },
     {
       "name": "head",
@@ -167,7 +168,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "b77e0802-07d5-4003-9baa-cdb96f949c5e"
     },
     {
       "name": "right_upper_arm",
@@ -203,7 +205,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "0ca57f83-70ba-426b-9ff8-ee6fd83aa88e"
     },
     {
       "name": "right_forearm",
@@ -239,7 +242,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "b3af8895-9172-4870-ba7c-df9952d55770"
     },
     {
       "name": "left_upper_arm",
@@ -275,7 +279,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "6fac1ade-2fc3-43fb-9e19-bfb84b593068"
     },
     {
       "name": "left_forearm",
@@ -311,7 +316,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "81537003-fe35-4a76-881b-c08f45ef78ea"
     },
     {
       "name": "right_leg",
@@ -332,7 +338,8 @@
         0
       ],
       "color": 7,
-      "faces": {}
+      "faces": {},
+      "uuid": "cf331293-ca57-4799-b264-376938169137"
     },
     {
       "name": "left_leg",
@@ -353,7 +360,8 @@
         0
       ],
       "color": 7,
-      "faces": {}
+      "faces": {},
+      "uuid": "5c7ddb0d-b933-4df7-938f-eb7700c35939"
     },
     {
       "name": "lower_cap",
@@ -384,7 +392,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "3f4d34c2-fadf-47d4-9feb-ed908e4554c7"
     },
     {
       "name": "lower_shaft",
@@ -415,7 +424,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "956f015e-ddb7-4424-81ca-533ac1cd2761"
     },
     {
       "name": "grip_wrap",
@@ -446,7 +456,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "f14bd7cf-d3f6-4716-badc-27282f4145f5"
     },
     {
       "name": "upper_shaft",
@@ -477,7 +488,8 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "3021c96d-5e24-45cf-8fc9-c6a90a92a9ae"
     },
     {
       "name": "upper_cap",
@@ -508,138 +520,24 @@
           ],
           "texture": null
         }
-      }
+      },
+      "uuid": "5d8b56df-3b5a-405b-8066-72594746ab86"
     }
   ],
   "outliner": [
-    {
-      "name": "torso",
-      "origin": [
-        0,
-        12,
-        0
-      ],
-      "children": [
-        0,
-        {
-          "name": "head",
-          "origin": [
-            0,
-            24,
-            0
-          ],
-          "children": [
-            1
-          ]
-        },
-        {
-          "name": "right_upper_arm",
-          "origin": [
-            5,
-            22,
-            0
-          ],
-          "rotation": [
-            -41.0,
-            44.8,
-            0.0
-          ],
-          "children": [
-            2,
-            {
-              "name": "right_forearm",
-              "origin": [
-                9.23,
-                18.79,
-                2.79
-              ],
-              "rotation": [
-                3.9,
-                -38.5,
-                0.0
-              ],
-              "children": [
-                3
-              ]
-            }
-          ]
-        },
-        {
-          "name": "left_upper_arm",
-          "origin": [
-            -5,
-            22,
-            0
-          ],
-          "rotation": [
-            38.4,
-            25.8,
-            0.0
-          ],
-          "children": [
-            4,
-            {
-              "name": "left_forearm",
-              "origin": [
-                -2.39,
-                17.76,
-                -3.35
-              ],
-              "rotation": [
-                81.2,
-                73.7,
-                0.0
-              ],
-              "children": [
-                5
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "right_leg",
-      "origin": [
-        2,
-        12,
-        0
-      ],
-      "children": [
-        6
-      ]
-    },
-    {
-      "name": "left_leg",
-      "origin": [
-        -2,
-        12,
-        0
-      ],
-      "children": [
-        7
-      ]
-    },
-    {
-      "name": "staff_assembly",
-      "origin": [
-        6.5,
-        12.5,
-        6.0
-      ],
-      "rotation": [
-        -24.4,
-        -15.9,
-        0.0
-      ],
-      "children": [
-        8,
-        9,
-        10,
-        11,
-        12
-      ]
-    }
+    "206125dc-cec1-463e-8098-6b666fb2c0df",
+    "b77e0802-07d5-4003-9baa-cdb96f949c5e",
+    "0ca57f83-70ba-426b-9ff8-ee6fd83aa88e",
+    "b3af8895-9172-4870-ba7c-df9952d55770",
+    "6fac1ade-2fc3-43fb-9e19-bfb84b593068",
+    "81537003-fe35-4a76-881b-c08f45ef78ea",
+    "cf331293-ca57-4799-b264-376938169137",
+    "5c7ddb0d-b933-4df7-938f-eb7700c35939",
+    "3f4d34c2-fadf-47d4-9feb-ed908e4554c7",
+    "956f015e-ddb7-4424-81ca-533ac1cd2761",
+    "f14bd7cf-d3f6-4716-badc-27282f4145f5",
+    "3021c96d-5e24-45cf-8fc9-c6a90a92a9ae",
+    "5d8b56df-3b5a-405b-8066-72594746ab86"
   ],
   "animations": []
 }

@@ -1,0 +1,105 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.sm_air_staff_glider",
+        "texture_width": 64,
+        "texture_height": 64
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.8,
+                -12.0,
+                -0.8
+              ],
+              "size": [
+                1.6,
+                32.0,
+                1.6
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -22.0,
+                4.0,
+                -0.3
+              ],
+              "size": [
+                21.2,
+                13.0,
+                0.6
+              ],
+              "uv": [
+                32,
+                0
+              ]
+            },
+            {
+              "origin": [
+                0.8,
+                4.0,
+                -0.3
+              ],
+              "size": [
+                21.2,
+                13.0,
+                0.6
+              ],
+              "uv": [
+                32,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -6.0,
+                -11.0,
+                -0.3
+              ],
+              "size": [
+                12.0,
+                7.0,
+                0.6
+              ],
+              "uv": [
+                32,
+                0
+              ]
+            }
+          ],
+          "locators": {
+            "trail_begin": [
+              -22.0,
+              10.0,
+              0
+            ],
+            "trail_end": [
+              22.0,
+              10.0,
+              0
+            ],
+            "imbue_emitter": [
+              0,
+              10.0,
+              0
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

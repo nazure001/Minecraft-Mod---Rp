@@ -1,0 +1,74 @@
+{
+  "bending.fire.jab": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.blaze.shoot",
+        "type": "event",
+        "pitch": 1.4
+      }
+    ]
+  },
+  "bending.fire.blast": {
+    "sounds": [
+      {
+        "name": "minecraft:item.firecharge.use",
+        "type": "event",
+        "pitch": 0.85
+      }
+    ]
+  },
+  "bending.water.whip": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.splash.high_speed",
+        "type": "event",
+        "pitch": 1.15
+      }
+    ]
+  },
+  "bending.earth.pillar": {
+    "sounds": [
+      {
+        "name": "minecraft:block.deepslate.break",
+        "type": "event",
+        "pitch": 0.65
+      }
+    ]
+  },
+  "bending.air.staff": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.attack.sweep",
+        "type": "event",
+        "pitch": 1.2
+      }
+    ]
+  },
+  "bending.redirection.parry": {
+    "sounds": [
+      {
+        "name": "minecraft:item.shield.block",
+        "type": "event",
+        "pitch": 1.35
+      }
+    ]
+  },
+  "boss.ozai.lightning": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.lightning_bolt.thunder",
+        "type": "event",
+        "pitch": 1.1
+      }
+    ]
+  },
+  "boss.vaatu.beam": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.warden.sonic_boom",
+        "type": "event",
+        "pitch": 0.75
+      }
+    ]
+  }
+}

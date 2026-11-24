@@ -87,7 +87,8 @@
           ],
           "texture": 0
         }
-      }
+      },
+      "uuid": "6bc9dda0-2985-4d01-9b4c-dc99e257b54e"
     },
     {
       "name": "lower_shaft",
@@ -164,7 +165,8 @@
           ],
           "texture": 0
         }
-      }
+      },
+      "uuid": "48e8f0b3-7f72-4003-aca8-d98e0c905c54"
     },
     {
       "name": "grip_wrap",
@@ -241,7 +243,8 @@
           ],
           "texture": 0
         }
-      }
+      },
+      "uuid": "44ec5397-83d9-41e4-bd59-2bdb0f299263"
     },
     {
       "name": "upper_shaft",
@@ -318,7 +321,8 @@
           ],
           "texture": 0
         }
-      }
+      },
+      "uuid": "e4f0b593-7bd2-4a4f-bf44-037b6fd86aef"
     },
     {
       "name": "upper_cap",
@@ -395,15 +399,16 @@
           ],
           "texture": 0
         }
-      }
+      },
+      "uuid": "4f96c345-116b-40ab-a7ac-96a9f2025221"
     }
   ],
   "outliner": [
-    "lower_cap",
-    "lower_shaft",
-    "grip_wrap",
-    "upper_shaft",
-    "upper_cap"
+    "6bc9dda0-2985-4d01-9b4c-dc99e257b54e",
+    "48e8f0b3-7f72-4003-aca8-d98e0c905c54",
+    "44ec5397-83d9-41e4-bd59-2bdb0f299263",
+    "e4f0b593-7bd2-4a4f-bf44-037b6fd86aef",
+    "4f96c345-116b-40ab-a7ac-96a9f2025221"
   ],
   "textures": [
     {

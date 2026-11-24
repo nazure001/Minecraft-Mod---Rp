@@ -5,8 +5,8 @@
     64
   ],
   "textures": {
-    "texture": "avatar_elements:textures/weapons/SM_Water_Spear",
-    "particle": "avatar_elements:textures/weapons/SM_Water_Spear"
+    "texture": "avatar_elements:weapons/SM_Water_Spear",
+    "particle": "avatar_elements:weapons/SM_Water_Spear"
   },
   "elements": [
     {

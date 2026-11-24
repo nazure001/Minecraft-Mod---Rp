@@ -1,0 +1,105 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.sm_air_staff",
+        "texture_width": 64,
+        "texture_height": 64
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -0.8,
+                -14.0,
+                -0.8
+              ],
+              "size": [
+                1.6,
+                36.0,
+                1.6
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -1.0,
+                22.0,
+                -1.0
+              ],
+              "size": [
+                2.0,
+                1.5,
+                2.0
+              ],
+              "uv": [
+                0,
+                32
+              ]
+            },
+            {
+              "origin": [
+                -1.0,
+                -15.5,
+                -1.0
+              ],
+              "size": [
+                2.0,
+                1.5,
+                2.0
+              ],
+              "uv": [
+                0,
+                32
+              ]
+            },
+            {
+              "origin": [
+                -1.2,
+                4.0,
+                -1.2
+              ],
+              "size": [
+                2.4,
+                14.0,
+                2.4
+              ],
+              "uv": [
+                32,
+                0
+              ]
+            }
+          ],
+          "locators": {
+            "trail_begin": [
+              0,
+              6.0,
+              0
+            ],
+            "trail_end": [
+              0,
+              23.5,
+              0
+            ],
+            "imbue_emitter": [
+              0,
+              14.0,
+              0
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

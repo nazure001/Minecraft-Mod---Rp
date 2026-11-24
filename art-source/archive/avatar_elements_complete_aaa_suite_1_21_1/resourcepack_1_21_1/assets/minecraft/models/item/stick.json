@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "minecraft:item/stick"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 2005
+      },
+      "model": "avatar_elements:item/SM_Air_Staff"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2006
+      },
+      "model": "avatar_elements:item/SM_Air_Staff_Glider"
+    }
+  ]
+}

@@ -5,8 +5,8 @@
     64
   ],
   "textures": {
-    "texture": "avatar_elements:textures/vfx/charge_orb_elemental",
-    "particle": "avatar_elements:textures/vfx/charge_orb_elemental"
+    "texture": "avatar_elements:vfx/charge_orb_elemental",
+    "particle": "avatar_elements:vfx/charge_orb_elemental"
   },
   "elements": [
     {
@@ -387,7 +387,7 @@
           8.0
         ],
         "axis": "y",
-        "angle": 25.0
+        "angle": 22.5
       }
     },
     {
@@ -465,7 +465,7 @@
           8.0
         ],
         "axis": "x",
-        "angle": 35.0
+        "angle": 45.0
       }
     },
     {
@@ -543,7 +543,7 @@
           8.0
         ],
         "axis": "z",
-        "angle": 55.0
+        "angle": 45.0
       }
     },
     {
@@ -621,7 +621,7 @@
           8.0
         ],
         "axis": "x",
-        "angle": 15.0
+        "angle": 22.5
       }
     },
     {
@@ -699,7 +699,7 @@
           8.0
         ],
         "axis": "x",
-        "angle": -15.0
+        "angle": -22.5
       }
     },
     {
@@ -777,7 +777,7 @@
           8.0
         ],
         "axis": "z",
-        "angle": 15.0
+        "angle": 22.5
       }
     },
     {
@@ -855,7 +855,7 @@
           8.0
         ],
         "axis": "z",
-        "angle": -15.0
+        "angle": -22.5
       }
     }
   ],

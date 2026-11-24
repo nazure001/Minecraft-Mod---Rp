@@ -1,0 +1,676 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.avatar_martial_rig",
+        "texture_width": 128,
+        "texture_height": 128,
+        "visible_bounds_width": 2.5,
+        "visible_bounds_height": 3.0,
+        "visible_bounds_offset": [
+          0,
+          1.5,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": []
+        },
+        {
+          "name": "pelvis",
+          "pivot": [
+            0,
+            12,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4,
+                10,
+                -2.5
+              ],
+              "size": [
+                8,
+                4,
+                5
+              ],
+              "uv": [
+                0,
+                64
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "torso_lower",
+          "pivot": [
+            0,
+            14,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.8,
+                14,
+                -2.2
+              ],
+              "size": [
+                7.6,
+                5,
+                4.4
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            }
+          ],
+          "parent": "pelvis"
+        },
+        {
+          "name": "torso_upper",
+          "pivot": [
+            0,
+            19,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.6,
+                19,
+                -2.6
+              ],
+              "size": [
+                9.2,
+                6,
+                5.2
+              ],
+              "uv": [
+                64,
+                0
+              ]
+            }
+          ],
+          "parent": "torso_lower",
+          "locators": {
+            "locator_chest_chi": [
+              0,
+              22,
+              0
+            ]
+          }
+        },
+        {
+          "name": "neck",
+          "pivot": [
+            0,
+            25,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.8,
+                25,
+                -1.8
+              ],
+              "size": [
+                3.6,
+                2,
+                3.6
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            }
+          ],
+          "parent": "torso_upper"
+        },
+        {
+          "name": "head",
+          "pivot": [
+            0,
+            27,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4,
+                27,
+                -4
+              ],
+              "size": [
+                8,
+                8,
+                8
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            }
+          ],
+          "parent": "neck",
+          "locators": {
+            "locator_third_eye": [
+              0,
+              32,
+              -4.2
+            ]
+          }
+        },
+        {
+          "name": "shoulder_r",
+          "pivot": [
+            -5.5,
+            24,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7.6,
+                22,
+                -2.5
+              ],
+              "size": [
+                3.6,
+                3.5,
+                5
+              ],
+              "uv": [
+                64,
+                0
+              ]
+            }
+          ],
+          "parent": "torso_upper"
+        },
+        {
+          "name": "upper_arm_r",
+          "pivot": [
+            -6,
+            22.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7.5,
+                17,
+                -1.8
+              ],
+              "size": [
+                3.2,
+                5.8,
+                3.6
+              ],
+              "uv": [
+                0,
+                64
+              ]
+            }
+          ],
+          "parent": "shoulder_r"
+        },
+        {
+          "name": "forearm_r",
+          "pivot": [
+            -6,
+            17,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7.3,
+                12,
+                -1.6
+              ],
+              "size": [
+                2.8,
+                5.2,
+                3.2
+              ],
+              "uv": [
+                64,
+                0
+              ]
+            }
+          ],
+          "parent": "upper_arm_r"
+        },
+        {
+          "name": "hand_r",
+          "pivot": [
+            -6,
+            12,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -7.2,
+                9.5,
+                -1.5
+              ],
+              "size": [
+                2.6,
+                2.6,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            }
+          ],
+          "parent": "forearm_r",
+          "locators": {
+            "locator_hand_r": [
+              -6,
+              10.5,
+              -1.5
+            ],
+            "locator_tool_r": [
+              -6,
+              10.5,
+              -2.2
+            ]
+          }
+        },
+        {
+          "name": "shoulder_l",
+          "pivot": [
+            5.5,
+            24,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                22,
+                -2.5
+              ],
+              "size": [
+                3.6,
+                3.5,
+                5
+              ],
+              "uv": [
+                64,
+                0
+              ]
+            }
+          ],
+          "parent": "torso_upper"
+        },
+        {
+          "name": "upper_arm_l",
+          "pivot": [
+            6,
+            22.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4.3,
+                17,
+                -1.8
+              ],
+              "size": [
+                3.2,
+                5.8,
+                3.6
+              ],
+              "uv": [
+                0,
+                64
+              ]
+            }
+          ],
+          "parent": "shoulder_l"
+        },
+        {
+          "name": "forearm_l",
+          "pivot": [
+            6,
+            17,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4.5,
+                12,
+                -1.6
+              ],
+              "size": [
+                2.8,
+                5.2,
+                3.2
+              ],
+              "uv": [
+                64,
+                0
+              ]
+            }
+          ],
+          "parent": "upper_arm_l"
+        },
+        {
+          "name": "hand_l",
+          "pivot": [
+            6,
+            12,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4.6,
+                9.5,
+                -1.5
+              ],
+              "size": [
+                2.6,
+                2.6,
+                3
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            }
+          ],
+          "parent": "forearm_l",
+          "locators": {
+            "locator_hand_l": [
+              6,
+              10.5,
+              -1.5
+            ]
+          }
+        },
+        {
+          "name": "thigh_r",
+          "pivot": [
+            -2.2,
+            11,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4,
+                5.5,
+                -2
+              ],
+              "size": [
+                3.6,
+                6,
+                4
+              ],
+              "uv": [
+                0,
+                64
+              ]
+            }
+          ],
+          "parent": "pelvis"
+        },
+        {
+          "name": "shin_r",
+          "pivot": [
+            -2.2,
+            5.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.8,
+                1.5,
+                -1.8
+              ],
+              "size": [
+                3.2,
+                4.5,
+                3.6
+              ],
+              "uv": [
+                64,
+                0
+              ]
+            }
+          ],
+          "parent": "thigh_r"
+        },
+        {
+          "name": "foot_r",
+          "pivot": [
+            -2.2,
+            1.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.8,
+                0,
+                -3.2
+              ],
+              "size": [
+                3.2,
+                1.8,
+                5
+              ],
+              "uv": [
+                64,
+                0
+              ]
+            }
+          ],
+          "parent": "shin_r",
+          "locators": {
+            "locator_foot_r": [
+              -2.2,
+              0.5,
+              0
+            ]
+          }
+        },
+        {
+          "name": "thigh_l",
+          "pivot": [
+            2.2,
+            11,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.4,
+                5.5,
+                -2
+              ],
+              "size": [
+                3.6,
+                6,
+                4
+              ],
+              "uv": [
+                0,
+                64
+              ]
+            }
+          ],
+          "parent": "pelvis"
+        },
+        {
+          "name": "shin_l",
+          "pivot": [
+            2.2,
+            5.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.6,
+                1.5,
+                -1.8
+              ],
+              "size": [
+                3.2,
+                4.5,
+                3.6
+              ],
+              "uv": [
+                64,
+                0
+              ]
+            }
+          ],
+          "parent": "thigh_l"
+        },
+        {
+          "name": "foot_l",
+          "pivot": [
+            2.2,
+            1.5,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                0.6,
+                0,
+                -3.2
+              ],
+              "size": [
+                3.2,
+                1.8,
+                5
+              ],
+              "uv": [
+                64,
+                0
+              ]
+            }
+          ],
+          "parent": "shin_l",
+          "locators": {
+            "locator_foot_l": [
+              2.2,
+              0.5,
+              0
+            ]
+          }
+        },
+        {
+          "name": "robe_front",
+          "pivot": [
+            0,
+            11,
+            -2.5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.5,
+                3,
+                -2.8
+              ],
+              "size": [
+                7,
+                8,
+                0.6
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "pelvis"
+        },
+        {
+          "name": "robe_back",
+          "pivot": [
+            0,
+            11,
+            2.5
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.8,
+                2,
+                2.3
+              ],
+              "size": [
+                7.6,
+                9,
+                0.6
+              ],
+              "uv": [
+                64,
+                64
+              ]
+            }
+          ],
+          "parent": "pelvis"
+        },
+        {
+          "name": "orbital_rings",
+          "pivot": [
+            0,
+            18,
+            0
+          ],
+          "cubes": [],
+          "parent": "root",
+          "locators": {
+            "ring_fire": [
+              14,
+              18,
+              0
+            ],
+            "ring_water": [
+              -14,
+              18,
+              0
+            ],
+            "ring_earth": [
+              0,
+              18,
+              14
+            ],
+            "ring_air": [
+              0,
+              18,
+              -14
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

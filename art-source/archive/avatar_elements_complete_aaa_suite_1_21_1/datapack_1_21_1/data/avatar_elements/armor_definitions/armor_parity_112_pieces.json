@@ -1,0 +1,1239 @@
+{
+  "schema_version": "1.21.1-native",
+  "total_sets": 28,
+  "total_pieces": 112,
+  "pieces": [
+    {
+      "nation": "fire",
+      "tier": 1,
+      "slot": "helmet",
+      "base_item": "minecraft:leather_helmet",
+      "custom_model_data": 1101,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:sentry"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 1,
+      "slot": "chestplate",
+      "base_item": "minecraft:leather_chestplate",
+      "custom_model_data": 1102,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:sentry"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 1,
+      "slot": "leggings",
+      "base_item": "minecraft:leather_leggings",
+      "custom_model_data": 1103,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:sentry"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 1,
+      "slot": "boots",
+      "base_item": "minecraft:leather_boots",
+      "custom_model_data": 1104,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:sentry"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 2,
+      "slot": "helmet",
+      "base_item": "minecraft:chainmail_helmet",
+      "custom_model_data": 1201,
+      "trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 2,
+      "slot": "chestplate",
+      "base_item": "minecraft:chainmail_chestplate",
+      "custom_model_data": 1202,
+      "trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 2,
+      "slot": "leggings",
+      "base_item": "minecraft:chainmail_leggings",
+      "custom_model_data": 1203,
+      "trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 2,
+      "slot": "boots",
+      "base_item": "minecraft:chainmail_boots",
+      "custom_model_data": 1204,
+      "trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 3,
+      "slot": "helmet",
+      "base_item": "minecraft:iron_helmet",
+      "custom_model_data": 1301,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 3,
+      "slot": "chestplate",
+      "base_item": "minecraft:iron_chestplate",
+      "custom_model_data": 1302,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 3,
+      "slot": "leggings",
+      "base_item": "minecraft:iron_leggings",
+      "custom_model_data": 1303,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 3,
+      "slot": "boots",
+      "base_item": "minecraft:iron_boots",
+      "custom_model_data": 1304,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 4,
+      "slot": "helmet",
+      "base_item": "minecraft:iron_helmet",
+      "custom_model_data": 1401,
+      "trim": {
+        "material": "minecraft:netherite",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 4,
+      "slot": "chestplate",
+      "base_item": "minecraft:iron_chestplate",
+      "custom_model_data": 1402,
+      "trim": {
+        "material": "minecraft:netherite",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 4,
+      "slot": "leggings",
+      "base_item": "minecraft:iron_leggings",
+      "custom_model_data": 1403,
+      "trim": {
+        "material": "minecraft:netherite",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 4,
+      "slot": "boots",
+      "base_item": "minecraft:iron_boots",
+      "custom_model_data": 1404,
+      "trim": {
+        "material": "minecraft:netherite",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 5,
+      "slot": "helmet",
+      "base_item": "minecraft:diamond_helmet",
+      "custom_model_data": 1501,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 5,
+      "slot": "chestplate",
+      "base_item": "minecraft:diamond_chestplate",
+      "custom_model_data": 1502,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 5,
+      "slot": "leggings",
+      "base_item": "minecraft:diamond_leggings",
+      "custom_model_data": 1503,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 5,
+      "slot": "boots",
+      "base_item": "minecraft:diamond_boots",
+      "custom_model_data": 1504,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 6,
+      "slot": "helmet",
+      "base_item": "minecraft:netherite_helmet",
+      "custom_model_data": 1601,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 6,
+      "slot": "chestplate",
+      "base_item": "minecraft:netherite_chestplate",
+      "custom_model_data": 1602,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 6,
+      "slot": "leggings",
+      "base_item": "minecraft:netherite_leggings",
+      "custom_model_data": 1603,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 6,
+      "slot": "boots",
+      "base_item": "minecraft:netherite_boots",
+      "custom_model_data": 1604,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 7,
+      "slot": "helmet",
+      "base_item": "minecraft:netherite_helmet",
+      "custom_model_data": 1701,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 7,
+      "slot": "chestplate",
+      "base_item": "minecraft:netherite_chestplate",
+      "custom_model_data": 1702,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 7,
+      "slot": "leggings",
+      "base_item": "minecraft:netherite_leggings",
+      "custom_model_data": 1703,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "fire",
+      "tier": 7,
+      "slot": "boots",
+      "base_item": "minecraft:netherite_boots",
+      "custom_model_data": 1704,
+      "trim": {
+        "material": "minecraft:redstone",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 1,
+      "slot": "helmet",
+      "base_item": "minecraft:leather_helmet",
+      "custom_model_data": 2101,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 1,
+      "slot": "chestplate",
+      "base_item": "minecraft:leather_chestplate",
+      "custom_model_data": 2102,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 1,
+      "slot": "leggings",
+      "base_item": "minecraft:leather_leggings",
+      "custom_model_data": 2103,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 1,
+      "slot": "boots",
+      "base_item": "minecraft:leather_boots",
+      "custom_model_data": 2104,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 2,
+      "slot": "helmet",
+      "base_item": "minecraft:chainmail_helmet",
+      "custom_model_data": 2201,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 2,
+      "slot": "chestplate",
+      "base_item": "minecraft:chainmail_chestplate",
+      "custom_model_data": 2202,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 2,
+      "slot": "leggings",
+      "base_item": "minecraft:chainmail_leggings",
+      "custom_model_data": 2203,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 2,
+      "slot": "boots",
+      "base_item": "minecraft:chainmail_boots",
+      "custom_model_data": 2204,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 3,
+      "slot": "helmet",
+      "base_item": "minecraft:iron_helmet",
+      "custom_model_data": 2301,
+      "trim": {
+        "material": "minecraft:diamond",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 3,
+      "slot": "chestplate",
+      "base_item": "minecraft:iron_chestplate",
+      "custom_model_data": 2302,
+      "trim": {
+        "material": "minecraft:diamond",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 3,
+      "slot": "leggings",
+      "base_item": "minecraft:iron_leggings",
+      "custom_model_data": 2303,
+      "trim": {
+        "material": "minecraft:diamond",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 3,
+      "slot": "boots",
+      "base_item": "minecraft:iron_boots",
+      "custom_model_data": 2304,
+      "trim": {
+        "material": "minecraft:diamond",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 4,
+      "slot": "helmet",
+      "base_item": "minecraft:iron_helmet",
+      "custom_model_data": 2401,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 4,
+      "slot": "chestplate",
+      "base_item": "minecraft:iron_chestplate",
+      "custom_model_data": 2402,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 4,
+      "slot": "leggings",
+      "base_item": "minecraft:iron_leggings",
+      "custom_model_data": 2403,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 4,
+      "slot": "boots",
+      "base_item": "minecraft:iron_boots",
+      "custom_model_data": 2404,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 5,
+      "slot": "helmet",
+      "base_item": "minecraft:diamond_helmet",
+      "custom_model_data": 2501,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 5,
+      "slot": "chestplate",
+      "base_item": "minecraft:diamond_chestplate",
+      "custom_model_data": 2502,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 5,
+      "slot": "leggings",
+      "base_item": "minecraft:diamond_leggings",
+      "custom_model_data": 2503,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 5,
+      "slot": "boots",
+      "base_item": "minecraft:diamond_boots",
+      "custom_model_data": 2504,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 6,
+      "slot": "helmet",
+      "base_item": "minecraft:netherite_helmet",
+      "custom_model_data": 2601,
+      "trim": {
+        "material": "minecraft:diamond",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 6,
+      "slot": "chestplate",
+      "base_item": "minecraft:netherite_chestplate",
+      "custom_model_data": 2602,
+      "trim": {
+        "material": "minecraft:diamond",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 6,
+      "slot": "leggings",
+      "base_item": "minecraft:netherite_leggings",
+      "custom_model_data": 2603,
+      "trim": {
+        "material": "minecraft:diamond",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 6,
+      "slot": "boots",
+      "base_item": "minecraft:netherite_boots",
+      "custom_model_data": 2604,
+      "trim": {
+        "material": "minecraft:diamond",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 7,
+      "slot": "helmet",
+      "base_item": "minecraft:netherite_helmet",
+      "custom_model_data": 2701,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 7,
+      "slot": "chestplate",
+      "base_item": "minecraft:netherite_chestplate",
+      "custom_model_data": 2702,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 7,
+      "slot": "leggings",
+      "base_item": "minecraft:netherite_leggings",
+      "custom_model_data": 2703,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "water",
+      "tier": 7,
+      "slot": "boots",
+      "base_item": "minecraft:netherite_boots",
+      "custom_model_data": 2704,
+      "trim": {
+        "material": "minecraft:lapis",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 1,
+      "slot": "helmet",
+      "base_item": "minecraft:leather_helmet",
+      "custom_model_data": 3101,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 1,
+      "slot": "chestplate",
+      "base_item": "minecraft:leather_chestplate",
+      "custom_model_data": 3102,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 1,
+      "slot": "leggings",
+      "base_item": "minecraft:leather_leggings",
+      "custom_model_data": 3103,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 1,
+      "slot": "boots",
+      "base_item": "minecraft:leather_boots",
+      "custom_model_data": 3104,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 2,
+      "slot": "helmet",
+      "base_item": "minecraft:chainmail_helmet",
+      "custom_model_data": 3201,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 2,
+      "slot": "chestplate",
+      "base_item": "minecraft:chainmail_chestplate",
+      "custom_model_data": 3202,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 2,
+      "slot": "leggings",
+      "base_item": "minecraft:chainmail_leggings",
+      "custom_model_data": 3203,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 2,
+      "slot": "boots",
+      "base_item": "minecraft:chainmail_boots",
+      "custom_model_data": 3204,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 3,
+      "slot": "helmet",
+      "base_item": "minecraft:iron_helmet",
+      "custom_model_data": 3301,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 3,
+      "slot": "chestplate",
+      "base_item": "minecraft:iron_chestplate",
+      "custom_model_data": 3302,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 3,
+      "slot": "leggings",
+      "base_item": "minecraft:iron_leggings",
+      "custom_model_data": 3303,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 3,
+      "slot": "boots",
+      "base_item": "minecraft:iron_boots",
+      "custom_model_data": 3304,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 4,
+      "slot": "helmet",
+      "base_item": "minecraft:iron_helmet",
+      "custom_model_data": 3401,
+      "trim": {
+        "material": "minecraft:iron",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 4,
+      "slot": "chestplate",
+      "base_item": "minecraft:iron_chestplate",
+      "custom_model_data": 3402,
+      "trim": {
+        "material": "minecraft:iron",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 4,
+      "slot": "leggings",
+      "base_item": "minecraft:iron_leggings",
+      "custom_model_data": 3403,
+      "trim": {
+        "material": "minecraft:iron",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 4,
+      "slot": "boots",
+      "base_item": "minecraft:iron_boots",
+      "custom_model_data": 3404,
+      "trim": {
+        "material": "minecraft:iron",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 5,
+      "slot": "helmet",
+      "base_item": "minecraft:diamond_helmet",
+      "custom_model_data": 3501,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:eye"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 5,
+      "slot": "chestplate",
+      "base_item": "minecraft:diamond_chestplate",
+      "custom_model_data": 3502,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:eye"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 5,
+      "slot": "leggings",
+      "base_item": "minecraft:diamond_leggings",
+      "custom_model_data": 3503,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:eye"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 5,
+      "slot": "boots",
+      "base_item": "minecraft:diamond_boots",
+      "custom_model_data": 3504,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:eye"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 6,
+      "slot": "helmet",
+      "base_item": "minecraft:netherite_helmet",
+      "custom_model_data": 3601,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 6,
+      "slot": "chestplate",
+      "base_item": "minecraft:netherite_chestplate",
+      "custom_model_data": 3602,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 6,
+      "slot": "leggings",
+      "base_item": "minecraft:netherite_leggings",
+      "custom_model_data": 3603,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 6,
+      "slot": "boots",
+      "base_item": "minecraft:netherite_boots",
+      "custom_model_data": 3604,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 7,
+      "slot": "helmet",
+      "base_item": "minecraft:netherite_helmet",
+      "custom_model_data": 3701,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 7,
+      "slot": "chestplate",
+      "base_item": "minecraft:netherite_chestplate",
+      "custom_model_data": 3702,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 7,
+      "slot": "leggings",
+      "base_item": "minecraft:netherite_leggings",
+      "custom_model_data": 3703,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "earth",
+      "tier": 7,
+      "slot": "boots",
+      "base_item": "minecraft:netherite_boots",
+      "custom_model_data": 3704,
+      "trim": {
+        "material": "minecraft:emerald",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 1,
+      "slot": "helmet",
+      "base_item": "minecraft:leather_helmet",
+      "custom_model_data": 4101,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 1,
+      "slot": "chestplate",
+      "base_item": "minecraft:leather_chestplate",
+      "custom_model_data": 4102,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 1,
+      "slot": "leggings",
+      "base_item": "minecraft:leather_leggings",
+      "custom_model_data": 4103,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 1,
+      "slot": "boots",
+      "base_item": "minecraft:leather_boots",
+      "custom_model_data": 4104,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:coast"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 2,
+      "slot": "helmet",
+      "base_item": "minecraft:chainmail_helmet",
+      "custom_model_data": 4201,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 2,
+      "slot": "chestplate",
+      "base_item": "minecraft:chainmail_chestplate",
+      "custom_model_data": 4202,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 2,
+      "slot": "leggings",
+      "base_item": "minecraft:chainmail_leggings",
+      "custom_model_data": 4203,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 2,
+      "slot": "boots",
+      "base_item": "minecraft:chainmail_boots",
+      "custom_model_data": 4204,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:dune"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 3,
+      "slot": "helmet",
+      "base_item": "minecraft:iron_helmet",
+      "custom_model_data": 4301,
+      "trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 3,
+      "slot": "chestplate",
+      "base_item": "minecraft:iron_chestplate",
+      "custom_model_data": 4302,
+      "trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 3,
+      "slot": "leggings",
+      "base_item": "minecraft:iron_leggings",
+      "custom_model_data": 4303,
+      "trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 3,
+      "slot": "boots",
+      "base_item": "minecraft:iron_boots",
+      "custom_model_data": 4304,
+      "trim": {
+        "material": "minecraft:copper",
+        "pattern": "minecraft:wild"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 4,
+      "slot": "helmet",
+      "base_item": "minecraft:iron_helmet",
+      "custom_model_data": 4401,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 4,
+      "slot": "chestplate",
+      "base_item": "minecraft:iron_chestplate",
+      "custom_model_data": 4402,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 4,
+      "slot": "leggings",
+      "base_item": "minecraft:iron_leggings",
+      "custom_model_data": 4403,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 4,
+      "slot": "boots",
+      "base_item": "minecraft:iron_boots",
+      "custom_model_data": 4404,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:host"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 5,
+      "slot": "helmet",
+      "base_item": "minecraft:diamond_helmet",
+      "custom_model_data": 4501,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 5,
+      "slot": "chestplate",
+      "base_item": "minecraft:diamond_chestplate",
+      "custom_model_data": 4502,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 5,
+      "slot": "leggings",
+      "base_item": "minecraft:diamond_leggings",
+      "custom_model_data": 4503,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 5,
+      "slot": "boots",
+      "base_item": "minecraft:diamond_boots",
+      "custom_model_data": 4504,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:vex"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 6,
+      "slot": "helmet",
+      "base_item": "minecraft:netherite_helmet",
+      "custom_model_data": 4601,
+      "trim": {
+        "material": "minecraft:amethyst",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 6,
+      "slot": "chestplate",
+      "base_item": "minecraft:netherite_chestplate",
+      "custom_model_data": 4602,
+      "trim": {
+        "material": "minecraft:amethyst",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 6,
+      "slot": "leggings",
+      "base_item": "minecraft:netherite_leggings",
+      "custom_model_data": 4603,
+      "trim": {
+        "material": "minecraft:amethyst",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 6,
+      "slot": "boots",
+      "base_item": "minecraft:netherite_boots",
+      "custom_model_data": 4604,
+      "trim": {
+        "material": "minecraft:amethyst",
+        "pattern": "minecraft:spire"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 7,
+      "slot": "helmet",
+      "base_item": "minecraft:netherite_helmet",
+      "custom_model_data": 4701,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 7,
+      "slot": "chestplate",
+      "base_item": "minecraft:netherite_chestplate",
+      "custom_model_data": 4702,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 7,
+      "slot": "leggings",
+      "base_item": "minecraft:netherite_leggings",
+      "custom_model_data": 4703,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:silence"
+      }
+    },
+    {
+      "nation": "air",
+      "tier": 7,
+      "slot": "boots",
+      "base_item": "minecraft:netherite_boots",
+      "custom_model_data": 4704,
+      "trim": {
+        "material": "minecraft:gold",
+        "pattern": "minecraft:silence"
+      }
+    }
+  ]
+}

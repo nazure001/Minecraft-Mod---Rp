@@ -1,0 +1,36 @@
+{
+  "spec_version": "2026-11-09",
+  "default_mode": "AUTO",
+  "themes": {
+    "fire_nation": {
+      "accent_primary": "#B81D24",
+      "accent_secondary": "#E8B938",
+      "ink": "#2A1814",
+      "motif": "flame_seal"
+    },
+    "water_tribe": {
+      "accent_primary": "#1E6BB8",
+      "accent_secondary": "#DDF4FF",
+      "ink": "#142230",
+      "motif": "ocean_wave"
+    },
+    "earth_kingdom": {
+      "accent_primary": "#387842",
+      "accent_secondary": "#B69358",
+      "ink": "#1D2418",
+      "motif": "stone_coin"
+    },
+    "air_nomad": {
+      "accent_primary": "#D87A24",
+      "accent_secondary": "#F5D258",
+      "ink": "#2E2012",
+      "motif": "air_swirl"
+    },
+    "nonbender": {
+      "accent_primary": "#5A626E",
+      "accent_secondary": "#C4CCD6",
+      "ink": "#1E2024",
+      "motif": "gear_crest"
+    }
+  }
+}

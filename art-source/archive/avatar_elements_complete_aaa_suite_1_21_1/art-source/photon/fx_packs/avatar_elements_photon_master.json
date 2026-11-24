@@ -1,0 +1,155 @@
+{
+  "fx_pack_version": "photon_2.2",
+  "target_loader": "fabric_1.21.1",
+  "pixel_art_bit_quantization": true,
+  "shader_graphs": {
+    "charge_orb_fresnel_dissolve": {
+      "meshes": [
+        "avatar_elements:meshes/vfx/vfx_charge_orb_core.obj",
+        "avatar_elements:meshes/vfx/vfx_charge_orb_shell.obj"
+      ],
+      "block_uv": false,
+      "noise_wrap": "Repeat",
+      "blackboard_uniforms": [
+        "NoiseSpeed",
+        "RimWidth",
+        "RimColor",
+        "BloomIntensity",
+        "StepAmount"
+      ],
+      "custom_mask_group": "avatar_charge_orb_outline",
+      "presets": {
+        "fire_blast": {
+          "NoiseSpeed": [
+            1.2,
+            -1.5
+          ],
+          "RimColor": [
+            1.0,
+            0.45,
+            0.08
+          ],
+          "BloomIntensity": 2.6,
+          "StepAmount": 0.35
+        },
+        "blue_fire": {
+          "NoiseSpeed": [
+            1.6,
+            -1.8
+          ],
+          "RimColor": [
+            0.15,
+            0.72,
+            1.0
+          ],
+          "BloomIntensity": 3.0,
+          "StepAmount": 0.32
+        },
+        "water_orb": {
+          "NoiseSpeed": [
+            0.8,
+            1.1
+          ],
+          "RimColor": [
+            0.22,
+            0.88,
+            1.0
+          ],
+          "BloomIntensity": 1.9,
+          "StepAmount": 0.28
+        },
+        "air_blast": {
+          "NoiseSpeed": [
+            2.2,
+            0.6
+          ],
+          "RimColor": [
+            0.85,
+            0.96,
+            1.0
+          ],
+          "BloomIntensity": 1.5,
+          "StepAmount": 0.22
+        },
+        "boulder_launch": {
+          "NoiseSpeed": [
+            0.4,
+            -0.5
+          ],
+          "RimColor": [
+            0.32,
+            0.88,
+            0.52
+          ],
+          "BloomIntensity": 1.6,
+          "StepAmount": 0.42
+        }
+      }
+    },
+    "spirit_barrier_depth_intersect": {
+      "mesh": "avatar_elements:meshes/vfx/vfx_spirit_dome.obj",
+      "block_uv": false,
+      "fresnel_power": 2.8,
+      "depth_intersection_highlight": true,
+      "custom_mask_group": "avatar_barrier_outline"
+    },
+    "aera_trails_local": {
+      "simulation_space": "Local",
+      "alignment": "Local",
+      "mesh": "avatar_elements:meshes/vfx/vfx_slash_arc_ribbon.obj",
+      "distortion_layer": true
+    }
+  },
+  "combat_timelines": {
+    "fire_jab_9tick": {
+      "duration_sec": 0.45,
+      "loop": false,
+      "beats": [
+        "telegraph_knuckle",
+        "apex_hitstop_signal",
+        "release_burst",
+        "dissipation"
+      ]
+    },
+    "earth_pillar_eruption": {
+      "duration_sec": 1.25,
+      "loop": false,
+      "beats": [
+        "telegraph_stomp_dust",
+        "apex_eruption_signal",
+        "release_piston_launch",
+        "dissipation_sink"
+      ]
+    },
+    "redirection_parry_wave": {
+      "duration_sec": 0.75,
+      "loop": false,
+      "beats": [
+        "capture_orbit_shards",
+        "apex_parry_hitstop",
+        "release_redirection_ring",
+        "dissipation"
+      ]
+    },
+    "ozai_dual_lightning": {
+      "duration_sec": 1.6,
+      "loop": false,
+      "beats": [
+        "telegraph_dual_hands",
+        "apex_hitstop_signal",
+        "release_hdr_bolt",
+        "dissipation"
+      ]
+    },
+    "vaatu_energy_cannon": {
+      "duration_sec": 2.0,
+      "loop": false,
+      "beats": [
+        "telegraph_eye_core",
+        "apex_hitstop_signal",
+        "release_chaos_beam",
+        "dissipation"
+      ]
+    }
+  }
+}
