@@ -54,8 +54,8 @@ public final class AirStaffAttackSkill {
         boolean upwardSlam = false;
 
         switch (step) {
-            case 2 -> { damage = 4.5f; range = 2.5; knockback = 0.6f; }
-            case 3 -> { damage = 7.0f; range = 3.0; knockback = 1.5f; upwardSlam = true; }
+            case 2 -> { damage = def.damage() * 1.5f; range = def.range() * 1.25; knockback = def.knockback() * 1.5f; }
+            case 3 -> { damage = def.damage() * 2.33f; range = def.range() * 1.5; knockback = def.knockback() * 3.75f; upwardSlam = true; }
             default -> { damage = def.damage(); range = def.range(); knockback = def.knockback(); }
         }
 

@@ -55,7 +55,7 @@ public final class FireJabSkill {
         Vec3d look = player.getRotationVec(1.0f);
 
         // Extended reach: 4.5m base, 5.8m on combo
-        double reach = Math.max(4.5, def.range()) * (finalCombo ? FINAL_COMBO_RANGE_BONUS : 1.0f);
+        double reach = def.range() * (finalCombo ? FINAL_COMBO_RANGE_BONUS : 1.0f);
         Vec3d reachEnd = eyePos.add(look.multiply(reach));
         Box scanBox = new Box(eyePos, reachEnd).expand(1.4);
 

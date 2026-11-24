@@ -136,7 +136,7 @@ public final class WaterWhipSkill {
     }
 
     private static void castIceSpear(ServerPlayerEntity player, ServerWorld world, Vec3d origin, Vec3d look, SkillDefinition def) {
-        double sniperRange = 14.0;
+        double sniperRange = def.range() * 1.75;
         double padding = 1.2;
         Vec3d end = origin.add(look.multiply(sniperRange));
         Box searchBounds = SkillTargeting.segmentBounds(origin, end, padding);
@@ -149,7 +149,7 @@ public final class WaterWhipSkill {
         );
 
         DamageSource source = world.getDamageSources().playerAttack(player);
-        float iceDamage = 10.0f; // High piercing damage
+        float iceDamage = def.damage() * 1.54f;
         for (LivingEntity target : targets) {
             target.damage(source, iceDamage);
             ElementalInteractions.applyFreezing(target, 200, 100);

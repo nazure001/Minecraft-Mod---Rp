@@ -47,7 +47,7 @@ public final class FireJetSkill {
         }
 
         // 2. True 3D rocket flight propulsion across all active/hold ticks
-        sustainThrust(player, t);
+        sustainThrust(player, def, t);
 
         // 3. Flame thruster twin trails every tick
         twinThrusterTrail(player);
@@ -77,7 +77,7 @@ public final class FireJetSkill {
                 SoundCategory.PLAYERS, 1.4f, 0.9f);
     }
 
-    private static void sustainThrust(ServerPlayerEntity player, int t) {
+    private static void sustainThrust(ServerPlayerEntity player, SkillDefinition def, int t) {
         Vec3d look = player.getRotationVec(1.0f);
         double speedMultiplier = ElementalInteractions.getWeaponSpeedMultiplier(player.getMainHandStack(), "FIRE");
         double thrust = FLIGHT_SPEED * speedMultiplier;
@@ -99,7 +99,8 @@ public final class FireJetSkill {
         List<LivingEntity> mobs = world.getEntitiesByClass(LivingEntity.class, box, e -> e != player && e.isAlive());
         for (LivingEntity e : mobs) {
             ElementalInteractions.applyFire(e, 80);
-            e.damage(world.getDamageSources().playerAttack(player), 4.0f);
+            float contactDamage = def.damage() > 0 ? def.damage() : 4.0f;
+            e.damage(world.getDamageSources().playerAttack(player), contactDamage);
             Vec3d push = look.multiply(0.9);
             e.addVelocity(push.x, 0.25, push.z);
             e.velocityModified = true;
