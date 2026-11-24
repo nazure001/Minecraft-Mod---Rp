@@ -1,8 +1,9 @@
-> **STATUS 2026-11-16: Code-ready, Testing-Blocked**
+> **STATUS 2026-11-25: Code-ready, Testing-Blocked**
 > Phase 0-2 complete [x]. Phase 3 implementation done [~] but blocked on in-game verification.
 > Blockers: Element bug retest required, Fire Jab animation not confirmed, Air Blast targeting not verified, T3-4 & T3-10 not started.
 > See: docs/BLOCKERS_2026-11-16.md for dependency chain and unblock procedures.
 > Revisi desain 2026-11-08: bagian tambahan di akhir dokumen menjadi acuan untuk perluasan W. Status historis tetap dipertahankan; tidak ada implementasi atau uji baru yang diklaim.
+> **2026-11-24:** Skill audit (4 hardcoded fix), docs cleanup (40→13 file aktif), art-source kurasi (15→10 folder, aset unik diekstrak ke canonical). Semua data-driven dari skill_definitions.json.
 
 # TASKS.md — Daftar Tugas Aktif
 
@@ -185,6 +186,9 @@ Lihat `docs/CONTENT_SPEC.md` → "Skill List Lengkap" untuk katalog semua teknik
 - [x] **B-11** Water Stance: Katara "PickUp & Freeze" Sub-Branch: Water Whip Shift+C trigger Ice Spear Sniper (10.0 piercing dmg, 14-block reach, Powder Snow freezing ticks, Frosted Ice freezing), Water Jet Shift+Cast freezing ice bridges (2026-11-20)
 - [x] **B-12** In-Process Java Compilation & Memory Optimization: fork=false pada compileJava dan JVM memory flags hemat commit (-XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xss256k) menyelesaikan isu commit memory Windows paging file (2026-11-20)
 - [x] **B-13** Automated Test Suite Expansion: penambahan EarthHardnessScalingTest (11 parameterized test cases) untuk kurva skalasi matematis kekerasan batuan (2026-11-20)
+- [x] **B-14** Skill Audit & Data-Driven Fix: 4 skill (FireJab, FireJet, AirStaffAttack, WaterWhip) diperbaiki dari hardcoded ke multiplier pada def values dari JSON (2026-11-24)
+- [x] **B-15** Docs Cleanup: 40+ file dikonsolidasi ke 13 file aktif, 27 diarsipkan ke docs/archive/ (2026-11-24)
+- [x] **B-16** Art-Source Curation: 15 subfolder dikurasi ke 10 aktif; aset unik diekstrak dari complete_aaa_suite ke canonical, folder redundan diarsipkan, CURATION_MANIFEST.md diperbarui (2026-11-24)
 
 ---
 
