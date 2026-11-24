@@ -46,6 +46,38 @@ public class AvatarElementsClient implements ClientModInitializer {
                 com.avatarmod.elements.client.render.entity.model.VaatuEntityModel.LAYER_LOCATION,
                 com.avatarmod.elements.client.render.entity.model.VaatuEntityModel::getTexturedModelData
         );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer(
+                com.avatarmod.elements.client.render.entity.model.FlyingBisonEntityModel.LAYER_LOCATION,
+                com.avatarmod.elements.client.render.entity.model.FlyingBisonEntityModel::getTexturedModelData
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer(
+                com.avatarmod.elements.client.render.entity.model.PlatypusBearEntityModel.LAYER_LOCATION,
+                com.avatarmod.elements.client.render.entity.model.PlatypusBearEntityModel::getTexturedModelData
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer(
+                com.avatarmod.elements.client.render.entity.model.PhoenixKingOzaiEntityModel.LAYER_LOCATION,
+                com.avatarmod.elements.client.render.entity.model.PhoenixKingOzaiEntityModel::getTexturedModelData
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer(
+                com.avatarmod.elements.client.render.entity.model.WingedLemurEntityModel.LAYER_LOCATION,
+                com.avatarmod.elements.client.render.entity.model.WingedLemurEntityModel::getTexturedModelData
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer(
+                com.avatarmod.elements.client.render.entity.model.TurtleDuckEntityModel.LAYER_LOCATION,
+                com.avatarmod.elements.client.render.entity.model.TurtleDuckEntityModel::getTexturedModelData
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer(
+                com.avatarmod.elements.client.render.entity.model.OtterPenguinEntityModel.LAYER_LOCATION,
+                com.avatarmod.elements.client.render.entity.model.OtterPenguinEntityModel::getTexturedModelData
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer(
+                com.avatarmod.elements.client.render.entity.model.DaiLiAgentEntityModel.LAYER_LOCATION,
+                com.avatarmod.elements.client.render.entity.model.DaiLiAgentEntityModel::getTexturedModelData
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.registerModelLayer(
+                com.avatarmod.elements.client.render.entity.model.FireNationSpearmanEntityModel.LAYER_LOCATION,
+                com.avatarmod.elements.client.render.entity.model.FireNationSpearmanEntityModel::getTexturedModelData
+        );
 
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 com.avatarmod.elements.entity.AvatarEntities.SHIRSHU,
@@ -54,6 +86,38 @@ public class AvatarElementsClient implements ClientModInitializer {
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
                 com.avatarmod.elements.entity.AvatarEntities.VAATU_SPIRIT_TITAN,
                 com.avatarmod.elements.client.render.entity.VaatuEntityRenderer::new
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                com.avatarmod.elements.entity.AvatarEntities.FLYING_BISON,
+                com.avatarmod.elements.client.render.entity.FlyingBisonEntityRenderer::new
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                com.avatarmod.elements.entity.AvatarEntities.PLATYPUS_BEAR,
+                com.avatarmod.elements.client.render.entity.PlatypusBearEntityRenderer::new
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                com.avatarmod.elements.entity.AvatarEntities.PHOENIX_KING_OZAI,
+                com.avatarmod.elements.client.render.entity.PhoenixKingOzaiEntityRenderer::new
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                com.avatarmod.elements.entity.AvatarEntities.WINGED_LEMUR,
+                com.avatarmod.elements.client.render.entity.WingedLemurEntityRenderer::new
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                com.avatarmod.elements.entity.AvatarEntities.TURTLE_DUCK,
+                com.avatarmod.elements.client.render.entity.TurtleDuckEntityRenderer::new
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                com.avatarmod.elements.entity.AvatarEntities.OTTER_PENGUIN,
+                com.avatarmod.elements.client.render.entity.OtterPenguinEntityRenderer::new
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                com.avatarmod.elements.entity.AvatarEntities.DAI_LI_AGENT,
+                com.avatarmod.elements.client.render.entity.DaiLiAgentEntityRenderer::new
+        );
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
+                com.avatarmod.elements.entity.AvatarEntities.FIRE_NATION_SPEARMAN,
+                com.avatarmod.elements.client.render.entity.FireNationSpearmanEntityRenderer::new
         );
 
         net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(
@@ -204,24 +268,6 @@ public class AvatarElementsClient implements ClientModInitializer {
         boolean justPressed = (isDown && !slotWasDown[slot]) || tapped;
         boolean justReleased = (!isDown && slotWasDown[slot]);
         slotWasDown[slot] = isDown;
-
-        // Interactive Earth Pillar manipulation via Earth slots (Z=Strike, X/C=Kick)
-        if ("EARTH".equals(activeElement) && client.player != null
-                && CinematicVfxController.hasNearbyPillarClient(client.player.getPos(), 5.5)) {
-            if ((slot == 1 || slot == 2) && justPressed) {
-                SkillClientHandler.sendPillarInteract(0);
-                client.player.swingHand(net.minecraft.util.Hand.MAIN_HAND);
-                var animId = AvatarAnimations.getAnimationForSkill("earth_boulder");
-                if (animId != null) AvatarAnimations.triggerComboAnimation(client.player, animId);
-                return;
-            } else if (slot == 0 && justPressed) {
-                SkillClientHandler.sendPillarInteract(1);
-                client.player.swingHand(net.minecraft.util.Hand.MAIN_HAND);
-                var animId = AvatarAnimations.getAnimationForSkill("fire_jab");
-                if (animId != null) AvatarAnimations.triggerComboAnimation(client.player, animId);
-                return;
-            }
-        }
 
         if (isHoldSkill) {
             if (justPressed) {

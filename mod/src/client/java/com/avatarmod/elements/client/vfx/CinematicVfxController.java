@@ -349,17 +349,17 @@ public final class CinematicVfxController {
                 }
             } else if (type == VfxType.CRESCENT_SLASH) {
                 Vec3d look = caster.getRotationVec(1.0f);
-                entity.setPosition(caster.getX() + look.x * 0.8, caster.getEyeY() - 0.2 + look.y * 0.8, caster.getZ() + look.z * 0.8);
+                entity.setPosition(caster.getX() + look.x * 2.2, caster.getEyeY() - 0.2 + look.y * 2.2, caster.getZ() + look.z * 2.2);
                 entity.setYaw(yaw);
                 entity.setPitch(pitch);
             } else if (type == VfxType.WATER_WHIP_STREAM) {
                 Vec3d look = caster.getRotationVec(1.0f);
-                entity.setPosition(caster.getX() + look.x * 0.5, caster.getEyeY() - 0.2 + look.y * 0.5, caster.getZ() + look.z * 0.5);
+                entity.setPosition(caster.getX() + look.x * 2.2, caster.getEyeY() - 0.2 + look.y * 2.2, caster.getZ() + look.z * 2.2);
                 entity.setYaw(yaw);
                 entity.setPitch(pitch);
             } else if (type == VfxType.BOULDER_LAUNCH_MEGALITH) {
                 Vec3d look = caster.getRotationVec(1.0f);
-                entity.setPosition(caster.getX() + look.x * 1.5, caster.getEyeY() - 0.2 + look.y * 1.5, caster.getZ() + look.z * 1.5);
+                entity.setPosition(caster.getX() + look.x * 2.4, caster.getEyeY() - 0.2 + look.y * 2.4, caster.getZ() + look.z * 2.4);
                 entity.setYaw(yaw);
                 entity.setPitch(pitch);
             } else if (type == VfxType.RUNE_DISC || type == VfxType.MAGIC_RUNE_CIRCLE) {
@@ -375,7 +375,7 @@ public final class CinematicVfxController {
                 entity.setPosition(caster.getX(), caster.getY() + 0.05, caster.getZ());
             } else if (type == VfxType.HITSTOP_FLASH) {
                 Vec3d look = caster.getRotationVec(1.0f);
-                entity.setPosition(caster.getX() + look.x * 1.2, caster.getEyeY() - 0.2 + look.y * 1.2, caster.getZ() + look.z * 1.2);
+                entity.setPosition(caster.getX() + look.x * 2.2, caster.getEyeY() - 0.2 + look.y * 2.2, caster.getZ() + look.z * 2.2);
             } else if (type == VfxType.DIVE_KICK_TRAIL) {
                 entity.setPosition(caster.getX(), caster.getY() + 0.5, caster.getZ());
             } else {
@@ -486,7 +486,7 @@ public final class CinematicVfxController {
                     entity.setYaw(caster.getYaw());
                 } else if (type == VfxType.WATER_WHIP_STREAM) {
                     Vec3d look = caster.getRotationVec(1.0f);
-                    entity.setPosition(caster.getX() + look.x * 0.5, caster.getEyeY() - 0.2 + look.y * 0.5, caster.getZ() + look.z * 0.5);
+                    entity.setPosition(caster.getX() + look.x * 2.2, caster.getEyeY() - 0.2 + look.y * 2.2, caster.getZ() + look.z * 2.2);
                     entity.setYaw(caster.getYaw());
                     entity.setPitch(caster.getPitch());
                 } else {

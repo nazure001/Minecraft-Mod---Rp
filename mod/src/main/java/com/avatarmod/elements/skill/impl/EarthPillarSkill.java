@@ -151,12 +151,10 @@ public final class EarthPillarSkill {
                 }
             }
 
-            // Check if fortress walls were already channeled during HOLD phase
+            // If previous pillar exists and wasn't interacted with, crumble it before spawning new one
             ActivePillar existing = ACTIVE_PILLARS.get(player.getUuid());
-            if (existing != null && !existing.positions().isEmpty()) {
-                world.playSound(null, player.getBlockPos(),
-                        SoundEvents.BLOCK_DEEPSLATE_PLACE, SoundCategory.PLAYERS, 1.2f, 0.7f);
-                return;
+            if (existing != null) {
+                crumblePillar(world, existing);
             }
 
             PlayerBendingData data = PlayerBendingData.get(player);

@@ -229,6 +229,14 @@ public final class AvatarAnimations {
             return fullId;
         }
 
+        if ("earth_tunnel".equals(clean)) {
+            Identifier tunnelId = Identifier.of("avatar_elements", "earth_tunnel");
+            if (PlayerAnimResources.hasAnimation(tunnelId)) {
+                return tunnelId;
+            }
+            return Identifier.of("avatar_elements", "earth_boulder");
+        }
+
         return Identifier.of("avatar_elements", clean);
     }
 

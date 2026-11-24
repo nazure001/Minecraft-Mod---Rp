@@ -96,9 +96,13 @@ public final class SkillValidator {
             if (tl.phase() == com.avatarmod.elements.data.SkillTimeline.Phase.WINDUP
                     || tl.phase() == com.avatarmod.elements.data.SkillTimeline.Phase.HOLD
                     || tl.phase() == com.avatarmod.elements.data.SkillTimeline.Phase.ACTIVE) {
-                return ValidationResult.deny(
-                        SkillPackets.S2CSkillResult.DenyReason.COOLDOWN,
-                        tl.ticksInPhase());
+                if (creativeTesting) {
+                    tl.cancel();
+                } else {
+                    return ValidationResult.deny(
+                            SkillPackets.S2CSkillResult.DenyReason.COOLDOWN,
+                            tl.ticksInPhase());
+                }
             }
         }
 

@@ -52,6 +52,7 @@ public final class AvatarServerEvents {
             SkillNetworking.onPlayerDisconnect(handler.player.getUuid());
             FireBlastSkill.clearFireball(handler.player.getUuid());
             EarthPillarSkill.clear(handler.player.getUuid());
+            com.avatarmod.elements.skill.impl.EarthWallSkill.clear(handler.player.getUuid());
             LAST_AVATAR_STATE_REFLEX.remove(handler.player.getUuid());
         });
 
@@ -69,6 +70,7 @@ public final class AvatarServerEvents {
             EarthBoulderSkill.tickAllBoulders(server);
             BoulderLaunchSkill.tickAllBoulders(server);
             EarthPillarSkill.tickAllPillars(server);
+            com.avatarmod.elements.skill.impl.EarthWallSkill.tickAllWalls(server);
             SkillNetworking.tickElementCycleCooldowns();
         });
 
