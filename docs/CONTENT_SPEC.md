@@ -42,21 +42,23 @@ Daftar ID di bawah adalah isi `skill_definitions.json` yang diaudit. Nilai numer
 
 | Elemen | Skill ID yang dimuat |
 |---|---|
-| FIRE | `avatar:fire_jab`, `avatar:fire_blast`, `avatar:flame_sweep`, `avatar:fire_jet`, `avatar:fire_guard` |
-| AIR | `avatar:air_palm`, `avatar:air_blast`, `avatar:air_staff_attack`, `avatar:air_vortex` |
-| WATER | `avatar:water_whip` |
-| EARTH | `avatar:earth_boulder`, `avatar:boulder_launch`, `avatar:earth_pillar` |
+| FIRE | `avatar:fire_jab`, `avatar:fire_blast`, `avatar:flame_sweep`, `avatar:lightning_strike`, `avatar:fire_jet` |
+| AIR | `avatar:air_palm`, `avatar:air_blast`, `avatar:air_staff_attack`, `avatar:air_vortex`, `avatar:air_scooter` |
+| WATER | `avatar:water_whip`, `avatar:water_jet`, `avatar:octopus_form`, `avatar:water_surf` |
+| EARTH | `avatar:earth_boulder`, `avatar:boulder_launch`, `avatar:earth_pillar`, `avatar:earth_wall`, `avatar:earth_tunnel` |
+| NON_BENDER | `avatar:chi_strike`, `avatar:acrobatic_dodge`, `avatar:grapple_wire`, `avatar:smoke_bomb`, `avatar:nerve_strike` |
 
 `element_slots.json` dan `ElementSlotMap` menggunakan lima slot (0–4; tombol Z/X/C/V/B). Mapping aktif:
 
 | Elemen | Z | X | C | V | B |
 |---|---|---|---|---|---|
-| FIRE | Fire Jab | Fire Blast | Flame Sweep | Fire Guard | Fire Jet |
-| AIR | Air Staff Attack | Air Blast | Air Palm | Air Vortex | Kosong |
-| WATER | Water Whip | Kosong | Kosong | Kosong | Kosong |
-| EARTH | Earth Boulder | Boulder Launch | Earth Pillar | Kosong | Kosong |
+| FIRE | Fire Jab | Fire Blast | Flame Sweep | Lightning Strike | Fire Jet |
+| AIR | Air Palm | Air Blast | Air Staff Attack | Air Vortex | Air Scooter |
+| WATER | Water Whip | Water Jet | Octopus Form | — | Water Surf |
+| EARTH | Earth Boulder | Boulder Launch | Earth Pillar | Earth Wall | Earth Tunnel |
+| NON_BENDER | Chi Strike | Acrobatic Dodge | Grapple Wire | Smoke Bomb | Nerve Strike |
 
-Slot kosong memakai `null` dan tidak menjalankan cast. Karena belum ada skill tambahan untuk WATER/EARTH, pilihan konservatif untuk fase ini adalah mempertahankan hanya skill yang tersedia dan tidak menggandakan atau mengarang ability. Assignment ini merupakan default kerja sementara, bukan keputusan desain final yang telah dikonfirmasi pengguna; slot dapat diisi saat skill baru siap dan assignment gameplay ditinjau.
+Slot `null` (WATER V) tidak menjalankan cast. Assignment ini merupakan default kerja sementara, bukan keputusan desain final yang telah dikonfirmasi pengguna; slot dapat diubah saat gameplay ditinjau.
 
 Contoh stat di bagian berikut merupakan katalog desain historis. Contoh yang tidak hadir di daftar runtime di atas masih direncanakan; jika nilai contoh berbeda dari JSON aktif, JSON aktif menang sampai nilai tersebut secara eksplisit direkonsiliasi.
 
@@ -406,7 +408,7 @@ Memakai framework hold-release generik (Phase.HOLD, `C2SHoldStart`/`C2SHoldRelea
 | `avatar:flame_sweep` | Flame Sweep | instant | done | — |
 | `avatar:fire_jet` | Fire Jet (dash) | instant | done | — |
 | `avatar:fire_guard` | Fire Guard | channel | done | — |
-| `avatar:fire_blast` | Fire Blast | hold→release | planned | T3 |
+| `avatar:fire_blast` | Fire Blast | hold→release | done | — |
 | `avatar:fire_stream` | Fire Stream | channel | planned | T3 |
 | `avatar:fire_ring` | Fire Ring | instant | planned | T3 |
 | `avatar:fire_whip` | Fire Whip | instant | planned | T3 |
@@ -416,7 +418,7 @@ Memakai framework hold-release generik (Phase.HOLD, `C2SHoldStart`/`C2SHoldRelea
 | `avatar:fire_breath` | Fire Breath | channel | planned | T4 |
 | `avatar:jet_propulsion` | Jet Propulsion | channel | planned | T4 |
 | `avatar:flame_vortex` | Flame Vortex | channel | planned | T4 |
-| `avatar:lightning_strike` | Lightning Strike | hold→release | planned | T5 |
+| `avatar:lightning_strike` | Lightning Strike | hold→release | done | — |
 | `avatar:lightning_redirect` | Lightning Redirect | instant/counter | planned | T5 |
 | `avatar:combustion_beam` | Combustion Beam | hold→release | planned | T5 |
 | `avatar:blue_fire` | Blue Fire | passive modifier | planned | T5 |
@@ -425,8 +427,8 @@ Memakai framework hold-release generik (Phase.HOLD, `C2SHoldStart`/`C2SHoldRelea
 
 | Skill ID | Nama | Cast Type | Status | Prioritas |
 |---|---|---|---|---|
-| `avatar:air_palm` | Air Palm | instant | planned | T3 |
-| `avatar:air_blast` | Air Blast | instant | in_progress | T3 |
+| `avatar:air_palm` | Air Palm | instant | done | — |
+| `avatar:air_blast` | Air Blast | instant | done | — |
 | `avatar:air_staff_attack` | Air Staff Attack | instant/combo | done | — |
 | `avatar:air_vortex` | Air Vortex | channel | done | — |
 | `avatar:air_swipe` | Air Swipe | instant | planned | T3 |
@@ -435,7 +437,7 @@ Memakai framework hold-release generik (Phase.HOLD, `C2SHoldStart`/`C2SHoldRelea
 | `avatar:air_shield` | Air Shield | toggle | planned | T4 |
 | `avatar:air_cushion` | Air Cushion | instant | planned | T4 |
 | `avatar:air_spout` | Air Spout | hold | planned | T4 |
-| `avatar:air_scooter` | Air Scooter | hold | planned | T4 |
+| `avatar:air_scooter` | Air Scooter | hold→release | done | — |
 | `avatar:breath_of_wind` | Breath of Wind | instant | planned | T4 |
 | `avatar:true_flight` | True Flight | channel | planned | T5 |
 | `avatar:sound_vibration` | Sound Vibration | instant | planned | T5 |
@@ -446,14 +448,14 @@ Memakai framework hold-release generik (Phase.HOLD, `C2SHoldStart`/`C2SHoldRelea
 | Skill ID | Nama | Cast Type | Status | Prioritas |
 |---|---|---|---|---|
 | `avatar:water_whip` | Water Whip | instant | done | — |
-| `avatar:water_jet` | Water Jet | channel | planned | T3 |
+| `avatar:water_jet` | Water Jet | channel (runs as 30-tick ACTIVE) | done | — |
 | `avatar:ice_spear` | Ice Spear | instant | planned | T3 |
 | `avatar:ice_disk` | Ice Disk | instant | planned | T3 |
 | `avatar:ice_shield` | Ice Shield | instant | planned | T3 |
 | `avatar:water_wave` | Water Wave | hold | planned | T4 |
 | `avatar:ice_prison` | Ice Prison | hold→release | planned | T4 |
 | `avatar:water_arms` | Water Arms | hold | planned | T4 |
-| `avatar:octopus_form` | Octopus Form | channel | planned | T4 |
+| `avatar:octopus_form` | Octopus Form | channel (runs as 20-tick ACTIVE) | done | — |
 | `avatar:steam_cloud` | Steam Cloud | instant | planned | T4 |
 | `avatar:ice_path` | Ice Path | instant | planned | T4 |
 | `avatar:healing` | Healing | channel | planned | T5 |
@@ -464,7 +466,7 @@ Memakai framework hold-release generik (Phase.HOLD, `C2SHoldStart`/`C2SHoldRelea
 
 | Skill ID | Nama | Cast Type | Status | Prioritas |
 |---|---|---|---|---|
-| `avatar:earth_wall` | Earth Wall | instant/construct actions | planned | W3 |
+| `avatar:earth_wall` | Earth Wall | hold→release | done | — |
 | `avatar:earth_boulder` | Earth Boulder | instant | done | — |
 | `avatar:earth_bullet` | Earth Bullet | instant | planned | T3 |
 | `avatar:earth_pillar` | Earth Pillar | instant | built (belum diuji) | — |
@@ -474,11 +476,27 @@ Memakai framework hold-release generik (Phase.HOLD, `C2SHoldStart`/`C2SHoldRelea
 | `avatar:earth_armor` | Earth Armor | instant | planned | T4 |
 | `avatar:rock_cage` | Rock Cage | instant | planned | T4 |
 | `avatar:earth_surf` | Earth Surf | hold | planned | T4 |
-| `avatar:earth_tunnel` | Earth Tunnel | hold | planned | T4 |
+| `avatar:earth_tunnel` | Earth Tunnel | hold→release | done | — |
 | `avatar:seismic_sense` | Seismic Sense | toggle | planned | T5 |
 | `avatar:metalbending_whip` | Metalbending Whip | instant | planned | T5 |
 | `avatar:metal_cable` | Metal Cable | instant | planned | T5 |
 | `avatar:lavabending` | Lavabending | hold→release | planned | T5 |
+
+### ⚔️ Non-Bender
+
+| Skill ID | Nama | Cast Type | Status | Prioritas |
+|---|---|---|---|---|
+| `avatar:chi_strike` | Chi Strike | instant/combo | done | — |
+| `avatar:acrobatic_dodge` | Acrobatic Dodge | instant | done | — |
+| `avatar:grapple_wire` | Grapple Wire | instant | done | — |
+| `avatar:smoke_bomb` | Smoke Bomb | instant | done | — |
+| `avatar:nerve_strike` | Nerve Strike | instant | done | — |
+
+### 🌊 Tambahan Waterbending
+
+| Skill ID | Nama | Cast Type | Status | Prioritas |
+|---|---|---|---|---|
+| `avatar:water_surf` | Water Surf | hold→release | done | — |
 
 ### Cast Type Definitions
 

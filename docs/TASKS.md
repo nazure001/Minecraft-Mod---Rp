@@ -148,7 +148,7 @@ Format status: `[ ]` Belum | `[~]` Sedang dikerjakan | `[x]` Selesai
 - [x] **SC-3** Untuk vertical slice, tunda `CHANNEL`, `TOGGLE`, dan chi sustain sampai kontrak W1 disetujui; parser menolak nilai yang belum didukung dan konfigurasi runtime tidak lagi menyatakan sustain yang tidak berjalan. Tes mencakup cast type serta biaya sustain.
 - [x] **SC-4** PAL versi `1.1.6+mc.1.21.1` sudah dideklarasikan di Gradle dan `player_animation_library >=1.1.6` di metadata Fabric. Pasang PAL pada instance yang menjalankan mod; metadata PAL kompatibel dengan client/server. Build terverifikasi, launch in-game masih perlu diuji manual.
 
-- [ ] **T3-10** Water Jet: channel skill, tekan+tahan untuk semburan air berkelanjutan
+- [x] **T3-10** Water Jet: sustained stream skill, chi sustain per 3 ticks, sneak-cast ice variant — Claude Code — 2026-11-25 — BUILD ✅ (sudah diimplementasi sebagai ACTIVE 30-tick, bukan CHANNEL; belum diuji in-game)
 
 - [x] **T3-11** Earth Pillar: raise column dari bawah target, launch ke atas — Claude Code — 2026-11-11
   - `EarthPillarSkill.java`: cari target terdekat di arah pandang (step 1 blok s/d range 8), snap ke permukaan tanah
