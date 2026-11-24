@@ -1,0 +1,654 @@
+{
+  "scanned_files": 11945,
+  "json_errors": [],
+  "zero_byte_files": [],
+  "png_errors": [],
+  "missing_textures": [],
+  "illegal_rotations": [],
+  "out_of_bounds_elements": [],
+  "uv_errors": [
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_cap",
+      "north",
+      [
+        41,
+        20,
+        43,
+        22
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_cap",
+      "east",
+      [
+        39,
+        20,
+        41,
+        22
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_cap",
+      "south",
+      [
+        45,
+        20,
+        47,
+        22
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_cap",
+      "west",
+      [
+        43,
+        20,
+        45,
+        22
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_cap",
+      "up",
+      [
+        41,
+        18,
+        43,
+        20
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_cap",
+      "down",
+      [
+        43,
+        18,
+        45,
+        20
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_shaft",
+      "north",
+      [
+        53,
+        16,
+        54,
+        45
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_shaft",
+      "east",
+      [
+        52,
+        16,
+        53,
+        45
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_shaft",
+      "south",
+      [
+        55,
+        16,
+        56,
+        45
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_shaft",
+      "west",
+      [
+        54,
+        16,
+        55,
+        45
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_shaft",
+      "up",
+      [
+        53,
+        15,
+        54,
+        16
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "lower_shaft",
+      "down",
+      [
+        54,
+        15,
+        55,
+        16
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "grip_wrap",
+      "north",
+      [
+        41,
+        20,
+        43,
+        26
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "grip_wrap",
+      "east",
+      [
+        39,
+        20,
+        41,
+        26
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "grip_wrap",
+      "south",
+      [
+        45,
+        20,
+        47,
+        26
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "grip_wrap",
+      "west",
+      [
+        43,
+        20,
+        45,
+        26
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "grip_wrap",
+      "up",
+      [
+        41,
+        18,
+        43,
+        20
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "grip_wrap",
+      "down",
+      [
+        43,
+        18,
+        45,
+        20
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_shaft",
+      "north",
+      [
+        53,
+        16,
+        54,
+        45
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_shaft",
+      "east",
+      [
+        52,
+        16,
+        53,
+        45
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_shaft",
+      "south",
+      [
+        55,
+        16,
+        56,
+        45
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_shaft",
+      "west",
+      [
+        54,
+        16,
+        55,
+        45
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_shaft",
+      "up",
+      [
+        53,
+        15,
+        54,
+        16
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_shaft",
+      "down",
+      [
+        54,
+        15,
+        55,
+        16
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_cap",
+      "north",
+      [
+        41,
+        20,
+        43,
+        22
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_cap",
+      "east",
+      [
+        39,
+        20,
+        41,
+        22
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_cap",
+      "south",
+      [
+        45,
+        20,
+        47,
+        22
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_cap",
+      "west",
+      [
+        43,
+        20,
+        45,
+        22
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_cap",
+      "up",
+      [
+        41,
+        18,
+        43,
+        20
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "upper_cap",
+      "down",
+      [
+        43,
+        18,
+        45,
+        20
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_spar_top",
+      "north",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_spar_top",
+      "south",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_spar_top",
+      "up",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_spar_top",
+      "down",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_wing_canvas",
+      "north",
+      [
+        4,
+        80,
+        56,
+        120
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_wing_canvas",
+      "east",
+      [
+        4,
+        80,
+        6,
+        120
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_wing_canvas",
+      "south",
+      [
+        4,
+        80,
+        56,
+        120
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_wing_canvas",
+      "west",
+      [
+        4,
+        80,
+        6,
+        120
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_wing_canvas",
+      "up",
+      [
+        4,
+        80,
+        56,
+        82
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_wing_canvas",
+      "down",
+      [
+        4,
+        80,
+        56,
+        82
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_spar_bottom",
+      "north",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_spar_bottom",
+      "south",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_spar_bottom",
+      "up",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "left_spar_bottom",
+      "down",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_spar_top",
+      "north",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_spar_top",
+      "south",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_spar_top",
+      "up",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_spar_top",
+      "down",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_wing_canvas",
+      "north",
+      [
+        60,
+        80,
+        112,
+        120
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_wing_canvas",
+      "east",
+      [
+        60,
+        80,
+        62,
+        120
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_wing_canvas",
+      "south",
+      [
+        60,
+        80,
+        112,
+        120
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_wing_canvas",
+      "west",
+      [
+        60,
+        80,
+        62,
+        120
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_wing_canvas",
+      "up",
+      [
+        60,
+        80,
+        112,
+        82
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_wing_canvas",
+      "down",
+      [
+        60,
+        80,
+        112,
+        82
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_spar_bottom",
+      "north",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_spar_bottom",
+      "south",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_spar_bottom",
+      "up",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ],
+    [
+      "d:\\repo\\Minecraft Mod & Rp\\mod\\src\\main\\resources\\assets\\avatar_elements\\models\\item\\air_staff.json",
+      "right_spar_bottom",
+      "down",
+      [
+        0,
+        16,
+        35,
+        18
+      ]
+    ]
+  ],
+  "bbmodel_errors": [],
+  "cmd_conflicts": [],
+  "missing_model_references": [],
+  "mcmeta_issues": [],
+  "sounds_issues": []
+}
