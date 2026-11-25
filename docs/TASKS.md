@@ -175,8 +175,8 @@ Lihat `docs/CONTENT_SPEC.md` → "Skill List Lengkap" untuk katalog semua teknik
 
 - [ ] **B-1** CIT tier armor: tambah layer definition untuk tier `basic` s/d `veteran` di resourcepack
 - [ ] **B-2** Ganti XP vanilla sebagai progression → mastery tracking kustom
-- [ ] **B-3** Pack format `pack.mcmeta` — verifikasi format 48 untuk 1.21.1
-- [ ] **B-4** `avatar_skill_timer` di armor-datapack sudah tidak dipakai — hapus setelah konfirmasi
+- [x] **B-3** Pack format `pack.mcmeta` — verified: resource pack format 34, data pack format 48 (correct for 1.21.1) (2026-11-25)
+- [x] **B-4** `avatar_skill_timer` dan legacy skill cast tags dihapus dari armor-datapack; skill timing sekarang via Fabric mod SkillTimeline (2026-11-25)
 - [x] **B-5** Fire Jet rocket flight: sustained flight pada ACTIVE phase, flame thruster trail, foot ignition, fall damage immunity (2026-11-20)
 - [x] **B-6** Air Scooter traversal: rapid ground/water glide (0.85b/t), hovering height 0.75b, spinning air vortex VFX, fall damage immunity, vegetation clearing, 6-bone zero-snap PAL clip (2026-11-20)
 - [x] **B-7** Emergency Avatar State Survival Reflex: auto-trigger saat health <= 2.0 (lethal/fatal), 100 Chi refill, full heal, Resistance IV, cataclysmic 4-element shockwave 8-block, 5-min cooldown (2026-11-20)

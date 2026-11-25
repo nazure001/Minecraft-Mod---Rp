@@ -6,23 +6,6 @@
 scoreboard players add @a avatar_tick 1
 execute as @a if score @s avatar_tick matches 20.. run scoreboard players set @s avatar_tick 0
 
-# Tag-based Skill Ingestion (allows external mods/commands to trigger skills via simple tags)
-execute as @a[tag=avatar.skill.fire] run function avatar:skill/cast_fire
-execute as @a[tag=avatar.skill.fire] run tag @s remove avatar.skill.fire
-
-execute as @a[tag=avatar.skill.water] run function avatar:skill/cast_water
-execute as @a[tag=avatar.skill.water] run tag @s remove avatar.skill.water
-
-execute as @a[tag=avatar.skill.earth] run function avatar:skill/cast_earth
-execute as @a[tag=avatar.skill.earth] run tag @s remove avatar.skill.earth
-
-execute as @a[tag=avatar.skill.air] run function avatar:skill/cast_air
-execute as @a[tag=avatar.skill.air] run tag @s remove avatar.skill.air
-
-# Countdown active skill duration timer
-execute as @a[scores={avatar_skill_timer=1..}] run scoreboard players remove @s avatar_skill_timer 1
-execute as @a[scores={avatar_skill_timer=0,avatar_skill=1..}] run scoreboard players set @s avatar_skill 0
-
 # Reset active armor set status for all online players before detection
 scoreboard players set @a avatar_set 0
 

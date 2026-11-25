@@ -1,4 +1,2 @@
-# Avatar Armor - Clear Skill
-scoreboard players set @s avatar_skill 0
-scoreboard players set @s avatar_skill_timer 0
+# Avatar Armor - Clear Skill (legacy; skills now managed by Fabric mod SkillTimeline)
 title @s actionbar [{"text":"[SKILL] ","color":"gold","bold":true},{"text":"Skill Deactivated","color":"gray"}]
